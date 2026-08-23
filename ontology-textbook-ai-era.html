@@ -117,6 +117,87 @@
 </style>
 </head>
 <body>
+
+<!-- AWS サービスアイコン (図 12-2 で使用) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <defs>
+  <linearGradient id="cCompute" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F8A24A"/><stop offset="1" stop-color="#ED7100"/></linearGradient>
+  <linearGradient id="cDatabase" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#DA5CE3"/><stop offset="1" stop-color="#C925D1"/></linearGradient>
+  <linearGradient id="cAnalytics" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A87DFF"/><stop offset="1" stop-color="#8C4FFF"/></linearGradient>
+  <linearGradient id="cML" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2BC4AC"/><stop offset="1" stop-color="#01A88D"/></linearGradient>
+  <linearGradient id="cStorage" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9BC53D"/><stop offset="1" stop-color="#7AA116"/></linearGradient>
+  <linearGradient id="cSecurity" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E85C6E"/><stop offset="1" stop-color="#DD344C"/></linearGradient>
+  <linearGradient id="cNetwork" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A87DFF"/><stop offset="1" stop-color="#8C4FFF"/></linearGradient>
+  <linearGradient id="cMgmt" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F0559B"/><stop offset="1" stop-color="#E7157B"/></linearGradient>
+
+  <symbol id="ic-neptune" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cDatabase)"/>
+    <g stroke="#fff" stroke-width="2" fill="none"><path d="M16 16 L32 16 M16 16 L24 30 M32 16 L24 30 M16 16 L14 32 M32 16 L34 32 M14 32 L24 30 M34 32 L24 30"/></g>
+    <g fill="#fff"><circle cx="16" cy="16" r="3.6"/><circle cx="32" cy="16" r="3.6"/><circle cx="24" cy="30" r="4.2"/><circle cx="14" cy="33" r="3"/><circle cx="34" cy="33" r="3"/></g></symbol>
+
+  <symbol id="ic-dynamodb" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cDatabase)"/>
+    <g fill="none" stroke="#fff" stroke-width="2.2"><ellipse cx="24" cy="15" rx="11" ry="4.2"/>
+    <path d="M13 15v8c0 2.3 4.9 4.2 11 4.2s11-1.9 11-4.2v-8"/><path d="M13 23v8c0 2.3 4.9 4.2 11 4.2s11-1.9 11-4.2v-8"/></g></symbol>
+
+  <symbol id="ic-s3" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cStorage)"/>
+    <path d="M13 14h22l-3 22H16z" fill="none" stroke="#fff" stroke-width="2.2"/>
+    <path d="M13 14h22" stroke="#fff" stroke-width="2.6"/><circle cx="24" cy="25" r="3.4" fill="#fff"/></symbol>
+
+  <symbol id="ic-athena" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cAnalytics)"/>
+    <g stroke="#fff" stroke-width="2.2" fill="none"><rect x="12" y="13" width="24" height="22" rx="2.5"/><path d="M12 20h24M20 20v15M28 20v15"/></g></symbol>
+
+  <symbol id="ic-opensearch" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cAnalytics)"/>
+    <circle cx="22" cy="21" r="8.5" fill="none" stroke="#fff" stroke-width="2.4"/>
+    <path d="M28.5 27.5 L36 35" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+    <g fill="#fff"><circle cx="19" cy="19" r="1.7"/><circle cx="25" cy="19" r="1.7"/><circle cx="22" cy="24" r="1.7"/></g></symbol>
+
+  <symbol id="ic-glue" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cAnalytics)"/>
+    <g stroke="#fff" stroke-width="2.2" fill="none"><circle cx="24" cy="24" r="6.5"/>
+    <path d="M24 11v5M24 32v5M11 24h5M32 24h5M15 15l3.5 3.5M29.5 29.5L33 33M33 15l-3.5 3.5M18.5 29.5L15 33"/></g></symbol>
+
+  <symbol id="ic-ecs" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cCompute)"/>
+    <g fill="none" stroke="#fff" stroke-width="2.2"><rect x="11" y="12" width="11" height="11" rx="1.5"/><rect x="26" y="12" width="11" height="11" rx="1.5"/>
+    <rect x="11" y="26" width="11" height="11" rx="1.5"/><rect x="26" y="26" width="11" height="11" rx="1.5"/></g></symbol>
+
+  <symbol id="ic-lambda" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cCompute)"/>
+    <path d="M14 36 L23 12 h5 l9 24 h-5.5 l-6-16 -5.5 16z" fill="#fff"/></symbol>
+
+  <symbol id="ic-bedrock" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cML)"/>
+    <g stroke="#fff" stroke-width="2.3" fill="none" stroke-linecap="round">
+    <path d="M12 17c4-2.5 8-2.5 12 0s8 2.5 12 0"/><path d="M12 24c4-2.5 8-2.5 12 0s8 2.5 12 0"/><path d="M12 31c4-2.5 8-2.5 12 0s8 2.5 12 0"/></g></symbol>
+
+  <symbol id="ic-cloudfront" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cNetwork)"/>
+    <circle cx="24" cy="24" r="11" fill="none" stroke="#fff" stroke-width="2.2"/>
+    <g stroke="#fff" stroke-width="1.9" fill="none"><ellipse cx="24" cy="24" rx="4.6" ry="11"/><path d="M13 24h22"/></g></symbol>
+
+  <symbol id="ic-waf" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cSecurity)"/>
+    <path d="M24 11l11 4v9c0 7-5 11.5-11 13-6-1.5-11-6-11-13v-9z" fill="none" stroke="#fff" stroke-width="2.2"/>
+    <path d="M13.5 20h21M24 15v22" stroke="#fff" stroke-width="1.6"/></symbol>
+
+  <symbol id="ic-cognito" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cSecurity)"/>
+    <circle cx="24" cy="19" r="5.6" fill="none" stroke="#fff" stroke-width="2.2"/>
+    <path d="M13 37c0-6.5 5-10.5 11-10.5S35 30.5 35 37" fill="none" stroke="#fff" stroke-width="2.2"/></symbol>
+
+  <symbol id="ic-apigw" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cNetwork)"/>
+    <g stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round">
+    <path d="M12 16h9l4 8-4 8h-9"/><path d="M36 16h-9l-4 8 4 8h9"/></g></symbol>
+
+  <symbol id="ic-cloudwatch" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cMgmt)"/>
+    <circle cx="24" cy="24" r="11" fill="none" stroke="#fff" stroke-width="2.2"/>
+    <path d="M24 16v8l6 4" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/></symbol>
+
+  <symbol id="ic-smus" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cML)"/>
+    <g stroke="#fff" stroke-width="2.2" fill="none"><rect x="11" y="13" width="26" height="18" rx="2.5"/><path d="M18 36h12M24 31v5"/></g>
+    <circle cx="24" cy="22" r="3.6" fill="#fff"/></symbol>
+
+  <symbol id="ic-datazone" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cAnalytics)"/>
+    <g fill="none" stroke="#fff" stroke-width="2.2"><path d="M24 11l12 6.5v13L24 37l-12-6.5v-13z"/><path d="M24 24l12-6.5M24 24v13M24 24L12 17.5"/></g></symbol>
+
+  <symbol id="ic-user" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="#4B5563"/>
+    <circle cx="24" cy="19" r="5.6" fill="none" stroke="#fff" stroke-width="2.2"/>
+    <path d="M13 37c0-6.5 5-10.5 11-10.5S35 30.5 35 37" fill="none" stroke="#fff" stroke-width="2.2"/></symbol>
+ </defs>
+</svg>
+
 <div class="wrap">
 
 <nav>
@@ -177,6 +258,205 @@
   <h2>この本の読み方</h2>
   <p class="lead">先に、この本が何をしようとしているかを説明します。ここを読めば、自分に必要な章だけ拾う判断もできます。</p>
 
+  <h3>なぜこの本があるのか — Agentic AI の 3 つの壁</h3>
+  <p>出発点は「オントロジーを勉強したい」ではありませんでした。<strong>AI に業務を任せようとすると、必ず同じ 3 つの壁にぶつかる</strong>、という実感です。</p>
+  <p>チャットで一問一答をさせるだけなら、壁はほとんどありません。しかし <strong>Agentic AI</strong> — 1 つの Agent が複数の社内システムを横断して、「参照 → 判断 → 実行」まで自分で回す姿 — を考えると、話が変わります。</p>
+  <div class="fig">
+  <p class="cap">図 0-1<span>Agentic AI の姿 — 1 つの Agent が社内システムを横断する</span></p>
+  <svg viewBox="0 0 880 400" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+    <defs>
+      <marker id="ag-db" markerWidth="9" markerHeight="9" refX="7.2" refY="3.1" orient="auto"><path d="M0,0 L7.2,3.1 L0,6.2 z" fill="#1c5b9c"/></marker>
+      <marker id="ag-list" markerWidth="9" markerHeight="9" refX="7.2" refY="3.1" orient="auto"><path d="M0,0 L7.2,3.1 L0,6.2 z" fill="#1f6f4a"/></marker>
+      <marker id="ag-yen" markerWidth="9" markerHeight="9" refX="7.2" refY="3.1" orient="auto"><path d="M0,0 L7.2,3.1 L0,6.2 z" fill="#96650a"/></marker>
+      <marker id="ag-ticket" markerWidth="9" markerHeight="9" refX="7.2" refY="3.1" orient="auto"><path d="M0,0 L7.2,3.1 L0,6.2 z" fill="#b3261e"/></marker>
+      <marker id="ag-stamp" markerWidth="9" markerHeight="9" refX="7.2" refY="3.1" orient="auto"><path d="M0,0 L7.2,3.1 L0,6.2 z" fill="#6b3fa0"/></marker>
+      <marker id="ag-loop" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b3fa0"/></marker>
+    </defs>
+    <circle cx="440" cy="206" r="126" fill="#f6f2fb" opacity=".5"/>
+    <line x1="440" y1="140" x2="440" y2="70" stroke="#1c5b9c" stroke-width="2.4" marker-end="url(#ag-db)"/>
+    <rect x="423" y="96" width="34" height="18" rx="9" fill="#fff" stroke="#1c5b9c" stroke-width="1.3"/>
+    <text x="440" y="109" text-anchor="middle" font-size="9.5" font-weight="800" fill="#0f3f6b">参照</text>
+    <line x1="496" y1="171" x2="534" y2="148" stroke="#1f6f4a" stroke-width="2.4" marker-end="url(#ag-list)"/>
+    <rect x="498" y="150" width="34" height="18" rx="9" fill="#fff" stroke="#1f6f4a" stroke-width="1.3"/>
+    <text x="515" y="163" text-anchor="middle" font-size="9.5" font-weight="800" fill="#155c3c">更新</text>
+    <line x1="486" y1="253" x2="527" y2="296" stroke="#96650a" stroke-width="2.4" marker-end="url(#ag-yen)"/>
+    <rect x="489" y="266" width="34" height="18" rx="9" fill="#fff" stroke="#96650a" stroke-width="1.3"/>
+    <text x="506" y="278" text-anchor="middle" font-size="9.5" font-weight="800" fill="#7a4a1c">計上</text>
+    <line x1="394" y1="253" x2="353" y2="296" stroke="#b3261e" stroke-width="2.4" marker-end="url(#ag-ticket)"/>
+    <rect x="357" y="266" width="34" height="18" rx="9" fill="#fff" stroke="#b3261e" stroke-width="1.3"/>
+    <text x="374" y="278" text-anchor="middle" font-size="9.5" font-weight="800" fill="#8c1e18">対応</text>
+    <line x1="384" y1="171" x2="346" y2="148" stroke="#6b3fa0" stroke-width="2.4" marker-end="url(#ag-stamp)"/>
+    <rect x="348" y="150" width="34" height="18" rx="9" fill="#fff" stroke="#6b3fa0" stroke-width="1.3"/>
+    <text x="365" y="163" text-anchor="middle" font-size="9.5" font-weight="800" fill="#4c1d95">申請</text>
+    <circle cx="440" cy="206" r="60" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="3"/>
+    <circle cx="440" cy="206" r="52" fill="none" stroke="#c4b5fd" stroke-width="1" stroke-dasharray="3 4"/>
+    <g transform="translate(440,180)" stroke="#6b3fa0" stroke-width="1.5" fill="none" stroke-linecap="round">
+      <rect x="-6" y="-6" width="12" height="12" rx="2.2"/><rect x="-2.2" y="-2.2" width="4.4" height="4.4" rx="1"/>
+      <path d="M-6,-2.8 H-9M-6,2.8 H-9M6,-2.8 H9M6,2.8 H9"/><path d="M-2.8,-6 V-9M2.8,-6 V-9M-2.8,6 V9M2.8,6 V9"/></g>
+    <text x="440" y="216" text-anchor="middle" font-size="14" font-weight="900" fill="#4c1d95">AI Agent</text>
+    <text x="440" y="232" text-anchor="middle" font-size="8.5" fill="#6b3fa0">参照 → 判断 → 実行 を</text>
+    <text x="440" y="244" text-anchor="middle" font-size="8.5" font-weight="800" fill="#4c1d95">自分で回す</text>
+    <path d="M 394 280 A 80 80 0 0 0 486 280" fill="none" stroke="#6b3fa0" stroke-width="2.2" stroke-dasharray="6 4" marker-end="url(#ag-loop)"/>
+    <rect x="400" y="286" width="80" height="20" rx="10" fill="#fff" stroke="#6b3fa0" stroke-width="1.3"/>
+    <text x="440" y="300" text-anchor="middle" font-size="10" font-weight="800" fill="#4c1d95">自律ループ</text>
+    <rect x="352" y="7" width="176" height="58" rx="10" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2.2"/>
+    <circle cx="379" cy="36" r="14" fill="#fff" stroke="#1c5b9c" stroke-width="1.7"/>
+    <g transform="translate(379,36)" stroke="#1c5b9c" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="0" cy="-6" rx="7.5" ry="2.9"/><path d="M-7.5,-6 V6 a7.5,2.9 0 0 0 15,0 V-6"/><path d="M-7.5,0 a7.5,2.9 0 0 0 15,0"/></g>
+    <text x="401" y="33" font-size="11.5" font-weight="800" fill="#0f3f6b">RDB / 業務データ</text>
+    <text x="401" y="49" font-size="9" fill="#1c5b9c">受発注・顧客 DB 等</text>
+    <rect x="496" y="87" width="176" height="58" rx="10" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2.2"/>
+    <circle cx="523" cy="116" r="14" fill="#fff" stroke="#1f6f4a" stroke-width="1.7"/>
+    <g transform="translate(523,116)" stroke="#1f6f4a" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="-6.5" y="-7.5" width="13" height="15" rx="1.6"/><path d="M-3.5,-3.5 H3.5M-3.5,0 H3.5M-3.5,3.5 H1"/></g>
+    <text x="545" y="113" font-size="11.5" font-weight="800" fill="#155c3c">案件管理システム</text>
+    <text x="545" y="129" font-size="9" fill="#1f6f4a">案件・商談管理</text>
+    <rect x="470" y="299" width="176" height="58" rx="10" fill="#fdf8ec" stroke="#96650a" stroke-width="2.2"/>
+    <circle cx="497" cy="328" r="14" fill="#fff" stroke="#96650a" stroke-width="1.7"/>
+    <g transform="translate(497,328)" stroke="#96650a" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M-5,-6.5 L0,-0.5 L5,-6.5"/><path d="M0,-0.5 V7"/><path d="M-4.5,1.5 H4.5M-4.5,4.5 H4.5"/></g>
+    <text x="519" y="325" font-size="11.5" font-weight="800" fill="#7a4a1c">経理システム</text>
+    <text x="519" y="341" font-size="9" fill="#96650a">請求・経費精算</text>
+    <rect x="234" y="299" width="176" height="58" rx="10" fill="#fdf3f2" stroke="#b3261e" stroke-width="2.2"/>
+    <circle cx="261" cy="328" r="14" fill="#fff" stroke="#b3261e" stroke-width="1.7"/>
+    <g transform="translate(261,328)" stroke="#b3261e" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M-8,-5 H8 V-1.6 a1.6,1.6 0 0 0 0,3.2 V5 H-8 V1.6 a1.6,1.6 0 0 0 0,-3.2 Z"/><path d="M-2.5,-5 V5"/></g>
+    <text x="283" y="325" font-size="11.5" font-weight="800" fill="#8c1e18">チケット管理</text>
+    <text x="283" y="341" font-size="9" fill="#b3261e">問合せ・障害対応</text>
+    <rect x="208" y="87" width="176" height="58" rx="10" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2.2"/>
+    <circle cx="235" cy="116" r="14" fill="#fff" stroke="#6b3fa0" stroke-width="1.7"/>
+    <g transform="translate(235,116)" stroke="#6b3fa0" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M-7.5,-2.5 L-1.5,3.5 L7.5,-5.5"/><path d="M-8,7.5 H8"/></g>
+    <text x="257" y="113" font-size="11.5" font-weight="800" fill="#4c1d95">承認ワークフロー</text>
+    <text x="257" y="129" font-size="9" fill="#6b3fa0">申請・決裁</text>
+    <path d="M 534,36 H 556" stroke="#1c5b9c" stroke-width="1.8"/>
+    <text x="562" y="40" font-size="10.5" font-weight="900" fill="#1c5b9c">本書はここがメイン</text>
+  </svg>
+  <p class="fc"><strong>Agentic AI</strong> = 1 つの Agent が複数の社内システムを横断し、「参照 → 判断 → 実行」まで<strong>自律で完結させる</strong>姿</p>
+</div>
+  <p>この図の Agent は、業務データを<strong>参照</strong>し、案件管理を<strong>更新</strong>し、経理に<strong>計上</strong>し、チケットに<strong>対応</strong>し、承認を<strong>申請</strong>します。人間が画面を見て確認する手順は、どこにもありません。ここで出てくる課題は、大きく 3 つに分かれます。</p>
+  <div class="fig">
+  <p class="cap">図 0-2<span>Agentic AI の前に立つ 3 つの壁 — 順番はなく、3 つとも要る</span></p>
+  <svg viewBox="0 0 880 492" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+    <circle cx="440" cy="116" r="110" fill="#1c5b9c" opacity="0.14"/>
+    <circle cx="379" cy="221" r="110" fill="#5b6472" opacity="0.09"/>
+    <circle cx="501" cy="221" r="110" fill="#5b6472" opacity="0.09"/>
+    <circle cx="440" cy="116" r="110" fill="none" stroke="#1c5b9c" stroke-width="2.8"/>
+    <circle cx="379" cy="221" r="110" fill="none" stroke="#5b6472" stroke-width="1.8"/>
+    <circle cx="501" cy="221" r="110" fill="none" stroke="#5b6472" stroke-width="1.8"/>
+    <circle cx="440" cy="52" r="18" fill="#fff" stroke="#1c5b9c" stroke-width="2.2"/>
+    <g transform="translate(440,52)" stroke="#1c5b9c" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5,-8 H8 V-1.5 L-1.5,8 L-8,1.5 Z"/><circle cx="4.6" cy="-4.6" r="1.7"/></g>
+    <text x="440" y="92" text-anchor="middle" font-size="12.5" font-weight="900" fill="#0f3f6b">① データの意味と操作の設計</text>
+    <rect x="378" y="101" width="124" height="22" rx="11" fill="#fff" stroke="#1c5b9c" stroke-width="1.6"/>
+    <text x="440" y="116" text-anchor="middle" font-size="9.5" font-weight="900" fill="#1c5b9c">本書はここがメイン</text>
+    <circle cx="340" cy="246" r="18" fill="#fff" stroke="#5b6472" stroke-width="1.8"/>
+    <g transform="translate(340,246)" stroke="#5b6472" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M0,-8 L7,-5 V1.5 C7,5.6 0,8.6 0,8.6 C0,8.6 -7,5.6 -7,1.5 V-5 Z"/><path d="M-3.2,0 L-1,2.3 L3.4,-2.3"/></g>
+    <text x="340" y="286" text-anchor="middle" font-size="12.5" font-weight="900" fill="#3d4654">② ガバナンス</text>
+    <rect x="278" y="295" width="124" height="22" rx="11" fill="#fff" stroke="#5b6472" stroke-width="1.6"/>
+    <text x="340" y="310" text-anchor="middle" font-size="9.5" font-weight="900" fill="#5b6472">本書の範囲外</text>
+    <circle cx="540" cy="246" r="18" fill="#fff" stroke="#5b6472" stroke-width="1.8"/>
+    <g transform="translate(540,246)" stroke="#5b6472" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="-8" y="-7.5" width="16" height="10" rx="1.6"/><path d="M-4,2.5 V5.5M4,2.5 V5.5M-7,7 H7"/><path d="M-5,-4.5 H5"/></g>
+    <text x="540" y="286" text-anchor="middle" font-size="12.5" font-weight="900" fill="#3d4654">③ AI Ready 環境</text>
+    <rect x="478" y="295" width="124" height="22" rx="11" fill="#fff" stroke="#5b6472" stroke-width="1.6"/>
+    <text x="540" y="310" text-anchor="middle" font-size="9.5" font-weight="900" fill="#5b6472">本書の範囲外</text>
+    <rect x="368" y="160" width="144" height="52" rx="10" fill="#fff" stroke="#1f6f4a" stroke-width="2.6"/>
+    <text x="440" y="181" text-anchor="middle" font-size="11" font-weight="900" fill="#155c3c">業務で本当に</text>
+    <text x="440" y="199" text-anchor="middle" font-size="11" font-weight="900" fill="#155c3c">使える Agentic AI</text>
+    <text x="440" y="230" text-anchor="middle" font-size="9" fill="#6b7480">= 3 つが同時に満たされた状態</text>
+    <rect x="20" y="350" width="268" height="124" rx="9" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2.4"/>
+    <path d="M20,359 a9,9 0 0 1 9,-9 H279 a9,9 0 0 1 9,9 V384 H20 Z" fill="#1c5b9c"/>
+    <text x="34" y="374" font-size="13" font-weight="900" fill="#fff">①</text>
+    <text x="54" y="374" font-size="12" font-weight="800" fill="#fff">データの意味と操作の設計</text>
+    <g transform="translate(266,367)" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5,-8 H8 V-1.5 L-1.5,8 L-8,1.5 Z"/><circle cx="4.6" cy="-4.6" r="1.7"/></g>
+    <text x="36" y="406" font-size="9.5" fill="#0f3f6b">Agent に業務データを読み書きさせる以上、</text>
+    <text x="36" y="421" font-size="9.5" fill="#0f3f6b">「何を」「どう安全に」操作させるかを先に</text>
+    <text x="36" y="436" font-size="9.5" fill="#0f3f6b">決めておく必要がある。素の Text-to-SQL では</text>
+    <text x="36" y="451" font-size="9.5" fill="#0f3f6b">曖昧さと誤操作のリスクが残る。</text>
+    <rect x="306" y="350" width="268" height="124" rx="9" fill="#f7f8fa" stroke="#5b6472" stroke-width="1.8"/>
+    <path d="M306,359 a9,9 0 0 1 9,-9 H565 a9,9 0 0 1 9,9 V384 H306 Z" fill="#5b6472"/>
+    <text x="320" y="374" font-size="13" font-weight="900" fill="#fff">②</text>
+    <text x="340" y="374" font-size="12" font-weight="800" fill="#fff">ガバナンス</text>
+    <g transform="translate(552,367)" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M0,-8 L7,-5 V1.5 C7,5.6 0,8.6 0,8.6 C0,8.6 -7,5.6 -7,1.5 V-5 Z"/><path d="M-3.2,0 L-1,2.3 L3.4,-2.3"/></g>
+    <text x="322" y="406" font-size="9.5" fill="#3d4654">誰が Agent の実行を許可するか。権限管理・</text>
+    <text x="322" y="421" font-size="9.5" fill="#3d4654">監査証跡・コンプライアンス。Agent の行動を</text>
+    <text x="322" y="436" font-size="9.5" fill="#3d4654">組織としてどう統制するかという課題。</text>
+    <rect x="592" y="350" width="268" height="124" rx="9" fill="#f7f8fa" stroke="#5b6472" stroke-width="1.8"/>
+    <path d="M592,359 a9,9 0 0 1 9,-9 H851 a9,9 0 0 1 9,9 V384 H592 Z" fill="#5b6472"/>
+    <text x="606" y="374" font-size="13" font-weight="900" fill="#fff">③</text>
+    <text x="626" y="374" font-size="12" font-weight="800" fill="#fff">AI Ready 環境</text>
+    <g transform="translate(838,367)" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="-8" y="-7.5" width="16" height="10" rx="1.6"/><path d="M-4,2.5 V5.5M4,2.5 V5.5M-7,7 H7"/><path d="M-5,-4.5 H5"/></g>
+    <text x="608" y="406" font-size="9.5" fill="#3d4654">そもそも社内システムが API 化されているか。</text>
+    <text x="608" y="421" font-size="9.5" fill="#3d4654">レガシーとどう繋ぐか。Agent が動ける土台そ</text>
+    <text x="608" y="436" font-size="9.5" fill="#3d4654">のものの整備。</text>
+  </svg>
+  <p class="fc">3 つは<strong>並列</strong>で、片付ける順番が決まっているわけではありません。それでも ① を先にやる理由は、②③ を整えても<strong>意味が曖昧なままでは Agent が間違え続ける</strong>から</p>
+</div>
+  <div class="box key">
+    <div class="bh">本書はここがメイン — ①、しかもその一部</div>
+    <p>正確には ① のうち<strong>「意味の設計」</strong>です。Agent が正確かつ安全に業務データを扱うために、<strong>社内の言葉の意味を、機械が読める形でどう書くか</strong>。これが<strong>オントロジー</strong>と呼ばれているものです。なお業界では、この層をまとめて <strong>セマンティックレイヤー</strong>と呼びます（dbt Semantic Layer・Cube・Looker の LookML・Palantir の Ontology が、いずれもこの言葉で説明されます）。<strong>オントロジーは、それを RDF で実装する流派</strong>だと考えてください。</p>
+    
+  </div>
+
+  <h3>「オントロジー」という言葉の広さ — 本書が扱うのはどこか</h3>
+  <p>もう 1 つ先に片付けます。<strong>「オントロジー」という言葉は、指しているものがかなり広い</strong>ということです。哲学の存在論から、機械が読める公理、RDB のオブジェクト化、さらには「自分で業務を回す基盤」まで、同じ 1 語で呼ばれています。話が噛み合わなくなる前に、本書がどこを扱うのかをはっきりさせておきます。</p>
+  <div class="fig">
+  <p class="cap">図 0-3<span>「オントロジー」が指しうる範囲 — 本書が正面から扱うのは C と D</span></p>
+  <svg viewBox="0 0 880 296" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+    <defs><marker id="sp-a" markerWidth="9" markerHeight="9" refX="7.2" refY="3.1" orient="auto"><path d="M0,0 L7.2,3.1 L0,6.2 z" fill="#aab1bb"/></marker></defs>
+    <text x="20" y="24" font-size="10" font-weight="800" fill="#6b7480">静的 — 意味を「定義する」</text>
+    <text x="860" y="24" text-anchor="end" font-size="10" font-weight="800" fill="#6b7480">動的 — 定義に沿って「自ら動く」</text>
+    <line x1="20" y1="36" x2="856" y2="36" stroke="#dfe3e9" stroke-width="3" marker-end="url(#sp-a)"/>
+    <rect x="20" y="52" width="160" height="118" rx="9" fill="#f7f8fa" stroke="#5b6472" stroke-width="1.8"/>
+    <circle cx="100" cy="78" r="14" fill="#5b6472"/>
+    <text x="100" y="83" text-anchor="middle" font-size="14" font-weight="900" fill="#fff">A</text>
+    <text x="100" y="110" text-anchor="middle" font-size="11" font-weight="900" fill="#3d4654">哲学の存在論</text>
+    <text x="100" y="130" text-anchor="middle" font-size="9" fill="#5b6472">「何が存在するか」を問う</text>
+    <text x="100" y="145" text-anchor="middle" font-size="9" fill="#5b6472">Ontology の語源</text>
+    <rect x="190" y="52" width="160" height="118" rx="9" fill="#f7f8fa" stroke="#5b6472" stroke-width="1.8"/>
+    <circle cx="270" cy="78" r="14" fill="#5b6472"/>
+    <text x="270" y="83" text-anchor="middle" font-size="14" font-weight="900" fill="#fff">B</text>
+    <text x="270" y="110" text-anchor="middle" font-size="11" font-weight="900" fill="#3d4654">語彙・分類体系</text>
+    <text x="270" y="130" text-anchor="middle" font-size="9" fill="#5b6472">Taxonomy・シソーラス</text>
+    <text x="270" y="145" text-anchor="middle" font-size="9" fill="#5b6472">SNOMED CT・FIBO</text>
+    <rect x="360" y="52" width="160" height="118" rx="9" fill="#fdf8ec" stroke="#96650a" stroke-width="2.8"/>
+    <circle cx="440" cy="78" r="14" fill="#96650a"/>
+    <text x="440" y="83" text-anchor="middle" font-size="14" font-weight="900" fill="#fff">C</text>
+    <text x="440" y="110" text-anchor="middle" font-size="11" font-weight="900" fill="#7a4a1c">形式意味論</text>
+    <text x="440" y="130" text-anchor="middle" font-size="9" fill="#96650a">RDF・OWL・SHACL</text>
+    <text x="440" y="145" text-anchor="middle" font-size="9" fill="#96650a">機械可読な公理と制約</text>
+    <rect x="530" y="52" width="160" height="118" rx="9" fill="#fdf8ec" stroke="#96650a" stroke-width="2.8"/>
+    <circle cx="610" cy="78" r="14" fill="#96650a"/>
+    <text x="610" y="83" text-anchor="middle" font-size="14" font-weight="900" fill="#fff">D</text>
+    <text x="610" y="110" text-anchor="middle" font-size="11" font-weight="900" fill="#7a4a1c">RDB のオブジェクト化</text>
+    <text x="610" y="130" text-anchor="middle" font-size="9" fill="#96650a">写像・射影 → Object</text>
+    <text x="610" y="145" text-anchor="middle" font-size="9" fill="#96650a">Palantir・AWS COA</text>
+    <rect x="700" y="52" width="160" height="118" rx="9" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2.2" stroke-dasharray="7 4"/>
+    <circle cx="780" cy="78" r="14" fill="#6b3fa0"/>
+    <text x="780" y="83" text-anchor="middle" font-size="14" font-weight="900" fill="#fff">E</text>
+    <text x="780" y="110" text-anchor="middle" font-size="11" font-weight="900" fill="#4c1d95">自律実行の基盤</text>
+    <text x="780" y="130" text-anchor="middle" font-size="9" fill="#6b3fa0">行動 + 権限 + 手順</text>
+    <text x="780" y="145" text-anchor="middle" font-size="9" fill="#6b3fa0">見積→交渉→申請→決裁</text>
+    <path d="M360,186 V178 H690 V186" fill="none" stroke="#96650a" stroke-width="2.4"/>
+    <text x="525" y="208" text-anchor="middle" font-size="12" font-weight="900" fill="#7a4a1c">本書が正面から扱う範囲</text>
+    <text x="525" y="225" text-anchor="middle" font-size="9.5" fill="#96650a">C = 第 3〜9 章 (手で書く) ／ D = 第 10〜12 章 (VKG・COA)</text>
+    <path d="M780,186 V176" fill="none" stroke="#6b3fa0" stroke-width="2" stroke-dasharray="4 3"/>
+    <rect x="708" y="192" width="144" height="24" rx="12" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
+    <text x="780" y="208" text-anchor="middle" font-size="10.5" font-weight="900" fill="#4c1d95">次の競争の土俵</text>
+    <text x="780" y="232" text-anchor="middle" font-size="9.5" fill="#6b3fa0">各社のサービスはここへ向かう</text>
+    <rect x="20" y="246" width="836" height="42" rx="9" fill="#fff" stroke="#6b7480" stroke-width="1.6" stroke-dasharray="7 4"/>
+    <text x="44" y="265" font-size="10.5" fill="#3d4654">同じ「オントロジー」でも、A と B は<tspan font-weight="800">人間が読む語彙</tspan>、C は<tspan font-weight="800">機械が計算に使える公理</tspan>、D は<tspan font-weight="800">既存の RDB に被せる意味の層</tspan>、E は<tspan font-weight="800">Agent が業務を回す土台</tspan>。</text>
+    <text x="44" y="281" font-size="10.5" fill="#3d4654">噛み合わない議論のほとんどは、<tspan font-weight="900" fill="#b3261e">お互いが別の段階を指している</tspan>ことが原因です。</text>
+  </svg>
+  <p class="fc">いまの <strong>Palantir (Object OS)</strong> と <strong>AWS COA (Virtual KG)</strong> が「オントロジー」と呼んでいるのは、ほぼ <strong>D</strong> の意味です</p>
+</div>
+  <p>左に行くほど<strong>意味を静的に定義する</strong>側、右に行くほど<strong>定義に沿って自律的に動く</strong>側です。本書が正面から扱うのは <strong>C</strong> と <strong>D</strong> です。</p>
+  <ul>
+    <li><strong>C 形式意味論</strong> — RDF・OWL・SHACL。第 3〜9 章で、道具を 1 つずつ実際に手で書きます</li>
+    <li><strong>D RDB のオブジェクト化</strong> — 第 10〜12 章。バラバラのテーブルを業務の言葉へ<strong>写像</strong>し、オブジェクトとして<strong>射影</strong>して、人と LLM が同じ語彙でデータに触れられるようにする層です。<strong>DB は動かしません。</strong>上に意味の層を被せるだけです</li>
+  </ul>
+  <p>この 2 つは別物ではなく、<strong>C が土台で D がその応用</strong>です。だから本書は C を先に手で書き、そのうえで D を見ます。</p>
+  <div class="box note">
+    <div class="bh">E — ここが次の競争の土俵になる</div>
+    <p><strong>E</strong> は、オブジェクト定義の上に<strong>行動 (Action)・権限・手順</strong>が乗り、Agent がその上で自分で判断して回す世界です。たとえば調達業務なら「見積 → 交渉 → 説明 → 申請 → 決裁」という流れを、人が繋ぐのではなく<strong>オントロジー側に「業務の型」として書いてあるから Agent が繋げる</strong>。この言葉の射程は、そこまで伸びていくはずです。</p>
+    <p style="margin-top:12px">そして<strong>各社のオントロジーサービスは、明らかにこの方向へ進んでいます</strong>。この「見積 → 交渉 → 説明 → 申請 → 決裁」という流れは、まさに<strong>次世代の Ontology-grounded Agent の典型ユースケース</strong>です。データを引いて答えるだけでなく、<strong>業務の型に沿って Agent が一連の流れを繋いでいく</strong>。<strong>今後はここが競争の土俵になります。</strong>そして C と D の「意味の層」は、その土俵に上がるための<strong>前提条件</strong>です。意味が曖昧なままでは、Agent に業務の流れを任せられません。</p>
+    <p style="margin-top:12px">問題は、<strong>E をそのまま見せられる製品が、まだ無い</strong>ことです。AWS COA が扱うのは D までで、行動や手順は入っていません（第 12 章で公開ソースを読んで確認します）。Palantir は定義に <strong>actions</strong> を含めていて E に踏み込んでいますが（第 15 章）、中を分解して「なぜ Agent が次の一手を選べたのか」まで見せられるものではありません。</p>
+  </div>
+
   <h3>この本が答える問い</h3>
   <p>技術用語を並べた解説は世の中にたくさんあります。しかし読んでも「で、結局どれを使うと何が嬉しいのか」が残らないことが多い。原因は、<strong>道具の説明が、解こうとしている問題から切り離されている</strong>ことだと思います。</p>
   <p>そこでこの本は、最初に<strong>たった 1 つの実務的な失敗</strong>を提示します。そして各章で道具を 1 つずつ導入し、<strong>その道具がこの失敗のどの部分を解くのか</strong>を毎回確認します。最終章まで来ると、次の問いに自分の言葉で答えられるようになります。</p>
@@ -193,7 +473,7 @@
   <div class="box def">
     <div class="bh">題材</div>
     <p style="font-size:17px;font-weight:700;color:var(--ink);margin-bottom:10px">「先月のアクティブな優良顧客の売上をレポートにして」</p>
-    <p>どこにでもある依頼です。しかしこの一文には、<strong>社内の誰かの頭の中にしか無い定義</strong>が最低 4 つ埋まっています。この本は、その 4 つを機械が読める形に書き下していく過程そのものです。</p>
+    <p>どこにでもある依頼です。AI に投げるなら、そのまま<strong>プロンプト</strong>になります。しかしこの一文には、<strong>社内の誰かの頭の中にしか無い定義</strong>が最低 4 つ埋まっています。この本は、その 4 つを機械が読める形に書き下していく過程そのものです。</p>
   </div>
 
   <h3>この本に出てくる 3 人の登場人物</h3>
@@ -213,7 +493,7 @@
   </div>
 
   <div class="fig">
-    <p class="cap">図 0-1<span>3 人の登場人物 — 何が読めて、何が得意か</span></p>
+    <p class="cap">図 0-4<span>3 人の登場人物 — 何が読めて、何が得意か</span></p>
     <svg viewBox="0 0 880 330" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
       <rect x="16" y="16" width="276" height="298" rx="9" fill="#faf5ee" stroke="#8b5a2b" stroke-width="2"/>
       <rect x="302" y="16" width="276" height="298" rx="9" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
@@ -271,11 +551,11 @@
     <p class="fc">3 者のうち <strong>「機械」だけが文章を読めない</strong>。ここが本書全体の出発点になる</p>
   </div>
 
-  <h4>ついでに整理 — LLM と AI Agent は同じものではない</h4>
+  <h4>用語を 1 つ片付ける — LLM と AI Agent は同じものではない</h4>
   <p>ここで用語を 1 つ片付けておきます。この 2 つは混同されがちですが、はっきり違います。<strong>AI Agent とは「LLM と機械を組み合わせたもの」</strong>です。</p>
 
   <div class="fig">
-    <p class="cap">図 0-2<span>LLM 単体 と AI Agent の違い</span></p>
+    <p class="cap">図 0-5<span>LLM 単体 と AI Agent の違い</span></p>
     <svg viewBox="0 0 880 376" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
       <defs>
         <marker id="ag1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#6b3fa0"/></marker>
@@ -363,23 +643,6 @@
     </tbody>
   </table>
 
-  <div class="box note">
-    <div class="bh">本書がなぜ Agent の話に行き着くのか</div>
-    <p>第 2 章で書く SQL は、<strong>文法的に正しく、実行も通り、もっともらしい数字を返します</strong>。間違っていることを示す手がかりが、どこにも出ません。だから問いはこうなります —<strong>この間違いは、誰が見つけるのか。</strong></p>
-    <table style="margin-top:12px">
-      <thead><tr><th style="width:15%">候補</th><th style="width:19%">見つけられるか</th><th style="width:66%">理由</th></tr></thead>
-      <tbody>
-        <tr><td><strong>人間</strong></td><td class="n">ほぼ無理</td><td>全件は追えない。そもそも「どちらの数字が正しいか」は<strong>社内の定義を知らないと判断できない</strong></td></tr>
-        <tr><td><strong>LLM</strong></td><td class="n">できない</td><td>自分が推測で埋めた箇所を「推測した」と認識できない。同じ質問でも違う答えを返しうる</td></tr>
-        <tr><td><strong>機械</strong></td><td class="y">できる</td><td>ただし<strong>文章は読めない</strong>。ルールが機械の読める形で書かれていなければ、<strong>検証そのものが成立しない</strong></td></tr>
-      </tbody>
-    </table>
-    <p style="margin-top:12px">これが本書の全体像です。<strong>間違いを減らすために、機械に検証させる。機械に検証させるために、定義を機械が読めるデータとして書く。</strong>順番はこれだけです。</p>
-    <p style="margin-top:10px">では Agent はどこで関わるのか。<strong>書き込むかどうかではありません。出力が人間の目を通らずに、そのまま次の処理へ進むから</strong>です。人が画面を見て「あれ?」と思う機会が、構造として存在しません。だから検証は<strong>あらかじめ機械側に置いておくしかない</strong>。本書で SHACL や推論器を扱うのは、そのためです。</p>
-    <p style="margin-top:10px"><strong>補足:</strong> 「Agent = 必ず書き込む」ではありません。第 12 章で見る <strong>AWS COA は Read-only</strong> です。それでも検証の必要性は変わりません。<strong>止める場所が「書き込みの直前」から「答えを返す直前」に移るだけ</strong>です。</p>
-  </div>
-
-
   <h4>「機械が読めない」と何が困るのか</h4>
   <p>第 1 章で <code>COMMENT ON COLUMN customers.member_rank IS '会員ランク'</code> を扱います。この一文を 3 者に渡すと、こうなります。</p>
   <table>
@@ -400,70 +663,31 @@
     <p style="margin-top:10px">なぜそこまでするのか。<strong>LLM は「同じ答えを返す保証が無い」</strong>からです。ルールが本当に適用されたかを後から確かめたいなら、<strong>検証できる誰か</strong>が必要で、それが「機械」です。</p>
   </div>
 
-  <h3>章の構成と依存関係</h3>
-  <div class="fig">
-    <p class="cap">図 0-3<span>章の依存関係 — どこから読めるか</span></p>
-    <svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
-      <defs><marker id="t0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#a97142"/></marker></defs>
-      <rect x="14" y="112" width="128" height="66" rx="7" fill="#fdf3f2" stroke="#b3261e" stroke-width="1.7"/>
-      <text x="78" y="138" text-anchor="middle" font-size="12" font-weight="800" fill="#8c1e18">第 1 部</text>
-      <text x="78" y="156" text-anchor="middle" font-size="10.5" fill="#b3261e">1〜2 章</text>
-      <text x="78" y="171" text-anchor="middle" font-size="10" fill="#b3261e">問題を掴む</text>
-
-      <rect x="188" y="34" width="128" height="60" rx="7" fill="#faf5ee" stroke="#8b5a2b" stroke-width="1.7"/>
-      <text x="252" y="58" text-anchor="middle" font-size="11.5" font-weight="800" fill="#7a4a1c">3〜4 章</text>
-      <text x="252" y="76" text-anchor="middle" font-size="10" fill="#8b5a2b">トリプルと Turtle</text>
-      <rect x="188" y="110" width="128" height="60" rx="7" fill="#faf5ee" stroke="#8b5a2b" stroke-width="1.7"/>
-      <text x="252" y="134" text-anchor="middle" font-size="11.5" font-weight="800" fill="#7a4a1c">5 章</text>
-      <text x="252" y="152" text-anchor="middle" font-size="10" fill="#8b5a2b">RDFS (ラベルと関係)</text>
-      <rect x="188" y="186" width="128" height="60" rx="7" fill="#faf5ee" stroke="#8b5a2b" stroke-width="1.7"/>
-      <text x="252" y="210" text-anchor="middle" font-size="11.5" font-weight="800" fill="#7a4a1c">6 章</text>
-      <text x="252" y="228" text-anchor="middle" font-size="10" fill="#8b5a2b">OWL (型とルール)</text>
-
-      <rect x="362" y="34" width="128" height="60" rx="7" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="1.7"/>
-      <text x="426" y="58" text-anchor="middle" font-size="11.5" font-weight="800" fill="#154a80">7 章</text>
-      <text x="426" y="76" text-anchor="middle" font-size="10" fill="#1c5b9c">SPARQL (引き出す)</text>
-      <rect x="362" y="110" width="128" height="60" rx="7" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.7"/>
-      <text x="426" y="134" text-anchor="middle" font-size="11.5" font-weight="800" fill="#175539">8 章</text>
-      <text x="426" y="152" text-anchor="middle" font-size="10" fill="#1f6f4a">SHACL (守らせる)</text>
-      <rect x="362" y="186" width="128" height="60" rx="7" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="1.7"/>
-      <text x="426" y="210" text-anchor="middle" font-size="11.5" font-weight="800" fill="#553180">9 章</text>
-      <text x="426" y="228" text-anchor="middle" font-size="10" fill="#6b3fa0">HermiT (推論する)</text>
-
-      <rect x="536" y="110" width="140" height="66" rx="7" fill="#fdf8ec" stroke="#96650a" stroke-width="1.7"/>
-      <text x="606" y="136" text-anchor="middle" font-size="11.5" font-weight="800" fill="#7a5208">10〜11 章</text>
-      <text x="606" y="154" text-anchor="middle" font-size="10" fill="#96650a">スタックと VKG</text>
-      <text x="606" y="169" text-anchor="middle" font-size="10" fill="#96650a">(実装の話)</text>
-
-      <rect x="722" y="98" width="164" height="90" rx="7" fill="#242b36" stroke="#14181f" stroke-width="1.7"/>
-      <text x="804" y="126" text-anchor="middle" font-size="12.5" font-weight="800" fill="#fff">12〜13 章</text>
-      <text x="804" y="146" text-anchor="middle" font-size="10.5" fill="#d9d3c9">AWS COA は何を</text>
-      <text x="804" y="161" text-anchor="middle" font-size="10.5" fill="#d9d3c9">実装したのか</text>
-      <text x="804" y="178" text-anchor="middle" font-size="10" fill="#b8b0a4">+ 判断のために</text>
-
-      <g stroke="#a97142" stroke-width="1.8" marker-end="url(#t0)" fill="none">
-        <path d="M146 138 L172 68"/><path d="M146 145 L182 140"/><path d="M146 152 L172 212"/>
-        <path d="M320 64 L356 64"/><path d="M320 140 L356 140"/><path d="M320 216 L356 216"/>
-        <path d="M252 98 L252 106"/><path d="M252 174 L252 182"/>
-        <path d="M494 64 L520 130"/><path d="M494 140 L530 142"/><path d="M494 216 L520 152"/>
-        <path d="M680 143 L716 143"/>
-      </g>
-      <text x="450" y="284" text-anchor="middle" font-size="11" fill="#6b7480">3〜4 章 (Turtle) だけは飛ばせません。他はすべてこの記法の上に建っています</text>
-    </svg>
-    <p class="fc">最短経路は <strong>1 → 3 → 4 → 5 → 12</strong>。推論や制約に興味があれば 6・8・9 章へ</p>
-  </div>
-
-  <div class="box note">
-    <div class="bh">表記について</div>
-    <p><span class="t">用語の初出</span>はこの色で示します。コードは <code>この書体</code>。実行可能なコード例には「リスト n-m」の番号を付けます。<strong>コラム</strong>は本筋から外れた補足なので、急ぐときは飛ばして構いません。</p>
-  </div>
+  <h3>章の構成</h3>
+  <p>本書は <strong>6 つの部</strong>に分かれます。</p>
+  <table>
+    <thead><tr><th style="width:26%">部</th><th style="width:11%">章</th><th style="width:63%">この部でやること</th></tr></thead>
+    <tbody>
+      <tr><td><strong>第 0 部 — 導入</strong></td><td>0</td><td>いま読んでいるところ。何を扱い、何を扱わないかを決める</td></tr>
+      <tr><td><strong>第 1 部 — なぜ意味を書くのか</strong></td><td>1〜2</td><td>題材のデータを机に広げ、<strong>実際に事故を起こします</strong>。以降の全章は、この 1 つの事故を直していく作業です</td></tr>
+      <tr><td><strong>第 2 部 — 意味を書く道具</strong></td><td>3〜9</td><td>トリプル・Turtle・RDFS・OWL・SPARQL・SHACL・推論器。<strong>製品を使わず、すべて手で書きます</strong></td></tr>
+      <tr><td><strong>第 3 部 — 実際に動かす</strong></td><td>10〜12</td><td>手で書いた道具を製品に載せます。4 層のスタック → VKG（RDB を動かさない）→ AWS COA の公開ソース実測</td></tr>
+      <tr><td><strong>第 4 部 — 判断のために</strong></td><td>13</td><td>どこまで効いて、どこから効かないか。<strong>導入するかどうかを決める材料</strong></td></tr>
+      <tr><td><strong>第 5 部 — デモ</strong></td><td>14〜16</td><td>AWS COA / Palantir Foundry / Minecraft の 3 本。図 0-3 の <strong>D</strong> と、その先の <strong>E</strong> を実物で見ます</td></tr>
+      <tr><td><strong>付録</strong></td><td>A・B</td><td>用語集と記法チートシート。読みながら引くためのもの</td></tr>
+    </tbody>
+  </table>
 
   <div class="sum">
     <div class="bh">第 0 章のまとめ</div>
     <ul>
+      <li>Agentic AI には <strong>3 つの壁</strong>がある。本書はそのうち <strong>① 意味の設計</strong> — 業界の言葉で<strong>セマンティックレイヤー</strong> — がメイン</li>
+      <li>「オントロジー」は <strong>A〜E</strong> と幅がある言葉。本書が正面から扱うのは <strong>C (RDF・OWL・SHACL)</strong> と <strong>D (RDB のオブジェクト化)</strong></li>
+      <li><strong>E</strong> (行動・権限・手順まで乗る段階) は今後の<strong>競争の土俵</strong>。C と D はそこに上がる前提条件</li>
       <li>この本は道具の羅列ではなく、<strong>1 つの失敗を解いていく順序</strong>で構成されている</li>
       <li>扱う依頼は「先月のアクティブな優良顧客の売上をレポートにして」</li>
-      <li>3〜4 章 (トリプルと Turtle) が土台。それ以降はすべてこの上に建つ</li>
+      <li>登場人物は<strong>人間・LLM・機械</strong>の 3 者。<strong>機械だけが文章を読めない</strong>ことが出発点</li>
+      <li>第 3・4 章 (トリプルと Turtle) が土台。それ以外は飛ばしても進める</li>
     </ul>
   </div>
 </section>
@@ -513,15 +737,16 @@
       <p style="font-size:13.5px;color:var(--mut);margin-top:14px">返金は 1 件だけです。佐藤さんの 7/5 の注文 (O101) に対して 5,500 円が返金されています。</p>
     </div>
 
-  <h3>1.2 依頼が来る</h3>
+  <h3>1.2 依頼が来る — これがそのままプロンプトになる</h3>
   <div class="box def">
-    <div class="bh">依頼</div>
+    <div class="bh">依頼（＝プロンプト）</div>
     <p style="font-size:17px;font-weight:700;color:var(--ink);margin-bottom:0">「先月のアクティブな優良顧客の売上をレポートにして」</p>
   </div>
+  <p>この一文は、人に頼めば<strong>依頼</strong>、AI に投げれば<strong>プロンプト</strong>です。文字は 1 つも変わりません。本書は第 2 章で<strong>新人がこれを受け取った場合</strong>を見て、第 5 章以降で<strong>LLM がこれを受け取った場合</strong>を見ます。<strong>どちらも、同じ 4 つの言葉でつまずきます。</strong></p>
   <p>SQL を書けば済む話に見えます。実際、書けます。問題は<strong>「書ける SQL が何通りもあって、どれも動いてしまう」</strong>ことです。</p>
 
   <h3>1.3 この一文に埋まっている、社内にしか無い定義</h3>
-  <p>依頼の中に、データベースを見ても絶対に分からないものが 4 つあります。</p>
+  <p>この一文の中に、データベースを見ても絶対に分からないものが 4 つあります。</p>
 
   <table>
     <thead><tr><th style="width:22%">言葉</th><th style="width:34%">DB から分かること</th><th style="width:44%">DB から分からないこと</th></tr></thead>
@@ -3020,7 +3245,706 @@ ec:C002 <span class="k">a</span> ec:顧客 .                <span class="c"># 2 
     <p class="fc"><strong>推論器と SHACL は「構築フェーズでオントロジー自身を検査する」ために使われている</strong>。クエリ結果の検査に使われるのは、赤い箱の機械的な検査 4 種だけ</p>
   </div>
 
-  <h3>12.3 この題材で考えると、どうなるか</h3>
+  <p>図 12-1 は<strong>論理的な</strong>構造でした。これを実際の AWS サービスに落とすと、こうなります。<strong>色のレーンが図 12-1 の ①②③ に対応</strong>しています。</p>
+  <div class="fig">
+    <p class="cap">図 12-2<span>AWS 構成 — 2 フェーズと共有アーティファクト（公開ソースから実測）</span></p>
+    <svg viewBox="0 0 940 660" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+          <defs>
+            <marker id="aArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#546074"/></marker>
+            <marker id="aArrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#ED7100"/></marker>
+            <marker id="aArrB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#2563eb"/></marker>
+          </defs>
+    
+          <!-- AWS Cloud boundary (AWS 図法: 実線 + 左上ラベル) -->
+          <rect x="14" y="14" width="912" height="632" rx="4" fill="none" stroke="#232F3E" stroke-width="2"/>
+          <rect x="14" y="14" width="132" height="26" fill="#232F3E"/>
+          <text x="80" y="32" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">AWS Cloud</text>
+          <!-- Region boundary (AWS 図法: 破線) -->
+          <rect x="32" y="52" width="876" height="578" rx="4" fill="none" stroke="#00A4A6" stroke-width="1.6" stroke-dasharray="7 5"/>
+          <text x="46" y="70" font-size="11.5" font-weight="700" fill="#00A4A6">Region: us-east-1</text>
+    
+          <!-- ── BUILD LANE ── -->
+          <rect x="52" y="86" width="836" height="212" rx="6" fill="#FFF7ED" stroke="#ED7100" stroke-width="1.8"/>
+          <text x="70" y="108" font-size="13" font-weight="900" fill="#B35309">① 構築フェーズ (Induction) — ここだけで推論と制約検証が走る</text>
+          <text x="70" y="126" font-size="10.5" fill="#B35309">packages/ontology-engine · ECS Fargate · Claude Sonnet 4-6</text>
+    
+          <use href="#ic-glue" x="86" y="146" width="46" height="46"/>
+          <text x="109" y="208" text-anchor="middle" font-size="10" font-weight="700" fill="#334155">AWS Glue</text>
+          <text x="109" y="221" text-anchor="middle" font-size="9" fill="#64748b">Data Catalog</text>
+    
+          <use href="#ic-ecs" x="228" y="146" width="46" height="46"/>
+          <text x="251" y="208" text-anchor="middle" font-size="10" font-weight="700" fill="#334155">ECS Fargate</text>
+          <text x="251" y="221" text-anchor="middle" font-size="9" fill="#64748b">ontology-engine</text>
+    
+          <use href="#ic-bedrock" x="228" y="238" width="34" height="34"/>
+          <text x="278" y="252" font-size="9.5" font-weight="700" fill="#0F766E">Bedrock</text>
+          <text x="278" y="265" font-size="9" fill="#0d9488">Sonnet 4-6</text>
+    
+          <rect x="336" y="146" width="196" height="126" rx="6" fill="#fff" stroke="#DD344C" stroke-width="2"/>
+          <text x="434" y="166" text-anchor="middle" font-size="11" font-weight="900" fill="#B02A3C">検証 (3 Tier / 10 validator)</text>
+          <text x="434" y="184" text-anchor="middle" font-size="9.5" font-weight="700" fill="#DD344C">owlready2 + HermiT</text>
+          <text x="434" y="198" text-anchor="middle" font-size="9.5" font-weight="700" fill="#DD344C">pyshacl (SHACL)</text>
+          <text x="434" y="214" text-anchor="middle" font-size="9" fill="#64748b">整合性 / 充足不能クラス / 循環</text>
+          <text x="434" y="227" text-anchor="middle" font-size="9" fill="#64748b">連結性 / XSD 型トークン</text>
+          <text x="434" y="240" text-anchor="middle" font-size="9" fill="#64748b">OOPS! / ラベル網羅 / CQ</text>
+          <text x="434" y="260" text-anchor="middle" font-size="9.5" font-weight="800" fill="#B02A3C">Tier1 は失敗すると公開をブロック</text>
+    
+          <rect x="566" y="146" width="150" height="126" rx="6" fill="#fff" stroke="#ED7100" stroke-width="1.6"/>
+          <text x="641" y="166" text-anchor="middle" font-size="11" font-weight="800" fill="#B35309">公開 (Publish)</text>
+          <text x="641" y="186" text-anchor="middle" font-size="9" fill="#475569">Neptune の名前付きグラフ</text>
+          <text x="641" y="199" text-anchor="middle" font-size="8.5" font-family="Menlo,monospace" fill="#64748b">urn:orion:{ns}:published</text>
+          <text x="641" y="219" text-anchor="middle" font-size="9" font-weight="700" fill="#B35309">同時に書き込むマーカー:</text>
+          <text x="641" y="234" text-anchor="middle" font-size="8.5" font-family="Menlo,monospace" fill="#C2410C">coa:isMapped true</text>
+          <text x="641" y="248" text-anchor="middle" font-size="8.5" font-family="Menlo,monospace" fill="#C2410C">coa:distinctValues</text>
+    
+          <use href="#ic-bedrock" x="756" y="150" width="42" height="42"/>
+          <text x="777" y="206" text-anchor="middle" font-size="10" font-weight="700" fill="#334155">Bedrock</text>
+          <text x="777" y="219" text-anchor="middle" font-size="9" fill="#64748b">Cohere Embed v4</text>
+          <text x="777" y="232" text-anchor="middle" font-size="9" fill="#64748b">1024 次元</text>
+          <text x="777" y="250" text-anchor="middle" font-size="9" font-weight="700" fill="#0F766E">埋め込み生成</text>
+    
+          <g stroke="#ED7100" stroke-width="2" marker-end="url(#aArrG)">
+            <line x1="140" y1="169" x2="222" y2="169"/><line x1="280" y1="169" x2="330" y2="169"/>
+            <line x1="538" y1="169" x2="560" y2="169"/><line x1="722" y1="169" x2="750" y2="169"/>
+          </g>
+    
+          <!-- ── SHARED ARTIFACT (pivot) ── -->
+          <rect x="52" y="316" width="836" height="128" rx="6" fill="#FDF4FF" stroke="#C925D1" stroke-width="2.4"/>
+          <text x="70" y="338" font-size="13" font-weight="900" fill="#9333EA">② 共有アーティファクト — 構築が書き、クエリが読む</text>
+          <use href="#ic-neptune" x="120" y="352" width="46" height="46"/>
+          <text x="143" y="414" text-anchor="middle" font-size="10" font-weight="700" fill="#334155">Amazon Neptune</text>
+          <text x="143" y="427" text-anchor="middle" font-size="9" fill="#64748b">RDF / SPARQL · IAM 認証</text>
+          <use href="#ic-opensearch" x="300" y="352" width="46" height="46"/>
+          <text x="323" y="414" text-anchor="middle" font-size="10" font-weight="700" fill="#334155">OpenSearch Serverless</text>
+          <text x="323" y="427" text-anchor="middle" font-size="9" fill="#64748b">クラス/プロパティのベクトル</text>
+          <use href="#ic-s3" x="480" y="352" width="46" height="46"/>
+          <text x="503" y="414" text-anchor="middle" font-size="10" font-weight="700" fill="#334155">Amazon S3</text>
+          <text x="503" y="427" text-anchor="middle" font-size="9" fill="#64748b">ontology artifacts (.ttl)</text>
+          <use href="#ic-dynamodb" x="640" y="352" width="46" height="46"/>
+          <text x="663" y="414" text-anchor="middle" font-size="10" font-weight="700" fill="#334155">DynamoDB</text>
+          <text x="663" y="427" text-anchor="middle" font-size="9" fill="#64748b">namespaces / sources</text>
+          <use href="#ic-athena" x="790" y="352" width="46" height="46"/>
+          <text x="813" y="414" text-anchor="middle" font-size="10" font-weight="700" fill="#334155">Amazon Athena</text>
+          <text x="813" y="427" text-anchor="middle" font-size="9" fill="#64748b">実データの実行先</text>
+    
+          <!-- ── QUERY LANE ── -->
+          <rect x="52" y="462" width="836" height="152" rx="6" fill="#EFF6FF" stroke="#2563eb" stroke-width="1.8"/>
+          <text x="70" y="484" font-size="13" font-weight="900" fill="#1D4ED8">③ クエリフェーズ (Serve / Playground) — 推論器も SHACL も居ない</text>
+          <text x="70" y="502" font-size="10.5" fill="#1D4ED8">packages/context-manager · Bedrock AgentCore Runtime · Claude Sonnet 5</text>
+    
+          <use href="#ic-user" x="80" y="524" width="40" height="40"/>
+          <text x="100" y="578" text-anchor="middle" font-size="9.5" font-weight="700" fill="#334155">利用者</text>
+          <use href="#ic-cloudfront" x="164" y="524" width="40" height="40"/>
+          <text x="184" y="578" text-anchor="middle" font-size="9.5" font-weight="700" fill="#334155">CloudFront</text>
+          <use href="#ic-waf" x="234" y="524" width="40" height="40"/>
+          <text x="254" y="578" text-anchor="middle" font-size="9.5" font-weight="700" fill="#334155">AWS WAF</text>
+          <use href="#ic-cognito" x="304" y="524" width="40" height="40"/>
+          <text x="324" y="578" text-anchor="middle" font-size="9.5" font-weight="700" fill="#334155">Cognito</text>
+          <use href="#ic-apigw" x="374" y="524" width="40" height="40"/>
+          <text x="394" y="578" text-anchor="middle" font-size="9.5" font-weight="700" fill="#334155">API Gateway</text>
+    
+          <rect x="440" y="516" width="150" height="56" rx="6" fill="#fff" stroke="#01A88D" stroke-width="2"/>
+          <use href="#ic-bedrock" x="450" y="524" width="38" height="38"/>
+          <text x="546" y="538" text-anchor="middle" font-size="10" font-weight="800" fill="#0F766E">AgentCore</text>
+          <text x="546" y="551" text-anchor="middle" font-size="9" fill="#0d9488">Runtime</text>
+          <text x="546" y="564" text-anchor="middle" font-size="8.5" fill="#0d9488">Sonnet 5</text>
+          <text x="515" y="588" text-anchor="middle" font-size="9" fill="#64748b">3-Tier オーケストレータ</text>
+    
+          <use href="#ic-ecs" x="628" y="524" width="40" height="40"/>
+          <text x="648" y="578" text-anchor="middle" font-size="9.5" font-weight="700" fill="#334155">ECS vkg</text>
+          <text x="648" y="590" text-anchor="middle" font-size="9" fill="#64748b">Ontop</text>
+          <use href="#ic-lambda" x="706" y="524" width="40" height="40"/>
+          <text x="726" y="578" text-anchor="middle" font-size="9.5" font-weight="700" fill="#334155">Lambda ×41</text>
+          <use href="#ic-cloudwatch" x="790" y="524" width="40" height="40"/>
+          <text x="810" y="578" text-anchor="middle" font-size="9.5" font-weight="700" fill="#334155">CloudWatch</text>
+    
+          <g stroke="#2563eb" stroke-width="1.8" marker-end="url(#aArrB)">
+            <line x1="124" y1="544" x2="158" y2="544"/><line x1="208" y1="544" x2="228" y2="544"/>
+            <line x1="278" y1="544" x2="298" y2="544"/><line x1="348" y1="544" x2="368" y2="544"/>
+            <line x1="418" y1="544" x2="434" y2="544"/><line x1="594" y1="544" x2="622" y2="544"/>
+          </g>
+    
+          <!-- vertical relations to the artifact -->
+          <g stroke="#C925D1" stroke-width="2.2" fill="none">
+            <path d="M434 278 L434 300 L470 300 L470 312" marker-end="url(#aArr)"/>
+            <path d="M700 278 L700 300 L560 300 L560 312" marker-end="url(#aArr)"/>
+            <path d="M515 458 L515 468" marker-end="url(#aArr)"/>
+            <path d="M648 518 L648 500 L700 500 L700 448" marker-end="url(#aArr)"/>
+          </g>
+          <text x="330" y="303" font-size="10" font-weight="800" fill="#9333EA">書き込む (公開)</text>
+          <text x="742" y="303" font-size="10" font-weight="800" fill="#9333EA">埋め込みを書き込む</text>
+          <text x="528" y="464" font-size="10" font-weight="800" fill="#9333EA">読むだけ</text>
+        </svg>
+    <p class="fc"><strong>推論器 (HermiT) と SHACL は、オレンジのレーンにしか居ません。</strong>青いレーン（回答）は、紫のアーティファクトを<strong>読むだけ</strong>です</p>
+  </div>
+  <div class="box key">
+    <div class="bh">この図から読み取るべきこと</div>
+    <ul>
+      <li><strong>推論器 (HermiT) と SHACL は、オレンジのレーン（構築）にしか無い</strong></li>
+      <li><strong>青いレーン（クエリ）は、紫のアーティファクトを読むだけ</strong> — 推論も検証もしない</li>
+      <li>だから「<strong>公理を書いたのに推論されない</strong>」は、バグではなく<strong>設計どおりの挙動</strong>です。§11.5 の ③ を選んだ結果です</li>
+    </ul>
+  </div>
+  <div class="box note">
+    <div class="bh">図の外にあるもの — ガバナンス層とマルチモデル戦略</div>
+    <p><strong>ガバナンス層。</strong>Glue のテーブルは、SageMaker Unified Studio / DataZone 経由で「<strong>Approved</strong>」として公開され、それを Athena が参照します。つまり <strong>COA は「オントロジー製品」ではなく、AWS のデータガバナンス基盤の上に乗る 1 レイヤー</strong>です。ここを外して COA だけ導入することはできません。</p>
+    <p style="margin-top:12px"><strong>マルチモデル戦略。</strong>モデルは 1 つではなく、Amazon Bedrock 上で役割ごとに分かれています — <strong>Sonnet 5</strong> が対話と推論合成 (Serve)、<strong>Sonnet 4-6</strong> が Induction（環境変数で差し替え可）、<strong>Cohere Embed v4</strong> が埋め込み。さらに <strong>Bedrock Guardrails が 2 本</strong>（general / retrieval）挟まっています。</p>
+  </div>
+
+  <h3>12.3 構築フェーズをコードで追う — Neptune と OpenSearch に何が入るのか</h3>
+  <p>ここまでは概念でした。実際のコードを読みます。まず構築フェーズです — <strong>Neptune と OpenSearch に何が保存されるのか</strong>が分かれば、次節のクエリフェーズは「それを読むだけ」になります。コードは <code>packages/ontology-engine/src/coa_ontology/</code> です。</p>
+  <div class="fig">
+  <p class="cap">図 12-3<span>構築フェーズの出口 — 1 つのオントロジーが 2 つのストアに分かれる</span></p>
+  <svg viewBox="0 0 880 486" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+    <defs><marker id="b4a" markerWidth="9" markerHeight="9" refX="7.2" refY="3.1" orient="auto"><path d="M0,0 L7.2,3.1 L0,6.2 z" fill="#96650a"/></marker></defs>
+    <rect x="240" y="16" width="400" height="48" rx="8" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2.4"/>
+    <text x="440" y="37" text-anchor="middle" font-size="12.5" font-weight="800" fill="#0f3f6b">Glue Data Catalog を読む</text>
+    <text x="440" y="54" text-anchor="middle" font-size="9" fill="#1c5b9c">テーブル・列・型・サンプル値</text>
+    <rect x="240" y="82" width="400" height="48" rx="8" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2.4"/>
+    <text x="440" y="103" text-anchor="middle" font-size="12.5" font-weight="800" fill="#4c1d95">LLM が Turtle と R2RML を提案する</text>
+    <text x="440" y="120" text-anchor="middle" font-size="9" fill="#6b3fa0">クラス / プロパティ / domain / range / 対応表</text>
+    <line x1="440" y1="64" x2="440" y2="80" stroke="#96650a" stroke-width="2.2" marker-end="url(#b4a)"/>
+    <rect x="240" y="148" width="400" height="48" rx="8" fill="#fdf3f2" stroke="#b3261e" stroke-width="2.4"/>
+    <text x="440" y="169" text-anchor="middle" font-size="12.5" font-weight="800" fill="#8c1e18">10 個の検証器を通す</text>
+    <text x="440" y="186" text-anchor="middle" font-size="9" fill="#b3261e">Tier-1 (5 個) に落ちると公開できない。HermiT と pySHACL はここ</text>
+    <line x1="440" y1="130" x2="440" y2="146" stroke="#96650a" stroke-width="2.2" marker-end="url(#b4a)"/>
+    <path d="M440,196 V214 H210 V232" fill="none" stroke="#96650a" stroke-width="2.2" marker-end="url(#b4a)"/>
+    <path d="M440,196 V214 H670 V232" fill="none" stroke="#96650a" stroke-width="2.2" marker-end="url(#b4a)"/>
+    <text x="440" y="210" text-anchor="middle" font-size="10" font-weight="900" fill="#7a4a1c">同じオントロジーから、2 つの形で書き出す</text>
+    <rect x="20" y="236" width="380" height="196" rx="9" fill="#fdf8ec" stroke="#96650a" stroke-width="2.6"/>
+    <text x="36" y="258" font-size="12" font-weight="900" fill="#7a4a1c">Neptune — 名前付きグラフ (オントロジー 1 つに 1 本)</text>
+    <text x="36" y="274" font-size="8.5" font-family="Menlo,monospace" fill="#96650a">{base}/{namespace}/{ontology_id}</text>
+    <line x1="36" y1="282" x2="384" y2="282" stroke="#e8d4a8" stroke-width="1.4"/>
+    <text x="36" y="300" font-size="8.5" font-family="Menlo,monospace" fill="#7a4a1c">&lt;Class&gt;  a owl:Class ; wb:definedBy &lt;Ontology&gt;</text>
+    <text x="36" y="316" font-size="8.5" font-family="Menlo,monospace" fill="#7a4a1c">&lt;Class&gt;  rdfs:label / rdfs:comment</text>
+    <text x="36" y="332" font-size="8.5" font-family="Menlo,monospace" fill="#7a4a1c">&lt;Class&gt;  rdfs:subClassOf &lt;Parent&gt;</text>
+    <text x="36" y="348" font-size="8.5" font-family="Menlo,monospace" fill="#7a4a1c">&lt;Class&gt;  coa:isMapped "true"^^xsd:boolean</text>
+    <text x="36" y="364" font-size="8.5" font-family="Menlo,monospace" fill="#7a4a1c">&lt;Prop&gt;   rdfs:domain / rdfs:range</text>
+    <text x="36" y="380" font-size="8.5" font-family="Menlo,monospace" fill="#7a4a1c">&lt;Prop&gt;   coa:distinctValues "VIP", "Regular"</text>
+    <text x="36" y="396" font-size="8.5" font-family="Menlo,monospace" fill="#7a4a1c">&lt;Class&gt;  coa:aiContext "{synonyms, instructions}"</text>
+    <text x="36" y="422" font-size="9.5" font-weight="800" fill="#96650a">入るのは TBox（定義）だけ — 実データは 1 行も入らない (図 11-4)</text>
+    <rect x="480" y="236" width="380" height="196" rx="9" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2.6"/>
+    <text x="496" y="258" font-size="12" font-weight="900" fill="#155c3c">OpenSearch — 名前空間ごとのベクトル索引</text>
+    <text x="496" y="274" font-size="8.5" fill="#1f6f4a">1 件 = クラス 1 つ、またはプロパティ 1 つ</text>
+    <line x1="496" y1="282" x2="844" y2="282" stroke="#cbe5d6" stroke-width="1.4"/>
+    <text x="496" y="300" font-size="8.5" font-family="Menlo,monospace" fill="#155c3c">entity_uri / entity_type<tspan font-family="'Hiragino Sans',sans-serif" fill="#6b7480"> クラスかプロパティか</tspan></text>
+    <text x="496" y="316" font-size="8.5" font-family="Menlo,monospace" fill="#155c3c">ontology_id / namespace<tspan font-family="'Hiragino Sans',sans-serif" fill="#6b7480"></tspan></text>
+    <text x="496" y="332" font-size="8.5" font-family="Menlo,monospace" fill="#155c3c">embedding_type / model_id<tspan font-family="'Hiragino Sans',sans-serif" fill="#6b7480"> lexical か structural か</tspan></text>
+    <text x="496" y="348" font-size="8.5" font-family="Menlo,monospace" fill="#155c3c">text<tspan font-family="'Hiragino Sans',sans-serif" fill="#6b7480"> ← 埋め込んだ元の文</tspan></text>
+    <text x="496" y="364" font-size="8.5" font-family="Menlo,monospace" fill="#155c3c">embedding<tspan font-family="'Hiragino Sans',sans-serif" fill="#6b7480"> ← ベクトル本体</tspan></text>
+    <text x="496" y="380" font-size="8.5" font-family="Menlo,monospace" fill="#155c3c">context_text<tspan font-family="'Hiragino Sans',sans-serif" fill="#6b7480"> ← 埋め込まないが保存する</tspan></text>
+    <text x="496" y="396" font-size="8.5" font-family="Menlo,monospace" fill="#155c3c">data_source_id<tspan font-family="'Hiragino Sans',sans-serif" fill="#6b7480"> ← R2RML の値 (あるときだけ)</tspan></text>
+    <text x="496" y="422" font-size="9.5" font-weight="800" fill="#1f6f4a">探すための索引 — 定義の本体は持たない</text>
+    <rect x="20" y="446" width="840" height="32" rx="8" fill="#fff" stroke="#6b7480" stroke-width="1.6" stroke-dasharray="7 4"/>
+    <text x="440" y="466" text-anchor="middle" font-size="10.5" fill="#3d4654"><tspan font-weight="900" fill="#b3261e">R2RML はどちらにも保存されません。</tspan>Neptune の <tspan font-family="Menlo,monospace">coa:isMapped</tspan> と OpenSearch の <tspan font-family="Menlo,monospace">data_source_id</tspan> を導くために、読むだけです。</text>
+  </svg>
+  <p class="fc">Neptune は<strong>辞書</strong>（URI を指定して定義を引く）、OpenSearch は<strong>索引</strong>（言葉から URI を当てる）。<strong>役割が重なっていません</strong></p>
+</div>
+
+  <h4>① 10 個の検証器 — Tier-1 に落ちると公開できない</h4>
+  <p>検証器の一覧は <code>validation/routers/validate.py</code> に辞書で書かれています。<strong>10 個が 3 段に分かれ、Tier-1 だけが公開をブロックします。</strong></p>
+  <div class="lst">
+    <p class="cap">リスト 12-1<span>validation/routers/validate.py — 検証器の登録</span></p>
+    <pre>_VALIDATORS: dict[ValidationTier, list[OntologyValidator]] = {
+    ValidationTier.tier1_blocking: [
+        ConsistencyValidator(),        <span class="c"># owlready2 + HermiT</span>
+        TaxonomyCycleValidator(),
+        ConnectivityValidator(),
+        SHACLValidator(),              <span class="c"># pyshacl</span>
+        DatatypeTokenValidator(),
+    ],
+    ValidationTier.tier2_scoring: [
+        StructuralMetricsValidator(),
+    ],
+    ValidationTier.tier3_review: [
+        OoPSValidator(),
+        LabelCompletenessValidator(),
+        AmbiguousMatchValidator(),
+        CompetencyQuestionValidator(),
+    ],
+}</pre>
+  </div>
+  <table>
+    <thead><tr><th style="width:24%">検証器</th><th style="width:52%">何を見るか</th><th style="width:24%">落ちたら</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Consistency</strong></td><td>HermiT で<strong>矛盾と充足不能クラス</strong>を探す — <strong>図 11-8 の実物</strong></td><td class="no" rowspan="5">公開をブロック</td></tr>
+      <tr><td><strong>TaxonomyCycle</strong></td><td><code>rdfs:subClassOf</code> の循環</td></tr>
+      <tr><td><strong>Connectivity</strong></td><td>どこにも繋がっていないクラス</td></tr>
+      <tr><td><strong>SHACL</strong></td><td>pySHACL で形の検査 (第 8 章)</td></tr>
+      <tr><td><strong>DatatypeToken</strong></td><td>OWL 2 のデータ型マップに<strong>無い <code>xsd:</code> 型</strong>。あると HermiT が異常終了する</td></tr>
+      <tr><td><strong>StructuralMetrics</strong></td><td>構造の指標を数える</td><td>点数だけ</td></tr>
+      <tr><td><strong>OoPS! / LabelCompleteness /<br>AmbiguousMatch / CompetencyQuestion</strong></td><td>よくある落とし穴・ラベルの網羅・曖昧な一致・想定質問に答えられるか</td><td>人間に回す</td></tr>
+    </tbody>
+  </table>
+  <div class="box key">
+    <div class="bh">図 11-8 は、ここで実装されている</div>
+    <p>§11.5 の ③ で「推論器を<strong>データではなく TBox に向けて</strong>、定義同士の矛盾を検査する」と書きました。それが <code>ConsistencyValidator</code> です。<strong>「優良顧客が誰も入れない空のクラスになっている」を見つけたら、そのオントロジーは公開されません。</strong></p>
+    <p style="margin-top:12px"><code>DatatypeTokenValidator</code> も地味に効いています。§9.5 で「<code>xsd:date</code> が OWL 2 のデータ型マップから外れることがある」と書いた話です。ソースのコメントに <strong>「Any XSD-namespaced datatype NOT in this set makes HermiT abort」</strong>とあり、対象の型を置き換えてから HermiT に渡しています。<strong>推論器を動かすための前処理が、検証器として独立している</strong>ということです。</p>
+  </div>
+
+  <h4>② Neptune に入るトリプル</h4>
+  <div class="lst">
+    <p class="cap">リスト 12-2<span>stores/neptune_db_graph.py — store_class()</span></p>
+    <pre>graph_uri = self._graph_for(ontology_uri)     <span class="c"># {base}/{namespace}/{ontology_id}</span>
+triples = [
+    f<span class="s">"{_iri(class_uri)} {_iri(RDF + 'type')} {_iri(OWL + 'Class')} ."</span>,
+    f<span class="s">"{_iri(class_uri)} {_iri(WB + 'definedBy')} {_iri(ontology_uri)} ."</span>,
+]
+
+<span class="y"># Tier-2 answerability marker: True when the class is the rr:class of an</span>
+<span class="y"># R2RML TriplesMap (SQL-backed) ... we therefore only emit it, never emit a "false".</span>
+<span class="k">if</span> is_mapped:
+    triples.append(f<span class="s">'{_iri(class_uri)} {_iri(_SCL + "isMapped")} "true"^^&lt;...#boolean&gt; .'</span>)
+
+<span class="k">for</span> lbl <span class="k">in</span> labels <span class="k">or</span> []:
+    triples.append(f<span class="s">'{_iri(class_uri)} {_iri(RDFS + "label")} "{_esc(lbl)}" .'</span>)
+<span class="k">for</span> cmt <span class="k">in</span> comments <span class="k">or</span> []:
+    triples.append(f<span class="s">'{_iri(class_uri)} {_iri(RDFS + "comment")} "{_esc(cmt)}" .'</span>)
+<span class="k">for</span> sup <span class="k">in</span> super_classes <span class="k">or</span> []:
+    <span class="k">if</span> <span class="k">not</span> _is_storable_iri(sup):
+        <span class="k">continue</span>                                <span class="c"># 空白ノードの親はスキップ</span>
+    triples.append(f<span class="s">"{_iri(class_uri)} {_iri(RDFS + 'subClassOf')} {_iri(sup)} ."</span>)
+
+_sparql_update(f<span class="s">"INSERT DATA {{ GRAPH {_iri(graph_uri)} {{ ... }} }}"</span>)</pre>
+  </div>
+  <p>第 4〜6 章で手で書いたものと<strong>同じトリプル</strong>です。<code>a owl:Class</code>、<code>rdfs:label</code>、<code>rdfs:comment</code>、<code>rdfs:subClassOf</code>。COA 固有のものが 2 つ足されているだけです。</p>
+  <ul>
+    <li><code>wb:definedBy</code> — どのオントロジーの一部か</li>
+    <li><code>coa:isMapped "true"</code> — <strong>そのクラスが R2RML で実データに繋がっているか</strong></li>
+  </ul>
+  <p><strong>空白ノードの親はスキップ</strong>されている点にも注目してください。第 6 章で <code>owl:equivalentClass [ ... ]</code> と書いた無名クラスは、ここで落ちます。<strong>グラフに残るのは名前のある関係だけ</strong>です。</p>
+  <div class="box warn">
+    <div class="bh">coa:isMapped は「信頼境界」のマーカー</div>
+    <p><code>coa:isMapped</code> は<strong>サーバが自分で導く印</strong>で、外から持ち込めません。取り込み時に、呼び出し元由来のものは<strong>全部剥がされます</strong>。</p>
+    <div class="lst" style="margin:12px 0 0">
+      <pre><span class="c"># ── 1b. Strip any caller-supplied coa:isMapped triples ──</span>
+<span class="c"># `coa:isMapped` is a TRUST-BOUNDARY marker: the serve Tier-2 filter treats</span>
+<span class="c"># ... a user-uploaded/edited ontology could FORGE `&lt;Class&gt; coa:isMapped ...`</span>
+<span class="c"># ... so only store_class can (re)emit it.</span></pre>
+    </div>
+    <p style="margin-top:12px">なぜそこまでするのか。§12.4 で見たとおり、<strong>プロンプトに載せるクラスをこの印で絞っている</strong>からです。偽造できてしまうと、実データに繋がっていないクラスを LLM に見せられます。<strong>「見せる範囲を絞る」が防御として成立するのは、印を偽造できないからこそ</strong>です。</p>
+    <p style="margin-top:12px">判定は <strong>R2RML の <code>TriplesMap</code> の <code>rr:class</code> になっているか</strong>だけで決まります。<code>coa:datasourceId</code> の<strong>値は見ません</strong> — Ontop には既定の接続先があるので、id が無くても答えられるからです。一方 OpenSearch 側の <code>data_source_id</code> は<strong>値を使います</strong>（どの DB に投げるかを決めるため）。<strong>同じ 1 つの情報を、2 つの用途で違う粒度で使っている</strong>ということです。</p>
+  </div>
+  <p>そして <strong>R2RML 自体はグラフに入りません</strong>。ソースにはっきり書かれています — <strong>「The R2RML is NOT loaded into the graph — only scanned here to derive this.」</strong>対応表は VKG エンジン (Ontop) が持ち、Neptune は印だけを持ちます。</p>
+
+  <h4>③ OpenSearch に入る 1 件</h4>
+  <div class="lst">
+    <p class="cap">リスト 12-3<span>stores/opensearch_vector.py — _doc_from()</span></p>
+    <pre><span class="k">def</span> _doc_from(self, item: dict, ns: str | <span class="k">None</span>) -&gt; dict:
+    vec = item[<span class="s">"vector"</span>]
+    <span class="k">if</span> len(vec) &lt; self.dimensions:
+        vec = list(vec) + [<span class="n">0.0</span>] * (self.dimensions - len(vec))   <span class="c"># 次元が足りなければ 0 で埋める</span>
+    doc = {
+        <span class="s">"entity_uri"</span>:     item[<span class="s">"entity_uri"</span>],
+        <span class="s">"ontology_id"</span>:    item.get(<span class="s">"ontology_id"</span>),
+        <span class="s">"entity_type"</span>:    item.get(<span class="s">"entity_type"</span>),      <span class="c"># class / property</span>
+        <span class="s">"embedding_type"</span>: item[<span class="s">"embedding_type"</span>],       <span class="c"># lexical / structural</span>
+        <span class="s">"model_id"</span>:       item[<span class="s">"model_id"</span>],
+        <span class="s">"namespace"</span>:      ns <span class="k">or</span> DEFAULT_NAMESPACE,
+        <span class="s">"text"</span>:           item.get(<span class="s">"text"</span>, <span class="s">""</span>),        <span class="c"># 埋め込んだ元の文</span>
+        <span class="s">"embedding"</span>:      vec,
+    }
+    <span class="k">if</span> item.get(<span class="s">"context_text"</span>):
+        doc[<span class="s">"context_text"</span>] = item[<span class="s">"context_text"</span>]      <span class="c"># 埋め込まないが保存する</span>
+    <span class="k">if</span> item.get(<span class="s">"data_source_id"</span>):
+        doc[<span class="s">"data_source_id"</span>] = item[<span class="s">"data_source_id"</span>]
+    <span class="k">return</span> doc</pre>
+  </div>
+  <p>ここに一番面白い設計が入っています。<strong><code>text</code> と <code>context_text</code> が別々にある</strong>ことです。</p>
+
+  <h4>④ 「探すための文」と「渡すための文」を分けている</h4>
+  <p>クラス 1 つから、<strong>2 通りの文が作られます</strong>。</p>
+  <div class="lst">
+    <p class="cap">リスト 12-4<span>catalog/ingest.py — _class_text_for() の中の _cols()</span></p>
+    <pre><span class="k">def</span> _cols(*, rich: bool) -&gt; str:
+    <span class="c"># rich=False → embedded vector: column names + comments only (type</span>
+    <span class="c">#              and sampled values are low-signal for retrieval).</span>
+    <span class="c"># rich=True  → generation context: adds type + allowed values so the</span>
+    <span class="c">#              LLM writes correct casts and WHERE literals.</span>
+    <span class="k">return</span> <span class="s">", "</span>.join(
+        (f<span class="s">"{label}:{dtype}"</span> <span class="k">if</span> rich <span class="k">else</span> label)
+        + (f<span class="s">" ({comment[:100]})"</span> <span class="k">if</span> comment <span class="k">else</span> <span class="s">""</span>)
+        + (f<span class="s">" allowed values: [{', '.join(vals[:20])}]"</span> <span class="k">if</span> rich <span class="k">and</span> vals <span class="k">else</span> <span class="s">""</span>)
+        <span class="k">for</span> label, dtype, comment, vals <span class="k">in</span> data_props_list
+    )
+
+embed_text   = <span class="s">" | "</span>.join(base_parts + [f<span class="s">"Columns: {_cols(rich=False)}"</span>])   <span class="c"># ベクトルにする</span>
+context_text = <span class="s">" | "</span>.join(base_parts + [f<span class="s">"Columns: {_cols(rich=True)}"</span>])    <span class="c"># 保存するだけ</span></pre>
+  </div>
+  <p>題材の <code>customers</code> に当てはめると、こうなります。</p>
+  <div class="lst">
+    <p class="cap">リスト 12-5<span>同じクラスから作られる 2 つの文 (題材に当てはめた形)</span></p>
+    <pre><span class="y">embed_text</span>  <span class="c">← これをベクトルにして OpenSearch の検索対象にする</span>
+Table: 顧客 | Description: EC サイトの顧客マスタ | Synonyms: 取引先, customer
+  | Relationships: 注文者-&gt;注文 | Columns: 会員ランク (営業部が手で付ける), 累計購入額, 最終注文日
+
+<span class="y">context_text</span>  <span class="c">← 埋め込まない。生成プロンプト用に保存しておく</span>
+Table: 顧客 | Description: EC サイトの顧客マスタ | Synonyms: 取引先, customer
+  | Relationships: 注文者-&gt;注文 | Columns: 会員ランク:string (営業部が手で付ける)
+    <span class="g">allowed values: [VIP, Regular]</span>, 累計購入額:decimal, 最終注文日:date</pre>
+  </div>
+  <p>違いは <strong>型と <code>allowed values</code> の有無</strong>だけです。そして<strong>なぜ分けるのかが、コメントに書いてあります</strong>。</p>
+  <ul>
+    <li><strong>探すとき</strong>（<code>embed_text</code>）に <code>"VIP"</code> や <code>date</code> が混ざると、<strong>検索の精度が落ちる</strong>。「先月の売上」という質問と <code>"VIP"</code> は意味的に無関係で、ベクトルを濁らせるだけです</li>
+    <li><strong>渡すとき</strong>（<code>context_text</code>）には型と値が<strong>必要</strong>。無いと LLM が <code>"vip"</code> と小文字で書いて 0 件になります (§12.4)</li>
+  </ul>
+  <p><strong>同じ情報が、目的によって邪魔になったり必須になったりする。</strong>だから 1 つの文で兼用せず、2 つ持っています。オントロジーを作るときに一番参考になる判断は、たぶんこれです。</p>
+  <div class="box note">
+    <div class="bh">実装の注意 — 同じオントロジーを 2 回入れると、ベクトルが二重に増える</div>
+    <p>OpenSearch Serverless の VECTORSEARCH コレクションは、クライアント指定の <code>_id</code> と <code>_delete_by_query</code> に対応していません。<strong>同じオントロジーを再度受け入れると、上書きではなく追記になります。</strong></p>
+    <div class="lst" style="margin:12px 0 0">
+      <pre><span class="c"># AOSS auto-assigns `_id` and does not support client-supplied IDs or</span>
+<span class="c"># `_delete_by_query` on VECTORSEARCH collections. Re-accepting the same</span>
+<span class="c"># ontology therefore appends duplicate vectors rather than overwriting;</span>
+<span class="c"># callers that need idempotency should `delete_embeddings_for_ontology` first.</span></pre>
+    </div>
+    <p style="margin-top:12px">つまり<strong>入れ直す前に消す</strong>必要があります。忘れると、同じクラスが検索結果を複数枠占めて <code>top_k = 10</code> を食い潰します。§12.4 の「10 件しか見ない」という制約と噛み合って、<strong>静かに精度が落ちる</strong>種類の事故です。</p>
+  </div>
+
+  <h4>⑤ 結局、2 つのストアの役割はどう違うのか</h4>
+  <table>
+    <thead><tr><th style="width:16%"></th><th style="width:42%">Neptune</th><th style="width:42%">OpenSearch</th></tr></thead>
+    <tbody>
+      <tr><td><strong>持っているもの</strong></td><td>定義の本体 (TBox のトリプル)</td><td>ベクトルと、その元になった文</td></tr>
+      <tr><td><strong>引き方</strong></td><td><strong>URI を指定して</strong> SPARQL で引く</td><td><strong>ベクトルの距離</strong>で近いものを引く</td></tr>
+      <tr><td><strong>得意</strong></td><td class="ok">正確。書いてあることは確実に返る</td><td class="ok">曖昧な言葉から当てられる</td></tr>
+      <tr><td><strong>苦手</strong></td><td class="no">「売上っぽいもの」を探せない</td><td class="no">正確ではない。10 件から漏れたら見えない</td></tr>
+      <tr><td><strong>役割</strong></td><td><strong>辞書</strong> — 何が書いてあるか</td><td><strong>索引</strong> — どれを見るか</td></tr>
+    </tbody>
+  </table>
+  <p>だから次節で見るクエリフェーズは、<strong>必ずこの順</strong>になります。<strong>OpenSearch で当てて、Neptune で引く。</strong>逆はできません。Neptune には「意味が近い」を計算する仕組みが無く、OpenSearch には定義の本体が入っていないからです。</p>
+
+  <h3>12.4 クエリフェーズをコードで追う</h3>
+  <p>保存されているものが分かったので、それを<strong>読む側</strong>を追います。コードはここから別のパッケージ — <code>packages/context-manager/src/coa_serve/</code> です。</p>
+  <div class="fig">
+  <p class="cap">図 12-4<span>クエリフェーズをコードで追う — 質問 1 回で通る 9 段</span></p>
+  <svg viewBox="0 0 880 544" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+    <defs>
+      <marker id="q3d" markerWidth="9" markerHeight="9" refX="7.2" refY="3.1" orient="auto"><path d="M0,0 L7.2,3.1 L0,6.2 z" fill="#9aa3af"/></marker>
+      <marker id="q3r" markerWidth="9" markerHeight="9" refX="7.2" refY="3.1" orient="auto"><path d="M0,0 L7.2,3.1 L0,6.2 z" fill="#b3261e"/></marker>
+    </defs>
+    <rect x="120" y="24" width="520" height="42" rx="8" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2.4"/>
+    <circle cx="142" cy="45" r="13" fill="#fff" stroke="#6b3fa0" stroke-width="1.8"/>
+    <text x="142" y="50" text-anchor="middle" font-size="12" font-weight="900" fill="#6b3fa0">1</text>
+    <text x="164" y="42" font-size="12" font-weight="800" fill="#4c1d95">質問が届く</text>
+    <text x="164" y="58" font-size="9" fill="#6b3fa0">「先月のアクティブな優良顧客の売上」</text>
+    <text x="656" y="42" font-size="8.5" font-family="Menlo,monospace" fill="#6b7480">main.py → orchestrator.py</text>
+    <text x="656" y="56" font-size="8.5" font-family="Menlo,monospace" font-weight="700" fill="#6b3fa0">resolve()</text>
+    <rect x="120" y="80" width="520" height="42" rx="8" fill="#fdf8ec" stroke="#96650a" stroke-width="2.4"/>
+    <circle cx="142" cy="101" r="13" fill="#fff" stroke="#96650a" stroke-width="1.8"/>
+    <text x="142" y="106" text-anchor="middle" font-size="12" font-weight="900" fill="#96650a">2</text>
+    <text x="164" y="98" font-size="12" font-weight="800" fill="#7a4a1c">質問をベクトル化し、渡す範囲を絞る</text>
+    <text x="164" y="114" font-size="9" fill="#96650a">埋め込みモデル → OpenSearch → Neptune から抜粋を組む</text>
+    <text x="656" y="98" font-size="8.5" font-family="Menlo,monospace" fill="#6b7480">bedrock.embed()</text>
+    <text x="656" y="112" font-size="8.5" font-family="Menlo,monospace" font-weight="700" fill="#96650a">tbox_context.build()</text>
+    <line x1="400" y1="66" x2="400" y2="78" stroke="#9aa3af" stroke-width="1.8" marker-end="url(#q3d)"/>
+    <rect x="120" y="136" width="520" height="42" rx="8" fill="#fdf8ec" stroke="#96650a" stroke-width="2.4"/>
+    <circle cx="142" cy="157" r="13" fill="#fff" stroke="#96650a" stroke-width="1.8"/>
+    <text x="142" y="162" text-anchor="middle" font-size="12" font-weight="900" fill="#96650a">3</text>
+    <text x="164" y="154" font-size="12" font-weight="800" fill="#7a4a1c">プロンプトを組む</text>
+    <text x="164" y="170" font-size="9" fill="#96650a">スキーマ + Few-shot + 指示。<tspan font-weight="800">質問は本文に入れない</tspan></text>
+    <text x="656" y="154" font-size="8.5" font-family="Menlo,monospace" fill="#6b7480">nl_to_sparql.py</text>
+    <text x="656" y="168" font-size="8.5" font-family="Menlo,monospace" font-weight="700" fill="#96650a">_build_user_prompt()</text>
+    <line x1="400" y1="122" x2="400" y2="134" stroke="#9aa3af" stroke-width="1.8" marker-end="url(#q3d)"/>
+    <rect x="120" y="192" width="520" height="42" rx="8" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2.4"/>
+    <circle cx="142" cy="213" r="13" fill="#fff" stroke="#6b3fa0" stroke-width="1.8"/>
+    <text x="142" y="218" text-anchor="middle" font-size="12" font-weight="900" fill="#6b3fa0">4</text>
+    <text x="164" y="210" font-size="12" font-weight="800" fill="#4c1d95">LLM を呼ぶ</text>
+    <text x="164" y="226" font-size="9" fill="#6b3fa0">temperature=0 / 質問は guard_content で別送</text>
+    <text x="656" y="210" font-size="8.5" font-family="Menlo,monospace" fill="#6b7480">clients/bedrock.py</text>
+    <text x="656" y="224" font-size="8.5" font-family="Menlo,monospace" font-weight="700" fill="#6b3fa0">converse()</text>
+    <line x1="400" y1="178" x2="400" y2="190" stroke="#9aa3af" stroke-width="1.8" marker-end="url(#q3d)"/>
+    <rect x="120" y="248" width="520" height="42" rx="8" fill="#f7f8fa" stroke="#6b7480" stroke-width="2.4"/>
+    <circle cx="142" cy="269" r="13" fill="#fff" stroke="#6b7480" stroke-width="1.8"/>
+    <text x="142" y="274" text-anchor="middle" font-size="12" font-weight="900" fill="#6b7480">5</text>
+    <text x="164" y="266" font-size="12" font-weight="800" fill="#3d4654">応答から SPARQL を剥がす</text>
+    <text x="164" y="282" font-size="9" fill="#6b7480">```sparql ブロックと Confidence を正規表現で抽出</text>
+    <text x="656" y="266" font-size="8.5" font-family="Menlo,monospace" fill="#6b7480">nl_to_sparql.py</text>
+    <text x="656" y="280" font-size="8.5" font-family="Menlo,monospace" font-weight="700" fill="#6b7480">_extract_sparql()</text>
+    <line x1="400" y1="234" x2="400" y2="246" stroke="#9aa3af" stroke-width="1.8" marker-end="url(#q3d)"/>
+    <rect x="120" y="304" width="520" height="42" rx="8" fill="#fdf3f2" stroke="#b3261e" stroke-width="2.4"/>
+    <circle cx="142" cy="325" r="13" fill="#fff" stroke="#b3261e" stroke-width="1.8"/>
+    <text x="142" y="330" text-anchor="middle" font-size="12" font-weight="900" fill="#b3261e">6</text>
+    <text x="164" y="322" font-size="12" font-weight="800" fill="#8c1e18">3 段で検証する</text>
+    <text x="164" y="338" font-size="9" fill="#b3261e">① 構文 ② URI 実在 ③ domain/range</text>
+    <text x="656" y="322" font-size="8.5" font-family="Menlo,monospace" fill="#6b7480">sparql_validator.py</text>
+    <text x="656" y="336" font-size="8.5" font-family="Menlo,monospace" font-weight="700" fill="#b3261e">validate()</text>
+    <line x1="400" y1="290" x2="400" y2="302" stroke="#9aa3af" stroke-width="1.8" marker-end="url(#q3d)"/>
+    <rect x="120" y="360" width="520" height="42" rx="8" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2.4"/>
+    <circle cx="142" cy="381" r="13" fill="#fff" stroke="#1c5b9c" stroke-width="1.8"/>
+    <text x="142" y="386" text-anchor="middle" font-size="12" font-weight="900" fill="#1c5b9c">7</text>
+    <text x="164" y="378" font-size="12" font-weight="800" fill="#0f3f6b">Ontop が SQL に翻訳する</text>
+    <text x="164" y="394" font-size="9" fill="#1c5b9c">SPARQL → Trino SQL。R2RML で接続先も決まる</text>
+    <text x="656" y="378" font-size="8.5" font-family="Menlo,monospace" fill="#6b7480">vkg_translator.py</text>
+    <text x="656" y="392" font-size="8.5" font-family="Menlo,monospace" font-weight="700" fill="#1c5b9c">vkg_client.translate()</text>
+    <line x1="400" y1="346" x2="400" y2="358" stroke="#9aa3af" stroke-width="1.8" marker-end="url(#q3d)"/>
+    <rect x="120" y="416" width="520" height="42" rx="8" fill="#fdf3f2" stroke="#b3261e" stroke-width="2.4"/>
+    <circle cx="142" cy="437" r="13" fill="#fff" stroke="#b3261e" stroke-width="1.8"/>
+    <text x="142" y="442" text-anchor="middle" font-size="12" font-weight="900" fill="#b3261e">8</text>
+    <text x="164" y="434" font-size="12" font-weight="800" fill="#8c1e18">SQL Firewall にかける</text>
+    <text x="164" y="450" font-size="9" fill="#b3261e">許可リスト + AST 全走査 + 表・列の認可</text>
+    <text x="656" y="434" font-size="8.5" font-family="Menlo,monospace" fill="#6b7480">sql_firewall.py</text>
+    <text x="656" y="448" font-size="8.5" font-family="Menlo,monospace" font-weight="700" fill="#b3261e">evaluate()</text>
+    <line x1="400" y1="402" x2="400" y2="414" stroke="#9aa3af" stroke-width="1.8" marker-end="url(#q3d)"/>
+    <rect x="120" y="472" width="520" height="42" rx="8" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2.4"/>
+    <circle cx="142" cy="493" r="13" fill="#fff" stroke="#1f6f4a" stroke-width="1.8"/>
+    <text x="142" y="498" text-anchor="middle" font-size="12" font-weight="900" fill="#1f6f4a">9</text>
+    <text x="164" y="490" font-size="12" font-weight="800" fill="#155c3c">実行する</text>
+    <text x="164" y="506" font-size="9" fill="#1f6f4a">生成物ではなく <tspan font-weight="800">authorized_sql</tspan> を投げる</text>
+    <text x="656" y="490" font-size="8.5" font-family="Menlo,monospace" fill="#6b7480">composite_executor.py</text>
+    <text x="656" y="504" font-size="8.5" font-family="Menlo,monospace" font-weight="700" fill="#1f6f4a">execute()</text>
+    <line x1="400" y1="458" x2="400" y2="470" stroke="#9aa3af" stroke-width="1.8" marker-end="url(#q3d)"/>
+    <path d="M114,325 H62 V157 H114" fill="none" stroke="#b3261e" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#q3r)"/>
+    <text x="56" y="233" text-anchor="end" font-size="9.5" font-weight="900" fill="#b3261e">検証に落ちたら</text>
+    <text x="56" y="247" text-anchor="end" font-size="9.5" font-weight="900" fill="#b3261e">エラー文を書き足して</text>
+    <text x="56" y="261" text-anchor="end" font-size="9.5" font-weight="900" fill="#b3261e">最大 2 回やり直す</text>
+    <text x="440" y="536" text-anchor="middle" font-size="10" fill="#6b7480">推論器 (HermiT) も SHACL も、この 9 段のどこにも出てきません</text>
+  </svg>
+  <p class="fc"><strong>文章を生成する LLM が動くのは 4 だけ</strong>。2 では埋め込みモデルが動きますが、<strong>生成はしません</strong>。残る 7 段はすべて<strong>決まった手続きで動くプログラム</strong> — 第 0 章で「機械」と呼んだものです</p>
+</div>
+
+  <div class="box note">
+    <div class="bh">段 2 で動くのは LLM ではなく、埋め込みモデル</div>
+    <p>質問がそのまま TBox 抜粋になるわけではありません。間に<strong>ベクトル検索</strong>が挟まります。ただしここで呼ばれるのは<strong>文章を生成する LLM ではなく、埋め込みモデル</strong>です。</p>
+    <div class="lst" style="margin:12px 0 0">
+      <pre>embedding = <span class="k">await</span> self._bedrock_client.embed(query)   <span class="c"># 図 12-2 の Cohere Embed v4</span>
+hits      = <span class="k">await</span> self._vector_client.search(embedding, namespace=..., top_k=<span class="n">10</span>, index=...)
+tbox      = <span class="k">await</span> self._tbox_builder.build(hits, namespace, query=query, max_tokens=<span class="n">20_000</span>)</pre>
+    </div>
+    <ul style="margin-top:12px">
+      <li><strong>質問をベクトルに変える</strong> — 生成しません。同じ入力なら必ず同じベクトルが返ります</li>
+      <li><strong>OpenSearch で意味の近いクラスとプロパティを 10 件引く</strong></li>
+      <li><strong>当たったものだけ Neptune から引いて抜粋を組む</strong> — <code>tbox_context.py</code> の中に LLM 呼び出しは<strong>1 つもありません</strong>。Neptune への SPARQL だけです</li>
+    </ul>
+    <p style="margin-top:12px">なぜ絞るのか。<strong>オントロジー全部をプロンプトに入れられないから</strong>です。実装では上限が <code>max_tokens = 20_000</code> で切られています。§12.6 の「① 見せる範囲を絞る」は、具体的にはこのベクトル検索のことです。</p>
+    <p style="margin-top:12px">失敗しても止まりません。埋め込みに失敗すると <code>None</code> が返り、<code>build()</code> は引数で受けた <code>query</code> の語からクラスを探す方式に落ちます（fail-open）。</p>
+  </div>
+
+  <h4>① 何を LLM に入れているか — システムプロンプト</h4>
+  <p>固定の指示文です。長いので抜粋します。</p>
+  <div class="lst">
+    <p class="cap">リスト 12-6<span>tier2/ontop/nl_to_sparql.py — _SYSTEM_PROMPT (抜粋)</span></p>
+    <pre>_SYSTEM_PROMPT = (
+    <span class="s">"You are a SPARQL query generator for the Ontop Virtual Knowledge Graph (VKG) engine. "</span>
+    <span class="s">"Given a natural language question and an ontology schema, generate a valid SPARQL 1.1 query.\n\n"</span>
+    <span class="s">"CRITICAL RULES:\n"</span>
+    <span class="s">"- The schema provides a PREFIX declaration (e.g. PREFIX ind: &lt;...&gt;). "</span>
+    <span class="s">"You MUST copy that EXACT PREFIX into your SPARQL query.\n"</span>
+    <span class="s">"- NEVER invent your own prefix URI — use exactly what the schema provides\n"</span>
+    <span class="s">"- When a property lists 'allowed values: [...]', match one of those literals "</span>
+    <span class="s">"exactly and case-sensitively (do NOT wrap in LCASE or invent a value)\n"</span>
+    <span class="s">"- Use OPTIONAL for fields that may not exist on all instances\n"</span>
+    <span class="s">"- Return the SPARQL query in a ```sparql code block\n"</span>
+    <span class="s">"- After the query, rate your confidence (0.0-1.0) ...\n\n"</span>
+
+    <span class="c"># Ontop で落ちる書き方を、名指しで禁止している</span>
+    <span class="s">"★ RULE: NEVER use nested SELECT subqueries for category comparison. They fail on Ontop.\n"</span>
+    <span class="s">"❌ { SELECT (COUNT(?x) AS ?c1) WHERE { ... } }  ← nested subquery\n"</span>
+    <span class="s">"❌ MINUS or NOT EXISTS for simple count comparisons — use SUM(IF) instead\n\n"</span>
+    <span class="c"># … このあと Few-shot 例が 12 個続く</span>
+)</pre>
+  </div>
+  <p>読みどころは 2 つあります。<strong>第 5 章で書いた <code>OPTIONAL</code> と、第 12.4 節の <code>allowed values</code> が、そのまま指示文になっている</strong>こと。そしてもう 1 つ —</p>
+  <div class="box note">
+    <div class="bh">プロンプトが実装の癖を吸収している</div>
+    <p>「入れ子の <code>SELECT</code> を書くな。<strong>Ontop では落ちる</strong>から」と、名指しで禁止しています。<code>MINUS</code> や <code>NOT EXISTS</code> も同じです。</p>
+    <p style="margin-top:12px">つまりこのプロンプトは、SPARQL の仕様ではなく<strong>「この製品で実際に通る SPARQL」</strong>を教えています。標準に沿って書けば動く、という話ではありません。<strong>エンジンごとにこの手当てが必要になる</strong>ということです。</p>
+  </div>
+
+  <h4>② ユーザーの質問は、プロンプト本文に入っていない</h4>
+  <p>ここが一番意外な設計です。</p>
+  <div class="lst">
+    <p class="cap">リスト 12-7<span>nl_to_sparql.py — _build_user_prompt() と LLM 呼び出し</span></p>
+    <pre><span class="k">def</span> _build_user_prompt(self, query, tbox, namespace, few_shot_block=<span class="s">""</span>):
+    context_text = self._tbox_builder.format_for_prompt(tbox, namespace)   <span class="c"># ← 実物は §12.5 で見る</span>
+    parts = [context_text]
+    <span class="k">if</span> few_shot_block:
+        parts.append(few_shot_block)
+
+    <span class="c"># 未信頼のユーザー質問は、プロンプト本文に入れない。</span>
+    <span class="c"># converse() の guard_content として別チャネルで渡す。</span>
+    parts.append(<span class="s">"Generate a SPARQL query for the user question."</span>)
+    <span class="k">return</span> <span class="s">"\n\n"</span>.join(parts)
+
+
+<span class="c"># ── 呼び出し側 ──</span>
+llm_response, ok = <span class="k">await</span> self._traced_step(
+    PipelineStep.LLM_CALL,
+    self._llm.converse(
+        prompt=user_prompt,                 <span class="c"># スキーマ + 指示だけ</span>
+        system=_SYSTEM_PROMPT,
+        guardrail_id=self._guardrail_id <span class="k">or</span> <span class="k">None</span>,
+        <span class="g">guard_content=query,</span>                <span class="c"># ← ユーザーの質問はここだけ</span>
+        temperature=<span class="n">0</span>,
+        model_id=model_id,
+    ), ...)</pre>
+  </div>
+  <p><code>_build_user_prompt</code> は <code>query</code> を引数で受け取っているのに、<strong>戻り値の文字列に使っていません</strong>。質問は <code>guard_content</code> という別の口から Bedrock に渡ります。ソースのコメントに理由が書いてあります。</p>
+  <ul>
+    <li><strong>Guardrails のプロンプト攻撃検査を、質問の一塊だけに絞れる</strong>。取ってきた TBox とこちらが書いた指示文は検査対象から外れる</li>
+    <li>プロンプト本文にも入れると<strong>トークンが二重にかかるだけ</strong>で、防御は増えない。Guardrails が採点するのは <code>guard_content</code> の側だけだから</li>
+  </ul>
+  <p><code>temperature=0</code> も見えます。それでも同じ答えが返る保証はありません。<strong>「揺れを減らす」までです。</strong></p>
+
+  <h4>③ 何が返ってきて、どう使うか</h4>
+  <div class="lst">
+    <p class="cap">リスト 12-8<span>nl_to_sparql.py — 応答から SPARQL と confidence を取り出す</span></p>
+    <pre>sparql     = self._extract_sparql(llm_response.text)
+confidence = self._extract_confidence(llm_response.text)
+
+<span class="k">def</span> _extract_sparql(self, response: str) -&gt; str:
+    <span class="c"># ```sparql ... ``` を剥がす</span>
+    match = re.search(<span class="s">r"```sparql\s*(.*?)\s*```"</span>, response, re.DOTALL)
+    <span class="k">if</span> match:
+        <span class="k">return</span> match.group(<span class="n">1</span>).strip()
+
+    <span class="c"># 次に ``` SELECT ... ``` を試す</span>
+    match = re.search(<span class="s">r"```\s*(SELECT.*?)\s*```"</span>, response, re.DOTALL | re.IGNORECASE)
+    ...
+    <span class="c"># それでも駄目なら、括弧の深さを数えて SPARQL らしい塊を拾う</span></pre>
+  </div>
+  <p>構造化出力 (JSON スキーマ) ではありません。<strong>Markdown のコードブロックを正規表現で剥がしています。</strong>失敗したときのために、3 段のフォールバックが用意されています。</p>
+  <p><code>confidence</code> も、応答本文の「<code>Confidence: 0.85</code>」という行から拾った<strong>自己申告値</strong>です。そのまま使わず、あとで <code>_calibrate_confidence()</code> が機械的に補正します。<strong>LLM の自己評価は信用しない</strong>という判断です。</p>
+
+  <h4>④ どう検証するか — 3 段</h4>
+  <div class="lst">
+    <p class="cap">リスト 12-9<span>tier2/ontop/sparql_validator.py — validate()</span></p>
+    <pre><span class="k">async def</span> validate(self, sparql: str, namespace: str) -&gt; ValidationResult:
+    <span class="k">if</span> <span class="k">not</span> sparql <span class="k">or</span> <span class="k">not</span> sparql.strip():
+        <span class="k">return</span> ValidationResult(valid=<span class="k">False</span>, error=<span class="s">"Empty SPARQL"</span>)
+
+    <span class="y"># ① 構文 — rdflib でパースできるか</span>
+    syntax_result = self._validate_syntax(sparql)
+    <span class="k">if</span> <span class="k">not</span> syntax_result.valid:
+        <span class="k">return</span> syntax_result
+
+    <span class="y"># ② URI 実在 — Neptune に本当にあるか問い合わせる</span>
+    validate_namespace(namespace)
+    uri_result = <span class="k">await</span> self._validate_uris(sparql, namespace)
+    <span class="k">if</span> <span class="k">not</span> uri_result.valid:
+        <span class="k">return</span> uri_result
+
+    <span class="y"># ③ domain/range 整合 — 「クラス違いのプロパティ」を捕まえる</span>
+    <span class="c"># fail-OPEN: 明確な不一致だけ落とす。判断できなければ通す。</span>
+    <span class="k">return</span> <span class="k">await</span> self._validate_domain_range(sparql, namespace)
+
+
+<span class="k">def</span> _validate_syntax(self, sparql):
+    <span class="k">try</span>:
+        prepareQuery(sparql)        <span class="c"># rdflib。第 7 章で使ったのと同じライブラリ</span>
+        <span class="k">return</span> ValidationResult(valid=<span class="k">True</span>)
+    <span class="k">except</span> Exception:
+        <span class="k">return</span> ValidationResult(valid=<span class="k">False</span>, error=<span class="s">"SPARQL syntax error"</span>)</pre>
+  </div>
+  <p>② の中身が面白いところです。<strong>幻覚 URI を捕まえる仕掛けが、SPARQL 1 本</strong>で書かれています。</p>
+  <div class="lst">
+    <p class="cap">リスト 12-10<span>sparql_validator.py — URI が実在するかを 1 往復で確かめる</span></p>
+    <pre>values_clause = <span class="s">" "</span>.join(f<span class="s">"(&lt;{uri}&gt;)"</span> <span class="k">for</span> uri <span class="k">in</span> safe_uris)
+graph_uri_prefix = namespace_graph_prefix(self._graph_uri_template, namespace)
+count_sparql = (
+    f<span class="s">"SELECT (COUNT(DISTINCT ?s) AS ?found) WHERE {{"</span>
+    f<span class="s">" GRAPH ?g {{ VALUES (?s) {{ {values_clause} }} ?s ?p ?o }}"</span>
+    f<span class="s">' FILTER(STRSTARTS(STR(?g), "{graph_uri_prefix}")) }}'</span>
+)</pre>
+  </div>
+  <p><strong>第 7 章で手で書いた <code>FILTER</code> が、そのままここに居ます。</strong>LLM が出した URI を <code>VALUES</code> に並べ、<strong>公開済みの名前付きグラフの中に主語として存在する数</strong>を数える。数が足りなければ、その URI は<strong>存在しないものを LLM が作った</strong>ということです。</p>
+  <p>③ が <strong>fail-open</strong> であることも、コメントに明記されています。「判断できないときは通す」。正しいクエリを誤って止めないほうを選んでいます。<strong>止める側に倒していない</strong>のは、設計の判断です。</p>
+
+  <h4>⑤ 落ちたら、機械が LLM を矯正する</h4>
+  <div class="lst">
+    <p class="cap">リスト 12-11<span>nl_to_sparql.py — 検証エラーをプロンプトに書き足して再試行</span></p>
+    <pre>max_validation_retries = <span class="n">2</span>
+validation_feedback: list[str] = []
+
+<span class="k">for</span> attempt <span class="k">in</span> range(max_validation_retries + <span class="n">1</span>):
+    user_prompt = self._build_user_prompt(query, tbox, namespace, few_shot_block)
+    <span class="k">if</span> validation_feedback:
+        user_prompt += (
+            <span class="s">"\n\n⚠️ CORRECTION REQUIRED — your previous SPARQL had errors:\n"</span>
+            + <span class="s">"\n"</span>.join(f<span class="s">"- {fb}"</span> <span class="k">for</span> fb <span class="k">in</span> validation_feedback)
+            + <span class="s">"\n\nPlease generate a corrected SPARQL query that avoids these issues."</span>
+        )
+
+    ...  <span class="c"># LLM 呼び出し → SPARQL 抽出</span>
+
+    validation = <span class="k">await</span> self._validator.validate(sparql, namespace)
+    <span class="k">if</span> validation.valid:
+        <span class="k">break</span>                                       <span class="c"># 成功。ループを抜ける</span>
+
+    <span class="k">if</span> attempt &lt; max_validation_retries:
+        validation_feedback.append(validation.error <span class="k">or</span> <span class="s">"validation failed"</span>)</pre>
+  </div>
+  <p>これが<strong>第 0 章で「機械が検証して弾く」と書いたものの実物</strong>です。ただし弾くだけではありません。<strong>落ちた理由を言葉にして LLM に返し、書き直させています。</strong>人間は一度も介在しません。回数は 2 回で打ち切りです。</p>
+
+  <h4>⑥ SQL になってから、もう一度検査する</h4>
+  <p>検証を通った SPARQL は Ontop に渡り、Trino SQL になります。<strong>その SQL に対して、あらためて検査が走ります。</strong></p>
+  <div class="lst">
+    <p class="cap">リスト 12-12<span>tier2/sql_firewall.py — 許可リストと AST 全走査</span></p>
+    <pre><span class="c"># 通すものを列挙する（許可リスト）。禁止を数えるより安全。</span>
+_SAFE_STATEMENT_TYPES = (Select, Union, Intersect, Except)
+
+<span class="c"># AST のどこに隠れていても拒否する</span>
+_DATA_MODIFYING_NODES = (Insert, Update, Delete, Merge, Into, Create, Drop, Alter)
+
+_DANGEROUS_FUNCTIONS = frozenset({
+    <span class="s">"pg_read_file"</span>, <span class="s">"pg_ls_dir"</span>, <span class="s">"dblink"</span>, <span class="s">"lo_import"</span>, <span class="s">"lo_export"</span>,
+    <span class="s">"copy"</span>, <span class="s">"pg_sleep"</span>, ...
+})
+
+<span class="k">def</span> validate(self, sql: str, dialect: str = <span class="s">"trino"</span>) -&gt; <span class="k">None</span>:
+    self.check_statement_type(sql)
+
+    <span class="k">try</span>:
+        parsed = sqlglot.parse_one(sql, read=dialect)
+    <span class="k">except</span> sqlglot.errors.ParseError <span class="k">as</span> e:
+        <span class="k">raise</span> UnsafeSQLError(<span class="s">"Failed to parse SQL statement"</span>) <span class="k">from</span> e   <span class="c"># 読めない = 拒否</span>
+
+    <span class="k">if</span> <span class="k">not</span> isinstance(parsed, _SAFE_STATEMENT_TYPES):
+        <span class="k">raise</span> UnsafeSQLError(...)
+
+    <span class="y"># CTE の中に隠した DML も捕まえる（AST を全部歩く）</span>
+    <span class="c"># 例: WITH d AS (DELETE FROM t RETURNING *) SELECT * FROM d</span>
+    <span class="k">for</span> node <span class="k">in</span> parsed.walk():
+        <span class="k">if</span> isinstance(node, _DATA_MODIFYING_NODES):
+            <span class="k">raise</span> UnsafeSQLError(...)
+
+    <span class="k">for</span> func <span class="k">in</span> parsed.find_all(sqlglot.exp.Anonymous, sqlglot.exp.Func):
+        <span class="k">if</span> getattr(func, <span class="s">"name"</span>, <span class="s">""</span>).lower() <span class="k">in</span> _DANGEROUS_FUNCTIONS:
+            <span class="k">raise</span> UnsafeSQLError(...)</pre>
+  </div>
+  <p>正規表現で <code>DROP</code> を探しているのではありません。<strong>SQL を構文木に変換して、全ノードを歩いています。</strong>だから <code>WITH d AS (DELETE FROM t RETURNING *) SELECT * FROM d</code> のように <code>SELECT</code> で始まる形に偽装しても捕まります。そして<strong>パースできない SQL は拒否</strong>です (fail-closed)。リスト 12-9 の ③ が fail-open だったのと逆向きになっています。</p>
+  <div class="box key">
+    <div class="bh">実行されるのは、LLM が書いた SQL ではない</div>
+    <div class="lst" style="margin:12px 0 0">
+      <p class="cap">リスト 12-13<span>tier2/ontop/vkg_translator.py — 認可済み SQL だけを実行する</span></p>
+      <pre>fw_result = self._firewall.evaluate(vkg_result.sql, profile, namespace=namespace)
+<span class="k">if</span> fw_result.denied:
+    <span class="k">return</span> Tier2Result(..., error=f<span class="s">"Firewall denied: {fw_result.reason}"</span>)
+
+...
+<span class="g">authorized_sql = fw_result.authorized_sql</span>       <span class="c"># ← 生成物そのままではない</span>
+query_result = <span class="k">await</span> self._executor.execute(
+    authorized_sql, namespace=namespace, data_source_id=resolved_source,
+    max_rows=max_rows, timeout_seconds=timeout_seconds,
+)</pre>
+    </div>
+    <p style="margin-top:12px">実行に渡すのは <code>vkg_result.sql</code> ではなく <code>fw_result.authorized_sql</code> です。<strong>ファイアウォールは判定するだけでなく、SQL を書き換えます</strong> — 権限プロファイルの <code>tableAllowlist</code> と <code>columnDenylist</code> を Cedar で評価し、その人が見てよい範囲に絞った SQL を返します。</p>
+  </div>
+
+  <h4>まとめると</h4>
+  <table>
+    <thead><tr><th style="width:22%">段</th><th style="width:44%">何を弾くか</th><th style="width:34%">落ちたとき</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Guardrails</strong></td><td>プロンプト攻撃 (<code>guard_content</code> の質問だけを検査)</td><td>終端。SPARQL を作らない</td></tr>
+      <tr><td><strong>① 構文</strong></td><td>SPARQL としてパースできない</td><td class="ok">エラー文を足して<strong>再生成</strong></td></tr>
+      <tr><td><strong>② URI 実在</strong></td><td><strong>存在しない URI</strong> — 幻覚の主要な捕獲点</td><td class="ok">同上</td></tr>
+      <tr><td><strong>③ domain/range</strong></td><td>クラス違いのプロパティ使用。<strong>fail-open</strong></td><td class="ok">同上</td></tr>
+      <tr><td><strong>④ SQL Firewall</strong></td><td>SELECT 以外 / CTE 内の DML / 危険関数 / 表・列の権限外。<strong>fail-closed</strong></td><td class="no">終端 (403)。再生成しない</td></tr>
+    </tbody>
+  </table>
+  <p>再生成が効くのは <strong>①〜③ の SPARQL 段だけ</strong>です。SQL になってから落ちたら、そこで終わりです。<strong>「意味の間違い」は書き直させ、「安全性の違反」は即座に切る</strong> — 段によって扱いを変えているのが読みどころです。</p>
+
+  <h3>12.5 この題材だと、どうなるか</h3>
   <p>第 6 章で書いた優良顧客ルールを COA に入れたとします。何が起きるでしょうか。</p>
   <table>
     <thead><tr><th style="width:26%">期待</th><th style="width:16%">実際</th><th style="width:58%">理由</th></tr></thead>
@@ -3029,14 +3953,14 @@ ec:C002 <span class="k">a</span> ec:顧客 .                <span class="c"># 2 
       <tr class="ok"><td><code>xsd:decimal</code> / <code>xsd:double</code> の型ミスを教えてくれる</td><td class="y">される</td><td>専用の型トークン検証器がある。第 6 章の罠は<strong>構築時に検出される</strong></td></tr>
       <tr class="no"><td>鈴木さん・田中さんに<strong>自動で優良顧客の型が付く</strong></td><td class="n">付かない</td><td><strong>クエリ時に推論器が走らない。</strong>回答側のパッケージに推論ライブラリが入っていない</td></tr>
       <tr class="no"><td>SHACL 違反があれば書き込みを止めてくれる</td><td class="n">止めない</td><td>SHACL 検証は<strong>構築時にオントロジー自身を検査する</strong>もの。クエリ経路には無い</td></tr>
-      <tr class="ok"><td>LLM が正しい列名・JOIN 経路で SQL を書く</td><td class="y">なる</td><td>抜粋をプロンプトに入れる仕組みが実装されている (次項)</td></tr>
+      <tr class="ok"><td>LLM が正しい列名・JOIN 経路で SQL を書く</td><td class="y">なる</td><td>抜粋をプロンプトに入れる仕組みが実装されている (下のリスト 12-14)</td></tr>
     </tbody>
   </table>
 
-  <h3>12.4 プロンプトに何が入るのか</h3>
+  <h4>組み上がったプロンプトを見る</h4>
   <p>COA は<strong>Turtle をそのまま LLM に渡していません</strong>。整形した抜粋を渡します。題材に当てはめると、こういう文字列になります。</p>
   <div class="lst">
-    <p class="cap">リスト 12-1<span>COA が LLM に渡す抜粋 (題材に当てはめた形)</span></p>
+    <p class="cap">リスト 12-14<span>COA が LLM に渡す抜粋 (題材に当てはめた形)</span></p>
     <pre><span class="k">PREFIX</span> ec: <span class="u">&lt;http://example.com/ec#&gt;</span>
 
 <span class="y">Classes:</span>
@@ -3068,18 +3992,9 @@ ec:C002 <span class="k">a</span> ec:顧客 .                <span class="c"># 2 
     <p style="margin-top:12px;font-weight:700;color:var(--red)">ただし — この note を書くのは人間です。空欄なら、空欄のまま LLM に渡ります。</p>
   </div>
 
-  <h3>12.5 生成後の検査</h3>
-  <p>LLM が SPARQL や SQL を出した後、COA は 4 つの門で機械的に検査します。</p>
-  <table>
-    <thead><tr><th style="width:22%">門</th><th style="width:44%">やること</th><th style="width:34%">落ちたらどうなるか</th></tr></thead>
-    <tbody>
-      <tr><td><strong>① 構文検証</strong></td><td>SPARQL としてパースできるか (rdflib)</td><td>次の段にフォールバック</td></tr>
-      <tr class="ok"><td><strong>② URI 実在確認</strong></td><td><strong>生成された URI が Neptune に実在するかを問い合わせる</strong></td><td>同上。<strong>幻覚 URI を捕まえる主要な仕掛け</strong></td></tr>
-      <tr><td><strong>③ 認可</strong></td><td>この人がこの名前空間を検索してよいか</td><td>終端 (403)</td></tr>
-      <tr class="ok"><td><strong>④ SQL Firewall</strong></td><td>SELECT 以外を拒否 / 危険関数を遮断 / 表・列の許可リスト</td><td>終端。<strong>解析できなければ拒否 (fail-closed)</strong></td></tr>
-    </tbody>
-  </table>
+  
 
+  <h3>12.6 結局、COA は何を制御しているのか</h3>
   <div class="box note">
     <div class="bh">正しい理解の仕方</div>
     <p>COA の制御は<strong>「LLM を決定論に置き換える」ものではありません</strong>。実際にやっているのは 3 つです。</p>
@@ -3089,6 +4004,8 @@ ec:C002 <span class="k">a</span> ec:顧客 .                <span class="c"># 2 
     <p style="margin-top:10px">クエリ生成そのものは<strong>最後まで確率的</strong>です。変わるのは <strong>外し方が予測可能になり、検証できるようになる</strong>ことです。</p>
   </div>
 
+  
+
   <div class="sum">
     <div class="bh">第 12 章のまとめ</div>
     <ul>
@@ -3096,7 +4013,14 @@ ec:C002 <span class="k">a</span> ec:顧客 .                <span class="c"># 2 
       <li><strong>HermiT と SHACL は構築時にのみ動く</strong> — オントロジー自身の検査のため。クエリ時には走らない</li>
       <li>プロンプトには Turtle ではなく<strong>整形した抜粋</strong>が入る (値・JOIN 経路・用語集)</li>
       <li>用語集の <code>note</code> が第 2 章の事故を防ぐ鍵。<strong>ただし書くのは人間</strong></li>
-      <li>生成後に <strong>4 つの門</strong>で機械的に検査する</li>
+      <li>生成後の検査は <strong>Guardrails → 構文 → URI 実在 → domain/range → SQL Firewall</strong>。<strong>SPARQL 段は再生成、SQL Firewall は即終端</strong></li>
+      <li>検証器は <strong>10 個 / 3 段</strong>。<strong>Tier-1 の 5 個だけが公開をブロック</strong>する。HermiT と pySHACL はそこ</li>
+      <li>Neptune に入るのは<strong>第 4〜6 章と同じトリプル</strong>＋ <code>coa:isMapped</code>。<strong>R2RML 自体は入らない</strong></li>
+      <li><code>coa:isMapped</code> は<strong>信頼境界のマーカー</strong> — 外から持ち込まれたものは剥がされる</li>
+      <li>OpenSearch は<strong>「探すための文」と「渡すための文」を別々に持つ</strong>。型と値は検索のノイズになるが、生成には必須だから</li>
+      <li>ユーザーの質問は<strong>プロンプト本文に入っていない</strong> — Guardrails の検査を絞るため <code>guard_content</code> で別送する</li>
+      <li>検証に落ちたら<strong>エラー文をプロンプトに書き足して最大 2 回やり直す</strong>。SPARQL 段は再生成、SQL Firewall は即終端</li>
+      <li>実行されるのは生成物ではなく <code>authorized_sql</code> — <strong>ファイアウォールが権限に合わせて書き換えた SQL</strong></li>
     </ul>
   </div>
 </section>
@@ -3322,7 +4246,7 @@ ind:アクティブ顧客 <span class="k">a</span> owl:Class <span class="k">;</
 <section class="ch" id="c16">
   <div class="cn"><b>第 16 章</b><i></i></div>
   <h2>デモ ③ Minecraft — 自律ループの最小模型</h2>
-  <p class="lead">最後は Minecraft です。本番業務でやると危ない「Agent が自分で判断して世界を書き換える」を、構造を保ったまま安全に見せられます。ただし<strong>最初に 1 つ訂正しておくべきことがあります</strong>。</p>
+  <p class="lead">最後は Minecraft です。第 0 章の <strong>E</strong> — オントロジーの上で Agent が自分で判断して動く段階 — を、<strong>製品から借りずに最小構成で自分で組んだもの</strong>です。だから中身を全部分解できます。おまけに、本番業務では試せない「Agent が自分で世界を書き換える」を安全に観察できます。ただし<strong>最初に 1 つ訂正しておくべきことがあります</strong>。</p>
 
   <h3>16.1 訂正 — このデモは RDF を使っていない</h3>
   <div class="box warn">
@@ -3441,7 +4365,7 @@ g.add_edge(<span class="s">"cobblestone"</span>, <span class="s">"stone_block"</
   <div class="box col">
     <p class="bt">RAG の限界と、オントロジーの真価</p>
     <p><strong>RAG は「関連情報を LLM に届ける」ことしかできません。</strong>LLM が読み違えたとき — 順序を間違える、前提を飛ばす、同じ手順を 2 回書く — それを<strong>外から検証する仕組みが無い</strong>のです。</p>
-    <p>オントロジーの真価は、構造化されているので <strong>プログラムが LLM を検証し、矯正できる</strong>ことにあります。「LLM に情報を渡す」だけでなく「<strong>LLM の間違いを直す</strong>」まで含めて設計できる。第 0 章の図 0-2 で言えば、<strong>機械の担当</strong>が仕事をできるようになる、ということです。</p>
+    <p>オントロジーの真価は、構造化されているので <strong>プログラムが LLM を検証し、矯正できる</strong>ことにあります。「LLM に情報を渡す」だけでなく「<strong>LLM の間違いを直す</strong>」まで含めて設計できる。第 0 章の図 0-5 で言えば、<strong>機械の担当</strong>が仕事をできるようになる、ということです。</p>
     <p>結論は <strong>RAG はオントロジーの代替ではなく補完</strong>です。参考知識の供給は RAG、実行構造の保証はオントロジー。目的で使い分けます。</p>
   </div>
 
@@ -3469,7 +4393,7 @@ g.add_edge(<span class="s">"cobblestone"</span>, <span class="s">"stone_block"</
   </div>
   <p>LLM が出したのは <strong>3 ステップで、しかも重複あり、しかも木を切る工程が丸ごと抜けている</strong>プランでした。それが <strong>6 ステップの正しい実行</strong>になっています。LLM を賢くしたわけではありません。<strong>同じ 7B のモデルのまま、機械側が直しています。</strong></p>
   <div class="box key">
-    <p class="bt">これが第 0 章の図 0-2 の実物</p>
+    <p class="bt">これが第 0 章の図 0-5 の実物</p>
     <p>LLM の担当は「何をすべきか、だいたいの見当をつける」。機械の担当は「順序を保証し、抜けを補い、実行する」。<strong>どちらか一方では動きません。</strong></p>
     <p>業務システムに置き換えると、LLM が出した処理計画を、依存関係の定義に照らして並べ替え・不足分を補完してから実行する、という構造になります。<strong>第 14 章の COA で「生成後に 4 つの門で検査する」と言ったのと、同じ発想の別の実装</strong>です。</p>
   </div>
@@ -3530,6 +4454,8 @@ g.add_edge(<span class="s">"cobblestone"</span>, <span class="s">"stone_block"</
       <tr><td><strong>COA</strong></td><td>AWS の Context Ontology Accelerator。オントロジーを LLM のグラウンディング層に使う実装 (第 12 章)</td></tr>
     <tr><td><strong>マテリアライズ</strong></td><td>materialization / 実体化。推論や変換の<strong>結果を先に計算して保存しておく</strong>こと。ここでは ABox も RDF に変換して Triple Store に入れる方式を指す。仮想化 (VKG) の対概念 (§11.4)</td></tr>
       <tr><td><strong>owl:disjointWith</strong></td><td>2 つのクラスが<strong>重ならない</strong>（両方に属するものは存在しない）と宣言する構文。OWL ではクラス名が違うだけでは重ならないことにならないので、これを書いて初めて「両方の一種」が矛盾になる (§11.5)</td></tr>
+      <tr><td><strong>セマンティックレイヤー</strong></td><td>業務用語（「優良顧客」「売上」）を物理データに対応させ、指標の定義を 1 箇所に置く層の総称。RDF や推論は必須ではなく、SQL と YAML で実装する製品（dbt Semantic Layer・Cube 等）もある。<strong>オントロジーは、これを RDF で実装する流派</strong> (第 0 章)</td></tr>
+      <tr><td><strong>Ontology-grounded Agent</strong></td><td>オントロジーを土台に据えた Agent。単にデータを引くのではなく、<strong>行動・権限・業務の手順までオントロジー側に書いてあるので、Agent が一連の流れを自分で繋げる</strong>。図 0-3 の <strong>E</strong> にあたり、今後の競争軸になる領域 (第 0 章)</td></tr>
       </tbody>
   </table>
 </section>

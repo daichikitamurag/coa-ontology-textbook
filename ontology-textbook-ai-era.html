@@ -3551,7 +3551,8 @@ ec:C002 <span class="k">a</span> ec:顧客 .                <span class="c"># 2 
 
   <p>ここから、<strong>2 つのフェーズを順に</strong>見ていきます。まず構築フェーズ（§12.4）、そのあとクエリフェーズ（§12.5）です。</p>
   <h3>12.4 構築フェーズ — 何が、どの段で、誰によって作られるのか</h3>
-  <p>構築フェーズを細かく見ていきます。まず押さえたいのは<strong>何が誰によって作られるのか</strong>です。「AI がオントロジーを作ってくれる」と聞くと <strong>LLM が Turtle を書いている</strong>ように思えますが、公開ソースを読むとそうではありませんでした。</p>
+  <p>構築フェーズを細かく見ていきます。まず押さえたいのは<strong>何が誰によって作られるのか</strong>です。<strong>AI は確かにオントロジーを作ります。</strong>ただし「どこを」作るのかが、直感とは違いました。</p>
+  <p><strong>意味の側は LLM が決めています</strong> — 各表の説明、列の説明、同義語、業務用語集、そして<strong>外部キーの推測</strong>まで。<strong>一方、それを Turtle や R2RML という書式に落とす作業は、決定論的なコードがやっています。</strong>「AI が Turtle を書く」のではなく、<strong>AI が中身を決めて、機械が形にする</strong>という分担です。</p>
   <div class="fig">
   <p class="cap">図 12-4<span>何が、どの段で、誰によって作られるのか</span></p>
   <svg viewBox="0 0 880 752" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
@@ -3638,10 +3639,10 @@ ec:C002 <span class="k">a</span> ec:顧客 .                <span class="c"># 2 
       <text x="96" y="669" font-size="9.5" font-weight="800" fill="#155c3c">埋め込みベクトル</text>
       <text x="264" y="669" font-size="8.5" fill="#1c5b9c">Cohere Embed v4。生成 LLM ではなく埋め込みモデル</text>
     <rect x="14" y="700" width="852" height="42" rx="8" fill="#fff" stroke="#6b7480" stroke-width="1.6" stroke-dasharray="6 4"/>
-    <text x="30" y="718" font-size="10" fill="#3d4654"><tspan font-weight="900" fill="#4c1d95">LLM</tspan> が働くのは <tspan font-weight="800">① ② ⑤ の追加提案 ⑥ の埋め込み</tspan>だけ。<tspan font-weight="900" fill="#0f3f6b">Turtle・R2RML・SHACL の生成そのものは決定論</tspan>です。</text>
+    <text x="30" y="718" font-size="10" fill="#3d4654"><tspan font-weight="900" fill="#4c1d95">LLM</tspan> が働くのは <tspan font-weight="800">① ② のメタデータ生成、⑤ の追加提案、⑥ の埋め込み</tspan>。<tspan font-weight="900" fill="#0f3f6b">Turtle・R2RML・SHACL の生成そのものは決定論</tspan>です。</text>
     <text x="30" y="734" font-size="10" fill="#3d4654">だから <tspan font-weight="800">同じカタログからは、いつも同じ Turtle が出ます</tspan>。揺れるのは <tspan font-weight="900" fill="#4c1d95">① ② で LLM が埋めたメタデータ</tspan>の側です。</text>
   </svg>
-  <p class="fc"><strong>「AI がオントロジーを書く」わけではありません。</strong>LLM が<strong>カタログを埋め</strong>、そこから<strong>機械が Turtle を組み立てる</strong>という分担です</p>
+  <p class="fc"><strong>AI が作るのは「中身」、機械が作るのは「書式」</strong>です。説明・同義語・用語集・外部キーの推測は <strong>LLM が決め</strong>、Turtle と R2RML の組み立ては<strong>決定論的なコード</strong>がやります</p>
 </div>
   <p>この図の <strong>①〜⑤</strong> を、以降の 3 節で<strong>実際の画面と並べて</strong>追います。<strong>§12.4.1 が Scan（①②③）、§12.4.2 が Induction（④）、§12.4.3 が Validate（⑤）</strong>。構築フェーズが終わったら、§12.5 でクエリフェーズに移ります。</p>
 
@@ -3721,7 +3722,7 @@ ind:refunds_orderId <span class="k">a</span> owl:ObjectProperty <span class="k">
   <h3 class="sub">12.4.3 Validate — 押して初めて検証が走る</h3>
   <p>図 12-3 に、まだ説明していない言葉が 2 つありました。<strong>「検証 (検証器 10 個 / 3 段階)」</strong>と<strong>「3-Tier オーケストレータ」</strong>です。上の図はその 2 つの箱を開いたものです。</p>
   <p>検証器で押さえておきたいのは <strong>「誰が決めた条件で検査しているのか」</strong>です。<strong>10 個のうち 8 個は、条件が COA 側のコードに固定されています</strong> — OWL 2 の意味論、グラフの循環、型の一覧など、<strong>利用者が何も書かなくても走る検査</strong>です。つまり調べているのは「業務ルールが守られているか」ではなく、<strong>「オントロジーが道具として壊れていないか」</strong>です。</p>
-  <p>もう 1 つ図に入れたのが <strong>LLM がどこで働くか</strong>です。<strong>検証器 10 個は、どれも LLM を使いません</strong>（<code>validation/validators/</code> に Bedrock 呼び出しは 1 つもありません）。構築フェーズで LLM が働くのは<strong>オントロジーそのものの提案</strong>と、<strong>SHACL の shape を日本語から起こすところ</strong>だけです。<strong>作るのは LLM、検査は決定論</strong>という分け方になっています。</p>
+  <p>もう 1 つ図に入れたのが <strong>LLM がどこで働くか</strong>です。<strong>検証器 10 個は、どれも LLM を使いません</strong>（<code>validation/validators/</code> に Bedrock 呼び出しは 1 つもありません）。構築フェーズで LLM が働くのは <strong>3 箇所</strong> — <strong>Scan のメタデータ生成</strong>（ここが一番大きい）、<strong>外部キーの推測</strong>、そして <strong>SHACL の追加提案</strong>です。<strong>意味を決めるのは LLM、書式に落とすのと検査は決定論</strong>という分け方になっています。</p>
   <p>条件を外から渡すのは <strong>2 個だけ</strong>です。<strong>SHACL</strong>（shape がそのまま条件になる）と<strong>想定質問</strong>（その問いに答えられるオントロジーか）。ここが唯一、<strong>「この会社ではこうあるべき」を検査できる場所</strong>です。</p>
   <p>ただし<strong>「外から渡す」＝「人が書いた」ではありません。</strong>SHACL の shape の出所は 3 つあります。</p>
   <ul>
@@ -4843,7 +4844,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
     <thead><tr><th style="width:28%">本書の記述</th><th style="width:36%">実機ではどうだったか</th><th style="width:36%">どう直したか</th></tr></thead>
     <tbody>
       <tr class="no"><td>CSV には外部キーが無いので JOIN 経路は導けない</td><td><strong>導けた。</strong><code>AI_INFERRED</code> / 95% で ObjectProperty が 2 本</td><td class="ok">撤回。図 12-7・12-8、リスト 12-1</td></tr>
-      <tr class="no"><td>構築フェーズで LLM が働くのは <strong>2 箇所</strong></td><td><strong>3 箇所。</strong>Scan 時のメタデータ生成が一番大きい</td><td class="ok">図 12-10 に「Scan」を追加</td></tr>
+      <tr class="no"><td>構築フェーズで LLM が働くのは <strong>2 箇所</strong></td><td><strong>3 箇所。</strong>Scan 時のメタデータ生成が一番大きい</td><td class="ok">図 12-10 と §12.4.3 を修正</td></tr>
       <tr class="no"><td>プロンプトに <code>allowed values</code> が入る</td><td><strong>入らなかった。</strong><code>distinctValues</code> は 0 件</td><td class="ok">リスト 12-3 に注記。上の ③</td></tr>
       <tr class="no"><td>SHACL の shape は「人が日本語で書く」</td><td>自然文は<strong>記録されるだけ</strong>。SHACL にならない</td><td class="ok">図 12-10 を「構造化制約か生 SHACL」に</td></tr>
       <tr class="no"><td>LLM が SHACL 制約を提案してくれる</td><td><strong>提案の仕組みはあるが、返る種類（日付の前後・取り得る値など）は<strong>まだ実際の検査にならない</strong>。押しても 22 個から増えなかった</strong></td><td class="ok">図 12-4・図 12-10 を修正。§12.4.3 に実機の画面</td></tr>

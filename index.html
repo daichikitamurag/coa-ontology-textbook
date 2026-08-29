@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>オントロジーの教科書</title>
+<style>
+  :root{
+    --ink:#14181f; --ink3:#3d4654; --mut:#6b7480; --line:#e3e7ed;
+    --pg:#faf9f7; --acc:#8b5a2b; --asoft:#faf5ee; --aline:#e8d9c4;
+    --sans:'Hiragino Sans','Yu Gothic','Noto Sans JP',-apple-system,sans-serif;
+    --serif:'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--pg);color:var(--ink3);font-family:var(--sans);
+       font-size:15.5px;line-height:1.95;-webkit-font-smoothing:antialiased}
+  .band{background:linear-gradient(160deg,#241a12 0%,#3b2a1c 55%,#4a3018 100%);color:#f5efe6;padding:56px 24px 46px}
+  .band .in{max-width:760px;margin:0 auto}
+  .band .k{font-size:11px;font-weight:700;letter-spacing:.24em;color:#d9b98a;text-transform:uppercase;margin-bottom:18px}
+  .band h1{font-family:var(--serif);font-size:30px;line-height:1.45;margin:0 0 12px;font-weight:700}
+  .band .au{font-size:13px;font-weight:700;color:#d9b98a;letter-spacing:.08em;margin:0 0 18px}
+  .band p{font-size:15px;color:#ded3c4;margin:0;line-height:1.9}
+  main{max-width:760px;margin:0 auto;padding:40px 24px 90px}
+  h2{font-family:var(--serif);font-size:19px;color:var(--ink);margin:0 0 6px;font-weight:700}
+  .lead{color:var(--mut);font-size:14px;margin:0 0 26px}
+  a.card{display:block;text-decoration:none;background:#fff;border:1px solid var(--line);
+    border-radius:11px;padding:20px 22px;margin:0 0 16px;transition:border-color .15s,box-shadow .15s}
+  a.card:hover{border-color:var(--aline);box-shadow:0 3px 16px rgba(139,90,43,.10)}
+  a.card .t{font-family:var(--serif);font-size:17.5px;font-weight:700;color:var(--ink);line-height:1.5;margin:0 0 7px}
+  a.card .d{font-size:13.5px;color:var(--mut);margin:0;line-height:1.75}
+  a.card .go{display:inline-block;margin-top:12px;font-size:12.5px;font-weight:800;color:var(--acc);letter-spacing:.04em}
+  .note{background:var(--asoft);border:1px solid var(--aline);border-radius:10px;padding:17px 19px;margin:30px 0 0}
+  .note b{color:var(--ink)}
+  .note p{margin:0;font-size:13.5px;line-height:1.85}
+  .note p+p{margin-top:9px}
+  ul{padding-left:22px;margin:8px 0 0} li{font-size:13.5px;margin-bottom:5px}
+  footer{border-top:1px solid var(--line);margin-top:44px;padding-top:20px;font-size:12.5px;color:var(--mut)}
+  @media (max-width:560px){
+    .band{padding:38px 16px 32px} .band h1{font-size:22px}
+    main{padding:30px 16px 70px}
+    a.card{padding:16px 16px} a.card .t{font-size:16px}
+  }
+</style>
+</head>
+<body>
+<div class="band"><div class="in">
+  <div class="k">社内クラウド勉強会 — A Textbook</div>
+  <h1>オントロジーの教科書</h1>
+  <p class="au">北村</p>
+  <p>RDF / RDFS / OWL / SPARQL / SHACL から、VKG と AWS Context Ontology Accelerator の実測まで。同じ内容を、2 つのタイトルで置いています。</p>
+</div></div>
+<main>
+  <h2>2 つの版</h2>
+  <p class="lead">中身は同じです。読む人に合わせて選んでください。</p>
+
+  <a class="card" href="aws-coa-ontology-textbook.html">
+    <p class="t">AWS Context Ontology Accelerator を<br>理解するうえで必要な、オントロジーの教科書</p>
+    <p class="d">COA を触る前に押さえたい前提から入る版。AWS の話をする相手に。</p>
+    <span class="go">開く →</span>
+  </a>
+
+  <a class="card" href="ontology-textbook-ai-era.html">
+    <p class="t">Agentic AI 時代における<br>オントロジーの教科書</p>
+    <p class="d">なぜいまオントロジーなのか、から入る版。AI の文脈で話す相手に。</p>
+    <span class="go">開く →</span>
+  </a>
+
+  <div class="note">
+    <p><b>読むときの注意</b></p>
+    <p>第 12 章には実機の AWS COA を触った実測が入っています。<b>COA はベータ版で、開発が進行中です。</b>「現時点では未実装」と書いてある箇所は、読んでいる時点では動いているかもしれません。設計の評価ではなく、ある日の記録として読んでください。</p>
+    <p><b>スマートフォンで読む場合</b></p>
+    <ul>
+      <li>図と表は<b>横スクロール</b>できます。細かい図はピンチで拡大してください</li>
+      <li>1 ファイル約 3 MB です。Wi-Fi での最初の読み込みをおすすめします</li>
+      <li>目次はページ<b>上部</b>にあります（PC では左側）</li>
+    </ul>
+  </div>
+
+  <footer>社内勉強会用の資料です。実測値・スクリーンショットは特定時点のものです。</footer>
+</main>
+</body>
+</html>

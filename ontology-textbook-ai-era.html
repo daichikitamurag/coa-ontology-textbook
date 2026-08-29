@@ -263,7 +263,7 @@
   <div class="pt">第 3 部 — 実際に動かす</div>
   <a href="#c10"><b>10</b>4 層のスタック</a>
   <a href="#c11"><b>11</b>VKG — RDB を動かさない</a>
-  <a href="#c12"><b>12</b>COA は何を実装したのか</a>
+  <a href="#c12"><b>12</b>AWS Context Ontology Accelerator</a>
 
   <div class="pt">第 4 部 — 判断のために</div>
   <a href="#c13"><b>13</b>どこまで効いて、どこから効かないか</a>
@@ -3141,9 +3141,39 @@ ec:C002 <span class="k">a</span> ec:顧客 .                <span class="c"># 2 
 </section>
 
 <hr>
-<section class="ch" id="c12"><h3>12.1 COA がやろうとしていること</h3>
+<section class="ch" id="c12">
+  <h2>AWS Context Ontology Accelerator — 実機で確かめる</h2>
+  <p class="lead">ここまでの 11 章で出てきた道具が、実際のサービスではどう組まれているのか。<strong>AWS Context Ontology Accelerator</strong>（以下 <strong>COA</strong>）を実機で動かして確かめます。まず、それが何なのかを押さえます。</p>
+
+  <h3>12.1 AWS Context Ontology Accelerator とは何か</h3>
+  <p>正式名称は <strong>AWS Context Ontology Accelerator</strong>、略して <strong>COA</strong> です。AWS が公開しているものですが、<strong>買えるマネージドサービスではありません</strong>。<strong>Apache License 2.0 のオープンソース実装</strong>で、自分の AWS アカウントに展開して使います。</p>
+  <p>公式の説明はこうです。</p>
+  <blockquote>An open-source <strong>semantic context layer</strong> for AWS that combines knowledge graphs, formal ontologies, and rule-based systems with modern AI — enabling agents to retrieve context, validate it against business logic, and determine correct actions.</blockquote>
+  <p>訳すと「知識グラフ・形式オントロジー・ルールベースの仕組みを現代の AI と組み合わせた、AWS 向けのオープンソースな<strong>セマンティックコンテキスト層</strong>。エージェントが<strong>文脈を取得し、業務ロジックに照らして検証し、正しい行動を決められるようにする</strong>」。第 0 章で挙げた 3 つの壁のうち、<strong>1 本目（意味の壁）に正面から当てにいく</strong>ものです。</p>
+
+  <h4>何をするものなのか — Scan → Model → Serve</h4>
+  <p>公式が挙げる流れは 3 段です。本書の章立てもこれに沿わせています。</p>
+  <div class="tw"><table>
+    <thead><tr><th style="width:16%">段</th><th style="width:52%">やること</th><th style="width:32%">本書のどこ</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Scan</strong><br>調べる</td><td>データ源に繋ぎ、スキーマを取り、メタデータを AI で補い、文書も取り込む</td><td>§12.5（実機の画面つき）</td></tr>
+      <tr><td><strong>Model</strong><br>組む</td><td>オントロジーを誘導して整え、指標を定義し、1 つの意味グラフにまとめる</td><td>§12.6・§12.7</td></tr>
+      <tr><td><strong>Serve</strong><br>答える</td><td>VKG（SPARQL 連携）で問い合わせ、グラフを辿り、<strong>MCP 経由で AI エージェントに文脈を渡す</strong></td><td>§12.3・§12.8</td></tr>
+    </tbody>
+  </table></div>
+  <p>最後の <strong>MCP</strong>（Model Context Protocol）が地味に重要です。COA は<strong>人が画面から使うだけのものではなく、エージェントから呼ばれる前提</strong>で作られています。第 0 章で「Agent がいろんなシステムにアクセスする」と描いた、その受け口にあたります。</p>
+  <p>権限は<strong>名前空間で区切られ</strong>、その中の役割（owner / maintainer / data-steward / data-analyst）と、名前空間を横断する役割（platform-admin / platform-viewer）で管理されます。<strong>「誰がどの意味定義を変えられるか」を分けられる</strong>作りです — 第 2 章の「定義が散る」問題に対する、統制側からの答えにあたります。</p>
+
+  <div class="box note">
+    <div class="bh">この章を読むときに押さえておきたい 3 点</div>
+    <p>① <strong>ベータ版です。</strong>画面にも <code>Beta</code> のバッジが出ます。この章には「現時点では未実装」と書いた箇所がいくつかありますが、<strong>読んでいる時点では動いているかもしれません</strong>。</p>
+    <p style="margin-top:10px">② <strong>自分の環境に展開するものです。</strong>だから構成も設定も自分の責任範囲にあり、逆に<strong>中身を全部読める</strong>。この章の「なぜそう動くのか」は、すべて公開ソースから確かめたものです。</p>
+    <p style="margin-top:10px">③ <strong>本章は特定時点の記録です。</strong>スクリーンショットと実測値（秒数・確信度・件数）は、すべて 1 つのデモ環境で実際に取ったものです。設計の評価ではなく、<strong>ある日の観測</strong>として読んでください。</p>
+  </div>
+
+  <h3>12.2 COA がやろうとしていること</h3>
   <p>COA の狙いは一言で言えます。<strong>「オントロジーを LLM のグラウンディング層として使う」</strong>。</p>
-  <p><strong>グラウンディング</strong>とは、LLM の答えを<strong>手元の事実に接地させる</strong>ことです。放っておくと LLM は「アクティブ顧客とは 30 日だろう」と自分で埋めます（第 2 章）。そこで <strong>SQL を書かせる前に、社内で決めた定義を読ませる</strong>。それだけなら RAG と同じですが、渡すのが文章ではなく<strong>オントロジー</strong>である点が違います。構造があるので、<strong>出てきた答えを機械が検査できます</strong>（§12.6）。</p>
+  <p><strong>グラウンディング</strong>とは、LLM の答えを<strong>手元の事実に接地させる</strong>ことです。放っておくと LLM は「アクティブ顧客とは 30 日だろう」と自分で埋めます（第 2 章）。そこで <strong>SQL を書かせる前に、社内で決めた定義を読ませる</strong>。それだけなら RAG と同じですが、渡すのが文章ではなく<strong>オントロジー</strong>である点が違います。構造があるので、<strong>出てきた答えを機械が検査できます</strong>（§12.7）。</p>
 
   <p>言葉だけだと掴みにくいので、図で見ます。<strong>層が無いとどうなるか</strong>と、<strong>層があると何が変わるか</strong>を並べました。</p>
   <div class="fig">
@@ -3227,7 +3257,7 @@ ec:C002 <span class="k">a</span> ec:顧客 .                <span class="c"># 2 
   <p class="fc">要点は<strong>「同じ層を 2 回使う」</strong>ことです。LLM に渡す材料と、LLM の出力を検査する物差しが<strong>同一のオントロジー</strong>。だから <strong>答えを出しているのは LLM ではなく COA</strong> — 破線の中が COA の責任範囲です</p>
 </div>
 
-  <h3>12.2 全体像 — 構築とクエリに割れている</h3>
+  <h3>12.3 全体像 — 構築とクエリに分かれている</h3>
   <p>ここが最も重要な構造です。<strong>COA は「構築」と「クエリ」が完全に別のプロセスに分かれています。</strong></p>
   <div class="fig">
     <p class="cap">図 12-2<span>構築フェーズとクエリフェーズ — 推論器はどこに居るか</span></p>
@@ -3359,137 +3389,137 @@ ec:C002 <span class="k">a</span> ec:顧客 .                <span class="c"># 2 
       <rect x="34" y="428" width="804" height="14" rx="4" fill="#fff" stroke="#154a80" stroke-width="1.4"/>
       <text x="436" y="439" text-anchor="middle" font-size="9.5" font-weight="900" fill="#154a80">依存ライブラリに owlready2 も pyshacl も入っていない = 構造上、ここで推論は走らない</text>
     </svg>
-    <p class="fc"><strong>推論器と SHACL は「構築フェーズでオントロジー自身を検査する」ために使われている</strong>。クエリ結果の検査に使われるのは、赤い箱の<strong>機械的な検査だけ</strong> (内訳は §12.6)</p>
+    <p class="fc"><strong>推論器と SHACL は「構築フェーズでオントロジー自身を検査する」ために使われている</strong>。クエリ結果の検査に使われるのは、赤い箱の<strong>機械的な検査だけ</strong> (内訳は §12.7)</p>
   </div>
   <p>図 12-2 は<strong>論理的な</strong>構造でした。これを実際の AWS サービスに落とすと、こうなります。<strong>色のレーンが図 12-2 の ①②③ に対応</strong>しています。</p>
   <div class="fig">
     <p class="cap">図 12-3<span>AWS 構成 — 2 フェーズと共有アーティファクト（公開ソースから実測）</span></p>
     <svg viewBox="0 0 940 660" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
           <defs>
-            <marker id="aArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#546074"/></marker>
-            <marker id="aArrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#ED7100"/></marker>
-            <marker id="aArrB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#2563eb"/></marker>
+            <marker id="aArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#6b7480"/></marker>
+            <marker id="aArrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#96650a"/></marker>
+            <marker id="aArrB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#1c5b9c"/></marker>
           </defs>
     
           <!-- AWS Cloud boundary (AWS 図法: 実線 + 左上ラベル) -->
-          <rect x="14" y="14" width="912" height="632" rx="4" fill="none" stroke="#232F3E" stroke-width="2"/>
-          <rect x="14" y="14" width="132" height="26" fill="#232F3E"/>
+          <rect x="14" y="14" width="912" height="632" rx="4" fill="none" stroke="#2b3440" stroke-width="2"/>
+          <rect x="14" y="14" width="132" height="26" fill="#2b3440"/>
           <text x="80" y="32" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">AWS Cloud</text>
           <!-- Region boundary (AWS 図法: 破線) -->
-          <rect x="32" y="52" width="876" height="578" rx="4" fill="none" stroke="#00A4A6" stroke-width="1.6" stroke-dasharray="7 5"/>
-          <text x="46" y="70" font-size="11.5" font-weight="700" fill="#00A4A6">Region: us-east-1</text>
+          <rect x="32" y="52" width="876" height="578" rx="4" fill="none" stroke="#6b7480" stroke-width="1.6" stroke-dasharray="7 5"/>
+          <text x="46" y="70" font-size="11.5" font-weight="700" fill="#6b7480">Region: us-east-1</text>
     
           <!-- ── BUILD LANE ── -->
-          <rect x="52" y="86" width="836" height="212" rx="6" fill="#FFF7ED" stroke="#ED7100" stroke-width="1.8"/>
-          <text x="70" y="108" font-size="13" font-weight="900" fill="#B35309">① 構築フェーズ (Induction) — ここだけで推論と制約検証が走る</text>
-          <text x="70" y="126" font-size="10.5" fill="#B35309">packages/ontology-engine · ECS Fargate · Claude Sonnet 4-6</text>
+          <rect x="52" y="86" width="836" height="212" rx="6" fill="#fdf8ec" stroke="#96650a" stroke-width="1.8"/>
+          <text x="70" y="108" font-size="13" font-weight="900" fill="#7a5208">① 構築フェーズ (Induction) — ここだけで推論と制約検証が走る</text>
+          <text x="70" y="126" font-size="10.5" fill="#7a5208">packages/ontology-engine · ECS Fargate · Claude Sonnet 4-6</text>
     
           <use href="#ic-glue" x="86" y="146" width="46" height="46"/>
-          <text x="109" y="208" text-anchor="middle" font-size="10" font-weight="700" fill="#334155">AWS Glue</text>
-          <text x="109" y="221" text-anchor="middle" font-size="9" fill="#64748b">Data Catalog</text>
+          <text x="109" y="208" text-anchor="middle" font-size="10" font-weight="700" fill="#3d4654">AWS Glue</text>
+          <text x="109" y="221" text-anchor="middle" font-size="9" fill="#6b7480">Data Catalog</text>
     
           <use href="#ic-ecs" x="228" y="146" width="46" height="46"/>
-          <text x="251" y="208" text-anchor="middle" font-size="10" font-weight="700" fill="#334155">ECS Fargate</text>
-          <text x="251" y="221" text-anchor="middle" font-size="9" fill="#64748b">ontology-engine</text>
+          <text x="251" y="208" text-anchor="middle" font-size="10" font-weight="700" fill="#3d4654">ECS Fargate</text>
+          <text x="251" y="221" text-anchor="middle" font-size="9" fill="#6b7480">ontology-engine</text>
     
           <use href="#ic-bedrock" x="228" y="238" width="34" height="34"/>
-          <text x="278" y="252" font-size="9.5" font-weight="700" fill="#0F766E">Bedrock</text>
-          <text x="278" y="265" font-size="9" fill="#0d9488">Sonnet 4-6</text>
+          <text x="278" y="252" font-size="9.5" font-weight="700" fill="#3d4654">Bedrock</text>
+          <text x="278" y="265" font-size="9" fill="#6b7480">Sonnet 4-6</text>
     
-          <rect x="336" y="146" width="196" height="126" rx="6" fill="#fff" stroke="#DD344C" stroke-width="2"/>
-          <text x="434" y="166" text-anchor="middle" font-size="11" font-weight="900" fill="#B02A3C">検証 (検証器 10 個 / 3 段階)</text>
-          <text x="434" y="184" text-anchor="middle" font-size="9.5" font-weight="700" fill="#DD344C">owlready2 + HermiT</text>
-          <text x="434" y="198" text-anchor="middle" font-size="9.5" font-weight="700" fill="#DD344C">pyshacl (SHACL)</text>
-          <text x="434" y="214" text-anchor="middle" font-size="9" fill="#64748b">整合性 / 充足不能クラス / 循環</text>
-          <text x="434" y="227" text-anchor="middle" font-size="9" fill="#64748b">連結性 / XSD 型トークン</text>
-          <text x="434" y="240" text-anchor="middle" font-size="9" fill="#64748b">OOPS! / ラベル網羅 / CQ</text>
-          <text x="434" y="260" text-anchor="middle" font-size="9.5" font-weight="800" fill="#B02A3C">1 段目の error で公開をブロック</text>
+          <rect x="336" y="146" width="196" height="126" rx="6" fill="#fff" stroke="#b3261e" stroke-width="2"/>
+          <text x="434" y="166" text-anchor="middle" font-size="11" font-weight="900" fill="#8c1e18">検証 (検証器 10 個 / 3 段階)</text>
+          <text x="434" y="184" text-anchor="middle" font-size="9.5" font-weight="700" fill="#b3261e">owlready2 + HermiT</text>
+          <text x="434" y="198" text-anchor="middle" font-size="9.5" font-weight="700" fill="#b3261e">pyshacl (SHACL)</text>
+          <text x="434" y="214" text-anchor="middle" font-size="9" fill="#6b7480">整合性 / 充足不能クラス / 循環</text>
+          <text x="434" y="227" text-anchor="middle" font-size="9" fill="#6b7480">連結性 / XSD 型トークン</text>
+          <text x="434" y="240" text-anchor="middle" font-size="9" fill="#6b7480">OOPS! / ラベル網羅 / CQ</text>
+          <text x="434" y="260" text-anchor="middle" font-size="9.5" font-weight="800" fill="#8c1e18">1 段目の error で公開をブロック</text>
     
-          <rect x="566" y="146" width="150" height="126" rx="6" fill="#fff" stroke="#ED7100" stroke-width="1.6"/>
-          <text x="641" y="166" text-anchor="middle" font-size="11" font-weight="800" fill="#B35309">公開 (Publish)</text>
-          <text x="641" y="186" text-anchor="middle" font-size="9" fill="#475569">Neptune の名前付きグラフ</text>
-          <text x="641" y="199" text-anchor="middle" font-size="8.5" font-family="Menlo,monospace" fill="#64748b">urn:orion:{ns}:published</text>
-          <text x="641" y="219" text-anchor="middle" font-size="9" font-weight="700" fill="#B35309">同時に書き込むマーカー:</text>
-          <text x="641" y="234" text-anchor="middle" font-size="8.5" font-family="Menlo,monospace" fill="#C2410C">coa:isMapped true</text>
-          <text x="641" y="248" text-anchor="middle" font-size="8.5" font-family="Menlo,monospace" fill="#C2410C">coa:distinctValues</text>
+          <rect x="566" y="146" width="150" height="126" rx="6" fill="#fff" stroke="#96650a" stroke-width="1.6"/>
+          <text x="641" y="166" text-anchor="middle" font-size="11" font-weight="800" fill="#7a5208">公開 (Publish)</text>
+          <text x="641" y="186" text-anchor="middle" font-size="9" fill="#3d4654">Neptune の名前付きグラフ</text>
+          <text x="641" y="199" text-anchor="middle" font-size="8.5" font-family="Menlo,monospace" fill="#6b7480">{base}/{ns}/{ontology_id}</text>
+          <text x="641" y="219" text-anchor="middle" font-size="9" font-weight="700" fill="#7a5208">同時に書き込むマーカー:</text>
+          <text x="641" y="234" text-anchor="middle" font-size="8.5" font-family="Menlo,monospace" fill="#96650a">coa:isMapped true</text>
+          <text x="641" y="248" text-anchor="middle" font-size="8.5" font-family="Menlo,monospace" fill="#96650a">coa:distinctValues</text>
     
           <use href="#ic-bedrock" x="756" y="150" width="42" height="42"/>
-          <text x="777" y="206" text-anchor="middle" font-size="10" font-weight="700" fill="#334155">Bedrock</text>
-          <text x="777" y="219" text-anchor="middle" font-size="9" fill="#64748b">Cohere Embed v4</text>
-          <text x="777" y="232" text-anchor="middle" font-size="9" fill="#64748b">1024 次元</text>
-          <text x="777" y="250" text-anchor="middle" font-size="9" font-weight="700" fill="#0F766E">埋め込み生成</text>
+          <text x="777" y="206" text-anchor="middle" font-size="10" font-weight="700" fill="#3d4654">Bedrock</text>
+          <text x="777" y="219" text-anchor="middle" font-size="9" fill="#6b7480">Cohere Embed v4</text>
+          <text x="777" y="232" text-anchor="middle" font-size="9" fill="#6b7480">1024 次元</text>
+          <text x="777" y="250" text-anchor="middle" font-size="9" font-weight="700" fill="#3d4654">埋め込み生成</text>
     
-          <g stroke="#ED7100" stroke-width="2" marker-end="url(#aArrG)">
+          <g stroke="#96650a" stroke-width="2" marker-end="url(#aArrG)">
             <line x1="140" y1="169" x2="222" y2="169"/><line x1="280" y1="169" x2="330" y2="169"/>
             <line x1="538" y1="169" x2="560" y2="169"/><line x1="722" y1="169" x2="750" y2="169"/>
           </g>
     
           <!-- ── SHARED ARTIFACT (pivot) ── -->
-          <rect x="52" y="316" width="836" height="128" rx="6" fill="#FDF4FF" stroke="#C925D1" stroke-width="2.4"/>
-          <text x="70" y="338" font-size="13" font-weight="900" fill="#9333EA">② 共有アーティファクト — 構築が書き、クエリが読む</text>
+          <rect x="52" y="316" width="836" height="128" rx="6" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2.4"/>
+          <text x="70" y="338" font-size="13" font-weight="900" fill="#6b3fa0">② 共有アーティファクト — 構築が書き、クエリが読む</text>
           <use href="#ic-neptune" x="120" y="352" width="46" height="46"/>
-          <text x="143" y="414" text-anchor="middle" font-size="10" font-weight="700" fill="#334155">Amazon Neptune</text>
-          <text x="143" y="427" text-anchor="middle" font-size="9" fill="#64748b">RDF / SPARQL · IAM 認証</text>
+          <text x="143" y="414" text-anchor="middle" font-size="10" font-weight="700" fill="#3d4654">Amazon Neptune</text>
+          <text x="143" y="427" text-anchor="middle" font-size="9" fill="#6b7480">RDF / SPARQL · IAM 認証</text>
           <use href="#ic-opensearch" x="300" y="352" width="46" height="46"/>
-          <text x="323" y="414" text-anchor="middle" font-size="10" font-weight="700" fill="#334155">OpenSearch Serverless</text>
-          <text x="323" y="427" text-anchor="middle" font-size="9" fill="#64748b">クラス/プロパティのベクトル</text>
+          <text x="323" y="414" text-anchor="middle" font-size="10" font-weight="700" fill="#3d4654">OpenSearch Serverless</text>
+          <text x="323" y="427" text-anchor="middle" font-size="9" fill="#6b7480">クラス/プロパティのベクトル</text>
           <use href="#ic-s3" x="480" y="352" width="46" height="46"/>
-          <text x="503" y="414" text-anchor="middle" font-size="10" font-weight="700" fill="#334155">Amazon S3</text>
-          <text x="503" y="427" text-anchor="middle" font-size="9" fill="#64748b">ontology artifacts (.ttl)</text>
+          <text x="503" y="414" text-anchor="middle" font-size="10" font-weight="700" fill="#3d4654">Amazon S3</text>
+          <text x="503" y="427" text-anchor="middle" font-size="9" fill="#6b7480">ontology artifacts (.ttl)</text>
           <use href="#ic-dynamodb" x="640" y="352" width="46" height="46"/>
-          <text x="663" y="414" text-anchor="middle" font-size="10" font-weight="700" fill="#334155">DynamoDB</text>
-          <text x="663" y="427" text-anchor="middle" font-size="9" fill="#64748b">namespaces / sources</text>
+          <text x="663" y="414" text-anchor="middle" font-size="10" font-weight="700" fill="#3d4654">DynamoDB</text>
+          <text x="663" y="427" text-anchor="middle" font-size="9" fill="#6b7480">namespaces / sources</text>
           <use href="#ic-athena" x="790" y="352" width="46" height="46"/>
-          <text x="813" y="414" text-anchor="middle" font-size="10" font-weight="700" fill="#334155">Amazon Athena</text>
-          <text x="813" y="427" text-anchor="middle" font-size="9" fill="#64748b">実データの実行先</text>
+          <text x="813" y="414" text-anchor="middle" font-size="10" font-weight="700" fill="#3d4654">Amazon Athena</text>
+          <text x="813" y="427" text-anchor="middle" font-size="9" fill="#6b7480">実データの実行先</text>
     
           <!-- ── QUERY LANE ── -->
-          <rect x="52" y="462" width="836" height="152" rx="6" fill="#EFF6FF" stroke="#2563eb" stroke-width="1.8"/>
-          <text x="70" y="484" font-size="13" font-weight="900" fill="#1D4ED8">③ クエリフェーズ (Serve / Playground) — 推論器も SHACL も居ない</text>
-          <text x="70" y="502" font-size="10.5" fill="#1D4ED8">packages/context-manager · Bedrock AgentCore Runtime · Claude Sonnet 5</text>
+          <rect x="52" y="462" width="836" height="152" rx="6" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="1.8"/>
+          <text x="70" y="484" font-size="13" font-weight="900" fill="#154a80">③ クエリフェーズ (Serve / Playground) — 推論器も SHACL も居ない</text>
+          <text x="70" y="502" font-size="10.5" fill="#154a80">packages/context-manager · Bedrock AgentCore Runtime · Claude Sonnet 5</text>
     
           <use href="#ic-user" x="80" y="524" width="40" height="40"/>
-          <text x="100" y="578" text-anchor="middle" font-size="9.5" font-weight="700" fill="#334155">利用者</text>
+          <text x="100" y="578" text-anchor="middle" font-size="9.5" font-weight="700" fill="#3d4654">利用者</text>
           <use href="#ic-cloudfront" x="164" y="524" width="40" height="40"/>
-          <text x="184" y="578" text-anchor="middle" font-size="9.5" font-weight="700" fill="#334155">CloudFront</text>
+          <text x="184" y="578" text-anchor="middle" font-size="9.5" font-weight="700" fill="#3d4654">CloudFront</text>
           <use href="#ic-waf" x="234" y="524" width="40" height="40"/>
-          <text x="254" y="578" text-anchor="middle" font-size="9.5" font-weight="700" fill="#334155">AWS WAF</text>
+          <text x="254" y="578" text-anchor="middle" font-size="9.5" font-weight="700" fill="#3d4654">AWS WAF</text>
           <use href="#ic-cognito" x="304" y="524" width="40" height="40"/>
-          <text x="324" y="578" text-anchor="middle" font-size="9.5" font-weight="700" fill="#334155">Cognito</text>
+          <text x="324" y="578" text-anchor="middle" font-size="9.5" font-weight="700" fill="#3d4654">Cognito</text>
           <use href="#ic-apigw" x="374" y="524" width="40" height="40"/>
-          <text x="394" y="578" text-anchor="middle" font-size="9.5" font-weight="700" fill="#334155">API Gateway</text>
+          <text x="394" y="578" text-anchor="middle" font-size="9.5" font-weight="700" fill="#3d4654">API Gateway</text>
     
-          <rect x="440" y="516" width="150" height="56" rx="6" fill="#fff" stroke="#01A88D" stroke-width="2"/>
+          <rect x="440" y="516" width="150" height="56" rx="6" fill="#fff" stroke="#8fb4d6" stroke-width="2"/>
           <use href="#ic-bedrock" x="450" y="524" width="38" height="38"/>
-          <text x="546" y="538" text-anchor="middle" font-size="10" font-weight="800" fill="#0F766E">AgentCore</text>
-          <text x="546" y="551" text-anchor="middle" font-size="9" fill="#0d9488">Runtime</text>
-          <text x="546" y="564" text-anchor="middle" font-size="8.5" fill="#0d9488">Sonnet 5</text>
-          <text x="515" y="588" text-anchor="middle" font-size="9" fill="#64748b">3-Tier オーケストレータ (答え方 3 通り)</text>
+          <text x="546" y="538" text-anchor="middle" font-size="10" font-weight="800" fill="#3d4654">AgentCore</text>
+          <text x="546" y="551" text-anchor="middle" font-size="9" fill="#6b7480">Runtime</text>
+          <text x="546" y="564" text-anchor="middle" font-size="8.5" fill="#6b7480">Sonnet 5</text>
+          <text x="515" y="588" text-anchor="middle" font-size="9" fill="#6b7480">3-Tier オーケストレータ (答え方 3 通り)</text>
     
           <use href="#ic-ecs" x="628" y="524" width="40" height="40"/>
-          <text x="648" y="578" text-anchor="middle" font-size="9.5" font-weight="700" fill="#334155">ECS vkg</text>
-          <text x="648" y="590" text-anchor="middle" font-size="9" fill="#64748b">Ontop</text>
+          <text x="648" y="578" text-anchor="middle" font-size="9.5" font-weight="700" fill="#3d4654">ECS vkg</text>
+          <text x="648" y="590" text-anchor="middle" font-size="9" fill="#6b7480">Ontop</text>
           <use href="#ic-lambda" x="706" y="524" width="40" height="40"/>
-          <text x="726" y="578" text-anchor="middle" font-size="9.5" font-weight="700" fill="#334155">Lambda ×41</text>
+          <text x="726" y="578" text-anchor="middle" font-size="9.5" font-weight="700" fill="#3d4654">Lambda ×41</text>
           <use href="#ic-cloudwatch" x="790" y="524" width="40" height="40"/>
-          <text x="810" y="578" text-anchor="middle" font-size="9.5" font-weight="700" fill="#334155">CloudWatch</text>
+          <text x="810" y="578" text-anchor="middle" font-size="9.5" font-weight="700" fill="#3d4654">CloudWatch</text>
     
-          <g stroke="#2563eb" stroke-width="1.8" marker-end="url(#aArrB)">
+          <g stroke="#1c5b9c" stroke-width="1.8" marker-end="url(#aArrB)">
             <line x1="124" y1="544" x2="158" y2="544"/><line x1="208" y1="544" x2="228" y2="544"/>
             <line x1="278" y1="544" x2="298" y2="544"/><line x1="348" y1="544" x2="368" y2="544"/>
             <line x1="418" y1="544" x2="434" y2="544"/><line x1="594" y1="544" x2="622" y2="544"/>
           </g>
     
           <!-- vertical relations to the artifact -->
-          <g stroke="#C925D1" stroke-width="2.2" fill="none">
+          <g stroke="#6b3fa0" stroke-width="2.2" fill="none">
             <path d="M434 278 L434 300 L470 300 L470 312" marker-end="url(#aArr)"/>
             <path d="M700 278 L700 300 L560 300 L560 312" marker-end="url(#aArr)"/>
             <path d="M515 458 L515 468" marker-end="url(#aArr)"/>
             <path d="M648 518 L648 500 L700 500 L700 448" marker-end="url(#aArr)"/>
           </g>
-          <text x="330" y="303" font-size="10" font-weight="800" fill="#9333EA">書き込む (公開)</text>
-          <text x="742" y="303" font-size="10" font-weight="800" fill="#9333EA">埋め込みを書き込む</text>
-          <text x="528" y="464" font-size="10" font-weight="800" fill="#9333EA">読むだけ</text>
+          <text x="330" y="303" font-size="10" font-weight="800" fill="#6b3fa0">書き込む (公開)</text>
+          <text x="742" y="303" font-size="10" font-weight="800" fill="#6b3fa0">埋め込みを書き込む</text>
+          <text x="528" y="464" font-size="10" font-weight="800" fill="#6b3fa0">読むだけ</text>
         </svg>
     <p class="fc"><strong>推論器 (HermiT) と SHACL は、オレンジのレーンにしか居ません。</strong>青いレーン（回答）は、紫のアーティファクトを<strong>読むだけ</strong>です</p>
   </div>
@@ -3707,9 +3737,9 @@ ec:C002 <span class="k">a</span> ec:顧客 .                <span class="c"># 2 
   </svg>
   <p class="fc">画面右上のトグル 1 つで、ここまで変わります。<strong>登録した定義を使わせたいなら Standard</strong> — 選び間違えると、書いたものが届きません</p>
 </div>
-  <p>ここを知らないと、<strong>指標を丁寧に登録したのに 1 度も参照されない</strong>という事故が起きます。実際に起きました（§12.7 の末尾）。</p>
+  <p>ここを知らないと、<strong>指標を丁寧に登録したのに 1 度も参照されない</strong>という事故が起きます。実際に起きました（§12.8 の末尾）。</p>
 
-  <h3>12.3 構築フェーズ — 何が、どの段で、誰によって作られるのか</h3>
+  <h3>12.4 構築フェーズ — 何が、どの段で、誰によって作られるのか</h3>
   <p>構築フェーズを細かく見ていきます。まず押さえたいのは<strong>何が誰によって作られるのか</strong>です。「AI がオントロジーを作ってくれる」と聞くと <strong>LLM が Turtle を書いている</strong>ように思えますが、公開ソースを読むとそうではありませんでした。</p>
   <div class="fig">
   <p class="cap">図 12-7<span>何が、どの段で、誰によって作られるのか</span></p>
@@ -3783,7 +3813,7 @@ ec:C002 <span class="k">a</span> ec:顧客 .                <span class="c"># 2 
       <rect x="30" y="552" width="58" height="18" rx="9" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="1.8"/>
       <text x="59" y="565" text-anchor="middle" font-size="9" font-weight="900" fill="#4c1d95">LLM</text>
       <text x="96" y="565" font-size="9.5" font-weight="800" fill="#8c1e18">SHACL 制約の提案</text>
-      <text x="264" y="565" font-size="8.5" fill="#1c5b9c">提案は出るが、まだ実際の検査にはならない (Beta / §12.6)</text>
+      <text x="264" y="565" font-size="8.5" fill="#1c5b9c">提案は出るが、まだ実際の検査にはならない (Beta / §12.7)</text>
     <rect x="14" y="596" width="852" height="88" rx="8" fill="#f1f8f4" stroke="#1c5b9c" stroke-width="2.2"/>
     <rect x="14" y="596" width="852" height="30" rx="8" fill="#1c5b9c"/>
     <text x="30" y="616" font-size="11.5" font-weight="900" fill="#fff">⑥ 公開 (Accept) — Neptune と OpenSearch へ</text>
@@ -3802,9 +3832,9 @@ ec:C002 <span class="k">a</span> ec:顧客 .                <span class="c"># 2 
   </svg>
   <p class="fc"><strong>「AI がオントロジーを書く」わけではありません。</strong>LLM が<strong>カタログを埋め</strong>、そこから<strong>機械が Turtle を組み立てる</strong>という分担です</p>
 </div>
-  <p>この図の <strong>①〜⑤</strong> を、以降の 3 節で<strong>実際の画面と並べて</strong>追います。<strong>§12.4 から §12.6 までは、すべて構築フェーズの話</strong>です — <strong>§12.4 がスキャン（①②③）、§12.5 が誘導（④）、§12.6 が検証（⑤）</strong>。クエリフェーズは 図 12-4 で見た 3-Tier で、§12.8 でもう一度触れます。</p>
+  <p>この図の <strong>①〜⑤</strong> を、以降の 3 節で<strong>実際の画面と並べて</strong>追います。<strong>§12.5 から §12.7 までは、すべて構築フェーズの話</strong>です — <strong>§12.5 がスキャン（①②③）、§12.6 が誘導（④）、§12.7 が検証（⑤）</strong>。クエリフェーズは 図 12-4 で見た 3-Tier で、§12.9 でもう一度触れます。</p>
 
-  <h3>12.4 スキャン — LLM がカタログを埋める</h3>
+  <h3>12.5 スキャン — LLM がカタログを埋める</h3>
   <p>ここまでは<strong>仕組みの図</strong>でした。ここからは<strong>実際に動かした画面</strong>を並べます。題材の 3 表 (<code>customers</code> / <code>orders</code> / <code>refunds</code>) を S3 に置いて Glue に登録し、COA でスキャン → 誘導 → 検証まで通したものです。</p>
   <p>先に対応表を置きます。<strong>図のどの部分が、画面のどこに出るのか</strong>です。</p>
   <h4>① スキャン — ここで LLM が一番働く</h4>
@@ -3820,7 +3850,7 @@ ec:C002 <span class="k">a</span> ec:顧客 .                <span class="c"># 2 
     <tbody>
       <tr><td><strong>説明文の自動生成</strong><br><span class="sm">Auto-generate descriptions</span></td><td>表と列ごとに <strong>1〜2 文</strong>の業務向け説明。<code>AI_GENERATED</code> タグが付く</td><td class="ok"><strong><code>rdfs:comment</code></strong>（19 件）</td><td>第 5 章の<strong>注釈</strong>。プロンプトの <code>comment</code></td></tr>
       <tr><td><strong>同義語の生成</strong><br><span class="sm">Generate synonyms</span></td><td>表と列ごとに、業務語の言い換えを <strong>2〜5 個</strong></td><td class="ok"><strong><code>skos:altLabel</code></strong>（19 件）</td><td>プロンプトの <code>synonyms:</code></td></tr>
-      <tr class="no"><td><strong>用語集の生成</strong><br><span class="sm">Generate glossary terms</span></td><td>表と列を、業務ドメインの概念（<strong>1〜3 個</strong>）に対応づける</td><td><strong>入らなかった。</strong>カタログ側のメタデータに留まり、<code>coa:aiContext</code> は 0 件</td><td>§12.7 の Glossary → <strong>§12.9 ⑥</strong></td></tr>
+      <tr class="no"><td><strong>用語集の生成</strong><br><span class="sm">Generate glossary terms</span></td><td>表と列を、業務ドメインの概念（<strong>1〜3 個</strong>）に対応づける</td><td><strong>入らなかった。</strong>カタログ側のメタデータに留まり、<code>coa:aiContext</code> は 0 件</td><td>§12.8 の Glossary → <strong>§12.10 ⑥</strong></td></tr>
       <tr><td><strong>制約発見</strong><br><span class="sm">Constraint discovery</span></td><td>表をまたぐ関係を AI が推論。<code>AI_INFERRED</code> が付き、<strong>昇格前に人のレビューが要る</strong></td><td class="ok"><strong><code>owl:ObjectProperty</code> 2 本</strong>＋<code>rdfs:domain</code> / <code>rdfs:range</code>＋<code>scl:fkProvenance</code>。主キーは <code>owl:hasKey</code> 3 件</td><td>第 5 章の <strong>domain / range</strong>、図 11-2</td></tr>
       <tr><td colspan="2"><strong>このトグルを切ると</strong> — 「取得されるのは技術的なメタデータのみ」</td><td><code>rdfs:label</code> と型だけ</td><td class="no"><strong>第 1 章の DDL と同じ状態</strong></td></tr>
     </tbody>
@@ -3836,7 +3866,7 @@ ec:C002 <span class="k">a</span> ec:顧客 .                <span class="c"># 2 
   <p><code>member_rank</code> には <code>membership</code> / <code>customer tier</code> / <code>loyalty status</code> という用語集が付き、確度 85%。第 5 章で「<code>rdfs:label</code> と <code>rdfs:comment</code> があれば LLM が語を対応づけられる」と書いた、その <code>label</code> と <code>comment</code> を <strong>AI が下書きしている</strong>わけです。</p>
   <div class="box warn">
     <div class="bh">この画面で 1 つだけ、空の列があります</div>
-    <p><code>Sample values</code> が<strong>全行「—」</strong>です。実際の値が採られていません。これが後で効いてきます（§12.9 ③）。</p>
+    <p><code>Sample values</code> が<strong>全行「—」</strong>です。実際の値が採られていません。これが後で効いてきます（§12.10 ③）。</p>
   </div>
   <h4>③ 外部キーまで推論する — 図 11-2 の実物</h4>
   <p>置いたのは CSV です。<strong>外部キー制約はどこにも書いていません。</strong>それでもこう出ました。</p>
@@ -3854,7 +3884,7 @@ ec:C002 <span class="k">a</span> ec:顧客 .                <span class="c"># 2 
   </div>
   <p><strong>図 12-13 で「人は承認するだけ」と書いた箇所の実物</strong>です。逆に言えば、<strong>ここを流し読みで承認すると、AI の推測がそのまま定義になります。</strong></p>
 
-  <h3>12.5 誘導 — 機械が Turtle と R2RML を組む</h3>
+  <h3>12.6 誘導 — 機械が Turtle と R2RML を組む</h3>
   <p>承認が済むと、誘導 (Induce) に進めます。<strong>ここは LLM を呼びません。</strong>スキャンでカタログに溜まったメタデータを、<strong>決定論的に Turtle と R2RML へ変換する</strong>だけです（図 12-13 の ④）。</p>
   <div class="fig">
     <p class="cap">図 12-12<span>実機 — 提案グラフ。これが 図 11-2「外部キーが矢印になる」の実物</span></p>
@@ -3877,7 +3907,7 @@ ind:refunds_orderId <span class="k">a</span> owl:ObjectProperty <span class="k">
   </div>
   <p>§5.2 の <code>ec:注文者 rdfs:domain ec:注文 ; rdfs:range ec:顧客</code> と<strong>同じ構造</strong>です。<strong>人が書くしかないと思っていた JOIN 経路が、推論で埋まりました。</strong></p>
 
-  <h3>12.6 検証 — <code>Validate</code> を押して初めて走る</h3>
+  <h3>12.7 検証 — <code>Validate</code> を押して初めて走る</h3>
   <p>図 12-3 に、まだ説明していない言葉が 2 つありました。<strong>「検証 (検証器 10 個 / 3 段階)」</strong>と<strong>「3-Tier オーケストレータ」</strong>です。上の図はその 2 つの箱を開いたものです。</p>
   <p>検証器で押さえておきたいのは <strong>「誰が決めた条件で検査しているのか」</strong>です。<strong>10 個のうち 8 個は、条件が COA 側のコードに固定されています</strong> — OWL 2 の意味論、グラフの循環、型の一覧など、<strong>利用者が何も書かなくても走る検査</strong>です。つまり調べているのは「業務ルールが守られているか」ではなく、<strong>「オントロジーが道具として壊れていないか」</strong>です。</p>
   <p>もう 1 つ図に入れたのが <strong>LLM がどこで働くか</strong>です。<strong>検証器 10 個は、どれも LLM を使いません</strong>（<code>validation/validators/</code> に Bedrock 呼び出しは 1 つもありません）。構築フェーズで LLM が働くのは<strong>オントロジーそのものの提案</strong>と、<strong>SHACL の shape を日本語から起こすところ</strong>だけです。<strong>作るのは LLM、検査は決定論</strong>という分け方になっています。</p>
@@ -4101,7 +4131,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
     <tbody>
       <tr><td><code>total_purchase</code> は 0 以上</td><td>型は <code>bigint</code> なので、マイナスも入れられる</td><td>第 8 章の <code>sh:minInclusive</code></td></tr>
       <tr><td><code>churned_at</code> は <code>last_order_at</code> より後</td><td><strong>日付 2 つの前後関係</strong>は、型では表せない</td><td>第 8 章の <code>sh:sparql</code></td></tr>
-      <tr><td><code>status</code> は <code>pending</code> / <code>confirmed</code> のどれか</td><td><code>string</code> としか書いていない</td><td>§12.7 の <code>allowed values</code></td></tr>
+      <tr><td><code>status</code> は <code>pending</code> / <code>confirmed</code> のどれか</td><td><code>string</code> としか書いていない</td><td>§12.8 の <code>allowed values</code></td></tr>
     </tbody>
   </table></div>
   <div class="box warn">
@@ -4121,10 +4151,10 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
   <p>ここから出る結論は 1 つです。<strong>「この会社ではこうあるべき」を機械に検査させたいなら、いまは人が書くしかありません。</strong>道は 2 本だけです。</p>
   <ul>
     <li><strong><code>Custom SHACL (advanced)</code> に生の SHACL を貼る</strong> — <strong>第 8 章で手で書いたものが、そのまま使えます</strong></li>
-    <li><strong>指標 (Metric) として登録する</strong> — §12.9 ⑥ の話です</li>
+    <li><strong>指標 (Metric) として登録する</strong> — §12.10 ⑥ の話です</li>
   </ul>
 
-  <h3>12.7 この題材だと、どうなるか</h3>
+  <h3>12.8 この題材だと、どうなるか</h3>
   <p>第 6 章で書いた優良顧客ルールを COA に入れたとします。何が起きるでしょうか。</p>
   <div class="tw"><table>
     <thead><tr><th style="width:26%">期待</th><th style="width:16%">実際</th><th style="width:58%">理由</th></tr></thead>
@@ -4149,7 +4179,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 
 <span class="y">Properties:</span>
  ec:会員ランク (label: 会員ランク) domain: ec:顧客 range: xsd:string
-   <span class="g">allowed values: ["VIP", "Regular"]</span>          <span class="c">← 実機では入らなかった (§12.9 ③)</span>
+   <span class="g">allowed values: ["VIP", "Regular"]</span>          <span class="c">← 実機では入らなかった (§12.10 ③)</span>
  ec:累計購入額 (label: 累計購入額) domain: ec:顧客 range: xsd:decimal
  ec:最終注文日 (label: 最終注文日) domain: ec:顧客 range: xsd:date
 
@@ -4168,7 +4198,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
     <div class="bh">第 2 章の事故が防げる理由が、ここにある</div>
     <p>最後の <strong>Glossary の <code>note</code></strong> を見てください。<strong>「直近 90 日以内に購入した、解約していない顧客」</strong>と書いてあります。</p>
     <p style="margin-top:10px">第 2 章の新人は、この情報が無かったので「30 日くらいかな」と推測しました。この 1 行がプロンプトに入っていれば、<strong>推測する必要がありません</strong>。</p>
-    <p style="margin-top:10px">同様に <code>allowed values: ["VIP", "Regular"]</code> があれば、<code>"vip"</code> と小文字で書いて 0 件になる事故も防げます — <strong>ただし実機ではこの行が出ませんでした</strong>（§12.9 ③）。<code>Join paths</code> があれば JOIN 条件を当てる必要がありません。</p>
+    <p style="margin-top:10px">同様に <code>allowed values: ["VIP", "Regular"]</code> があれば、<code>"vip"</code> と小文字で書いて 0 件になる事故も防げます — <strong>ただし実機ではこの行が出ませんでした</strong>（§12.10 ③）。<code>Join paths</code> があれば JOIN 条件を当てる必要がありません。</p>
     <p style="margin-top:12px;font-weight:700;color:var(--red)">ただし — この note を書くのは人間です。空欄なら、空欄のまま LLM に渡ります。</p>
   </div>
 
@@ -4439,7 +4469,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
     <p style="margin-top:10px"><strong>配線するための材料は、既に保存されています。</strong>読む側が実装されれば繋がります — <strong>設計にはちゃんと場所が用意されている</strong>ということです。</p>
   </div>
   <p>では繋がったとき、オントロジーは何をしてくれるのか。同じ質問で並べます。</p>
-  <p>1 点先に断っておきます。次の図に出てくる <code>ind:PreferredCustomer</code> は<strong>実機には存在しないクラス</strong>です。実機の公開済みオントロジーは <code>ind:Customers</code> / <code>ind:Orders</code> / <code>ind:Refunds</code> の <strong>3 クラスだけ</strong>で、誘導は<strong>テーブル 1 つにクラス 1 つ</strong>しか作りません（これが 図 12-26 の ② です）。§12.6 で提案に貼った同名のクラスは<strong>わざと矛盾させた例</strong>で、検証に弾かれて公開されていません（リスト 12-2）。</p>
+  <p>1 点先に断っておきます。次の図に出てくる <code>ind:PreferredCustomer</code> は<strong>実機には存在しないクラス</strong>です。実機の公開済みオントロジーは <code>ind:Customers</code> / <code>ind:Orders</code> / <code>ind:Refunds</code> の <strong>3 クラスだけ</strong>で、誘導は<strong>テーブル 1 つにクラス 1 つ</strong>しか作りません（これが 図 12-26 の ② です）。§12.7 で提案に貼った同名のクラスは<strong>わざと矛盾させた例</strong>で、検証に弾かれて公開されていません（リスト 12-2）。</p>
   <p>つまり次の図は<strong>「第 6 章で書いた優良顧客クラスが、もし実機のオントロジーに入っていたら」</strong>という想定です。<strong>第 6 章 リスト 6-2 の <code>ec:優良顧客</code> を、そのまま <code>ind:</code> 名前空間に置いたもの</strong>だと考えてください。書き方は第 6 章で確認済みで、<code>owl:equivalentClass</code> と <code>xsd:minInclusive</code> だけで書けます。</p>
   <div class="fig star">
   <p class="cap">図 12-27<span class="badge">最重要</span><span>β版でなければ、オントロジーはどこで効くのか</span></p>
@@ -4448,7 +4478,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
     <rect x="14" y="14" width="852" height="48" rx="8" fill="#fff8ec" stroke="#a8710f" stroke-width="2"/>
     <text x="28" y="30" font-size="9.8" font-weight="900" fill="#6b4708">⚠ この図の <tspan font-family="Menlo,monospace">ind:PreferredCustomer</tspan> は、実機のオントロジーには存在しません。</text>
     <text x="28" y="44" font-size="8.8" fill="#6b4708">実機の公開済みクラスは <tspan font-family="Menlo,monospace">ind:Customers / ind:Orders / ind:Refunds</tspan> の 3 つだけです。これは本書が「こう書くべき」として示す想定クラスです。</text>
-    <text x="28" y="57" font-size="8.8" fill="#6b4708">§12.6 で提案に貼った同名のクラスは<tspan font-weight="800">わざと壊した例</tspan>で、<tspan font-weight="800">検証に弾かれて公開されていません</tspan>（リスト 12-2）。</text>
+    <text x="28" y="57" font-size="8.8" fill="#6b4708">§12.7 で提案に貼った同名のクラスは<tspan font-weight="800">わざと壊した例</tspan>で、<tspan font-weight="800">検証に弾かれて公開されていません</tspan>（リスト 12-2）。</text>
     <rect x="164" y="74" width="552" height="30" rx="15" fill="#2b3440"/>
     <text x="440" y="94" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">「先月のアクティブな優良顧客の売上をレポートにして」</text>
     <rect x="14" y="116" width="852" height="62" rx="8" fill="#f7f4fc" stroke="#6b3fa0" stroke-width="2.2"/>
@@ -4583,7 +4613,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
   <p class="fc">関所は本当に役に立っています — <strong>第 2 章の「列名を間違える」事故はここで消えました</strong>。残ったのが「値を推測する」事故です</p>
 </div>
 
-  <p>実測では <strong>4 つ全部を通過しました</strong>。ここは軽く見ないでください。<strong>生成された SPARQL は列名を 1 つも間違えていません。</strong><code>ind:customers_totalPurchase</code>、<code>ind:orders_amount</code>、<code>ind:orders_customerId</code> — すべて実在するプロパティで、JOIN も §12.5 で誘導が作った ObjectProperty から出ています。</p>
+  <p>実測では <strong>4 つ全部を通過しました</strong>。ここは軽く見ないでください。<strong>生成された SPARQL は列名を 1 つも間違えていません。</strong><code>ind:customers_totalPurchase</code>、<code>ind:orders_amount</code>、<code>ind:orders_customerId</code> — すべて実在するプロパティで、JOIN も §12.6 で誘導が作った ObjectProperty から出ています。</p>
   <p>第 2 章の事故を思い出してください。新人がやりがちな失敗は 2 種類ありました。<strong>①「列名や JOIN を間違える」</strong>と <strong>②「業務定義を知らずに値を推測する」</strong>。<strong>オントロジーは ① を消しました。</strong>これは実測された成果です。</p>
   <div class="box key">
     <div class="bh">消えた事故と、残った事故</div>
@@ -4597,13 +4627,13 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 
 
   <h4>では、COA に <code>ind:PreferredCustomer</code> を定義すべきなのか</h4>
-  <p>定義できます。§12.6 でパッチを貼ったのと同じ手順 — 提案の Turtle に足して <code>Validate</code> を押すだけです。第 6 章 リスト 6-2 の形（<code>owl:equivalentClass</code> ＋ <code>xsd:minInclusive 50000</code>）で書けば、矛盾していないので HermiT も通ります。</p>
+  <p>定義できます。§12.7 でパッチを貼ったのと同じ手順 — 提案の Turtle に足して <code>Validate</code> を押すだけです。第 6 章 リスト 6-2 の形（<code>owl:equivalentClass</code> ＋ <code>xsd:minInclusive 50000</code>）で書けば、矛盾していないので HermiT も通ります。</p>
   <p>ただし<strong>期待していい効果と、期待できない効果があります</strong>。ソースを読んで分かれました。</p>
   <div class="tw"><table>
     <thead><tr><th style="width:34%">定義すると</th><th style="width:14%">効くか</th><th style="width:52%">理由</th></tr></thead>
     <tbody>
       <tr class="ok"><td>LLM が <code>100000</code> と推測しなくなる</td><td class="y">効く（見込み）</td><td>足したクラスは Tier 2 の抜粋に乗ります。<strong>この名前空間には <code>coa:isMapped</code> マーカーが 1 件も無いため</strong>、コードのフォールバックが働いて<strong>全クラスが露出</strong>します。<code>rdfs:comment</code> と <code>skos:altLabel "優良顧客"</code> を付ければ、定義が LLM の目の前に出ます</td></tr>
-      <tr class="ok"><td>矛盾した定義を足せなくなる</td><td class="y">効く</td><td>§12.6 で実演したとおり、HermiT が公開前に止めます。<strong>指標の SQL にはこの検査がありません</strong></td></tr>
+      <tr class="ok"><td>矛盾した定義を足せなくなる</td><td class="y">効く</td><td>§12.7 で実演したとおり、HermiT が公開前に止めます。<strong>指標の SQL にはこの検査がありません</strong></td></tr>
       <tr class="ok"><td>業務側が定義をレビューできる</td><td class="y">効く</td><td><code>rdfs:comment</code> は日本語で書けます。SQL を読めない人でも確認できます</td></tr>
       <tr class="no"><td><code>?c a ind:PreferredCustomer</code> で顧客が引ける</td><td class="n">効かない</td><td><strong>クエリ時に推論器が走らないので、個体に型が付きません</strong>（第 11 章）。0 行のままです。SPARQL は結局 <code>FILTER(?totalPurchase &gt;= 50000)</code> の形になります</td></tr>
       <tr class="no"><td>90 日ルールも機械が守る</td><td class="n">効かない</td><td>OWL に「今日」が無いので書けません（第 6 章）。ここは指標か SPARQL に残ります</td></tr>
@@ -4670,7 +4700,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
     <text x="472" y="256" font-size="8.6" font-weight="900" fill="#155c3c">クラスの定義を 1 行直す。</text>
     <text x="472" y="269" font-size="8.6" font-weight="900" fill="#155c3c">指標は 1 本も触らない。</text>
     <text x="472" y="282" font-size="8.6" font-weight="400" fill="#155c3c">矛盾する定義を足せば HermiT が止める</text>
-    <text x="472" y="295" font-size="8.6" font-weight="400" fill="#155c3c">（§12.6 で実演したとおり、公開前に）</text>
+    <text x="472" y="295" font-size="8.6" font-weight="400" fill="#155c3c">（§12.7 で実演したとおり、公開前に）</text>
     <rect x="14" y="363" width="852" height="126" rx="9" fill="#fff" stroke="#1c5b9c" stroke-width="2.2"/>
     <text x="30" y="385" font-size="11.4" font-weight="900" fill="#0f3f6b">指標は「答えの置き場」、オントロジーは「定義の置き場」。役割が違うので、どちらか一方では足りません。</text>
     <text x="30" y="405" font-size="9.5" fill="#3d4654">指標だけでも、<tspan font-weight="800">登録した質問には正しく答えられます</tspan> — 実測 2.06 秒・確信度 100%・84,500。それは本物の価値です。ただし 4 つが手に入りません。</text>
@@ -4700,7 +4730,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
   <h4>この章の評価 — 方向は正しく、構造のグラウンディングは既に効いている</h4>
   <div class="box key">
     <div class="bh">実測で裏付けられたこと</div>
-    <p>§12.1 に書いたとおり、COA の狙いは「オントロジーを LLM のグラウンディング層として使う」です。<strong>この狙い自体は、実測で裏付けられました。</strong></p>
+    <p>§12.2 に書いたとおり、COA の狙いは「オントロジーを LLM のグラウンディング層として使う」です。<strong>この狙い自体は、実測で裏付けられました。</strong></p>
     <p style="margin-top:10px"><strong>今日すでに効いていたもの:</strong> 列名を 1 つも間違えない SPARQL、誘導が推論した JOIN 経路、公開前に矛盾を止める HermiT、権限に合わせて書き換わる SQL、そして指標に当たったときの 2.06 秒・確信度 100%。<strong>第 2 章の事故のうち「列名と JOIN を間違える」側は、機械が消しました。</strong></p>
     <p style="margin-top:10px"><strong>これから繋がるもの:</strong> 業務概念のクラス化、その定義を回答経路に届けること、指標とクラスの紐付けの利用、日本語での照合。<strong>どれも設計に場所が用意されていて、材料も保存されています。</strong></p>
     <p style="margin-top:12px">だから評価はこうなります — <strong>「今日の COA は、構造のグラウンディングは効く。意味のグラウンディングは、まだ人が指標に書く」</strong>。そして「まだ」の部分は、<strong>作り込みの不足ではなく、順番の問題</strong>に見えます。構造を先に固めてから意味を載せるのは、設計としてむしろ正しい順序です。</p>
@@ -4713,7 +4743,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
     <p style="margin-top:12px;font-weight:800;color:var(--grn)">逆にやらないほうがよいのは、「オントロジーは効かないから指標に全部書く」と決めてしまうことです。定義が指標の数だけ複製されて（図 12-29）、繋がった日に作り直しになります。</p>
   </div>
 
-  <h3>12.8 結局、COA は何を制御しているのか</h3>
+  <h3>12.9 結局、COA は何を制御しているのか</h3>
   <div class="box note">
     <div class="bh">正しい理解の仕方</div>
     <p>COA の制御は<strong>「LLM を決定論に置き換える」ものではありません</strong>。実際にやっているのは 3 つです。</p>
@@ -4732,8 +4762,8 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
       <li>実行されるのは生成物ではなく <code>authorized_sql</code> — <strong>ファイアウォールが権限に合わせて書き換えた SQL</strong>です</li>
     </ul>
   </div>
-  <h3>12.9 実機で分かったこと — 本書の訂正</h3>
-  <p>§12.3 の画面を通して、<strong>本書の記述が実機と合っていなかった箇所</strong>が 4 つ出ました。順に直します。</p>
+  <h3>12.10 実機で分かったこと — 本書の訂正</h3>
+  <p>§12.4 の画面を通して、<strong>本書の記述が実機と合っていなかった箇所</strong>が 4 つ出ました。順に直します。</p>
 
   <h4>① CSV でも JOIN 経路は導ける（訂正）</h4>
   <p>本書はどこかで「Glue の CSV には外部キーが無いので、COA は JOIN 経路を導けない」と説明していました。<strong>これは誤りです。</strong>図 12-10 と 図 12-12 のとおり導けます。</p>
@@ -4744,7 +4774,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
   <p><strong>検証器 10 個が LLM を使わない</strong>という点は変わりません。<strong>作るのは LLM、検査は決定論</strong>という分け方です。</p>
 
   <h4>③ <code>allowed values</code> は入らなかった（訂正）</h4>
-  <p>図 12-9 の <code>Sample values</code> が全行空欄でした。生成された Turtle と R2RML を全文検索しても、<strong><code>coa:distinctValues</code> は 1 件もありません</strong>。§12.7 のリスト 12-3 は、プロンプトにこう入る前提で書いていました。</p>
+  <p>図 12-9 の <code>Sample values</code> が全行空欄でした。生成された Turtle と R2RML を全文検索しても、<strong><code>coa:distinctValues</code> は 1 件もありません</strong>。§12.8 のリスト 12-3 は、プロンプトにこう入る前提で書いていました。</p>
   <div class="lst">
     <p class="cap">リスト 12-5<span>入るはずだったが、実機では出なかったもの</span></p>
     <pre> ec:会員ランク (label: 会員ランク) domain: ec:顧客 range: xsd:string
@@ -4752,7 +4782,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
   </div>
   <p>仕組み自体はあります。「あれば渡す」実装になっていて、<strong>今回は値が採られなかった</strong>ということです。</p>
   <p>影響は具体的です。<strong>「<code>"vip"</code> と小文字で書いて 0 件になる」事故は、この構成では防げません。</strong></p>
-  <p>そして <code>Infer constraints</code> でも解決しませんでした（§12.6）。「取り得る値」は<strong>意味の制約</strong>にあたり、<strong>実際の検査にならない</strong>種類だからです。残る手は <strong><code>Custom SHACL (advanced)</code> に生の SHACL を貼る</strong>か、<strong>指標として登録する</strong>（下の ⑥）かの <strong>2 本だけ</strong>です。</p>
+  <p>そして <code>Infer constraints</code> でも解決しませんでした（§12.7）。「取り得る値」は<strong>意味の制約</strong>にあたり、<strong>実際の検査にならない</strong>種類だからです。残る手は <strong><code>Custom SHACL (advanced)</code> に生の SHACL を貼る</strong>か、<strong>指標として登録する</strong>（下の ⑥）かの <strong>2 本だけ</strong>です。</p>
 
   <h4>④ 自然文のルールは SHACL にならない（図 12-13 を修正済み）</h4>
   <p>図 12-18 の注意書きのとおりです。図 12-13 の出所 ③ は「人が日本語で書く」ではなく「<strong>人が構造化制約か生 SHACL を書く</strong>」に直しました。</p>
@@ -4770,7 +4800,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
   <p>よく書けています。しかし<strong>「優良顧客とは累計 50,000 円以上」という一文は、どこにも出てきません。</strong>出るはずがありません。それは<strong>データを見て分かることではなく、この会社が決めたこと</strong>だからです。</p>
   <div class="box key">
     <div class="bh">これが本書の結論です</div>
-    <p><strong>AI は語彙を埋めるが、社内で決めた閾値は埋めない。</strong>第 2 章の事故は、AI の自動生成だけでは防げません。§12.7 で「用語集の <code>note</code> を書くのは人間です」と書いたのは、そのまま生きています。</p>
+    <p><strong>AI は語彙を埋めるが、社内で決めた閾値は埋めない。</strong>第 2 章の事故は、AI の自動生成だけでは防げません。§12.8 で「用語集の <code>note</code> を書くのは人間です」と書いたのは、そのまま生きています。</p>
     <p style="margin-top:12px">日本語ラベルも付きませんでした（<code>@ja</code> は 0 件、クラス名は <code>ind:Customers</code> / <code>rdfs:label "customers"</code>）。§5.1 で「<code>rdfs:label "取引先"@ja</code> があれば LLM が語を対応づけられる」と書いた話は、<strong>人が足さないと始まりません</strong>。</p>
   </div>
   <div class="box note">
@@ -4780,7 +4810,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
   </div>
 
   <h4>⑥ 用語集の <code>note</code> を入れる場所は、指標（Metric）の画面だった</h4>
-  <p>③ の続きです。§12.7 のリスト 12-3 で「ここが決定的」と書いたのは、この行でした。</p>
+  <p>③ の続きです。§12.8 のリスト 12-3 で「ここが決定的」と書いたのは、この行でした。</p>
   <div class="lst">
     <p class="cap">リスト 12-7<span>プロンプトに入るはずの、一番効く 1 行</span></p>
     <pre><span class="y">Glossary (business terms → ontology):</span>
@@ -4802,7 +4832,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
       <tr class="no"><td>構築フェーズで LLM が働くのは <strong>2 箇所</strong></td><td><strong>3 箇所。</strong>スキャン時のメタデータ生成が一番大きい</td><td class="ok">図 12-13 に「スキャン」を追加</td></tr>
       <tr class="no"><td>プロンプトに <code>allowed values</code> が入る</td><td><strong>入らなかった。</strong><code>distinctValues</code> は 0 件</td><td class="ok">リスト 12-3 に注記。上の ③</td></tr>
       <tr class="no"><td>SHACL の shape は「人が日本語で書く」</td><td>自然文は<strong>記録されるだけ</strong>。SHACL にならない</td><td class="ok">図 12-13 を「構造化制約か生 SHACL」に</td></tr>
-      <tr class="no"><td>LLM が SHACL 制約を提案してくれる</td><td><strong>提案の仕組みはあるが、返る種類（日付の前後・取り得る値など）は<strong>まだ実際の検査にならない</strong>。押しても 22 個から増えなかった</strong></td><td class="ok">図 12-7・図 12-13 を修正。§12.6 に実機の画面</td></tr>
+      <tr class="no"><td>LLM が SHACL 制約を提案してくれる</td><td><strong>提案の仕組みはあるが、返る種類（日付の前後・取り得る値など）は<strong>まだ実際の検査にならない</strong>。押しても 22 個から増えなかった</strong></td><td class="ok">図 12-7・図 12-13 を修正。§12.7 に実機の画面</td></tr>
       <tr class="no"><td>スキャンの「用語集」がプロンプトに回る</td><td><strong>回らない。</strong><code>coa:aiContext</code> を書く口は<strong>指標の画面だけ</strong></td><td class="ok">上の ⑥ を追加</td></tr>
       <tr class="ok"><td>用語集の <code>note</code> を書くのは人間</td><td><strong>そのとおり。</strong>AI は語彙を埋めるが閾値を埋めない</td><td>変更なし（実測で裏付け）</td></tr>
     </tbody>
@@ -4946,7 +4976,7 @@ ind:アクティブ顧客 <span class="k">a</span> owl:Class <span class="k">;</
   <div class="tw"><table>
     <thead><tr><th style="width:36%">見たくなるが、見えないもの</th><th style="width:64%">理由</th></tr></thead>
     <tbody>
-      <tr><td>鈴木さん・田中さんに<strong>自動で優良顧客の型が付く</strong></td><td>クエリ時に推論器が走らない。回答側のパッケージに推論ライブラリが入っていない (第 12 章 §12.3)</td></tr>
+      <tr><td>鈴木さん・田中さんに<strong>自動で優良顧客の型が付く</strong></td><td>クエリ時に推論器が走らない。回答側のパッケージに推論ライブラリが入っていない (第 12 章 §12.4)</td></tr>
       <tr><td>クエリ結果を SHACL が検証する</td><td>SHACL は構築時にオントロジー自身を検査するもの。クエリ経路には無い</td></tr>
       <tr><td>LLM が<strong>必ず</strong>正しい SQL を書く</td><td>生成そのものは最後まで確率的。変わるのは「外し方が予測可能になり、検証できるようになる」ことだけ</td></tr>
       <tr><td>Agent が<strong>データを書き換える</strong></td><td>COA は読み取り専用。書き込みまで含む設計は次章の Palantir が扱う領域</td></tr>

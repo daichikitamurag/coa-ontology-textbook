@@ -56,6 +56,7 @@
       padding-left:13px;border-left:4px solid var(--acc)}
   .ch h3.sub{font-size:17px;margin:34px 0 12px;padding-left:14px;
       border-left:3px solid var(--aline);color:var(--ink2)}
+  .sm{font-size:.86em;color:var(--mut);font-weight:400;line-height:1.65}
   .ch h4{font-size:15.5px;color:var(--ink);margin:28px 0 10px;font-weight:800}
   .ch p{margin:0 0 17px;max-width:82ch}
   .ch p strong{color:var(--ink);font-weight:700}
@@ -3660,10 +3661,10 @@ ec:C002 <span class="k">a</span> ec:顧客 .                <span class="c"># 2 
   <div class="tw"><table>
     <thead><tr><th style="width:20%">画面の項目</th><th style="width:30%">何を生成するか</th><th style="width:28%">Turtle のどこに入ったか（実測）</th><th style="width:22%">本書のどこの話か</th></tr></thead>
     <tbody>
-      <tr><td><strong>説明文の自動生成</strong><br><span class="sm">Auto-generate descriptions</span></td><td>表と列ごとに <strong>1〜2 文</strong>の業務向け説明。<code>AI_GENERATED</code> タグが付く</td><td class="ok"><strong><code>rdfs:comment</code></strong>（19 件）</td><td>第 5 章の<strong>注釈</strong>。プロンプトの <code>comment</code></td></tr>
-      <tr><td><strong>同義語の生成</strong><br><span class="sm">Generate synonyms</span></td><td>表と列ごとに、業務語の言い換えを <strong>2〜5 個</strong></td><td class="ok"><strong><code>skos:altLabel</code></strong>（19 件）</td><td>プロンプトの <code>synonyms:</code></td></tr>
-      <tr class="no"><td><strong>用語集の生成</strong><br><span class="sm">Generate glossary terms</span></td><td>表と列を、業務ドメインの概念（<strong>1〜3 個</strong>）に対応づける</td><td><strong>入らなかった。</strong>カタログ側のメタデータに留まり、<code>coa:aiContext</code> は 0 件</td><td>§12.6 の Glossary → <strong>§12.8 ⑥</strong></td></tr>
-      <tr><td><strong>制約発見</strong><br><span class="sm">Constraint discovery</span></td><td>表をまたぐ関係を AI が推論。<code>AI_INFERRED</code> が付き、<strong>昇格前に人のレビューが要る</strong></td><td class="ok"><strong><code>owl:ObjectProperty</code> 2 本</strong>＋<code>rdfs:domain</code> / <code>rdfs:range</code>＋<code>scl:fkProvenance</code>。主キーは <code>owl:hasKey</code> 3 件</td><td>第 5 章の <strong>domain / range</strong>、図 11-2</td></tr>
+      <tr><td><strong>説明文の自動生成</strong><br><span class="sm">Auto-generate descriptions</span></td><td>表と列ごとに <strong>1〜2 文</strong>の業務向け説明。<code>AI_GENERATED</code> タグが付く<br><span class="sm" style="display:block;margin-top:6px;color:var(--mut)">実例 — <code>total_purchase</code> に「Cumulative monetary value of all purchases made by the customer in the base currency」</span></td><td class="ok"><strong><code>rdfs:comment</code></strong>（19 件）</td><td>第 5 章の<strong>注釈</strong>。プロンプトの <code>comment</code></td></tr>
+      <tr><td><strong>同義語の生成</strong><br><span class="sm">Generate synonyms</span></td><td>表と列ごとに、業務語の言い換えを <strong>2〜5 個</strong><br><span class="sm" style="display:block;margin-top:6px;color:var(--mut)">実例 — <code>total_purchase</code> → <code>lifetime_value</code> / <code>ltv</code> / <code>total_sales</code></span></td><td class="ok"><strong><code>skos:altLabel</code></strong>（19 件）</td><td>プロンプトの <code>synonyms:</code></td></tr>
+      <tr class="no"><td><strong>用語集の生成</strong><br><span class="sm">Generate glossary terms</span></td><td>表と列を、業務ドメインの概念（<strong>1〜3 個</strong>）に対応づける<br><span class="sm" style="display:block;margin-top:6px;color:var(--mut)">実例 — <code>churned_at</code> → 「churn」「customer attrition」「inactive status」<br><code>member_rank</code> → 「membership」「customer tier」「loyalty status」</span></td><td><strong>入らなかった。</strong>カタログ側のメタデータに留まり、<code>coa:aiContext</code> は 0 件</td><td>§12.6 の Glossary → <strong>§12.8 ⑥</strong></td></tr>
+      <tr><td><strong>制約発見</strong><br><span class="sm">Constraint discovery</span></td><td>表をまたぐ関係を AI が推論。<code>AI_INFERRED</code> が付き、<strong>昇格前に人のレビューが要る</strong><br><span class="sm" style="display:block;margin-top:6px;color:var(--mut)">実例 — <code>refunds.order_id</code> → <code>orders.order_id</code> を<strong>確度 95%</strong>で推測（図 12-7）。<code>orders.customer_id</code> → <code>customers.customer_id</code> も同様</span></td><td class="ok"><strong><code>owl:ObjectProperty</code> 2 本</strong>＋<code>rdfs:domain</code> / <code>rdfs:range</code>＋<code>scl:fkProvenance</code>。主キーは <code>owl:hasKey</code> 3 件</td><td>第 5 章の <strong>domain / range</strong>、図 11-2</td></tr>
       <tr><td colspan="2"><strong>このトグルを切ると</strong> — 「取得されるのは技術的なメタデータのみ」</td><td><code>rdfs:label</code> と型だけ</td><td class="no"><strong>第 1 章の DDL と同じ状態</strong></td></tr>
     </tbody>
   </table></div>

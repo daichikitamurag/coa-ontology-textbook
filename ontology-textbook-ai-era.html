@@ -3391,6 +3391,13 @@ ec:C002 <span class="k">a</span> ec:顧客 .                <span class="c"># 2 
     </svg>
     <p class="fc"><strong>推論器と SHACL は「構築フェーズでオントロジー自身を検査する」ために使われている</strong>。クエリ結果の検査に使われるのは、赤い箱の<strong>機械的な検査だけ</strong> (内訳は §12.7)</p>
   </div>
+
+  <div class="box def">
+    <div class="bh">補足 — 「ベクトル索引を作る」とは</div>
+    <p>クラス・プロパティ・指標を 1 件ずつ <strong>1024 個の数値（座標）</strong>に変換して OpenSearch に置くことです。<strong>近い語のリストではなく、座標だけ</strong>を保存し、<strong>近さは検索のたびに計算します</strong>。</p>
+    <p style="margin-top:10px">だから<strong>書いていない言い方でも引けます</strong>。オントロジーに「優良顧客」と一言も書かなくても、「優良顧客の売上」という質問から <code>ind:Customers</code> は引けます。同義語リストなら、登録した文字列と一致しない限り引けません。</p>
+    <p style="margin-top:10px"><strong>列挙方式（Tier 1 の同義語）は確実だが融通が利かず、座標方式（ベクトル検索）は融通が利くが確実でない。</strong>§12.8 で、同じ質問がこの違いで別々の結果になります。</p>
+  </div>
   <p>図 12-2 は<strong>論理的な</strong>構造でした。これを実際の AWS サービスに落とすと、こうなります。<strong>色のレーンが図 12-2 の ①②③ に対応</strong>しています。</p>
   <div class="fig">
     <p class="cap">図 12-3<span>AWS 構成 — 2 フェーズと共有アーティファクト（公開ソースから実測）</span></p>

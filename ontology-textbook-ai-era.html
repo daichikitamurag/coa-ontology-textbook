@@ -5469,47 +5469,134 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 
   <h3>14.1 何を作ったのか</h3>
   <p>Minecraft のボットに「石のツルハシを作って、動物を狩り、小屋を建てて」と日本語で頼むと、<strong>手順に分解して、実際にゲーム内で動く</strong>ものです。プロセスは 3 つ、その間の API は 2 本しかありません。</p>
-  <div class="fig">
-  <p class="cap">図 14-1<span>3 つのプロセスと、その間の 2 本の API — 全部ローカル</span></p>
-  <svg viewBox="0 0 880 254" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
-    <defs><marker id="x14n1" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b7480"/></marker>
-    <marker id="x14n1r" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#b3261e"/></marker>
-    <marker id="x14n1g" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#1f6f4a"/></marker></defs>
-    <rect x="14" y="30" width="270" height="72" rx="9" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2.4"/>
-    <text x="26" y="49" font-size="10.6" font-weight="900" fill="#155c3c">① Minecraft サーバ</text>
-    <text x="26" y="62" font-size="8" fill="#1f6f4a">ゲーム世界そのもの</text>
-    <text x="26" y="78" font-size="8.4" fill="#3d4654">木・石・動物が実際に存在する</text>
-    <text x="26" y="91" font-size="8.4" fill="#3d4654">ここが「物理法則」を持っている</text>
-    <rect x="305" y="30" width="270" height="72" rx="9" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2.4"/>
-    <text x="317" y="49" font-size="10.6" font-weight="900" fill="#154a80">② Bot API（Node.js）</text>
-    <text x="317" y="62" font-size="8" fill="#1c5b9c">mineflayer + Express・約 1,500 行</text>
-    <text x="317" y="78" font-size="8.4" fill="#3d4654">ボットを操作する 14 本の HTTP 窓口</text>
-    <text x="317" y="91" font-size="8.4" fill="#3d4654">素手で石は掘れない、を実際に拒む</text>
-    <rect x="596" y="30" width="270" height="72" rx="9" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2.4"/>
-    <text x="608" y="49" font-size="10.6" font-weight="900" fill="#4c1d95">③ Agent（Python）</text>
-    <text x="608" y="62" font-size="8" fill="#6b3fa0">ontology_agent.py・約 300 行</text>
-    <text x="608" y="78" font-size="8.4" fill="#3d4654">オントロジーを持ち、LLM を呼び、</text>
-    <text x="608" y="91" font-size="8.4" fill="#3d4654">出てきたプランを並べ替えて実行する</text>
-    <path d="M302,62 h-15" stroke="#6b7480" stroke-width="2" marker-end="url(#x14n1)"/>
-    <text x="294" y="22" text-anchor="middle" font-size="7.8" fill="#6b7480">Minecraft プロトコル</text>
-    <path d="M593,62 h-15" stroke="#6b7480" stroke-width="2" marker-end="url(#x14n1)"/>
-    <text x="585" y="22" text-anchor="middle" font-size="7.8" fill="#6b7480">HTTP（14 本の窓口）</text>
-    <rect x="596" y="126" width="270" height="60" rx="9" fill="#fbf7ef" stroke="#a8710f" stroke-width="2.4"/>
-    <text x="608" y="145" font-size="10.6" font-weight="900" fill="#6b4708">④ Ollama（ローカル LLM）</text>
-    <text x="608" y="158" font-size="8" fill="#a8710f">qwen2.5:7b / format=json / temperature 0.2</text>
-    <text x="608" y="174" font-size="8.4" fill="#3d4654">クラウドに出ない。Bedrock も API キーも使わない</text>
-    <path d="M674,106 V122" stroke="#a8710f" stroke-width="2.2" marker-end="url(#x14n1)"/>
-    <path d="M704,122 V106" stroke="#a8710f" stroke-width="2.2" marker-end="url(#x14n1)"/>
-    <text x="714" y="118" font-size="7.8" fill="#a8710f">POST /api/generate</text>
-    <rect x="14" y="126" width="561" height="60" rx="9" fill="#fbf7ef" stroke="#a8710f" stroke-width="2.4"/>
-    <text x="26" y="145" font-size="10.6" font-weight="900" fill="#6b4708">⑤ オントロジー（ontology.py・NetworkX の有向グラフ）</text>
-    <text x="26" y="160" font-size="8.4" fill="#3d4654">クラフト依存グラフ（<tspan font-family="Menlo,monospace">material / tool_needed / obtained_from</tspan>）と、アクション依存表 <tspan font-family="Menlo,monospace">ACTION_DEPS</tspan></text>
-    <text x="26" y="176" font-size="8.4" fill="#a8710f">③ の中に持たれる。<tspan font-weight="800">プロンプトに入る用の文字列</tspan>と、<tspan font-weight="800">並べ替え用のグラフ</tspan>の 2 通りに使われる</text>
-    <rect x="14" y="198" width="852" height="44" rx="8" fill="#f7f8fa" stroke="#6b7480" stroke-width="1.8"/>
-    <text x="26" y="216" font-size="9.6" font-weight="900" fill="#3d4654">全部ローカルで動きます。クラウドは 1 つも使っていません。</text>
-    <text x="26" y="232" font-size="8.6" fill="#3d4654">第 12 章の COA は Neptune・OpenSearch・Bedrock・Athena の上に乗っていました。ここは <tspan font-weight="800">Node.js 1 本と Python 1 本と Ollama 1 本</tspan>。<tspan font-weight="800">だから全部読めます</tspan>。</text>
+  <div class="fig star">
+  <p class="cap">図 14-1<span class="badge">最重要</span><span>全体像 1 枚 — 構成・流れ・誰が何をやっているのか</span></p>
+  <svg viewBox="0 0 880 818" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+    <defs>
+      <marker id="y14mA" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#1f6f4a"/></marker>
+      <marker id="y14mB" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#a8710f"/></marker>
+      <marker id="y14mC" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b3fa0"/></marker>
+      <marker id="y14mE" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b7480"/></marker>
+      <marker id="y14mD" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#1c5b9c"/></marker>
+    </defs>
+    <rect x="14" y="14" width="196" height="62" rx="9" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2.4"/>
+    <text x="112.0" y="31" text-anchor="middle" font-size="10.6" font-weight="900" fill="#155c3c">Agent（Python）</text>
+    <text x="112.0" y="44" text-anchor="middle" font-size="7.6" font-family="Menlo,monospace" fill="#1f6f4a">ontology_agent.py</text>
+    <text x="112.0" y="58" text-anchor="middle" font-size="8.4" fill="#3d4654">司会・全部を回す</text>
+    <rect x="95.0" y="62" width="34" height="14" rx="7" fill="#1f6f4a"/>
+    <text x="112.0" y="72.5" text-anchor="middle" font-size="7.6" font-weight="900" fill="#fff">機械</text>
+    <rect x="232" y="14" width="196" height="62" rx="9" fill="#fbf7ef" stroke="#a8710f" stroke-width="2.4"/>
+    <text x="330.0" y="31" text-anchor="middle" font-size="10.6" font-weight="900" fill="#6b4708">オントロジー</text>
+    <text x="330.0" y="44" text-anchor="middle" font-size="7.6" font-family="Menlo,monospace" fill="#a8710f">ontology.py / NetworkX</text>
+    <text x="330.0" y="58" text-anchor="middle" font-size="8.4" fill="#3d4654">材料を出す・並べ替える</text>
+    <rect x="308.5" y="62" width="43" height="14" rx="7" fill="#a8710f"/>
+    <text x="330.0" y="72.5" text-anchor="middle" font-size="7.6" font-weight="900" fill="#fff">ONT</text>
+    <rect x="450" y="14" width="196" height="62" rx="9" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2.4"/>
+    <text x="548.0" y="31" text-anchor="middle" font-size="10.6" font-weight="900" fill="#4c1d95">LLM</text>
+    <text x="548.0" y="44" text-anchor="middle" font-size="7.6" font-family="Menlo,monospace" fill="#6b3fa0">Ollama qwen2.5:7b</text>
+    <text x="548.0" y="58" text-anchor="middle" font-size="8.4" fill="#3d4654">見当をつける</text>
+    <rect x="531.0" y="62" width="34" height="14" rx="7" fill="#6b3fa0"/>
+    <text x="548.0" y="72.5" text-anchor="middle" font-size="7.6" font-weight="900" fill="#fff">AI</text>
+    <rect x="668" y="14" width="196" height="62" rx="9" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2.4"/>
+    <text x="766.0" y="31" text-anchor="middle" font-size="10.6" font-weight="900" fill="#154a80">Bot API → 世界</text>
+    <text x="766.0" y="44" text-anchor="middle" font-size="7.6" font-family="Menlo,monospace" fill="#1c5b9c">bot_server.js / Minecraft</text>
+    <text x="766.0" y="58" text-anchor="middle" font-size="8.4" fill="#3d4654">確かめて実行する</text>
+    <rect x="735.5" y="62" width="61" height="14" rx="7" fill="#1c5b9c"/>
+    <text x="766.0" y="72.5" text-anchor="middle" font-size="7.6" font-weight="900" fill="#fff">機械＋世界</text>
+    <line x1="112.0" y1="76" x2="112.0" y2="624" stroke="#1f6f4a" stroke-width="1.4" stroke-dasharray="4 4" opacity="0.55"/>
+    <line x1="330.0" y1="76" x2="330.0" y2="624" stroke="#a8710f" stroke-width="1.4" stroke-dasharray="4 4" opacity="0.55"/>
+    <line x1="548.0" y1="76" x2="548.0" y2="624" stroke="#6b3fa0" stroke-width="1.4" stroke-dasharray="4 4" opacity="0.55"/>
+    <line x1="766.0" y1="76" x2="766.0" y2="624" stroke="#1c5b9c" stroke-width="1.4" stroke-dasharray="4 4" opacity="0.55"/>
+    <rect x="28.0" y="-2" width="168" height="0" rx="0" fill="none"/>
+    <circle cx="20" cy="100" r="9" fill="#2b3440"/>
+    <text x="20" y="103.5" text-anchor="middle" font-size="8.6" font-weight="900" fill="#fff">1</text>
+    <rect x="40" y="88" width="104" height="24" rx="12" fill="#2b3440"/>
+    <text x="92" y="104" text-anchor="middle" font-size="8.4" font-weight="900" fill="#fff">人（利用者）</text>
+    <path d="M146,100 H292.0" stroke="#6b7480" stroke-width="2.2" marker-end="url(#y14mE)"/>
+    <text x="164" y="94" font-size="8.4" font-weight="800" fill="#6b7480">タスクを日本語で渡す</text>
+    <text x="164" y="114" font-size="7.6" fill="#6b7480">「石のツルハシを作って、動物を狩り、小屋を建てて」</text>
+    <circle cx="20" cy="146" r="9" fill="#2b3440"/>
+    <text x="20" y="149.5" text-anchor="middle" font-size="8.6" font-weight="900" fill="#fff">2</text>
+    <path d="M116.0,150 H326.0" stroke="#1f6f4a" stroke-width="2.2" marker-end="url(#y14mA)"/>
+    <text x="221.0" y="144" text-anchor="middle" font-size="8.4" font-weight="800" fill="#1f6f4a">to_prompt_text() を呼ぶ</text>
+    <circle cx="20" cy="178" r="9" fill="#2b3440"/>
+    <text x="20" y="181.5" text-anchor="middle" font-size="8.6" font-weight="900" fill="#fff">3</text>
+    <path d="M326.0,182 H116.0" stroke="#a8710f" stroke-width="2.2" marker-end="url(#y14mB)"/>
+    <text x="221.0" y="176" text-anchor="middle" font-size="8.4" font-weight="800" fill="#a8710f">依存グラフを文字列に</text>
+    <text x="221.0" y="194" text-anchor="middle" font-size="7.6" fill="#6b7480">クラフトレシピ / 道具要件 / 入手先 の 3 節</text>
+    <circle cx="20" cy="218" r="9" fill="#2b3440"/>
+    <text x="20" y="221.5" text-anchor="middle" font-size="8.6" font-weight="900" fill="#fff">4</text>
+    <path d="M116.0,222 H544.0" stroke="#1f6f4a" stroke-width="2.2" marker-end="url(#y14mA)"/>
+    <text x="330.0" y="216" text-anchor="middle" font-size="8.4" font-weight="800" fill="#1f6f4a">POST /api/generate</text>
+    <text x="330.0" y="234" text-anchor="middle" font-size="7.6" fill="#6b7480">グラフ＋使えるアクション 8 個＋出力規則（format=json）</text>
+    <circle cx="20" cy="262" r="9" fill="#2b3440"/>
+    <text x="20" y="265.5" text-anchor="middle" font-size="8.6" font-weight="900" fill="#fff">5</text>
+    <path d="M544.0,266 H116.0" stroke="#6b3fa0" stroke-width="2.2" marker-end="url(#y14mC)"/>
+    <text x="330.0" y="260" text-anchor="middle" font-size="8.4" font-weight="800" fill="#6b3fa0">JSON で 6 手のプラン</text>
+    <text x="330.0" y="278" text-anchor="middle" font-size="7.6" fill="#6b7480">4.32 秒 / temperature 0.2</text>
+    <rect x="564.0" y="288" width="302.0" height="44" rx="5" fill="#fdf3f2" stroke="#b3261e" stroke-width="1.6"/>
+    <text x="572.0" y="301" font-size="7.8" fill="#b3261e">craft_wooden_pickaxe と mine_stone が抜けている</text>
+    <text x="572.0" y="312" font-size="7.8" fill="#b3261e">そのまま実行すれば必ず失敗する（前提が満たせない）</text>
+    <text x="572.0" y="323" font-size="7.8" fill="#b3261e">ここが唯一の確率的な段。同じ入力でも結果が揺れる</text>
+    <circle cx="20" cy="336" r="9" fill="#2b3440"/>
+    <text x="20" y="339.5" text-anchor="middle" font-size="8.6" font-weight="900" fill="#fff">6</text>
+    <path d="M116.0,340 H326.0" stroke="#1f6f4a" stroke-width="2.2" marker-end="url(#y14mA)"/>
+    <text x="221.0" y="334" text-anchor="middle" font-size="8.4" font-weight="800" fill="#1f6f4a">sort_actions(6 手)</text>
+    <circle cx="20" cy="368" r="9" fill="#2b3440"/>
+    <text x="20" y="371.5" text-anchor="middle" font-size="8.6" font-weight="900" fill="#fff">7</text>
+    <path d="M326.0,372 H116.0" stroke="#a8710f" stroke-width="2.2" marker-end="url(#y14mB)"/>
+    <text x="221.0" y="366" text-anchor="middle" font-size="8.4" font-weight="800" fill="#a8710f">8 手に直して返す</text>
+    <text x="221.0" y="384" text-anchor="middle" font-size="7.6" fill="#6b7480">未知名を捨て・前提を再帰補完・トポロジカルソート</text>
+    <rect x="440.0" y="392" width="426.0" height="40" rx="5" fill="#eefaf3" stroke="#1f6f4a" stroke-width="1.6"/>
+    <text x="448.0" y="405" font-size="7.8" fill="#1f6f4a">＋craft_wooden_pickaxe / ＋mine_stone を挿入し、craft_stone_pickaxe を mine_stone の後ろへ移動</text>
+    <text x="448.0" y="416" font-size="7.8" fill="#1f6f4a">ここは決定論。同じ入力なら、必ず同じ順序が出る</text>
+    <rect x="72.0" y="442" width="790.0" height="112" rx="8" fill="none" stroke="#1c5b9c" stroke-width="1.8" stroke-dasharray="7 5"/>
+    <rect x="72.0" y="442" width="112" height="15" rx="7" fill="#1c5b9c"/>
+    <text x="128.0" y="453" text-anchor="middle" font-size="7.8" font-weight="900" fill="#fff">8 手を 1 つずつ</text>
+    <circle cx="20" cy="470" r="9" fill="#2b3440"/>
+    <text x="20" y="473.5" text-anchor="middle" font-size="8.6" font-weight="900" fill="#fff">8</text>
+    <path d="M116.0,474 H762.0" stroke="#1f6f4a" stroke-width="2.2" marker-end="url(#y14mA)"/>
+    <text x="439.0" y="468" text-anchor="middle" font-size="8.4" font-weight="800" fill="#1f6f4a">POST /action { type }</text>
+    <rect x="674.0" y="484" width="184" height="30" rx="6" fill="#fdf3f2" stroke="#b3261e" stroke-width="1.6"/>
+    <text x="766.0" y="496" text-anchor="middle" font-size="7.8" font-weight="900" fill="#b3261e">前提条件を確かめる</text>
+    <text x="766.0" y="508" text-anchor="middle" font-size="7.4" fill="#b3261e">満たさなければ HTTP 409 で拒否</text>
+    <circle cx="20" cy="530" r="9" fill="#2b3440"/>
+    <text x="20" y="533.5" text-anchor="middle" font-size="8.6" font-weight="900" fill="#fff">9</text>
+    <path d="M762.0,534 H116.0" stroke="#1c5b9c" stroke-width="2.2" marker-end="url(#y14mD)"/>
+    <text x="439.0" y="528" text-anchor="middle" font-size="8.4" font-weight="800" fill="#1c5b9c">ok / error を返す</text>
+    <text x="439.0" y="546" text-anchor="middle" font-size="7.6" fill="#6b7480">成功なら世界が実際に変わる（木が減り、家が建つ）</text>
+    <circle cx="20" cy="584" r="9" fill="#2b3440"/>
+    <text x="20" y="587.5" text-anchor="middle" font-size="8.6" font-weight="900" fill="#fff">10</text>
+    <rect x="26.0" y="574" width="180" height="26" rx="6" fill="#f7f8fa" stroke="#6b7480" stroke-width="1.6"/>
+    <text x="116.0" y="592" text-anchor="middle" font-size="8.4" font-weight="800" fill="#3d4654">ログに全部残す → 8 / 8 成功</text>
+    <text x="222.0" y="592" font-size="7.8" fill="#6b7480">LLM の生プラン・整列後・自動補完数・各手の結果</text>
+    <rect x="14" y="638" width="852" height="96" rx="9" fill="#fff" stroke="#2b3440" stroke-width="2.2"/>
+    <text x="28" y="659" font-size="11" font-weight="900" fill="#2b3440">この 1 枚で分かること — 担当が 4 つに分かれている</text>
+    <text x="26" y="678" font-size="9.4" font-weight="900" fill="#6b3fa0">AI（LLM）</text>
+    <text x="26" y="691" font-size="7.8" font-weight="800" fill="#6b7480">⑤ の 1 箇所だけ</text>
+    <text x="26" y="706" font-size="7.8" fill="#3d4654">日本語 → アクション名の翻訳</text>
+    <text x="26" y="718" font-size="7.8" fill="#3d4654">順序は当てにならない（2 手抜けた）</text>
+    <line x1="215" y1="668" x2="215" y2="726" stroke="#6b7480" stroke-width="0.8" opacity="0.4"/>
+    <text x="229" y="678" font-size="9.4" font-weight="900" fill="#a8710f">ONT（オントロジー）</text>
+    <text x="229" y="691" font-size="7.8" font-weight="800" fill="#6b7480">③ と ⑦ の 2 箇所</text>
+    <text x="229" y="706" font-size="7.8" fill="#3d4654">③ LLM に読ませる材料を出す</text>
+    <text x="229" y="718" font-size="7.8" fill="#3d4654">⑦ 並べ替えの根拠を出す</text>
+    <line x1="418" y1="668" x2="418" y2="726" stroke="#6b7480" stroke-width="0.8" opacity="0.4"/>
+    <text x="432" y="678" font-size="9.4" font-weight="900" fill="#1f6f4a">機械（Python）</text>
+    <text x="432" y="691" font-size="7.8" font-weight="800" fill="#6b7480">②④⑥⑧⑩ の 5 箇所</text>
+    <text x="432" y="706" font-size="7.8" fill="#3d4654">呼ぶ・直す・実行する・記録する</text>
+    <text x="432" y="718" font-size="7.8" fill="#3d4654">ここが決定論</text>
+    <line x1="621" y1="668" x2="621" y2="726" stroke="#6b7480" stroke-width="0.8" opacity="0.4"/>
+    <text x="635" y="678" font-size="9.4" font-weight="900" fill="#1c5b9c">世界（Bot API）</text>
+    <text x="635" y="691" font-size="7.8" font-weight="800" fill="#6b7480">⑨ の 1 箇所</text>
+    <text x="635" y="706" font-size="7.8" fill="#3d4654">前提を確かめて 409 で拒む</text>
+    <text x="635" y="718" font-size="7.8" fill="#3d4654">最後の関所</text>
+    <rect x="14" y="744" width="852" height="62" rx="8" fill="#fbf7ef" stroke="#a8710f" stroke-width="2.2"/>
+    <text x="28" y="763" font-size="9.8" font-weight="900" fill="#6b4708">全部ローカルで動きます。クラウドは 1 つも使っていません。</text>
+    <text x="28" y="778" font-size="8.6" fill="#3d4654">Node.js 1 本（Bot API・約 1,500 行）＋ Python 1 本（Agent・約 300 行）＋ Ollama 1 本。</text>
+    <text x="28" y="794" font-size="8.6" fill="#3d4654">第 12 章の COA は Neptune・OpenSearch・Bedrock・Athena の上に乗っていました。<tspan font-weight="800">ここは約 1,800 行で全部読めます</tspan>。</text>
   </svg>
-  <p class="fc"><strong>③ の中だけが「考える」場所</strong>です。① は世界、② は世界を触る窓、④ は文章を書く部品。<strong>判断の組み立ては ③ が持っています</strong></p>
+  <p class="fc"><strong>確率的なのは ⑤ の 1 箇所だけ</strong>です。残りは決定論と、世界の側の確認。<strong>だから 7B のモデルでも 8/8 通ります</strong></p>
 </div>
   <p>注目してほしいのは <strong>⑤ の位置</strong>です。オントロジーは独立したデータベースではなく、<strong>Agent の中に持たれた 1 つの Python モジュール</strong>です。第 12 章では Neptune にトリプルが入っていましたが、ここでは <code>ontology.py</code> の中に NetworkX の有向グラフとして書かれています。</p>
   <div class="box def">
@@ -5520,9 +5607,182 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
   </div>
 
   <h3>14.2 オントロジーの定義の仕方が違う</h3>
+  <p>まず<strong>実物を見せます。</strong>オントロジーの中身は、<strong>NetworkX の有向グラフ 2 つ</strong>です。データをそのまま描いたのが次の図です。</p>
+  <div class="fig">
+  <p class="cap">図 14-2<span>オントロジーの実体 — NetworkX の 2 つの有向グラフ（実データそのまま描いたもの）</span></p>
+  <svg viewBox="0 0 880 470" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+    <defs>
+      <marker id="y14gV" markerWidth="7" markerHeight="7" refX="5.6" refY="2.4" orient="auto"><path d="M0,0 L5.6,2.4 L0,4.8 z" fill="#6b3fa0"/></marker>
+      <marker id="y14gG" markerWidth="7" markerHeight="7" refX="5.6" refY="2.4" orient="auto"><path d="M0,0 L5.6,2.4 L0,4.8 z" fill="#1f6f4a"/></marker>
+      <marker id="y14gR" markerWidth="7" markerHeight="7" refX="5.6" refY="2.4" orient="auto"><path d="M0,0 L5.6,2.4 L0,4.8 z" fill="#b3261e"/></marker>
+      <marker id="y14gG2" markerWidth="7" markerHeight="7" refX="5.6" refY="2.4" orient="auto"><path d="M0,0 L5.6,2.4 L0,4.8 z" fill="#1f6f4a"/></marker>
+    </defs>
+    <rect x="14" y="14" width="520" height="26" rx="7" fill="#a8710f"/>
+    <text x="27" y="31" font-size="10.2" font-weight="900" fill="#fff">① クラフト依存グラフ — LLM に読ませるほう</text>
+    <path d="M189.9,80.9 L119.6,117.2" stroke="#6b3fa0" stroke-width="1.7" marker-end="url(#y14gV)"/>
+    <circle cx="154.8" cy="96.1" r="7.5" fill="#fff" opacity="0.92"/>
+    <text x="154.8" y="99.1" text-anchor="middle" font-size="7.2" font-weight="900" fill="#6b3fa0">×3</text>
+    <path d="M243.3,80.7 L339.0,117.8" stroke="#6b3fa0" stroke-width="1.7" marker-end="url(#y14gV)"/>
+    <circle cx="291.1" cy="96.3" r="7.5" fill="#fff" opacity="0.92"/>
+    <text x="291.1" y="99.3" text-anchor="middle" font-size="7.2" font-weight="900" fill="#6b3fa0">×2</text>
+    <path d="M93.0,144.0 L93.0,176.0" stroke="#b3261e" stroke-width="1.7" stroke-dasharray="4 3" marker-end="url(#y14gR)"/>
+    <path d="M106.9,143.3 L216.1,240.0" stroke="#1f6f4a" stroke-width="1.7" marker-end="url(#y14gG)"/>
+    <path d="M154.0,193.0 L308.0,193.0" stroke="#6b3fa0" stroke-width="1.7" marker-end="url(#y14gV)"/>
+    <circle cx="231.0" cy="190.0" r="7.5" fill="#fff" opacity="0.92"/>
+    <text x="231.0" y="193.0" text-anchor="middle" font-size="7.2" font-weight="900" fill="#6b3fa0">×3</text>
+    <path d="M144.6,181.6 L317.5,143.3" stroke="#6b3fa0" stroke-width="1.7" marker-end="url(#y14gV)"/>
+    <circle cx="231.0" cy="159.4" r="7.5" fill="#fff" opacity="0.92"/>
+    <text x="231.0" y="162.4" text-anchor="middle" font-size="7.2" font-weight="900" fill="#6b3fa0">×2</text>
+    <path d="M373.0,144.0 L373.0,176.0" stroke="#6b3fa0" stroke-width="1.7" marker-end="url(#y14gV)"/>
+    <circle cx="373.0" cy="157.0" r="7.5" fill="#fff" opacity="0.92"/>
+    <text x="373.0" y="160.0" text-anchor="middle" font-size="7.2" font-weight="900" fill="#6b3fa0">×2</text>
+    <path d="M373.0,206.0 L373.0,238.0" stroke="#6b3fa0" stroke-width="1.7" marker-end="url(#y14gV)"/>
+    <circle cx="373.0" cy="219.0" r="7.5" fill="#fff" opacity="0.92"/>
+    <text x="373.0" y="222.0" text-anchor="middle" font-size="7.2" font-weight="900" fill="#6b3fa0">×1</text>
+    <path d="M373.0,268.0 L373.0,300.0" stroke="#1f6f4a" stroke-width="1.7" marker-end="url(#y14gG)"/>
+    <path d="M312.0,317.0 L298.0,317.0" stroke="#b3261e" stroke-width="1.7" stroke-dasharray="4 3" marker-end="url(#y14gR)"/>
+    <rect x="154" y="58" width="118" height="22" rx="5" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="1.8"/>
+    <text x="213.0" y="73" text-anchor="middle" font-size="7.6" font-family="Menlo,monospace" fill="#6b3fa0">stone_pickaxe</text>
+    <rect x="34" y="120" width="118" height="22" rx="5" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
+    <text x="93.0" y="135" text-anchor="middle" font-size="7.6" font-family="Menlo,monospace" fill="#1f6f4a">cobblestone</text>
+    <rect x="314" y="120" width="118" height="22" rx="5" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="1.8"/>
+    <text x="373.0" y="135" text-anchor="middle" font-size="7.6" font-family="Menlo,monospace" fill="#6b3fa0">stick</text>
+    <rect x="34" y="182" width="118" height="22" rx="5" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="1.8"/>
+    <text x="93.0" y="197" text-anchor="middle" font-size="7.6" font-family="Menlo,monospace" fill="#6b3fa0">wooden_pickaxe</text>
+    <rect x="314" y="182" width="118" height="22" rx="5" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="1.8"/>
+    <text x="373.0" y="197" text-anchor="middle" font-size="7.6" font-family="Menlo,monospace" fill="#6b3fa0">planks</text>
+    <rect x="174" y="244" width="118" height="22" rx="5" fill="#f7f8fa" stroke="#6b7480" stroke-width="1.8"/>
+    <text x="233.0" y="259" text-anchor="middle" font-size="7.6" font-family="Menlo,monospace" fill="#6b7480">stone_block</text>
+    <rect x="314" y="244" width="118" height="22" rx="5" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
+    <text x="373.0" y="259" text-anchor="middle" font-size="7.6" font-family="Menlo,monospace" fill="#1f6f4a">log</text>
+    <rect x="314" y="306" width="118" height="22" rx="5" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
+    <text x="373.0" y="321" text-anchor="middle" font-size="7.6" font-family="Menlo,monospace" fill="#1f6f4a">tree</text>
+    <rect x="174" y="306" width="118" height="22" rx="5" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="1.8"/>
+    <text x="233.0" y="321" text-anchor="middle" font-size="7.6" font-family="Menlo,monospace" fill="#1c5b9c">hand</text>
+    <text x="14" y="353" font-size="8" font-weight="800" fill="#2b3440">エッジ</text>
+    <path d="M56,349 h15" stroke="#6b3fa0" stroke-width="1.8"/>
+    <text x="75" y="352" font-size="7.2" fill="#6b3fa0">material（材料・数量）</text>
+    <path d="M173.5,349 h15" stroke="#1f6f4a" stroke-width="1.8"/>
+    <text x="192.5" y="352" font-size="7.2" fill="#1f6f4a">obtained_from（入手先）</text>
+    <path d="M309.3,349 h15" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="4 3"/>
+    <text x="328.3" y="352" font-size="7.2" fill="#b3261e">tool_needed（必要な道具）</text>
+    <text x="14" y="368" font-size="8" font-weight="800" fill="#2b3440">ノード</text>
+    <rect x="56" y="358" width="11" height="11" rx="3" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="1.4"/>
+    <text x="71" y="367" font-size="7.2" font-family="Menlo,monospace" fill="#6b3fa0">craftable</text>
+    <rect x="134.6" y="358" width="11" height="11" rx="3" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.4"/>
+    <text x="149.6" y="367" font-size="7.2" font-family="Menlo,monospace" fill="#1f6f4a">harvestable</text>
+    <rect x="224.0" y="358" width="11" height="11" rx="3" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="1.4"/>
+    <text x="239.0" y="367" font-size="7.2" font-family="Menlo,monospace" fill="#1c5b9c">tool</text>
+    <rect x="275.6" y="358" width="11" height="11" rx="3" fill="#f7f8fa" stroke="#6b7480" stroke-width="1.4"/>
+    <text x="290.6" y="367" font-size="7.2" font-family="Menlo,monospace" fill="#6b7480">natural_block</text>
+    <rect x="550" y="14" width="316" height="26" rx="7" fill="#1f6f4a"/>
+    <text x="563" y="31" font-size="10.2" font-weight="900" fill="#fff">② アクション依存グラフ — 機械が並べ替えに使うほう</text>
+    <path d="M643,62.0 C617,62.0 617,98.0 642,98.0" fill="none" stroke="#1f6f4a" stroke-width="1.4" opacity="0.85" marker-end="url(#y14gG2)"/>
+    <path d="M643,98.0 C617,98.0 617,134.0 642,134.0" fill="none" stroke="#1f6f4a" stroke-width="1.4" opacity="0.85" marker-end="url(#y14gG2)"/>
+    <path d="M643,98.0 C604,98.0 604,170.0 642,170.0" fill="none" stroke="#1f6f4a" stroke-width="1.4" opacity="0.85" marker-end="url(#y14gG2)"/>
+    <path d="M643,134.0 C617,134.0 617,170.0 642,170.0" fill="none" stroke="#1f6f4a" stroke-width="1.4" opacity="0.85" marker-end="url(#y14gG2)"/>
+    <path d="M643,170.0 C617,170.0 617,206.0 642,206.0" fill="none" stroke="#1f6f4a" stroke-width="1.4" opacity="0.85" marker-end="url(#y14gG2)"/>
+    <path d="M643,206.0 C604,206.0 604,278.0 642,278.0" fill="none" stroke="#1f6f4a" stroke-width="1.4" opacity="0.85" marker-end="url(#y14gG2)"/>
+    <path d="M643,134.0 C578,134.0 578,278.0 642,278.0" fill="none" stroke="#1f6f4a" stroke-width="1.4" opacity="0.85" marker-end="url(#y14gG2)"/>
+    <path d="M643,170.0 C604,170.0 604,242.0 642,242.0" fill="none" stroke="#1f6f4a" stroke-width="1.4" opacity="0.85" marker-end="url(#y14gG2)"/>
+    <path d="M643,98.0 C552,98.0 552,314.0 642,314.0" fill="none" stroke="#1f6f4a" stroke-width="1.4" opacity="0.85" marker-end="url(#y14gG2)"/>
+    <path d="M643,206.0 C591,206.0 591,314.0 642,314.0" fill="none" stroke="#1f6f4a" stroke-width="1.4" opacity="0.85" marker-end="url(#y14gG2)"/>
+    <rect x="646" y="52" width="190" height="20" rx="5" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
+    <text x="655" y="66" font-size="7.6" font-family="Menlo,monospace" fill="#155c3c">chop_tree</text>
+    <rect x="646" y="88" width="190" height="20" rx="5" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
+    <text x="655" y="102" font-size="7.6" font-family="Menlo,monospace" fill="#155c3c">craft_planks</text>
+    <rect x="646" y="124" width="190" height="20" rx="5" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
+    <text x="655" y="138" font-size="7.6" font-family="Menlo,monospace" fill="#155c3c">craft_stick</text>
+    <rect x="646" y="160" width="190" height="20" rx="5" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
+    <text x="655" y="174" font-size="7.6" font-family="Menlo,monospace" fill="#155c3c">craft_wooden_pickaxe</text>
+    <rect x="646" y="196" width="190" height="20" rx="5" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
+    <text x="655" y="210" font-size="7.6" font-family="Menlo,monospace" fill="#155c3c">mine_stone</text>
+    <rect x="646" y="232" width="190" height="20" rx="5" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
+    <text x="655" y="246" font-size="7.6" font-family="Menlo,monospace" fill="#155c3c">hunt_animal</text>
+    <rect x="646" y="268" width="190" height="20" rx="5" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
+    <text x="655" y="282" font-size="7.6" font-family="Menlo,monospace" fill="#155c3c">craft_stone_pickaxe</text>
+    <rect x="646" y="304" width="190" height="20" rx="5" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
+    <text x="655" y="318" font-size="7.6" font-family="Menlo,monospace" fill="#155c3c">build_hut</text>
+    <text x="550" y="340" font-size="7.6" fill="#6b7480">矢印は「先に済ませる → 後にやる」。この向きのまま</text>
+    <text x="550" y="353" font-size="7.6" font-family="Menlo,monospace" fill="#6b7480">nx.topological_sort() に渡します</text>
+    <text x="550" y="370" font-size="7.6" fill="#6b7480">①とは<tspan font-weight="800">別物</tspan>です。①はモノの関係、②は手順の前後。</text>
+    <text x="550" y="383" font-size="7.6" fill="#6b7480">②のほうが枝が多いのは、1 つの手が複数の手の前提になるから。</text>
+    <rect x="14" y="396" width="852" height="62" rx="8" fill="#fbf7ef" stroke="#a8710f" stroke-width="2.2"/>
+    <text x="26" y="416" font-size="10.2" font-weight="900" fill="#6b4708">なぜ 2 つに分かれているのか</text>
+    <text x="26" y="433" font-size="8.6" fill="#3d4654">① は<tspan font-weight="800">モノとモノの関係</tspan>（石のツルハシの材料は丸石）。第 5 章の <tspan font-family="Menlo,monospace">owl:ObjectProperty</tspan> にあたり、<tspan font-weight="800">RDF に置き換えられます</tspan>。</text>
+    <text x="26" y="449" font-size="8.6" fill="#3d4654">② は<tspan font-weight="800">手順の前後</tspan>（石を掘る前にツルハシを作る）。RDF には素直に書ける語彙が無く、<tspan font-weight="800">ここが Python で持たれている理由</tspan>です。</text>
+  </svg>
+  <p class="fc">左は第 3 章のトリプルと同じ形（<strong>主語・述語・目的語</strong>）。右は RDF に対応する語彙が無いもの。<strong>同じファイルの中で役割を分けて持っています</strong></p>
+</div>
+  <p>これを作っているコードがこれです。<strong>約 40 行しかありません。</strong></p>
+  <div class="lst">
+    <p class="cap">リスト 14-1<span><code>ontology.py</code> — オントロジーの実コード（そのまま抜粋）</span></p>
+    <pre><span class="c">import networkx as nx</span>
+
+<span class="k">def</span> build_ontology() -&gt; nx.DiGraph:
+    g = nx.DiGraph()
+
+    <span class="c"># ── ノード：kind が第 4 章の a (rdf:type) にあたる ──</span>
+    <span class="k">for</span> item <span class="k">in</span> [<span class="s">"stone_pickaxe"</span>, <span class="s">"wooden_pickaxe"</span>, <span class="s">"planks"</span>, <span class="s">"stick"</span>]:
+        g.add_node(item, kind=<span class="s">"craftable"</span>)
+    <span class="k">for</span> item <span class="k">in</span> [<span class="s">"cobblestone"</span>, <span class="s">"log"</span>, <span class="s">"tree"</span>, <span class="s">"stone_block"</span>]:
+        g.add_node(item, kind=<span class="s">"harvestable"</span>)
+
+    <span class="c"># ── エッジ：クラフトレシピ（作りたいもの → 材料）──</span>
+    <span class="c"># 石のツルハシ = 丸石×3 + 棒×2</span>
+    g.add_edge(<span class="s">"stone_pickaxe"</span>,  <span class="s">"cobblestone"</span>, relation=<span class="s">"material"</span>, qty=<span class="n">3</span>)
+    g.add_edge(<span class="s">"stone_pickaxe"</span>,  <span class="s">"stick"</span>,       relation=<span class="s">"material"</span>, qty=<span class="n">2</span>)
+    g.add_edge(<span class="s">"wooden_pickaxe"</span>, <span class="s">"planks"</span>,      relation=<span class="s">"material"</span>, qty=<span class="n">3</span>)
+    g.add_edge(<span class="s">"planks"</span>,         <span class="s">"log"</span>,         relation=<span class="s">"material"</span>, qty=<span class="n">1</span>)
+    g.add_edge(<span class="s">"stick"</span>,          <span class="s">"planks"</span>,      relation=<span class="s">"material"</span>, qty=<span class="n">2</span>)
+
+    <span class="c"># ── エッジ：採取ルール（採るもの → 必要な道具 / 入手先）──</span>
+    g.add_edge(<span class="s">"cobblestone"</span>, <span class="s">"wooden_pickaxe"</span>, relation=<span class="s">"tool_needed"</span>)
+    g.add_edge(<span class="s">"cobblestone"</span>, <span class="s">"stone_block"</span>,    relation=<span class="s">"obtained_from"</span>)
+    g.add_edge(<span class="s">"log"</span>,         <span class="s">"tree"</span>,           relation=<span class="s">"obtained_from"</span>)
+    g.add_edge(<span class="s">"tree"</span>,        <span class="s">"hand"</span>,           relation=<span class="s">"tool_needed"</span>)
+    <span class="k">return</span> g
+
+
+<span class="c"># ── もう 1 つのグラフ：手順の前後関係。これは RDF に対応する語彙が無い ──</span>
+ACTION_DEPS: dict[str, list[str]] = {
+    <span class="s">"chop_tree"</span>:            [],
+    <span class="s">"craft_planks"</span>:         [<span class="s">"chop_tree"</span>],
+    <span class="s">"craft_stick"</span>:          [<span class="s">"craft_planks"</span>],
+    <span class="s">"craft_wooden_pickaxe"</span>: [<span class="s">"craft_planks"</span>, <span class="s">"craft_stick"</span>],
+    <span class="s">"mine_stone"</span>:           [<span class="s">"craft_wooden_pickaxe"</span>],
+    <span class="s">"craft_stone_pickaxe"</span>:  [<span class="s">"mine_stone"</span>, <span class="s">"craft_stick"</span>],
+    <span class="s">"hunt_animal"</span>:          [<span class="s">"craft_wooden_pickaxe"</span>],
+    <span class="s">"build_hut"</span>:            [<span class="s">"craft_planks"</span>, <span class="s">"mine_stone"</span>],
+}</pre>
+  </div>
+  <div class="lst">
+    <p class="cap">リスト 14-2<span>矯正の実コード — 抜けた前提を再帰的に足して、並べ替える</span></p>
+    <pre><span class="k">def</span> sort_actions(actions: list[str]) -&gt; tuple[list[str], list[str]]:
+    unknown = [a <span class="k">for</span> a <span class="k">in</span> actions <span class="k">if</span> a <span class="k">not in</span> ACTION_DEPS]   <span class="c"># ← 知らない名前は捨てる</span>
+    known   = [a <span class="k">for</span> a <span class="k">in</span> actions <span class="k">if</span> a <span class="k">in</span> ACTION_DEPS]
+
+    <span class="c"># ← LLM が挙げていなくても、前提を再帰的にさかのぼって足す</span>
+    <span class="k">def</span> add_deps_recursive(action, acc):
+        <span class="k">for</span> dep <span class="k">in</span> ACTION_DEPS.get(action, []):
+            <span class="k">if</span> dep <span class="k">not in</span> acc:
+                acc.add(dep)
+                add_deps_recursive(dep, acc)
+
+    expanded = set(known)
+    <span class="k">for</span> a <span class="k">in</span> list(known):
+        add_deps_recursive(a, expanded)
+
+    <span class="c"># ← 集めた分だけの部分グラフを作って、トポロジカルソート</span>
+    g = build_action_graph().subgraph(expanded).copy()
+    <span class="k">return</span> list(nx.topological_sort(g)), unknown</pre>
+  </div>
+  <p>第 3 章で「トリプルは世界を 3 語で書く」と説明しました。<code>g.add_edge("stone_pickaxe", "cobblestone", relation="material")</code> は <strong>(主語, 述語, 目的語)</strong> — 形は同じです。ノードの <code>kind</code> は第 4 章の <code>a</code>（<code>rdf:type</code>）にあたります。</p>
+  <p>そして <code>sort_actions()</code> が矯正の全部です。<strong>知らない名前を捨て、前提を再帰的にさかのぼって足し、部分グラフをトポロジカルソートする</strong> — これだけで LLM の抜けが埋まります。</p>
+
   <p>ここまでの章では、オントロジーは<strong>ファイルに宣言的に書くもの</strong>でした。第 4 章で Turtle を書き、第 5 章で <code>rdfs:domain</code> を足し、第 6 章で <code>owl:equivalentClass</code> を書きました。<strong>この実装は、それをコードに書きます。</strong>同じ知識を並べます。</p>
   <div class="fig">
-  <p class="cap">図 14-2<span>オントロジーの定義の仕方 — 同じ知識を、ファイルに書くか、プログラムに書くか</span></p>
+  <p class="cap">図 14-3<span>オントロジーの定義の仕方 — 同じ知識を、ファイルに書くか、プログラムに書くか</span></p>
   <svg viewBox="0 0 880 480" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
     <defs><marker id="x14d1" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b7480"/></marker>
     <marker id="x14d1a" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#a8710f"/></marker>
@@ -5597,7 +5857,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
   <p>Bot API には 14 本のエンドポイントがあります（<code>/status</code> <code>/observe</code> <code>/chat</code> <code>/action</code> <code>/goto</code> <code>/reset_inventory</code> ほか）。エージェントが実際に使うのは <code>POST /action</code> と <code>POST /chat</code> の 2 本だけです。</p>
   <p>大事なのは、この <code>/action</code> が<strong>「できないこと」を実際に拒む</strong>ことです。</p>
   <div class="fig">
-  <p class="cap">図 14-3<span>世界の側にある関所 — 前提条件を満たさない操作は HTTP 409 で拒まれる</span></p>
+  <p class="cap">図 14-4<span>世界の側にある関所 — 前提条件を満たさない操作は HTTP 409 で拒まれる</span></p>
   <svg viewBox="0 0 880 350" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
     <defs><marker id="x14n2" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b7480"/></marker>
     <marker id="x14n2r" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#b3261e"/></marker>
@@ -5645,7 +5905,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
   <h3>14.4 1 回の実行を追う</h3>
   <p>実際のログから 1 回分を追います。タスクは<strong>「石のツルハシを作って、動物を狩り、小屋を建てて」</strong>。3 つの目標が混ざっていて、しかも依存関係が絡む — わざと難しくしたものです。</p>
   <div class="fig star">
-  <p class="cap">図 14-4<span class="badge">最重要</span><span>1 回の実行を追う — LLM が抜かした 2 手を、機械が挿入して 8/8 成功</span></p>
+  <p class="cap">図 14-5<span class="badge">最重要</span><span>1 回の実行を追う — LLM が抜かした 2 手を、機械が挿入して 8/8 成功</span></p>
   <svg viewBox="0 0 880 364" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
     <defs><marker id="x14n3" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b7480"/></marker>
     <marker id="x14n3r" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#b3261e"/></marker>
@@ -5720,7 +5980,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
   <h3>14.5 LLM の出力を直す — 2 つの型</h3>
   <p>前の節で見たのは<strong>「プランを作らせて、実行前に整える」</strong>やり方でした。この実装にはもう 1 つ、<strong>「1 手ずつ聞いて、その場で止める」</strong>やり方も入っています（<code>06_autonomous_agent/autonomous_agent.py</code>）。並べます。</p>
   <div class="fig star">
-  <p class="cap">図 14-5<span class="badge">最重要</span><span>LLM の出力を直す 2 つの型 — 事前に一括で整えるか、毎ターン止めるか</span></p>
+  <p class="cap">図 14-6<span class="badge">最重要</span><span>LLM の出力を直す 2 つの型 — 事前に一括で整えるか、毎ターン止めるか</span></p>
   <svg viewBox="0 0 880 464" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
     <defs><marker id="x14d2" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b7480"/></marker>
     <marker id="x14d2a" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#a8710f"/></marker>
@@ -5803,7 +6063,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
   <h3>14.6 同じタスクを 3 方式で回す</h3>
   <p>「依存関係も知識なんだから、社内 Wiki に書いて RAG で読ませれば済むのでは」— この問いに答えるために、<strong>同じタスク・同じモデル・同じ API</strong>で 3 通り作って回してあります。</p>
   <div class="fig">
-  <p class="cap">図 14-6<span>3 方式の実測 — 差は「渡した情報量」ではなく「出力を直せるか」</span></p>
+  <p class="cap">図 14-7<span>3 方式の実測 — 差は「渡した情報量」ではなく「出力を直せるか」</span></p>
   <svg viewBox="0 0 880 268" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
     <defs><marker id="x14n4" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b7480"/></marker>
     <marker id="x14n4r" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#b3261e"/></marker>
@@ -5856,7 +6116,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 
   <h3>14.7 誰が何をやっているのか</h3>
   <div class="fig">
-  <p class="cap">図 14-7<span>4 つの担当 — LLM / オントロジー / 機械 / 世界</span></p>
+  <p class="cap">図 14-8<span>4 つの担当 — LLM / オントロジー / 機械 / 世界</span></p>
   <svg viewBox="0 0 880 342" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
     <defs><marker id="x14n5" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b7480"/></marker>
     <marker id="x14n5r" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#b3261e"/></marker>

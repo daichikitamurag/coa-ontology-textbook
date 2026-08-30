@@ -5519,11 +5519,85 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
     <p style="margin-top:10px">この 2 つは<strong>役割が違います</strong>。① は LLM に読ませるための知識、② は機械が並べ替えるための構造。同じファイルの中で分けて持っています。</p>
   </div>
 
-  <h3>14.2 世界の側にある関所</h3>
+  <h3>14.2 オントロジーの定義の仕方が違う</h3>
+  <p>ここまでの章では、オントロジーは<strong>ファイルに宣言的に書くもの</strong>でした。第 4 章で Turtle を書き、第 5 章で <code>rdfs:domain</code> を足し、第 6 章で <code>owl:equivalentClass</code> を書きました。<strong>この実装は、それをコードに書きます。</strong>同じ知識を並べます。</p>
+  <div class="fig">
+  <p class="cap">図 14-2<span>オントロジーの定義の仕方 — 同じ知識を、ファイルに書くか、プログラムに書くか</span></p>
+  <svg viewBox="0 0 880 480" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+    <defs><marker id="x14d1" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b7480"/></marker>
+    <marker id="x14d1a" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#a8710f"/></marker>
+    <marker id="x14d1g" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#1f6f4a"/></marker></defs>
+    <rect x="14" y="14" width="418" height="26" rx="7" fill="#a8710f"/>
+    <text x="27" y="31" font-size="10.2" font-weight="900" fill="#fff">これまで（第 4〜6 章）— 宣言的なファイルに書く</text>
+    <rect x="448" y="14" width="418" height="26" rx="7" fill="#6b3fa0"/>
+    <text x="461" y="31" font-size="10.2" font-weight="900" fill="#fff">この実装 — プログラムの中に書く</text>
+    <text x="14" y="58" font-size="9.4" font-weight="900" fill="#2b3440">① 石のツルハシ = 丸石×3 + 棒×2</text>
+    <rect x="14" y="64" width="418" height="60" rx="5" fill="#fbf7ef" stroke="#a8710f" stroke-width="1.3"/>
+    <text x="23" y="80" font-size="8.0" font-family="Menlo,monospace" fill="#a8710f">:stone_pickaxe :material :cobblestone ;</text>
+    <text x="23" y="92" font-size="8.0" font-family="Menlo,monospace" fill="#a8710f">    :qty 3 .</text>
+    <text x="23" y="104" font-size="8.0" font-family="Menlo,monospace" fill="#a8710f">:stone_pickaxe :material :stick ;</text>
+    <text x="23" y="116" font-size="8.0" font-family="Menlo,monospace" fill="#a8710f">    :qty 2 .</text>
+    <rect x="448" y="64" width="418" height="60" rx="5" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="1.3"/>
+    <text x="457" y="80" font-size="8.0" font-family="Menlo,monospace" fill="#6b3fa0">g.add_edge("stone_pickaxe", "cobblestone",</text>
+    <text x="457" y="92" font-size="8.0" font-family="Menlo,monospace" fill="#6b3fa0">       relation="material", qty=3)</text>
+    <text x="457" y="104" font-size="8.0" font-family="Menlo,monospace" fill="#6b3fa0">g.add_edge("stone_pickaxe", "stick",</text>
+    <text x="457" y="116" font-size="8.0" font-family="Menlo,monospace" fill="#6b3fa0">       relation="material", qty=2)</text>
+    <text x="14" y="148" font-size="9.4" font-weight="900" fill="#2b3440">② 丸石は木のツルハシで採る</text>
+    <rect x="14" y="154" width="418" height="24" rx="5" fill="#fbf7ef" stroke="#a8710f" stroke-width="1.3"/>
+    <text x="23" y="170" font-size="8.0" font-family="Menlo,monospace" fill="#a8710f">:cobblestone :toolNeeded :wooden_pickaxe .</text>
+    <rect x="448" y="154" width="418" height="36" rx="5" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="1.3"/>
+    <text x="457" y="170" font-size="8.0" font-family="Menlo,monospace" fill="#6b3fa0">g.add_edge("cobblestone", "wooden_pickaxe",</text>
+    <text x="457" y="182" font-size="8.0" font-family="Menlo,monospace" fill="#6b3fa0">       relation="tool_needed")</text>
+    <text x="14" y="214" font-size="9.4" font-weight="900" fill="#2b3440">③ craft_stone_pickaxe は mine_stone の後</text>
+    <rect x="14" y="220" width="418" height="36" rx="5" fill="#fdf3f2" stroke="#b3261e" stroke-width="1.3"/>
+    <text x="23" y="236" font-size="8.0" font-family="Menlo,monospace" fill="#b3261e">（OWL には「A の後に B」を書く語彙が無い）</text>
+    <text x="23" y="248" font-size="8.0" font-family="Menlo,monospace" fill="#b3261e">SHACL / SWRL / 別のプランナが必要</text>
+    <rect x="448" y="220" width="418" height="48" rx="5" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="1.3"/>
+    <text x="457" y="236" font-size="8.0" font-family="Menlo,monospace" fill="#6b3fa0">ACTION_DEPS = {</text>
+    <text x="457" y="248" font-size="8.0" font-family="Menlo,monospace" fill="#6b3fa0">  "craft_stone_pickaxe":</text>
+    <text x="457" y="260" font-size="8.0" font-family="Menlo,monospace" fill="#6b3fa0">      ["mine_stone", "craft_stick"], … }</text>
+    <text x="424" y="214" text-anchor="end" font-size="8.2" font-weight="800" fill="#b3261e">← RDF では素直に書けない</text>
+    <text x="858" y="214" text-anchor="end" font-size="8.2" font-weight="800" fill="#1f6f4a">← ただの dict で済む</text>
+    <rect x="14" y="282" width="852" height="112" rx="8" fill="#f7f8fa" stroke="#6b7480" stroke-width="1.8"/>
+    <text x="26" y="301" font-size="10.2" font-weight="900" fill="#3d4654">同じ知識を書いているのに、何が変わるのか</text>
+    <text x="26" y="318" font-size="8.4" font-weight="800" fill="#3d4654">意味がどこにあるか</text>
+    <text x="164" y="318" font-size="8.2" fill="#a8710f">仕様（W3C）が決めている。どの推論器でも同じ結論</text>
+    <text x="484" y="318" font-size="8.2" fill="#6b3fa0">それを読む Python 関数の中。関数を変えると意味が変わる</text>
+    <text x="26" y="336" font-size="8.4" font-weight="800" fill="#3d4654">誰が読めるか</text>
+    <text x="164" y="336" font-size="8.2" fill="#a8710f">他社のツールでも読める。URI で他の知識と繋がる</text>
+    <text x="484" y="336" font-size="8.2" fill="#6b3fa0">この実装だけ。外に持ち出せない</text>
+    <text x="26" y="354" font-size="8.4" font-weight="800" fill="#3d4654">実行時にできること</text>
+    <text x="164" y="354" font-size="8.2" fill="#a8710f">SPARQL / 推論器を通す。I/O が挟まる</text>
+    <text x="484" y="354" font-size="8.2" fill="#6b3fa0">関数呼び出し 1 回。<tspan font-weight="800">1 手ごとに呼んでも間に合う</tspan></text>
+    <text x="26" y="372" font-size="8.4" font-weight="800" fill="#3d4654">手続きの前後関係</text>
+    <text x="164" y="372" font-size="8.2" fill="#a8710f">語彙が無い。SHACL や別の仕組みを足す</text>
+    <text x="484" y="372" font-size="8.2" fill="#6b3fa0"><tspan font-weight="800">dict 1 つで書ける</tspan>。トポロジカルソートにそのまま渡せる</text>
+    <rect x="14" y="406" width="852" height="62" rx="8" fill="#fbf7ef" stroke="#a8710f" stroke-width="2.4"/>
+    <text x="26" y="426" font-size="10.4" font-weight="900" fill="#6b4708">「オントロジー」は広い言葉です。ここは<tspan font-weight="900">プログラム側に持たせた</tspan>例です。</text>
+    <text x="26" y="444" font-size="8.8" fill="#3d4654">第 0 章で「オントロジーという言葉はかなり広い」と書きました。RDB の隣に置く（第 11 章の VKG）だけでなく、<tspan font-weight="800">実行するプログラムの中に持つ</tspan>やり方もあります。</text>
+    <text x="26" y="460" font-size="8.8" fill="#3d4654">代わりに標準・相互運用・形式意味論を手放します。<tspan font-weight="800">得るのは速さと、手続きを書けること</tspan> — だから<tspan font-weight="800">その場の行動を制御できます</tspan>。</text>
+  </svg>
+  <p class="fc">③ が効いています。<strong>「A の後に B」は RDF が得意な種類の情報ではありません。</strong>この実装が Python を選んだ理由がここにあります</p>
+</div>
+  <p>読みどころは <strong>③</strong> です。①②は書き方が違うだけで、内容は同じです。ところが ③「<code>craft_stone_pickaxe</code> は <code>mine_stone</code> の後」は<strong>種類が違う情報</strong>です。</p>
+  <div class="box def">
+    <div class="bh">RDF が得意なのは「事実」、苦手なのは「手続きの前後」</div>
+    <p>RDF / OWL は<strong>「何が何であるか」と「そこから何が導けるか」</strong>を書く道具です。「石のツルハシの材料は丸石だ」は書けます。<strong>「石を掘る前にツルハシを作れ」は、素直に書ける語彙がありません。</strong>SHACL で制約として書くか、別のプランナを用意するか、SWRL のような拡張を持ち出すことになります。</p>
+    <p style="margin-top:10px">一方この実装では、<code>ACTION_DEPS</code> という<strong>ただの辞書 1 つ</strong>です。しかもそのまま <code>networkx.topological_sort()</code> に渡せます。<strong>実行順を決めるのが目的なら、こちらのほうが直接的</strong>です。</p>
+    <p style="margin-top:10px">だからこの実装は、<strong>知識を 2 つに分けて持っています</strong> — LLM に読ませる<strong>クラフト依存グラフ</strong>と、機械が並べ替えに使う<strong>アクション依存表</strong>。前者は RDF に置き換えられますが、<strong>後者は置き換えにくい</strong>ものです。</p>
+  </div>
+  <div class="box note">
+    <div class="bh">「オントロジー」という言葉の幅</div>
+    <p>第 0 章で「オントロジーという言葉はかなり広い」と書きました。この章はその実例です。<strong>RDB の隣に置く</strong>（第 11 章の VKG）でも、<strong>専用のグラフ DB に置く</strong>（第 12 章の Neptune）でも、<strong>製品のオブジェクトモデルとして持つ</strong>（第 13 章）でもなく、<strong>実行するプログラムの中に持つ</strong>やり方があります。</p>
+    <p style="margin-top:10px">手放すのは<strong>標準・相互運用・形式意味論</strong>です。他のツールから読めず、URI で他の知識と繋がらず、意味は読む側の関数が決めます（第 18 章で分解します）。</p>
+    <p style="margin-top:10px">代わりに得るのは<strong>速さと、手続きを書けること</strong>です。DB も SPARQL エンジンも通らないので、<strong>1 手ごとに参照しても間に合います</strong>。それが §14.5 で効いてきます。</p>
+  </div>
+
+  <h3>14.3 世界の側にある関所</h3>
   <p>Bot API には 14 本のエンドポイントがあります（<code>/status</code> <code>/observe</code> <code>/chat</code> <code>/action</code> <code>/goto</code> <code>/reset_inventory</code> ほか）。エージェントが実際に使うのは <code>POST /action</code> と <code>POST /chat</code> の 2 本だけです。</p>
   <p>大事なのは、この <code>/action</code> が<strong>「できないこと」を実際に拒む</strong>ことです。</p>
   <div class="fig">
-  <p class="cap">図 14-2<span>世界の側にある関所 — 前提条件を満たさない操作は HTTP 409 で拒まれる</span></p>
+  <p class="cap">図 14-3<span>世界の側にある関所 — 前提条件を満たさない操作は HTTP 409 で拒まれる</span></p>
   <svg viewBox="0 0 880 350" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
     <defs><marker id="x14n2" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b7480"/></marker>
     <marker id="x14n2r" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#b3261e"/></marker>
@@ -5568,10 +5642,10 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
   <p>第 12 章の SQL ファイアウォールを思い出してください。あれは「危険な SQL を実行前に弾く」仕組みでした。ここも同じ位置にあります。<strong>エージェントが何を計画しようと、世界の側が受け付けなければ実行されません。</strong></p>
   <p>ゲームなので<strong>この関所を自分で実装できる</strong>のが、教材としての強みです。業務システムなら、在庫の残数・権限の有効期限・対象レコードの実在といった確認がここに当たります。</p>
 
-  <h3>14.3 1 回の実行を追う</h3>
+  <h3>14.4 1 回の実行を追う</h3>
   <p>実際のログから 1 回分を追います。タスクは<strong>「石のツルハシを作って、動物を狩り、小屋を建てて」</strong>。3 つの目標が混ざっていて、しかも依存関係が絡む — わざと難しくしたものです。</p>
   <div class="fig star">
-  <p class="cap">図 14-3<span class="badge">最重要</span><span>1 回の実行を追う — LLM が抜かした 2 手を、機械が挿入して 8/8 成功</span></p>
+  <p class="cap">図 14-4<span class="badge">最重要</span><span>1 回の実行を追う — LLM が抜かした 2 手を、機械が挿入して 8/8 成功</span></p>
   <svg viewBox="0 0 880 364" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
     <defs><marker id="x14n3" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b7480"/></marker>
     <marker id="x14n3r" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#b3261e"/></marker>
@@ -5643,10 +5717,93 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
     <p style="margin-top:10px">[2] が 2 手を挿入し、<code>craft_stone_pickaxe</code> を <code>mine_stone</code> の後ろに動かしました。結果 <strong>8/8 成功</strong>。<strong>LLM は同じ 7B のまま、プロンプトも変えていません。</strong>直したのは後段です。</p>
   </div>
 
-  <h3>14.4 同じタスクを 3 方式で回す</h3>
+  <h3>14.5 LLM の出力を直す — 2 つの型</h3>
+  <p>前の節で見たのは<strong>「プランを作らせて、実行前に整える」</strong>やり方でした。この実装にはもう 1 つ、<strong>「1 手ずつ聞いて、その場で止める」</strong>やり方も入っています（<code>06_autonomous_agent/autonomous_agent.py</code>）。並べます。</p>
+  <div class="fig star">
+  <p class="cap">図 14-5<span class="badge">最重要</span><span>LLM の出力を直す 2 つの型 — 事前に一括で整えるか、毎ターン止めるか</span></p>
+  <svg viewBox="0 0 880 464" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+    <defs><marker id="x14d2" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b7480"/></marker>
+    <marker id="x14d2a" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#a8710f"/></marker>
+    <marker id="x14d2g" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#1f6f4a"/></marker></defs>
+    <rect x="14" y="14" width="418" height="34" rx="8" fill="#1f6f4a"/>
+    <text x="27" y="30" font-size="10.4" font-weight="900" fill="#fff">型① 事前に一括で直す</text>
+    <text x="27" y="43" font-size="8.2" fill="#fff" opacity="0.9">ontology_agent.py — 全体プランを作らせて、実行前に整える</text>
+    <rect x="448" y="14" width="418" height="34" rx="8" fill="#1c5b9c"/>
+    <text x="461" y="30" font-size="10.4" font-weight="900" fill="#fff">型② 毎ターン直す</text>
+    <text x="461" y="43" font-size="8.2" fill="#fff" opacity="0.9">autonomous_agent.py — 1 手ずつ聞いて、その場で止める</text>
+    <rect x="14" y="58" width="418" height="38" rx="6" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
+    <text x="25" y="74" font-size="9.2" font-weight="900" fill="#155c3c">① LLM の出した名前の列を受け取る</text>
+    <text x="25" y="89" font-size="7.8" font-family="Menlo,monospace" fill="#1f6f4a">["chop_tree", …, "craft_stone_pickaxe", …]</text>
+    <rect x="448" y="58" width="418" height="38" rx="6" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="1.8"/>
+    <text x="459" y="74" font-size="9.2" font-weight="900" fill="#154a80">① 世界を観測する</text>
+    <text x="459" y="89" font-size="7.8" font-family="Menlo,monospace" fill="#1c5b9c">GET /observe — インベントリ・周囲ブロック・HP・食料</text>
+    <path d="M44,97 V105" stroke="#6b7480" stroke-width="1.8" marker-end="url(#x14d2)"/>
+    <path d="M478,97 V105" stroke="#6b7480" stroke-width="1.8" marker-end="url(#x14d2)"/>
+    <rect x="14" y="108" width="418" height="38" rx="6" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
+    <text x="25" y="124" font-size="9.2" font-weight="900" fill="#155c3c">② 知らない名前は捨てる</text>
+    <text x="25" y="139" font-size="7.8" font-family="Menlo,monospace" fill="#1f6f4a">ACTION_DEPS に無いものは無視（黙って落とす）</text>
+    <rect x="448" y="108" width="418" height="38" rx="6" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="1.8"/>
+    <text x="459" y="124" font-size="9.2" font-weight="900" fill="#154a80">② 次の 1 手だけ聞く</text>
+    <text x="459" y="139" font-size="7.8" font-family="Menlo,monospace" fill="#1c5b9c">ゴール＋観測＋直近 6 件の履歴＋オントロジーを渡す</text>
+    <path d="M44,147 V155" stroke="#6b7480" stroke-width="1.8" marker-end="url(#x14d2)"/>
+    <path d="M478,147 V155" stroke="#6b7480" stroke-width="1.8" marker-end="url(#x14d2)"/>
+    <rect x="14" y="158" width="418" height="38" rx="6" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
+    <text x="25" y="174" font-size="9.2" font-weight="900" fill="#155c3c">③ 足りない前提を再帰的にさかのぼる</text>
+    <text x="25" y="189" font-size="7.8" font-family="Menlo,monospace" fill="#1f6f4a">craft_stone_pickaxe → mine_stone → craft_wooden_pickaxe …</text>
+    <rect x="448" y="158" width="418" height="38" rx="6" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="1.8"/>
+    <text x="459" y="174" font-size="9.2" font-weight="900" fill="#154a80">③ 知らない名前ならスキップして聞き直す</text>
+    <text x="459" y="189" font-size="7.8" font-family="Menlo,monospace" fill="#1c5b9c">action not in ACTIONS → 実行せず再思考</text>
+    <path d="M44,197 V205" stroke="#6b7480" stroke-width="1.8" marker-end="url(#x14d2)"/>
+    <path d="M478,197 V205" stroke="#6b7480" stroke-width="1.8" marker-end="url(#x14d2)"/>
+    <rect x="14" y="208" width="418" height="38" rx="6" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
+    <text x="25" y="224" font-size="9.2" font-weight="900" fill="#155c3c">④ その部分グラフでトポロジカルソート</text>
+    <text x="25" y="239" font-size="7.8" font-family="Menlo,monospace" fill="#1f6f4a">nx.topological_sort() — 決定論的に 1 つの順序</text>
+    <rect x="448" y="208" width="418" height="38" rx="6" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="1.8"/>
+    <text x="459" y="224" font-size="9.2" font-weight="900" fill="#154a80">④ 同じ手が 3 連続なら強制打ち切り</text>
+    <text x="459" y="239" font-size="7.8" font-family="Menlo,monospace" fill="#1c5b9c">成否を問わず。ループに入ったと判断する安全弁</text>
+    <path d="M44,247 V255" stroke="#6b7480" stroke-width="1.8" marker-end="url(#x14d2)"/>
+    <path d="M478,247 V255" stroke="#6b7480" stroke-width="1.8" marker-end="url(#x14d2)"/>
+    <rect x="14" y="258" width="418" height="38" rx="6" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
+    <text x="25" y="274" font-size="9.2" font-weight="900" fill="#155c3c">⑤ 元の note を引き継ぎ、追加分に印を付ける</text>
+    <text x="25" y="289" font-size="7.8" font-family="Menlo,monospace" fill="#1f6f4a">人が見て「機械が足した手」が分かるように</text>
+    <rect x="448" y="258" width="418" height="38" rx="6" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="1.8"/>
+    <text x="459" y="274" font-size="9.2" font-weight="900" fill="#154a80">⑤ 失敗理由を履歴に入れて次に渡す</text>
+    <text x="459" y="289" font-size="7.8" font-family="Menlo,monospace" fill="#1c5b9c">[✗] action=chop_tree ERROR="target block not found"</text>
+    <rect x="14" y="302" width="418" height="40" rx="6" fill="#eefaf3" stroke="#1f6f4a" stroke-width="2.4"/>
+    <text x="25" y="320" font-size="9.6" font-weight="900" fill="#155c3c">出力：順序が保証されたプラン</text>
+    <text x="25" y="335" font-size="8.2" fill="#1f6f4a">実行前に 1 度だけ。実行中は直さない</text>
+    <rect x="448" y="302" width="418" height="40" rx="6" fill="#eaf2fb" stroke="#1c5b9c" stroke-width="2.4"/>
+    <text x="459" y="320" font-size="9.6" font-weight="900" fill="#0f3f6b">出力：1 手だけ。次のターンでまた考える</text>
+    <text x="459" y="335" font-size="8.2" fill="#1c5b9c">最大 12 ターン。暴走はその場で止まる</text>
+    <rect x="14" y="356" width="852" height="96" rx="8" fill="#fbf7ef" stroke="#a8710f" stroke-width="2.4"/>
+    <text x="26" y="376" font-size="10.4" font-weight="900" fill="#6b4708">プログラム側に持っているから、この 2 つが両方できます</text>
+    <text x="26" y="394" font-size="8.8" fill="#3d4654">型① も型② も、<tspan font-weight="800">やっているのは同じ 1 つの dict とグラフの参照</tspan>です。DB も SPARQL エンジンも通らないので、<tspan font-weight="800">1 手ごとに呼んでも間に合います</tspan>。</text>
+    <text x="26" y="412" font-size="8.8" fill="#3d4654">第 12 章の COA は、生成された SPARQL を検証して<tspan font-weight="800">落ちたら作り直させる</tspan>（最大 2 回）方式でした。第 13 章の Palantir は <tspan font-weight="800">Action という単位に閉じ込め</tspan>、Evals で測る方式。</text>
+    <text x="26" y="430" font-size="8.8" font-weight="800" fill="#1f6f4a">この実装は 3 つめの型です — 作り直させるのでも閉じ込めるのでもなく、<tspan fill="#a8710f">出てきたものを機械が書き換える</tspan>。だから同じ 7B のままで通ります。</text>
+    <text x="26" y="446" font-size="8.4" fill="#6b7480">なお型② はトポロジカルソートを使いません。1 手ずつなので順序を並べる対象が無く、代わりに<tspan font-weight="800">未知アクションの拒否とループ検出</tspan>が矯正の役を担います。</text>
+  </svg>
+  <p class="fc"><strong>「直す」のやり方が第 12・13 章と違います。</strong>COA は作り直させ、Palantir は閉じ込め、<strong>ここは書き換える</strong></p>
+</div>
+  <p>型② は<strong>トポロジカルソートを使いません。</strong>1 手しか返らないので並べる対象が無いからです。代わりに<strong>3 つのガード</strong>が矯正の役をします — 知らないアクション名なら実行せず聞き直す、同じ手が 3 連続なら成否を問わず打ち切る、失敗理由を履歴に入れて次の判断に渡す。</p>
+  <p>もう 1 つ、細かいですが効いている判断があります。LLM が <code>goal_status: "achieved"</code> と申告しても<strong>それだけでは止めません</strong>。明示的に <code>action: "done"</code> が来たときだけ終了します。<strong>LLM の自己申告を、そのまま終了条件にしていない</strong>ということです。</p>
+  <div class="box key">
+    <div class="bh">「直す」のやり方が、3 つの実装で違いました</div>
+    <p><strong>第 12 章の COA</strong> — 生成された SPARQL を 3 段で検証し、落ちたら<strong>エラー文を足して作り直させる</strong>（最大 2 回）。<strong>LLM にやり直させる</strong>型です。</p>
+    <p style="margin-top:10px"><strong>第 13 章の Palantir</strong> — 出力を <strong>Action という単位に閉じ込め</strong>、権限と監査を通す。そして Evals で品質を測ってから自律の幅を広げる。<strong>出口を狭める</strong>型です。</p>
+    <p style="margin-top:10px"><strong>この実装</strong> — <strong>出てきたものを機械が書き換える</strong>。順序を並べ替え、抜けた手を挿入し、暴走を打ち切る。<strong>LLM に聞き直さず、そのまま直す</strong>型です。</p>
+    <p style="margin-top:12px">だから<strong>同じ 7B のモデルのままで通りました。</strong>作り直させる型なら、モデルの賢さが効きます。書き換える型は、<strong>依存関係を書いた側の正しさ</strong>が効きます。</p>
+  </div>
+  <div class="box note">
+    <div class="bh">プログラム側に持つと、リアルタイムに挟める</div>
+    <p>型② が成り立つのは、<strong>オントロジーがプロセスの中にあるから</strong>です。毎ターン参照しているのは同じ 1 つの辞書とグラフで、<strong>DB へのアクセスも SPARQL の実行も挟まりません</strong>。</p>
+    <p style="margin-top:10px">第 12 章の COA では、オントロジーを引くたびに Neptune と OpenSearch を叩いていました。実測で <strong>1 回の質問に 2 秒から 132 秒</strong>かかっています。<strong>1 手ごとに挟むのは現実的ではありません。</strong></p>
+    <p style="margin-top:12px;font-weight:800;color:var(--grn)">「その場の行動を制御したい」なら、オントロジーを実行するプログラムの側に置く選択があります。標準を手放す代わりに、介入する頻度を上げられます。</p>
+  </div>
+
+  <h3>14.6 同じタスクを 3 方式で回す</h3>
   <p>「依存関係も知識なんだから、社内 Wiki に書いて RAG で読ませれば済むのでは」— この問いに答えるために、<strong>同じタスク・同じモデル・同じ API</strong>で 3 通り作って回してあります。</p>
   <div class="fig">
-  <p class="cap">図 14-4<span>3 方式の実測 — 差は「渡した情報量」ではなく「出力を直せるか」</span></p>
+  <p class="cap">図 14-6<span>3 方式の実測 — 差は「渡した情報量」ではなく「出力を直せるか」</span></p>
   <svg viewBox="0 0 880 268" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
     <defs><marker id="x14n4" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b7480"/></marker>
     <marker id="x14n4r" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#b3261e"/></marker>
@@ -5697,9 +5854,9 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
     <p style="margin-top:12px;font-weight:800;color:var(--red)">差は「渡した情報量」ではありません。「出てきたものを機械が直せるか」です。</p>
   </div>
 
-  <h3>14.5 誰が何をやっているのか</h3>
+  <h3>14.7 誰が何をやっているのか</h3>
   <div class="fig">
-  <p class="cap">図 14-5<span>4 つの担当 — LLM / オントロジー / 機械 / 世界</span></p>
+  <p class="cap">図 14-7<span>4 つの担当 — LLM / オントロジー / 機械 / 世界</span></p>
   <svg viewBox="0 0 880 342" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
     <defs><marker id="x14n5" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b7480"/></marker>
     <marker id="x14n5r" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#b3261e"/></marker>
@@ -5732,7 +5889,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
   <p>第 13 章の 図 13-1 で「判断するのは人と AI、つなぐのがオントロジー、運ぶのが機械」と書きました。<strong>300 行の自作実装でも、同じ分担になりました。</strong></p>
   <p>ひとつだけ違うのは、<strong>このデモに「人」がいないこと</strong>です。全部自動で回るので、承認の段がありません。第 13 章 図 13-4 の言い方なら<strong>いきなり ③「AI が主導」</strong>から始めていることになります。業務に載せるなら、そこを足す必要があります。</p>
 
-  <h3>14.6 第 12・13 章と並べる</h3>
+  <h3>14.8 第 12・13 章と並べる</h3>
   <div class="tw">
   <table>
     <thead><tr><th style="width:19%"></th><th style="width:27%">AWS COA（第 12 章）</th><th style="width:27%">Palantir（第 13 章）</th><th style="width:27%">この実装（第 14 章）</th></tr></thead>

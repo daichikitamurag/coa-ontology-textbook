@@ -269,14 +269,15 @@
   <a href="#c11"><b>11</b>VKG — RDB を動かさない</a>
   <a href="#c12"><b>12</b>AWS Context Ontology Accelerator</a>
   <a href="#c13"><b>13</b>Palantir Foundry / AIP</a>
+  <a href="#c14"><b>14</b>Minecraft オントロジー Agent</a>
 
   <div class="pt">第 4 部 — 判断のために</div>
-  <a href="#c14"><b>14</b>どこまで効いて、どこから効かないか</a>
+  <a href="#c15"><b>15</b>どこまで効いて、どこから効かないか</a>
 
   <div class="pt">第 5 部 — デモ</div>
-  <a href="#c15"><b>15</b>デモ① AWS COA</a>
-  <a href="#c16"><b>16</b>デモ② Palantir Foundry</a>
-  <a href="#c17"><b>17</b>デモ③ Minecraft</a>
+  <a href="#c16"><b>16</b>デモ① AWS COA</a>
+  <a href="#c17"><b>17</b>デモ② Palantir Foundry</a>
+  <a href="#c18"><b>18</b>デモ③ Minecraft</a>
 
   <div class="gl">
     <div class="pt">付録</div>
@@ -498,7 +499,7 @@
     <div class="bh">E — ここが次の競争の土俵になる</div>
     <p><strong>E</strong> は、オブジェクト定義の上に<strong>行動 (Action)・権限・手順</strong>が乗り、Agent がその上で自分で判断して回す世界です。たとえば調達業務なら「見積 → 交渉 → 説明 → 申請 → 決裁」という流れを、人が繋ぐのではなく<strong>オントロジー側に「業務の型」として書いてあるから Agent が繋げる</strong>。この言葉の射程は、そこまで伸びていくはずです。</p>
     <p style="margin-top:12px">そして<strong>各社のオントロジーサービスは、明らかにこの方向へ進んでいます</strong>。この「見積 → 交渉 → 説明 → 申請 → 決裁」という流れは、まさに<strong>次世代の Ontology-grounded Agent の典型ユースケース</strong>です。データを引いて答えるだけでなく、<strong>業務の型に沿って Agent が一連の流れを繋いでいく</strong>。<strong>今後はここが競争の土俵になります。</strong>そして C と D の「意味の層」は、その土俵に上がるための<strong>前提条件</strong>です。意味が曖昧なままでは、Agent に業務の流れを任せられません。</p>
-    <p style="margin-top:12px">問題は、<strong>E をそのまま見せられる製品が、まだ無い</strong>ことです。AWS COA が扱うのは D までで、行動や手順は入っていません（第 12 章で公開ソースを読んで確認します）。Palantir は定義に <strong>actions</strong> を含めていて E に踏み込んでいますが（第 16 章）、中を分解して「なぜ Agent が次の一手を選べたのか」まで見せられるものではありません。</p>
+    <p style="margin-top:12px">問題は、<strong>E をそのまま見せられる製品が、まだ無い</strong>ことです。AWS COA が扱うのは D までで、行動や手順は入っていません（第 12 章で公開ソースを読んで確認します）。Palantir は定義に <strong>actions</strong> を含めていて E に踏み込んでいますが（第 17 章）、中を分解して「なぜ Agent が次の一手を選べたのか」まで見せられるものではありません。</p>
   </div>
 
   <h3>この本が答える問い</h3>
@@ -1541,7 +1542,7 @@ ec:累計購入額
       </tbody>
     </table></div>
     <p>効くのは <strong>2 番目</strong>です。「先月の注文を顧客別に集計して」と言われたとき、<strong>注文者で集計するのか請求先で集計するのか</strong>は外部キーからは決められません。<strong>名前と説明が付いた道</strong>があって初めて、LLM も人間も迷わず選べます。</p>
-    <p style="margin-top:10px">加えて実務では、<strong>外部キーを張れない場所のほうが多い</strong>です。分析基盤に取り込んだテーブル、CSV から作った Glue テーブル、別システムから来たデータ — ここには外部キーという仕組み自体がありません。第 15 章のデモ環境もこれに当たります。</p>
+    <p style="margin-top:10px">加えて実務では、<strong>外部キーを張れない場所のほうが多い</strong>です。分析基盤に取り込んだテーブル、CSV から作った Glue テーブル、別システムから来たデータ — ここには外部キーという仕組み自体がありません。第 16 章のデモ環境もこれに当たります。</p>
   </div>
 
   <p><strong>最後に名前の話を 1 つ。</strong><code>ec:注文者</code> は「注文者という人」ではなく<strong>プロパティの名前</strong>で、「<strong>注文 1 件が、注文者として顧客 1 人を持つ</strong>」という関係を表します。<code>ec:O101 ec:注文者 ec:C001 .</code> を「<strong>O101 の注文者は C001 である</strong>」と主語から読めば迷いません。プロパティを「線の先にあるものの役割」で名付けるのは W3C 界の慣例で、<code>dc:creator</code> や schema.org の <code>author</code> も同じです。動詞で <code>ec:注文した</code> と名付けることもできますが、<strong>その場合は向きが逆</strong>になります (対応は第 6 章の <code>owl:inverseOf</code>)。</p>
@@ -2514,7 +2515,7 @@ ec:C002 <span class="k">a</span> ec:顧客 .                <span class="c"># 2 
   <h3>11.1 「対応表」を書くだけ</h3>
   <p>第 4 章では customers 表を手で Turtle に書き写しました。しかし実務でそれをやると、<strong>元の DB と Turtle の二重管理</strong>が始まります。</p>
   <p>そこで <span class="t">R2RML</span> (RDB to RDF Mapping Language / W3C 勧告) を使います。<strong>「この表のこの列は、オントロジーのこのプロパティに対応する」という対応表だけを書きます。</strong></p>
-  <p><strong>どの DB に繋ぐかは、R2RML には書きません。</strong>接続情報 (ホスト・ユーザー・パスワード) は別の設定として渡します。だから<strong>同じ対応表を、開発用 DB と本番用 DB に向け直せます</strong>。第 15 章のデモでは、この「接続先」に相当するのが COA の Data Source 登録です。</p>
+  <p><strong>どの DB に繋ぐかは、R2RML には書きません。</strong>接続情報 (ホスト・ユーザー・パスワード) は別の設定として渡します。だから<strong>同じ対応表を、開発用 DB と本番用 DB に向け直せます</strong>。第 16 章のデモでは、この「接続先」に相当するのが COA の Data Source 登録です。</p>
 
   <div class="fig">
     <p class="cap">図 11-1<span>仮想化のレイヤ — 上はグラフに見え、下は RDB のまま</span></p>
@@ -4741,7 +4742,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
     <p style="margin-top:12px">この差は偶然ではありません。関所が見ているのは <code>rdfs:domain</code> / <code>rdfs:range</code> / URI の実在 / SQL の構文 — <strong>すべて「構造」の情報</strong>です。「50000 以上を優良顧客と呼ぶ」は<strong>「意味」の情報</strong>で、今のオントロジーには書かれていません。<strong>書かれていないものは、検査もできません。</strong></p>
     <p style="margin-top:12px">図 12-27 の ② が繋がると、<strong>4 つのうち 1 つ目（しきい値）は関所で止まるようになります。</strong><code>PreferredCustomer</code> の定義が <code>totalPurchase &#8805; 50000</code> だと書いてあれば、<strong>100000 と書いたクエリは定義と矛盾する</strong>と機械が言えるからです。<strong>意味を書けば、意味も検査できるようになります。</strong></p>
     <p style="margin-top:10px">ただし残る 3 つ — <strong>90 日ルール、税と返品の控除、「先月」の解釈</strong> — は <strong>OWL では書けません</strong>。時間に依存する条件（第 6 章）と、四則演算（OWL に算術はありません）だからです。<strong>この 3 つは、繋がった後も指標か SPARQL の側で守る必要があります。</strong></p>
-    <p style="margin-top:10px">つまり「オントロジーを整えれば全部機械が守ってくれる」わけではありません。<strong>機械に守らせられる範囲は、書ける範囲まで</strong>です。その線引きが第 14 章のテーマになります。</p>
+    <p style="margin-top:10px">つまり「オントロジーを整えれば全部機械が守ってくれる」わけではありません。<strong>機械に守らせられる範囲は、書ける範囲まで</strong>です。その線引きが第 15 章のテーマになります。</p>
   </div>
 
 
@@ -5254,7 +5255,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
   <div class="box note">
     <div class="bh">第 12 章と並べると、ここが一番の差になります</div>
     <p>COA にも <code>Standard</code> と <code>Agentic</code> の切り替えはありました（図 12-20）。でもあれは<strong>経路の選択</strong>で、「どこまで任せていいか」を<strong>測る仕組みではありません</strong>。実測でも、Agentic は 88〜132 秒かけて「答えられない」と返し、Standard は確信度 23% で 0 行を返しました — <strong>どちらも自己申告で、第三者が検証できる形にはなっていません</strong>。</p>
-    <p style="margin-top:10px">Evals のような<strong>評価の仕組みが製品に組み込まれているかどうか</strong>は、業務に載せる段階で効いてきます。第 14 章の「どこまで効いて、どこから効かないか」で、この観点をもう一度使います。</p>
+    <p style="margin-top:10px">Evals のような<strong>評価の仕組みが製品に組み込まれているかどうか</strong>は、業務に載せる段階で効いてきます。第 15 章の「どこまで効いて、どこから効かないか」で、この観点をもう一度使います。</p>
   </div>
 
   <h3>13.6 ワークショップで実際にやること</h3>
@@ -5450,7 +5451,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
     <div class="bh">どちらが優れているという話ではありません</div>
     <p><strong>標準に乗るか、製品に乗るか</strong>の違いです。COA は RDF / OWL / SPARQL / SHACL という W3C 標準の上に立っているので、<strong>本書の第 3〜11 章がそのまま読める</strong>し、他のツールに持ち出せます。Palantir は独自モデルですが、<strong>アクションとガバナンスと評価まで一続きで揃っている</strong>。</p>
     <p style="margin-top:10px">そして<strong>考え方は驚くほど同じ</strong>です。どちらも「LLM に業務の文脈を渡す層が必要だ」と言い、どちらも「その層を 1 箇所に集める」と言っています。教材の一文が象徴的でした — <strong>「フロンティアモデルが Enterprise Agent の脳なら、Ontology は身体だ」</strong>。</p>
-    <p style="margin-top:12px">この章は<strong>製品としての説明</strong>までです。実際のデモで何を見せるかは<strong>第 16 章</strong>で扱います。</p>
+    <p style="margin-top:12px">この章は<strong>製品としての説明</strong>までです。実際のデモで何を見せるかは<strong>第 17 章</strong>で扱います。</p>
   </div>
   <div class="box note">
     <div class="bh">この章の出典について</div>
@@ -5463,11 +5464,310 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 
 <hr>
 <section class="ch" id="c14">
-  <div class="cn"><b>第 14 章</b><i></i></div>
+  <h2>Minecraft オントロジー Agent — 自分で組んだ最小実装</h2>
+  <p class="lead">3 つめの実装は<strong>自分で作ったもの</strong>です。第 12 章は AWS、第 13 章は Palantir と、どちらも既製の製品でした。ここは <strong>Node.js 1 本・Python 1 本・ローカル LLM 1 本</strong>で組んだ Minecraft のエージェントで、<strong>全部のコードが読めます</strong>。製品では見えなかった「LLM と機械とオントロジーが、どこで何をしているのか」を、行単位で確かめられます。</p>
+
+  <h3>14.1 何を作ったのか</h3>
+  <p>Minecraft のボットに「石のツルハシを作って、動物を狩り、小屋を建てて」と日本語で頼むと、<strong>手順に分解して、実際にゲーム内で動く</strong>ものです。プロセスは 3 つ、その間の API は 2 本しかありません。</p>
+  <div class="fig">
+  <p class="cap">図 14-1<span>3 つのプロセスと、その間の 2 本の API — 全部ローカル</span></p>
+  <svg viewBox="0 0 880 254" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+    <defs><marker id="x14n1" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b7480"/></marker>
+    <marker id="x14n1r" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#b3261e"/></marker>
+    <marker id="x14n1g" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#1f6f4a"/></marker></defs>
+    <rect x="14" y="30" width="270" height="72" rx="9" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2.4"/>
+    <text x="26" y="49" font-size="10.6" font-weight="900" fill="#155c3c">① Minecraft サーバ</text>
+    <text x="26" y="62" font-size="8" fill="#1f6f4a">ゲーム世界そのもの</text>
+    <text x="26" y="78" font-size="8.4" fill="#3d4654">木・石・動物が実際に存在する</text>
+    <text x="26" y="91" font-size="8.4" fill="#3d4654">ここが「物理法則」を持っている</text>
+    <rect x="305" y="30" width="270" height="72" rx="9" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2.4"/>
+    <text x="317" y="49" font-size="10.6" font-weight="900" fill="#154a80">② Bot API（Node.js）</text>
+    <text x="317" y="62" font-size="8" fill="#1c5b9c">mineflayer + Express・約 1,500 行</text>
+    <text x="317" y="78" font-size="8.4" fill="#3d4654">ボットを操作する 14 本の HTTP 窓口</text>
+    <text x="317" y="91" font-size="8.4" fill="#3d4654">素手で石は掘れない、を実際に拒む</text>
+    <rect x="596" y="30" width="270" height="72" rx="9" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2.4"/>
+    <text x="608" y="49" font-size="10.6" font-weight="900" fill="#4c1d95">③ Agent（Python）</text>
+    <text x="608" y="62" font-size="8" fill="#6b3fa0">ontology_agent.py・約 300 行</text>
+    <text x="608" y="78" font-size="8.4" fill="#3d4654">オントロジーを持ち、LLM を呼び、</text>
+    <text x="608" y="91" font-size="8.4" fill="#3d4654">出てきたプランを並べ替えて実行する</text>
+    <path d="M302,62 h-15" stroke="#6b7480" stroke-width="2" marker-end="url(#x14n1)"/>
+    <text x="294" y="22" text-anchor="middle" font-size="7.8" fill="#6b7480">Minecraft プロトコル</text>
+    <path d="M593,62 h-15" stroke="#6b7480" stroke-width="2" marker-end="url(#x14n1)"/>
+    <text x="585" y="22" text-anchor="middle" font-size="7.8" fill="#6b7480">HTTP（14 本の窓口）</text>
+    <rect x="596" y="126" width="270" height="60" rx="9" fill="#fbf7ef" stroke="#a8710f" stroke-width="2.4"/>
+    <text x="608" y="145" font-size="10.6" font-weight="900" fill="#6b4708">④ Ollama（ローカル LLM）</text>
+    <text x="608" y="158" font-size="8" fill="#a8710f">qwen2.5:7b / format=json / temperature 0.2</text>
+    <text x="608" y="174" font-size="8.4" fill="#3d4654">クラウドに出ない。Bedrock も API キーも使わない</text>
+    <path d="M674,106 V122" stroke="#a8710f" stroke-width="2.2" marker-end="url(#x14n1)"/>
+    <path d="M704,122 V106" stroke="#a8710f" stroke-width="2.2" marker-end="url(#x14n1)"/>
+    <text x="714" y="118" font-size="7.8" fill="#a8710f">POST /api/generate</text>
+    <rect x="14" y="126" width="561" height="60" rx="9" fill="#fbf7ef" stroke="#a8710f" stroke-width="2.4"/>
+    <text x="26" y="145" font-size="10.6" font-weight="900" fill="#6b4708">⑤ オントロジー（ontology.py・NetworkX の有向グラフ）</text>
+    <text x="26" y="160" font-size="8.4" fill="#3d4654">クラフト依存グラフ（<tspan font-family="Menlo,monospace">material / tool_needed / obtained_from</tspan>）と、アクション依存表 <tspan font-family="Menlo,monospace">ACTION_DEPS</tspan></text>
+    <text x="26" y="176" font-size="8.4" fill="#a8710f">③ の中に持たれる。<tspan font-weight="800">プロンプトに入る用の文字列</tspan>と、<tspan font-weight="800">並べ替え用のグラフ</tspan>の 2 通りに使われる</text>
+    <rect x="14" y="198" width="852" height="44" rx="8" fill="#f7f8fa" stroke="#6b7480" stroke-width="1.8"/>
+    <text x="26" y="216" font-size="9.6" font-weight="900" fill="#3d4654">全部ローカルで動きます。クラウドは 1 つも使っていません。</text>
+    <text x="26" y="232" font-size="8.6" fill="#3d4654">第 12 章の COA は Neptune・OpenSearch・Bedrock・Athena の上に乗っていました。ここは <tspan font-weight="800">Node.js 1 本と Python 1 本と Ollama 1 本</tspan>。<tspan font-weight="800">だから全部読めます</tspan>。</text>
+  </svg>
+  <p class="fc"><strong>③ の中だけが「考える」場所</strong>です。① は世界、② は世界を触る窓、④ は文章を書く部品。<strong>判断の組み立ては ③ が持っています</strong></p>
+</div>
+  <p>注目してほしいのは <strong>⑤ の位置</strong>です。オントロジーは独立したデータベースではなく、<strong>Agent の中に持たれた 1 つの Python モジュール</strong>です。第 12 章では Neptune にトリプルが入っていましたが、ここでは <code>ontology.py</code> の中に NetworkX の有向グラフとして書かれています。</p>
+  <div class="box def">
+    <div class="bh">オントロジーの実体 — 2 つのグラフ</div>
+    <p>① <strong>クラフト依存グラフ</strong>：「作りたいもの → その材料 / 必要な道具」を辺で結んだもの。辺には <code>material</code>（数量つき）・<code>tool_needed</code>・<code>obtained_from</code> の 3 種類があります。第 5 章の <code>owl:ObjectProperty</code> に相当します。</p>
+    <p style="margin-top:10px">② <strong>アクション依存表 <code>ACTION_DEPS</code></strong>：「このアクションは、どのアクションの後でなければならないか」を書いた辞書。8 個のアクションについて定義されています。<strong>こちらが実行順を決めます。</strong></p>
+    <p style="margin-top:10px">この 2 つは<strong>役割が違います</strong>。① は LLM に読ませるための知識、② は機械が並べ替えるための構造。同じファイルの中で分けて持っています。</p>
+  </div>
+
+  <h3>14.2 世界の側にある関所</h3>
+  <p>Bot API には 14 本のエンドポイントがあります（<code>/status</code> <code>/observe</code> <code>/chat</code> <code>/action</code> <code>/goto</code> <code>/reset_inventory</code> ほか）。エージェントが実際に使うのは <code>POST /action</code> と <code>POST /chat</code> の 2 本だけです。</p>
+  <p>大事なのは、この <code>/action</code> が<strong>「できないこと」を実際に拒む</strong>ことです。</p>
+  <div class="fig">
+  <p class="cap">図 14-2<span>世界の側にある関所 — 前提条件を満たさない操作は HTTP 409 で拒まれる</span></p>
+  <svg viewBox="0 0 880 350" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+    <defs><marker id="x14n2" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b7480"/></marker>
+    <marker id="x14n2r" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#b3261e"/></marker>
+    <marker id="x14n2g" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#1f6f4a"/></marker></defs>
+    <rect x="14" y="14" width="852" height="24" rx="7" fill="#1c5b9c"/>
+    <text x="27" y="30" font-size="10" font-weight="900" fill="#fff">Bot API は「できないこと」を実際に拒みます — 世界の側に置かれた関所</text>
+    <rect x="14" y="48" width="852" height="22" rx="6" fill="#f5f2ed"/>
+    <text x="26" y="63" font-size="8.6" font-weight="800" fill="#3d4654">POST /action の type</text>
+    <text x="264" y="63" font-size="8.6" font-weight="800" fill="#3d4654">やること</text>
+    <text x="534" y="63" font-size="8.6" font-weight="800" fill="#3d4654">前提条件（満たさないと 409）</text>
+    <rect x="14" y="70" width="852" height="26" rx="0" fill="#f2f9f4" opacity="0.55"/>
+    <text x="26" y="87" font-size="8.6" font-family="Menlo,monospace" fill="#1f6f4a">chop_tree</text>
+    <text x="264" y="87" font-size="8.4" fill="#3d4654">木を探して 3 本連続で伐採</text>
+    <text x="534" y="87" font-size="8.4" fill="#3d4654">—（素手でよい）</text>
+    <rect x="14" y="96" width="852" height="26" rx="0" fill="#fdf3f2" opacity="0.55"/>
+    <text x="26" y="113" font-size="8.6" font-family="Menlo,monospace" fill="#b3261e">mine_stone</text>
+    <text x="264" y="113" font-size="8.4" fill="#3d4654">石を探して 4 個連続で採掘</text>
+    <text x="534" y="113" font-size="8.4" fill="#3d4654"><tspan font-weight="800">木のツルハシ以上</tspan>を持っていること</text>
+    <rect x="14" y="122" width="852" height="26" rx="0" fill="#fdf3f2" opacity="0.55"/>
+    <text x="26" y="139" font-size="8.6" font-family="Menlo,monospace" fill="#b3261e">craft_planks / stick / pickaxe</text>
+    <text x="264" y="139" font-size="8.4" fill="#3d4654">材料を消費してアイテムを付与</text>
+    <text x="534" y="139" font-size="8.4" fill="#3d4654">材料が<tspan font-weight="800">実際にインベントリにある</tspan>こと</text>
+    <rect x="14" y="148" width="852" height="26" rx="0" fill="#fdf3f2" opacity="0.55"/>
+    <text x="26" y="165" font-size="8.6" font-family="Menlo,monospace" fill="#b3261e">build_hut</text>
+    <text x="264" y="165" font-size="8.4" fill="#3d4654">小屋を建てる</text>
+    <text x="534" y="165" font-size="8.4" fill="#3d4654"><tspan font-weight="800">板と基礎石の両方</tspan>があること</text>
+    <rect x="14" y="174" width="852" height="26" rx="0" fill="#f2f9f4" opacity="0.55"/>
+    <text x="26" y="191" font-size="8.6" font-family="Menlo,monospace" fill="#1f6f4a">hunt_animal</text>
+    <text x="264" y="191" font-size="8.4" fill="#3d4654">近くの牛・羊を狩る</text>
+    <text x="534" y="191" font-size="8.4" fill="#3d4654">—（素手でも通る）</text>
+    <rect x="14" y="212" width="852" height="72" rx="8" fill="#fff" stroke="#b3261e" stroke-width="2.2"/>
+    <text x="26" y="231" font-size="10" font-weight="900" fill="#8c1e18">実際に返ってきたエラー（オントロジー無しの実行ログ）</text>
+    <text x="34" y="248" font-size="8.2" font-family="Menlo,monospace" fill="#b3261e">HTTP 409  precondition failed: need 1x cobblestone/... to craft craft_stone_pickaxe</text>
+    <text x="34" y="261" font-size="8.2" font-family="Menlo,monospace" fill="#b3261e">HTTP 409  precondition failed: need a pickaxe (wooden or better) to mine stone</text>
+    <text x="34" y="274" font-size="8.2" font-family="Menlo,monospace" fill="#b3261e">HTTP 409  precondition failed: need oak_planks to build a hut</text>
+    <rect x="14" y="296" width="852" height="42" rx="8" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2"/>
+    <text x="26" y="314" font-size="9.6" font-weight="900" fill="#154a80">これは第 12 章の SQL ファイアウォールと同じ位置にあります</text>
+    <text x="26" y="329" font-size="8.6" fill="#3d4654">エージェントが何を言おうと、<tspan font-weight="800">世界の側が受け付けなければ実行されません</tspan>。オントロジーは「順序を作る」側、この関所は「間違いを止める」側です。</text>
+  </svg>
+  <p class="fc">ゲームなので<strong>物理法則を実装できる</strong>のが利点です。業務システムなら、在庫や権限の存在確認がここに当たります</p>
+</div>
+  <p>第 12 章の SQL ファイアウォールを思い出してください。あれは「危険な SQL を実行前に弾く」仕組みでした。ここも同じ位置にあります。<strong>エージェントが何を計画しようと、世界の側が受け付けなければ実行されません。</strong></p>
+  <p>ゲームなので<strong>この関所を自分で実装できる</strong>のが、教材としての強みです。業務システムなら、在庫の残数・権限の有効期限・対象レコードの実在といった確認がここに当たります。</p>
+
+  <h3>14.3 1 回の実行を追う</h3>
+  <p>実際のログから 1 回分を追います。タスクは<strong>「石のツルハシを作って、動物を狩り、小屋を建てて」</strong>。3 つの目標が混ざっていて、しかも依存関係が絡む — わざと難しくしたものです。</p>
+  <div class="fig star">
+  <p class="cap">図 14-3<span class="badge">最重要</span><span>1 回の実行を追う — LLM が抜かした 2 手を、機械が挿入して 8/8 成功</span></p>
+  <svg viewBox="0 0 880 364" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+    <defs><marker id="x14n3" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b7480"/></marker>
+    <marker id="x14n3r" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#b3261e"/></marker>
+    <marker id="x14n3g" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#1f6f4a"/></marker></defs>
+    <rect x="14" y="14" width="852" height="24" rx="7" fill="#6b3fa0"/>
+    <text x="27" y="30" font-size="10" font-weight="900" fill="#fff">実測 — タスク「石のツルハシを作って、動物を狩り、小屋を建てて」（2026-07-19）</text>
+    <rect x="14" y="48" width="852" height="74" rx="8" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2.2"/>
+    <text x="26" y="67" font-size="10.2" font-weight="900" fill="#4c1d95">[1] LLM にプランを作らせる</text>
+    <text x="26" y="82" font-size="8.4" fill="#3d4654">オントロジー全体を文字列にしてシステムプロンプトへ。JSON で受け取る</text>
+    <rect x="714" y="56" width="140" height="18" rx="9" fill="#6b3fa0"/>
+    <text x="784" y="69" text-anchor="middle" font-size="8.4" font-weight="900" fill="#fff">4.32 秒 / 6 ステップ</text>
+    <rect x="30" y="94" width="64.6" height="19" rx="4" fill="#fff" stroke="#6b3fa0" stroke-width="1.2"/>
+    <text x="62.3" y="107" text-anchor="middle" font-size="7.4" font-family="Menlo,monospace" font-weight="400" fill="#4c1d95">chop_tree</text>
+    <rect x="99.6" y="94" width="80.80000000000001" height="19" rx="4" fill="#fff" stroke="#6b3fa0" stroke-width="1.2"/>
+    <text x="140.0" y="107" text-anchor="middle" font-size="7.4" font-family="Menlo,monospace" font-weight="400" fill="#4c1d95">craft_planks</text>
+    <rect x="185.4" y="94" width="75.4" height="19" rx="4" fill="#fff" stroke="#6b3fa0" stroke-width="1.2"/>
+    <text x="223.10000000000002" y="107" text-anchor="middle" font-size="7.4" font-family="Menlo,monospace" font-weight="400" fill="#4c1d95">craft_stick</text>
+    <rect x="265.8" y="94" width="118.60000000000001" height="19" rx="4" fill="#fff" stroke="#6b3fa0" stroke-width="1.2"/>
+    <text x="325.1" y="107" text-anchor="middle" font-size="7.4" font-family="Menlo,monospace" font-weight="400" fill="#4c1d95">craft_stone_pickaxe</text>
+    <rect x="389.40000000000003" y="94" width="75.4" height="19" rx="4" fill="#fff" stroke="#6b3fa0" stroke-width="1.2"/>
+    <text x="427.1" y="107" text-anchor="middle" font-size="7.4" font-family="Menlo,monospace" font-weight="400" fill="#4c1d95">hunt_animal</text>
+    <rect x="469.80000000000007" y="94" width="64.6" height="19" rx="4" fill="#fff" stroke="#6b3fa0" stroke-width="1.2"/>
+    <text x="502.1000000000001" y="107" text-anchor="middle" font-size="7.4" font-family="Menlo,monospace" font-weight="400" fill="#4c1d95">build_hut</text>
+    <path d="M54,125 V137" stroke="#6b7480" stroke-width="2.2" marker-end="url(#x14n3)"/>
+    <rect x="14" y="140" width="852" height="74" rx="8" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2.2"/>
+    <text x="26" y="159" font-size="10.2" font-weight="900" fill="#155c3c">[2] 機械が並べ替えて、抜けを補う</text>
+    <text x="26" y="174" font-size="8.4" fill="#3d4654">ACTION_DEPS からトポロジカルソート。前提が足りなければ<tspan font-weight="800">自動で挿入</tspan></text>
+    <rect x="714" y="148" width="140" height="18" rx="9" fill="#1f6f4a"/>
+    <text x="784" y="161" text-anchor="middle" font-size="8.4" font-weight="900" fill="#fff">8 ステップ（＋2 自動補完）</text>
+    <rect x="30" y="186" width="64.6" height="19" rx="4" fill="#fff" stroke="#1f6f4a" stroke-width="1.2"/>
+    <text x="62.3" y="199" text-anchor="middle" font-size="7.4" font-family="Menlo,monospace" font-weight="400" fill="#155c3c">chop_tree</text>
+    <rect x="99.6" y="186" width="80.80000000000001" height="19" rx="4" fill="#fff" stroke="#1f6f4a" stroke-width="1.2"/>
+    <text x="140.0" y="199" text-anchor="middle" font-size="7.4" font-family="Menlo,monospace" font-weight="400" fill="#155c3c">craft_planks</text>
+    <rect x="185.4" y="186" width="75.4" height="19" rx="4" fill="#fff" stroke="#1f6f4a" stroke-width="1.2"/>
+    <text x="223.10000000000002" y="199" text-anchor="middle" font-size="7.4" font-family="Menlo,monospace" font-weight="400" fill="#155c3c">craft_stick</text>
+    <rect x="265.8" y="186" width="124.0" height="19" rx="4" fill="#fff3d6" stroke="#a8710f" stroke-width="2"/>
+    <text x="327.8" y="199" text-anchor="middle" font-size="7.4" font-family="Menlo,monospace" font-weight="900" fill="#a8710f">craft_wooden_pickaxe</text>
+    <rect x="394.8" y="186" width="70.0" height="19" rx="4" fill="#fff3d6" stroke="#a8710f" stroke-width="2"/>
+    <text x="429.8" y="199" text-anchor="middle" font-size="7.4" font-family="Menlo,monospace" font-weight="900" fill="#a8710f">mine_stone</text>
+    <rect x="469.8" y="186" width="75.4" height="19" rx="4" fill="#fff" stroke="#1f6f4a" stroke-width="1.2"/>
+    <text x="507.5" y="199" text-anchor="middle" font-size="7.4" font-family="Menlo,monospace" font-weight="400" fill="#155c3c">hunt_animal</text>
+    <rect x="550.2" y="186" width="118.60000000000001" height="19" rx="4" fill="#fff" stroke="#1f6f4a" stroke-width="1.2"/>
+    <text x="609.5" y="199" text-anchor="middle" font-size="7.4" font-family="Menlo,monospace" font-weight="400" fill="#155c3c">craft_stone_pickaxe</text>
+    <rect x="673.8000000000001" y="186" width="64.6" height="19" rx="4" fill="#fff" stroke="#1f6f4a" stroke-width="1.2"/>
+    <text x="706.1" y="199" text-anchor="middle" font-size="7.4" font-family="Menlo,monospace" font-weight="400" fill="#155c3c">build_hut</text>
+    <text x="852" y="199" text-anchor="end" font-size="7.8" font-weight="800" fill="#a8710f">■ が自動で挿入された手</text>
+    <path d="M54,217 V229" stroke="#6b7480" stroke-width="2.2" marker-end="url(#x14n3)"/>
+    <rect x="14" y="232" width="852" height="52" rx="8" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2.2"/>
+    <text x="26" y="251" font-size="10.2" font-weight="900" fill="#154a80">[3] 1 手ずつ実行</text>
+    <text x="26" y="266" font-size="8.4" fill="#3d4654">各手を POST /action。ゲーム内チャットにも実況を流す</text>
+    <rect x="714" y="240" width="140" height="18" rx="9" fill="#1c5b9c"/>
+    <text x="784" y="253" text-anchor="middle" font-size="8.4" font-weight="900" fill="#fff">8 / 8 成功</text>
+    <rect x="14" y="292" width="852" height="60" rx="8" fill="#fff" stroke="#b3261e" stroke-width="2.4"/>
+    <text x="26" y="312" font-size="10.4" font-weight="900" fill="#8c1e18">LLM は同じ間違いをしていました</text>
+    <text x="26" y="329" font-size="8.8" fill="#3d4654">[1] の 6 ステップには <tspan font-family="Menlo,monospace" font-weight="800">craft_wooden_pickaxe</tspan> と <tspan font-family="Menlo,monospace" font-weight="800">mine_stone</tspan> がありません。木のツルハシが無いと石は採れず、石が無いと石のツルハシは作れません。</text>
+    <text x="26" y="345" font-size="8.8" fill="#3d4654"><tspan font-weight="800">LLM を賢くしたのではありません。</tspan>同じ 7B のまま、[2] の機械が 2 手を挿入し、<tspan font-family="Menlo,monospace">craft_stone_pickaxe</tspan> を <tspan font-family="Menlo,monospace">mine_stone</tspan> の後ろに動かしました。</text>
+  </svg>
+  <p class="fc"><strong>これが「機械が LLM を矯正する」の実物</strong>です。プロンプトを工夫したのではなく、<strong>出てきたものを後から直しています</strong></p>
+</div>
+  <p>手順は 3 段です。</p>
+  <ul>
+    <li><strong>[1] LLM にプランを作らせる。</strong>クラフト依存グラフを文字列に変換してシステムプロンプトに埋め込み、<code>format=json</code> で JSON を強制します。返るのは <code>goal</code> / <code>reasoning</code> / <code>plan</code> の 3 つ</li>
+    <li><strong>[2] 機械が並べ替える。</strong><code>ACTION_DEPS</code> で有向グラフを作り、<strong>NetworkX のトポロジカルソート</strong>にかけます。前提が足りなければ<strong>再帰的にさかのぼって挿入</strong>します。未知のアクション名が来たら黙って捨てます</li>
+    <li><strong>[3] 1 手ずつ実行。</strong>各手を <code>POST /action</code> に投げ、ゲーム内チャットにも実況を流します。失敗しても止めず、全ステップを見せます（デモ用の判断）</li>
+  </ul>
+  <div class="box key">
+    <div class="bh">LLM は、抜けたまま出してきました</div>
+    <p>[1] の 6 ステップには <code>craft_wooden_pickaxe</code> と <code>mine_stone</code> がありません。<strong>木のツルハシが無いと石は採れず、石が無いと石のツルハシは作れません。</strong>そのまま実行すれば必ず失敗します。</p>
+    <p style="margin-top:10px">[2] が 2 手を挿入し、<code>craft_stone_pickaxe</code> を <code>mine_stone</code> の後ろに動かしました。結果 <strong>8/8 成功</strong>。<strong>LLM は同じ 7B のまま、プロンプトも変えていません。</strong>直したのは後段です。</p>
+  </div>
+
+  <h3>14.4 同じタスクを 3 方式で回す</h3>
+  <p>「依存関係も知識なんだから、社内 Wiki に書いて RAG で読ませれば済むのでは」— この問いに答えるために、<strong>同じタスク・同じモデル・同じ API</strong>で 3 通り作って回してあります。</p>
+  <div class="fig">
+  <p class="cap">図 14-4<span>3 方式の実測 — 差は「渡した情報量」ではなく「出力を直せるか」</span></p>
+  <svg viewBox="0 0 880 268" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+    <defs><marker id="x14n4" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b7480"/></marker>
+    <marker id="x14n4r" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#b3261e"/></marker>
+    <marker id="x14n4g" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#1f6f4a"/></marker></defs>
+    <rect x="14" y="14" width="852" height="24" rx="7" fill="#2b3440"/>
+    <text x="27" y="30" font-size="10" font-weight="900" fill="#fff">同じタスク・同じモデル・同じ API で 3 方式を回した実測（2026-07-19 14:11〜14:12）</text>
+    <rect x="14" y="48" width="276" height="118" rx="9" fill="#fdf3f2" stroke="#b3261e" stroke-width="2.4"/>
+    <text x="26" y="67" font-size="10.4" font-weight="900" fill="#8c1e18">① オントロジー無し</text>
+    <text x="26" y="80" font-size="7.8" font-family="Menlo,monospace" fill="#b3261e">no_ontology_agent.py</text>
+    <text x="26" y="96" font-size="8" fill="#3d4654">プロンプト: アクション名の列挙だけ</text>
+    <text x="26" y="109" font-size="8" fill="#3d4654">LLM: 5.47 秒</text>
+    <text x="26" y="122" font-size="8" fill="#3d4654">プラン: craft_stone_pickaxe →</text>
+    <text x="26" y="135" font-size="8" fill="#3d4654">　　　 mine_stone → hunt_animal → build_hut</text>
+    <rect x="26" y="144" width="252" height="18" rx="9" fill="#b3261e"/>
+    <text x="152.0" y="157" text-anchor="middle" font-size="9" font-weight="900" fill="#fff">実行結果 1 / 4 成功</text>
+    <rect x="302" y="48" width="276" height="118" rx="9" fill="#fdf3f2" stroke="#b3261e" stroke-width="2.4"/>
+    <text x="314" y="67" font-size="10.4" font-weight="900" fill="#8c1e18">② RAG</text>
+    <text x="314" y="80" font-size="7.8" font-family="Menlo,monospace" fill="#b3261e">rag_agent.py</text>
+    <text x="314" y="96" font-size="8" fill="#3d4654">プロンプト: Wiki 8 本から bi-gram 類似度で上位 4 本</text>
+    <text x="314" y="109" font-size="8" fill="#3d4654">LLM: 4.90 秒</text>
+    <text x="314" y="122" font-size="8" fill="#3d4654">プラン: ①と<tspan font-weight="800">まったく同じ</tspan></text>
+    <text x="314" y="135" font-size="8" fill="#3d4654">　　　（順序も同じ）</text>
+    <rect x="314" y="144" width="252" height="18" rx="9" fill="#b3261e"/>
+    <text x="440.0" y="157" text-anchor="middle" font-size="9" font-weight="900" fill="#fff">実行結果 1 / 4 成功</text>
+    <rect x="590" y="48" width="276" height="118" rx="9" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2.4"/>
+    <text x="602" y="67" font-size="10.4" font-weight="900" fill="#155c3c">③ オントロジー</text>
+    <text x="602" y="80" font-size="7.8" font-family="Menlo,monospace" fill="#1f6f4a">ontology_agent.py</text>
+    <text x="602" y="96" font-size="8" fill="#3d4654">プロンプト: 依存グラフ全体＋トポロジカルソート</text>
+    <text x="602" y="109" font-size="8" fill="#3d4654">LLM: 4.32 秒</text>
+    <text x="602" y="122" font-size="8" fill="#3d4654">プラン: LLM 6 手 →<tspan font-weight="800"> 機械が 8 手に補正</tspan></text>
+    <text x="602" y="135" font-size="8" fill="#3d4654">　　　（2 手を自動挿入）</text>
+    <rect x="602" y="144" width="252" height="18" rx="9" fill="#1f6f4a"/>
+    <text x="728.0" y="157" text-anchor="middle" font-size="9" font-weight="900" fill="#fff">実行結果 8 / 8 成功</text>
+    <rect x="14" y="180" width="852" height="76" rx="8" fill="#fbf7ef" stroke="#a8710f" stroke-width="2.4"/>
+    <text x="26" y="200" font-size="10.4" font-weight="900" fill="#6b4708">RAG は「正しいページ」を引いていました。それでも順序を組めませんでした。</text>
+    <text x="26" y="217" font-size="8.6" fill="#3d4654">取り出された 4 本 — <tspan font-family="Menlo,monospace">stone_pickaxe</tspan> 0.226 ／ <tspan font-family="Menlo,monospace">wooden_pickaxe</tspan> 0.114 ／ <tspan font-family="Menlo,monospace">build_hut</tspan> 0.103 ／ <tspan font-family="Menlo,monospace">chop_tree</tspan> 0.067</text>
+    <text x="26" y="233" font-size="8.6" fill="#3d4654">ツルハシのレシピは 2 本とも届いています。ただし「石を掘るには木のツルハシが必要」と<tspan font-weight="800">明記した <tspan font-family="Menlo,monospace">mine_stone</tspan> のページは上位 4 本に入りませんでした</tspan>。</text>
+    <text x="26" y="249" font-size="8.6" font-weight="800" fill="#b3261e">仮に 8 本全部渡しても、RAG には「順序を保証する仕組み」がありません。③ が勝ったのは情報量ではなく、後段の並べ替えです。</text>
+  </svg>
+  <p class="fc">①と②が<strong>同じ間違ったプラン</strong>を出したことが決定的です。<strong>検索で情報を足しても、順序は直りませんでした</strong></p>
+</div>
+  <p>結果は <strong>1/4 ・ 1/4 ・ 8/8</strong>。①と②は<strong>まったく同じプランを出しました</strong>。順序まで一致しています。</p>
+  <p>そして RAG は<strong>失敗したのに、検索は当たっていました</strong>。石のツルハシと木のツルハシのレシピは 2 本とも届いています。にもかかわらず <code>craft_stone_pickaxe</code> を 1 手目に置きました。</p>
+  <div class="box warn">
+    <div class="bh">この比較で気をつけて読むべき点</div>
+    <p>RAG が引いたのは 8 本のうち上位 4 本で、「石を掘るには木のツルハシが必要」と<strong>最も明確に書いた <code>mine_stone</code> のページは落ちています</strong>。だから「情報が足りなかった」という説明も成り立ちます。</p>
+    <p style="margin-top:10px">ただし<strong>それでは説明しきれません。</strong>③ の LLM は<strong>依存グラフ全体を受け取っていた</strong>のに、やはり同じ 2 手を抜かしました。<strong>情報を全部渡しても、順序は保証されなかった</strong>のです。</p>
+    <p style="margin-top:12px;font-weight:800;color:var(--red)">差は「渡した情報量」ではありません。「出てきたものを機械が直せるか」です。</p>
+  </div>
+
+  <h3>14.5 誰が何をやっているのか</h3>
+  <div class="fig">
+  <p class="cap">図 14-5<span>4 つの担当 — LLM / オントロジー / 機械 / 世界</span></p>
+  <svg viewBox="0 0 880 342" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+    <defs><marker id="x14n5" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b7480"/></marker>
+    <marker id="x14n5r" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#b3261e"/></marker>
+    <marker id="x14n5g" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#1f6f4a"/></marker></defs>
+    <rect x="14" y="14" width="852" height="24" rx="7" fill="#1f6f4a"/>
+    <text x="27" y="30" font-size="10" font-weight="900" fill="#fff">誰が何をやっているのか — 4 つの担当に分かれている</text>
+    <rect x="14" y="48" width="852" height="50" rx="8" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2.2"/>
+    <text x="26" y="67" font-size="10.2" font-weight="900" fill="#4c1d95">LLM（qwen2.5:7b）</text>
+    <text x="26" y="82" font-size="8.4" fill="#3d4654">日本語のタスクを、使えるアクション名に翻訳する。<tspan font-weight="800">見当をつけるところまで</tspan></text>
+    <text x="852" y="93" text-anchor="end" font-size="7.8" font-style="italic" fill="#6b3fa0">順序は当てにならない。今回も 2 手抜けた</text>
+    <rect x="14" y="104" width="852" height="50" rx="8" fill="#fbf7ef" stroke="#a8710f" stroke-width="2.2"/>
+    <text x="26" y="123" font-size="10.2" font-weight="900" fill="#6b4708">オントロジー（グラフ）</text>
+    <text x="26" y="138" font-size="8.4" fill="#3d4654">何と何が依存しているかを持つ。<tspan font-weight="800">プロンプト用の文字列</tspan>と<tspan font-weight="800">並べ替え用のグラフ</tspan>の 2 役</text>
+    <text x="852" y="149" text-anchor="end" font-size="7.8" font-style="italic" fill="#a8710f">それ自身は判断しない。材料を提供する</text>
+    <rect x="14" y="160" width="852" height="50" rx="8" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2.2"/>
+    <text x="26" y="179" font-size="10.2" font-weight="900" fill="#155c3c">機械（Python）</text>
+    <text x="26" y="194" font-size="8.4" fill="#3d4654">トポロジカルソートで順序を保証し、抜けた前提を挿入し、1 手ずつ実行する</text>
+    <text x="852" y="205" text-anchor="end" font-size="7.8" font-style="italic" fill="#1f6f4a">ここが決定論。同じ入力なら同じ順序が出る</text>
+    <rect x="14" y="216" width="852" height="50" rx="8" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2.2"/>
+    <text x="26" y="235" font-size="10.2" font-weight="900" fill="#154a80">世界（Bot API）</text>
+    <text x="26" y="250" font-size="8.4" fill="#3d4654">前提を満たさない操作を 409 で拒む。実際に木を切り、石を掘る</text>
+    <text x="852" y="261" text-anchor="end" font-size="7.8" font-style="italic" fill="#1c5b9c">最後の関所。エージェントの言い分は通らない</text>
+    <rect x="14" y="272" width="852" height="58" rx="8" fill="#fff" stroke="#b3261e" stroke-width="2.4"/>
+    <text x="26" y="292" font-size="10.4" font-weight="900" fill="#8c1e18">オントロジーの寄与は、第 13 章で書いたのと同じでした</text>
+    <text x="26" y="310" font-size="8.8" fill="#3d4654"><tspan font-weight="800">判断するのは LLM と人、つなぐのがオントロジー、運んで保証するのが機械</tspan>（図 13-1）。実装が 300 行でも、この分担は変わりません。</text>
+    <text x="26" y="325" font-size="8.8" fill="#3d4654">違うのは<tspan font-weight="800">「人」がいない</tspan>ことだけです。このデモは全部自動で回るので、承認の段がありません — <tspan font-weight="800">業務に載せるなら、そこを足す必要があります</tspan>。</text>
+  </svg>
+  <p class="fc"><strong>300 行の実装でも、第 12・13 章と同じ形</strong>になりました。だから<strong>この分担は製品固有の話ではない</strong>と言えます</p>
+</div>
+  <p>第 13 章の 図 13-1 で「判断するのは人と AI、つなぐのがオントロジー、運ぶのが機械」と書きました。<strong>300 行の自作実装でも、同じ分担になりました。</strong></p>
+  <p>ひとつだけ違うのは、<strong>このデモに「人」がいないこと</strong>です。全部自動で回るので、承認の段がありません。第 13 章 図 13-4 の言い方なら<strong>いきなり ③「AI が主導」</strong>から始めていることになります。業務に載せるなら、そこを足す必要があります。</p>
+
+  <h3>14.6 第 12・13 章と並べる</h3>
+  <div class="tw">
+  <table>
+    <thead><tr><th style="width:19%"></th><th style="width:27%">AWS COA（第 12 章）</th><th style="width:27%">Palantir（第 13 章）</th><th style="width:27%">この実装（第 14 章）</th></tr></thead>
+    <tbody>
+      <tr><td>オントロジーの実体</td><td>Neptune の RDF トリプル</td><td>独自のオブジェクトモデル</td><td>NetworkX の有向グラフ（Python）</td></tr>
+      <tr><td>LLM</td><td>Bedrock（Claude Sonnet 5）</td><td>AIP から複数モデル</td><td class="y">ローカルの qwen2.5:7b</td></tr>
+      <tr><td>LLM に渡すもの</td><td>整形した抜粋（ベクトル検索で絞る）</td><td>オントロジーの文脈</td><td class="y">依存グラフ<strong>全体</strong>（小さいので絞らない）</td></tr>
+      <tr class="ok"><td><strong>出力の後処理</strong></td><td>SPARQL を 3 段で検証し、落ちたら再生成</td><td>Action として実行、Evals で評価</td><td class="y"><strong>トポロジカルソートで並べ替え＋前提を挿入</strong></td></tr>
+      <tr><td>実行前の関所</td><td>Cedar ＋ SQL ファイアウォール</td><td>権限つき Action</td><td class="y">Bot API の前提条件チェック（409）</td></tr>
+      <tr class="no"><td>書き戻し</td><td class="n">無い（読み取り専用）</td><td class="y">あり（Action）</td><td class="y">あり（世界を実際に変える）</td></tr>
+      <tr class="no"><td>人の承認</td><td>構築時のみ</td><td class="y">段階的自動化＋Evals</td><td class="n"><strong>無い</strong></td></tr>
+      <tr><td>読めるか</td><td>公開ソース（大規模）</td><td class="n">読めない</td><td class="y"><strong>約 1,800 行で全部</strong></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="box key">
+    <div class="bh">3 つ並べて分かったこと</div>
+    <p><strong>「LLM の出力を、構造に照らして後から直す」— この形が 3 つとも共通していました。</strong>COA は SPARQL を検証して再生成させ、Palantir は Action という単位に閉じ込め、この実装はトポロジカルソートで並べ替える。<strong>やり方は違いますが、狙いは同じです。</strong></p>
+    <p style="margin-top:10px">つまりこれは<strong>製品固有の設計ではなく、オントロジーを LLM と組むときの一般形</strong>だと言えます。第 0 章で「機械の担当」と書いたものが、実装 3 つで同じ位置に現れました。</p>
+    <p style="margin-top:12px">この実装が<strong>「本当にオントロジーなのか」</strong>という問いは、まだ残っています。RDF を使っていないので、第 4〜9 章で見たものとは別物です。<strong>それは第 18 章で分解します。</strong></p>
+  </div>
+  <div class="box note">
+    <div class="bh">この章の出典</div>
+    <p>実装は <code>04_ontology_agent/</code>（<code>ontology.py</code> / <code>ontology_agent.py</code> / <code>no_ontology_agent.py</code> / <code>rag_agent.py</code>）と <code>02_mineflayer検証/bot_server.js</code> を読んで整理しました。数値はすべて <code>logs/</code> に残っている <strong>2026-07-19 の実行ログ</strong>から取ったもので、推定値は含みません。</p>
+  </div>
+</section>
+
+
+<hr>
+<section class="ch" id="c15">
+  <div class="cn"><b>第 15 章</b><i></i></div>
   <h2>どこまで効いて、どこから効かないか</h2>
   <p class="lead">最後に、判断のための整理をします。この本を読んだ人が、明日から使える形にまとめます。</p>
 
-  <h3>14.1 オントロジーで解ける問題・解けない問題</h3>
+  <h3>15.1 オントロジーで解ける問題・解けない問題</h3>
   <div class="tw"><table>
     <thead><tr><th style="width:40%">問題</th><th style="width:14%">解ける?</th><th style="width:46%">使う道具</th></tr></thead>
     <tbody>
@@ -5482,12 +5782,12 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
       <tr class="no"><td><strong>「直近 90 日」のような時間依存の条件</strong></td><td class="n">OWL では書けない</td><td>SPARQL の <code>FILTER</code> / SHACL / バッチ再計算</td></tr>
       <tr class="no"><td><strong>「無いこと」から結論を出す</strong></td><td class="n">OWL では無理</td><td>SHACL (閉世界)</td></tr>
       <tr class="no"><td>SQL の方言差 / クエリ性能 / コンテキスト長</td><td class="n">担当外</td><td>別の手段で解く</td></tr>
-      <tr class="no"><td><strong>その操作が「今この瞬間」に実行可能か</strong></td><td class="n">解けない</td><td>実行前の存在確認 (pre-check) を別に用意する。在庫・権限・対象レコードの実在はオントロジーの外 (第 17 章 §17.7)</td></tr>
+      <tr class="no"><td><strong>その操作が「今この瞬間」に実行可能か</strong></td><td class="n">解けない</td><td>実行前の存在確認 (pre-check) を別に用意する。在庫・権限・対象レコードの実在はオントロジーの外 (第 18 章 §18.7)</td></tr>
       <tr class="no"><td><strong>定義そのものを誰かが書く工数</strong></td><td class="n">解けない</td><td>人間が書く。ここが最大のコスト</td></tr>
     </tbody>
   </table></div>
 
-  <h3>14.2 最初にやると効くこと</h3>
+  <h3>15.2 最初にやると効くこと</h3>
   <div class="box key">
     <div class="bh">推論器を動かす前に、元が取れる作業</div>
     <p>第 6 章で見た <strong>「ルールでは 4 名、member_rank 列では 2 名」というズレの検出</strong>を思い出してください。これは推論器も SHACL も不要です。<strong>ルールを 1 箇所に書いて、現状と突き合わせるだけ</strong>で見えます。</p>
@@ -5500,7 +5800,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
     <p style="margin-top:10px">ズレの件数が出れば、それが投資判断の材料になります。</p>
   </div>
 
-  <h3>14.3 この本の結論</h3>
+  <h3>15.3 この本の結論</h3>
   <div class="box def" style="padding:24px 28px">
     <div class="bh">結論</div>
     <p style="font-size:18px;font-weight:700;color:var(--ink);line-height:1.8;margin-bottom:14px">オントロジーは「答えを出す魔法」ではありません。<br>「組織のルールを一箇所に置く場所」です。</p>
@@ -5509,7 +5809,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
   </div>
 
   <div class="sum">
-    <div class="bh">第 14 章のまとめ</div>
+    <div class="bh">第 15 章のまとめ</div>
     <ul>
       <li>意味に起因する問題 (シノニム・JOIN・集計定義・値の揺れ・型・階層・制約) は解ける</li>
       <li>時間依存・「無いこと」・方言・性能は<strong>オントロジーの担当外</strong></li>
@@ -5520,12 +5820,12 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <hr>
-<section class="ch" id="c15">
-  <div class="cn"><b>第 15 章</b><i></i></div>
+<section class="ch" id="c16">
+  <div class="cn"><b>第 16 章</b><i></i></div>
   <h2>デモ ① AWS COA — 定義を 1 箇所に置くと、LLM の出力が変わる</h2>
   <p class="lead">ここから第 5 部です。ここまで読んだ道具が、実際の製品の上で動く様子を 3 つ見ます。<strong>最初は AWS COA。題材の 5 人がそのまま AWS 上に乗ります</strong>。第 2 章で見た事故を再現し、それが消えるところまでを見せます。</p>
 
-  <h3>15.1 このデモが証明すること</h3>
+  <h3>16.1 このデモが証明すること</h3>
   <p>証明したいことは 1 つだけです。<strong>Turtle に定義を数行書くと、LLM が生成する SQL の <code>WHERE</code> 句が変わる</strong>。LLM もモデルもプロンプトのテンプレートも触りません。</p>
   <div class="tw"><table>
     <thead><tr><th style="width:22%">段階</th><th style="width:40%">やること</th><th style="width:38%">画面に出る値</th></tr></thead>
@@ -5540,10 +5840,10 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
     </tbody>
   </table></div>
 
-  <h3>15.2 ④ で投入するもの</h3>
+  <h3>16.2 ④ で投入するもの</h3>
   <p>デモの山場はここです。第 12 章で「用語集の note が第 2 章の事故を防ぐ鍵。ただし書くのは人間」と書きました。その人間が書く部分の実物です。</p>
   <div class="lst">
-    <p class="cap">リスト 15-1<span>この定義が LLM の出力を変える</span></p>
+    <p class="cap">リスト 16-1<span>この定義が LLM の出力を変える</span></p>
     <pre><span class="c"># COA では用語集を JSON リテラルとして aiContext に載せる</span>
 ind:アクティブ顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
     <span class="k">rdfs:subClassOf</span> ind:Customers <span class="k">;</span>
@@ -5560,12 +5860,12 @@ ind:アクティブ顧客 <span class="k">a</span> owl:Class <span class="k">;</
     <p>なお <code>coa:isMapped</code> を自分で書き足すことはできません。外部から渡されたこのマーカーは、取り込み時に<strong>意図的に剥がされます</strong> (偽造防止のため)。付与するのは COA 自身の役目です。</p>
   </div>
 
-  <h3>15.3 ⑥ が実は一番大事</h3>
+  <h3>16.3 ⑥ が実は一番大事</h3>
   <p>⑤ は派手ですが、確率的です。同じ質問を 3 回すれば 3 回同じ結果になるとは限りません。<strong>⑥ は決定論的で、しかも推論器も検証器も要りません</strong>。ルールを 1 箇所に書いて現状のデータと突き合わせるだけです。</p>
   <div class="box key">
     <p class="bt">デモで一番効くのはこの 1 行</p>
     <p>「ルールでは 4 名、<code>member_rank</code> 列では 2 名。<strong>差の 2 名 — 鈴木さんと田中さんは、VIP 対応すべきなのに Regular のままです</strong>」</p>
-    <p>これは推論器を立てる前に、Turtle を 10 行書くだけで出てきます。第 14 章 §14.2 で「最初にやると効くこと」として挙げたのがこれです。<strong>投資判断の材料が、投資する前に手に入る</strong>という構造になっています。</p>
+    <p>これは推論器を立てる前に、Turtle を 10 行書くだけで出てきます。第 15 章 §15.2 で「最初にやると効くこと」として挙げたのがこれです。<strong>投資判断の材料が、投資する前に手に入る</strong>という構造になっています。</p>
   </div>
   <div class="box warn">
     <p class="bt">なぜ「差の 2 名」と言えるのか — 引き算が成り立つ条件</p>
@@ -5573,7 +5873,7 @@ ind:アクティブ顧客 <span class="k">a</span> owl:Class <span class="k">;</
     <p>実務のデータでは、これが<strong>普通に混ざっています</strong>。だから件数を引き算する前に、必ず<strong>どちらの集合に誰が入っているかを並べて確認する</strong>こと。第 6 章の表 (誰が一致し、誰がズレているか) を作るのが先で、件数は後です。</p>
   </div>
 
-  <h3>15.4 このデモで見えないこと</h3>
+  <h3>16.4 このデモで見えないこと</h3>
   <p>正直に言っておくべき限界です。第 12 章の結論を、デモの形で言い直したものになります。</p>
   <div class="tw"><table>
     <thead><tr><th style="width:36%">見たくなるが、見えないもの</th><th style="width:64%">理由</th></tr></thead>
@@ -5586,7 +5886,7 @@ ind:アクティブ顧客 <span class="k">a</span> owl:Class <span class="k">;</
   </table></div>
 
   <div class="sum">
-    <div class="bh">第 15 章のまとめ</div>
+    <div class="bh">第 16 章のまとめ</div>
     <ul>
       <li>題材の 5 人をそのまま AWS に乗せ、<strong>89,000 円 → 84,500 円</strong>の事故を再現する</li>
       <li>山場は「用語集の Turtle を足すと、LLM の生成 SQL の <code>WHERE</code> が変わる」</li>
@@ -5597,12 +5897,12 @@ ind:アクティブ顧客 <span class="k">a</span> owl:Class <span class="k">;</
   </div>
 </section>
 
-<section class="ch" id="c16">
-  <div class="cn"><b>第 16 章</b><i></i></div>
+<section class="ch" id="c17">
+  <div class="cn"><b>第 17 章</b><i></i></div>
   <h2>デモ ② Palantir Foundry — オントロジーが「行動」まで持つとどうなるか</h2>
   <p class="lead">2 つめは Palantir Foundry です。COA との違いは技術の優劣ではありません。<strong>オントロジーという言葉に何を含めているか</strong>が違います。Palantir の公式教材の定義を読むと、その違いが 1 行で分かります。</p>
 
-  <h3>16.1 Palantir の定義 — data, logic, and actions</h3>
+  <h3>17.1 Palantir の定義 — data, logic, and actions</h3>
   <div class="box def">
     <p class="bt">Palantir 公式教材の記述</p>
     <p>「プロセスの符号化はオントロジーによって達成される。オントロジーは <strong>データ・ロジック・アクション</strong>を統合するものである」<br>
@@ -5621,7 +5921,7 @@ ind:アクティブ顧客 <span class="k">a</span> owl:Class <span class="k">;</
     </tbody>
   </table></div>
 
-  <h3>16.2 デモが扱う業務 — 臨床試験の患者リクルート</h3>
+  <h3>17.2 デモが扱う業務 — 臨床試験の患者リクルート</h3>
   <p>公式教材が使う業務はこれです。手順は 3 段階に符号化されています。</p>
   <div class="tw"><table>
     <thead><tr><th style="width:8%">段</th><th style="width:38%">業務</th><th style="width:54%">誰がやるか</th></tr></thead>
@@ -5633,7 +5933,7 @@ ind:アクティブ顧客 <span class="k">a</span> owl:Class <span class="k">;</
   </table></div>
   <p>この形に見覚えがあるはずです。<strong>調達業務の「見積 → 交渉 → 説明 → 申請 → 決裁」と同じ構造</strong>です。判断の連鎖があり、途中に人間の承認点があり、各段が前段の結果に依存する。Palantir が狙っているのはこの領域です。</p>
 
-  <h3>16.3 教材の 3 部構成が、そのまま設計思想になっている</h3>
+  <h3>17.3 教材の 3 部構成が、そのまま設計思想になっている</h3>
   <p>コースは Agent を「作る → 評価する → 自動化する」の 3 部でできています。<strong>この 3 部構成自体が、COA との最大の違いを示しています</strong>。</p>
   <div class="tw"><table>
     <thead><tr><th style="width:16%">部</th><th style="width:44%">やること</th><th style="width:40%">COA に相当するものがあるか</th></tr></thead>
@@ -5653,13 +5953,13 @@ ind:アクティブ顧客 <span class="k">a</span> owl:Class <span class="k">;</
     <p>人間は<strong>データを 1 件足しただけ</strong>です。誰も Agent を呼んでいません。オントロジーに患者オブジェクトが増えたというイベントが、Automation を起動し、Agent が判定し、結果がまたオントロジーに書き戻される。<strong>オントロジーが「業務が流れる場所」になっています。</strong></p>
   </div>
 
-  <h3>16.4 では、どちらを選ぶのか</h3>
+  <h3>17.4 では、どちらを選ぶのか</h3>
   <p>「どちらが優れているか」という問いは噛み合いません。<strong>解こうとしている問題が違います</strong>。</p>
   <div class="box col">
     <p class="bt">判断の分かれ目</p>
     <p><strong>AWS COA が向く場面 —</strong> 既存の RDB を動かせない。データを外に出せない。まず「意味のズレ」を可視化したい。W3C 標準に載せて資産を長く持ちたい。<strong>読む側の統制が課題のとき。</strong></p>
     <p><strong>Palantir が向く場面 —</strong> 業務プロセスそのものを Agent に流したい。書き込みと承認と自動実行まで含めて 1 つの上に載せたい。評価の仕組みも製品として欲しい。<strong>業務を動かす側が課題のとき。</strong></p>
-    <p>そして予算の桁が違います。この本で学んだ W3C の道具は、<strong>Turtle を 10 行書くところから始められます</strong> (第 14 章 §14.2)。Palantir は業務 OS として導入する規模の話になります。</p>
+    <p>そして予算の桁が違います。この本で学んだ W3C の道具は、<strong>Turtle を 10 行書くところから始められます</strong> (第 15 章 §15.2)。Palantir は業務 OS として導入する規模の話になります。</p>
   </div>
   <div class="box warn">
     <p class="bt">Palantir を「オントロジーの正解」と紹介しないこと</p>
@@ -5668,7 +5968,7 @@ ind:アクティブ顧客 <span class="k">a</span> owl:Class <span class="k">;</
   </div>
 
   <div class="sum">
-    <div class="bh">第 16 章のまとめ</div>
+    <div class="bh">第 17 章のまとめ</div>
     <ul>
       <li>Palantir はオントロジーを<strong>データ・ロジック・アクション</strong>の統合と定義する。COA には<strong>アクションが無い</strong></li>
       <li>扱う業務は臨床試験の患者リクルート。<strong>調達の「見積→交渉→説明→申請→決裁」と同じ構造</strong></li>
@@ -5679,12 +5979,12 @@ ind:アクティブ顧客 <span class="k">a</span> owl:Class <span class="k">;</
   </div>
 </section>
 
-<section class="ch" id="c17">
-  <div class="cn"><b>第 17 章</b><i></i></div>
+<section class="ch" id="c18">
+  <div class="cn"><b>第 18 章</b><i></i></div>
   <h2>デモ ③ Minecraft — 自律ループの最小模型</h2>
   <p class="lead">最後は Minecraft です。第 0 章の <strong>E</strong> — オントロジーの上で Agent が自分で判断して動く段階 — を、<strong>製品から借りずに最小構成で自分で組んだもの</strong>です。だから中身を全部分解できます。おまけに、本番業務では試せない「Agent が自分で世界を書き換える」を安全に観察できます。ただし<strong>最初に 1 つ訂正しておくべきことがあります</strong>。</p>
 
-  <h3>17.1 訂正 — このデモは RDF を使っていない</h3>
+  <h3>18.1 訂正 — このデモは RDF を使っていない</h3>
   <div class="box warn">
     <p class="bt">実装を読んで確認した事実</p>
     <p>この Minecraft デモは、これまでの資料で「Turtle / OWL / SPARQL をフル活用」「Neptune + HermiT + Ontop VKG」と説明されていました。<strong>実装を読むと、そうではありません。</strong></p>
@@ -5693,10 +5993,10 @@ ind:アクティブ顧客 <span class="k">a</span> owl:Class <span class="k">;</
   </div>
   <p>そして — これは弱点ではありません。<strong>むしろこの章で一番教育的な事実です。</strong>RDF を使っていないのに、この実装はオントロジーとして機能しています。それはなぜかを見ていきます。</p>
 
-  <h3>17.2 何をオントロジーと呼んでいるのか</h3>
+  <h3>18.2 何をオントロジーと呼んでいるのか</h3>
   <p>実体は「作りたいもの → その材料 / 必要な道具」を辺で結んだグラフです。第 3 章で見たトリプルの構造と、実は同じことをしています。</p>
   <div class="lst">
-    <p class="cap">リスト 17-1<span>ontology.py — グラフの定義 (抜粋)</span></p>
+    <p class="cap">リスト 18-1<span>ontology.py — グラフの定義 (抜粋)</span></p>
     <pre><span class="c"># 石のツルハシ = 丸石 x3 + 棒 x2</span>
 g.add_edge(<span class="s">"stone_pickaxe"</span>, <span class="s">"cobblestone"</span>, relation=<span class="s">"material"</span>, qty=<span class="n">3</span>)
 g.add_edge(<span class="s">"stone_pickaxe"</span>, <span class="s">"stick"</span>,       relation=<span class="s">"material"</span>, qty=<span class="n">2</span>)
@@ -5718,7 +6018,7 @@ g.add_edge(<span class="s">"cobblestone"</span>, <span class="s">"stone_block"</
   <p><code>relation="material"</code> が何を意味するかは、それを読む <code>to_prompt_text()</code> と <code>sort_actions()</code> の中にしか書かれていません。OWL は含意が仕様として定義されているので、<strong>どの推論器で読んでも同じ結論が出ます</strong>。ここが「書き方の違い」ではなく「種類の違い」です。</p>
   <p>そしてこのグラフは、そのまま文字列に変換されて LLM のプロンプトに入ります。</p>
   <div class="lst">
-    <p class="cap">リスト 17-2<span>to_prompt_text() が生成する文字列</span></p>
+    <p class="cap">リスト 18-2<span>to_prompt_text() が生成する文字列</span></p>
     <pre>## クラフト・採取知識グラフ
 ### クラフトレシピ
 - stone_pickaxe を作るには cobblestone が 3 個必要
@@ -5736,11 +6036,11 @@ g.add_edge(<span class="s">"cobblestone"</span>, <span class="s">"stone_block"</
   <p>ただし<strong>「だから RDF は要らない」とは言えません</strong>。次の項で、このグラフに何が足りないかを実測で見ます。</p>
   </div>
 
-  <h3>17.3 何が足りないのか — 実測で確かめる</h3>
+  <h3>18.3 何が足りないのか — 実測で確かめる</h3>
   <p>このグラフを「オントロジーだ」と言うとき、<strong>何を諦めているのか</strong>をはっきりさせておきます。抽象論ではなく、実際にコードを動かして確かめます。</p>
   <p>グラフのノードには <code>kind</code> という属性が付いています。<code>craftable</code> (作れる) / <code>harvestable</code> (採れる) / <code>tool</code> (道具) / <code>natural_block</code> (自然物)。これは第 4 章の <code>a</code> (rdf:type) に相当します。ではこのグラフに「道具を全部挙げて」と聞いてみます。</p>
   <div class="lst">
-    <p class="cap">リスト 17-3<span>ontology.py を実行して型を数える</span></p>
+    <p class="cap">リスト 18-3<span>ontology.py を実行して型を数える</span></p>
     <pre><span class="c">&gt;&gt;&gt; g = build_ontology()</span>
 <span class="c">&gt;&gt;&gt; [n for n, d in g.nodes(data=True) if d.get("kind") == "tool"]</span>
 [<span class="s">'hand'</span>]                      <span class="b">← 素手だけ</span>
@@ -5759,7 +6059,7 @@ g.add_edge(<span class="s">"cobblestone"</span>, <span class="s">"stone_block"</
   </div>
   <p>そして、もう 1 つ深刻なことが起きています。<code>tool_needed</code> という関係の目的語なのに、その相手が道具として型付けされていない。<strong>これは食い違いですが、誰も検出しません。</strong>このグラフには「矛盾」という概念自体が無いからです。第 8 章の SHACL があれば <code>sh:class</code> 1 行で捕まります。</p>
 
-  <h3>17.4 では、これはオントロジーなのか</h3>
+  <h3>18.4 では、これはオントロジーなのか</h3>
   <p>整理します。古典的な定義は「<strong>形式的で・明示的な・共有された</strong>概念化の仕様」です。3 つのうち 2 つは満たしています。</p>
   <div class="tw"><table>
     <thead><tr><th style="width:16%">条件</th><th style="width:12%">満たすか</th><th style="width:72%">中身</th></tr></thead>
@@ -5785,7 +6085,7 @@ g.add_edge(<span class="s">"cobblestone"</span>, <span class="s">"stone_block"</
     <p>「オントロジーじゃない」と切り捨てるのも、「これもオントロジーだから W3C 標準は要らない」と言うのも、どちらも不正確です。<strong>このデモがやりたいこと (機械が LLM を矯正する) には、これで足りています。</strong>足りなくなるのは、型を複数持たせたいとき・階層を効かせたいとき・矛盾を検出したいとき・他システムと統合したいときです。上の実測は、その 1 つ目に<strong>すでにぶつかっている</strong>ことを示しています。</p>
   </div>
 
-  <h3>17.5 「それ、RAG でよくないですか」に答える</h3>
+  <h3>18.5 「それ、RAG でよくないですか」に答える</h3>
   <p>この質問は必ず出ます。「クラフトの依存関係も知識なんだから、社内 Wiki に書いて RAG で LLM に読ませればいいのでは」。もっともな指摘です。<strong>だから実際に 3 通り作って比べてあります。</strong>同じ 7B のローカル LLM・同じタスク・同じアクション集で回した結果です。</p>
   <div class="tw"><table>
     <thead><tr><th style="width:22%"></th><th style="width:26%">なにもなし</th><th style="width:26%">RAG</th><th style="width:26%">オントロジー</th></tr></thead>
@@ -5805,10 +6105,10 @@ g.add_edge(<span class="s">"cobblestone"</span>, <span class="s">"stone_block"</
     <p>結論は <strong>RAG はオントロジーの代替ではなく補完</strong>です。参考知識の供給は RAG、実行構造の保証はオントロジー。目的で使い分けます。</p>
   </div>
 
-  <h3>17.6 機械が LLM を矯正する — 実測ログ</h3>
+  <h3>18.6 機械が LLM を矯正する — 実測ログ</h3>
   <p>このデモの核心です。<code>ACTION_DEPS</code> という辞書に「どのアクションがどのアクションの後でなければならないか」を書いておき、Python 側で<strong>トポロジカルソート</strong>します。</p>
   <div class="lst">
-    <p class="cap">リスト 17-4<span>実測ログ — 「石のツルハシを作って」</span></p>
+    <p class="cap">リスト 18-4<span>実測ログ — 「石のツルハシを作って」</span></p>
     <pre>▶ タスク: 石のツルハシを作って
 
 [1] LLM 推論: 5.84 秒
@@ -5831,10 +6131,10 @@ g.add_edge(<span class="s">"cobblestone"</span>, <span class="s">"stone_block"</
   <div class="box key">
     <p class="bt">これが第 0 章の図 0-5 の実物</p>
     <p>LLM の担当は「何をすべきか、だいたいの見当をつける」。機械の担当は「順序を保証し、抜けを補い、実行する」。<strong>どちらか一方では動きません。</strong></p>
-    <p>業務システムに置き換えると、LLM が出した処理計画を、依存関係の定義に照らして並べ替え・不足分を補完してから実行する、という構造になります。<strong>第 15 章の COA で「生成後に 4 つの関所で検査する」と言ったのと、同じ発想の別の実装</strong>です。</p>
+    <p>業務システムに置き換えると、LLM が出した処理計画を、依存関係の定義に照らして並べ替え・不足分を補完してから実行する、という構造になります。<strong>第 16 章の COA で「生成後に 4 つの関所で検査する」と言ったのと、同じ発想の別の実装</strong>です。</p>
   </div>
 
-  <h3>17.7 オントロジーは物理世界を持たない</h3>
+  <h3>18.7 オントロジーは物理世界を持たない</h3>
   <p>実装中に踏んだ罠が、そのまま業務システムの教訓になっています。</p>
   <div class="tw"><table>
     <thead><tr><th style="width:26%">起きたこと</th><th style="width:37%">原因</th><th style="width:37%">業務システムでの対応物</th></tr></thead>
@@ -5845,11 +6145,11 @@ g.add_edge(<span class="s">"cobblestone"</span>, <span class="s">"stone_block"</
   </table></div>
   <div class="box note">
     <p class="bt">オントロジーが答えられない問い</p>
-    <p>第 14 章 §14.1 の表の最後に、この行が入っています。<strong>「その操作が、今この瞬間に実行可能か」</strong>。オントロジーは定義と関係の世界にいるので、在庫があるか・権限が生きているか・対象レコードが実在するかは知りません。<strong>実行前の存在確認は、必ず別に用意する必要があります。</strong></p>
+    <p>第 15 章 §15.1 の表の最後に、この行が入っています。<strong>「その操作が、今この瞬間に実行可能か」</strong>。オントロジーは定義と関係の世界にいるので、在庫があるか・権限が生きているか・対象レコードが実在するかは知りません。<strong>実行前の存在確認は、必ず別に用意する必要があります。</strong></p>
   </div>
 
   <div class="sum">
-    <div class="bh">第 17 章のまとめ</div>
+    <div class="bh">第 18 章のまとめ</div>
     <ul>
       <li>このデモは <strong>RDF を使っていない</strong>。実体は NetworkX の有向グラフと、ローカルの 7B モデル。資料の記述を先に直すこと</li>
       <li>それでもオントロジーとして機能する。ただし正確には<strong>軽量オントロジー</strong> — 明示的・共有されてはいるが、<strong>形式的ではない</strong></li>

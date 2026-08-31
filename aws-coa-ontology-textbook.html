@@ -441,7 +441,7 @@
   <p>言葉の広さを整理する前に、<strong>オントロジーが具体的にどんなものか</strong>を先に見ておきます。難しい定義から入らずに、<strong>やっていること 3 つ</strong>で押さえます。</p>
   <div class="fig">
   <p class="cap">図 0-3<span>オントロジーとは何か — 点と線で書き、型にまとめ、機械に導かせる</span></p>
-  <svg viewBox="0 0 880 786" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+  <svg viewBox="0 0 880 630" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
     <defs>
       <marker id="z0a0" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#1c5b9c"/></marker>
       <marker id="z0a2" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b3fa0"/></marker>
@@ -549,23 +549,9 @@
     <text x="604" y="520" font-size="7.8" fill="#6b7480">新薬が承認されても、書くのは</text>
     <text x="604" y="533" font-size="7.6" font-family="Menlo,monospace" fill="#1f6f4a">rdfs:subClassOf :NSAIDs</text>
     <text x="604" y="546" font-size="7.8" fill="#6b7480">の 1 行だけ。<tspan font-weight="800">禁忌は書きません</tspan>。</text>
-    <rect x="14" y="572" width="852" height="40" rx="6" fill="#fffaf0" stroke="#a8710f" stroke-width="1.8"/>
-    <text x="26" y="589" font-size="8.8" font-weight="900" fill="#6b4708">しかも、効きすぎません — アセトアミノフェンは「解熱鎮痛薬」だが「NSAIDs」ではない</text>
-    <text x="26" y="605" font-size="8.4" fill="#3d4654">だから<tspan font-weight="800">この禁忌は継承されません</tspan>。分類を正しく書いておけば、<tspan font-weight="800">効く範囲も効かない範囲も機械が区別します</tspan>。</text>
-    <rect x="14" y="624" width="852" height="96" rx="8" fill="#fff" stroke="#2b3440" stroke-width="2.2"/>
-    <text x="28" y="645" font-size="10.8" font-weight="900" fill="#2b3440">これが RDB と決定的に違うところです</text>
-    <text x="28" y="666" font-size="9.6" font-weight="900" fill="#b3261e">RDB で同じことをやると</text>
-    <text x="28" y="682" font-size="8.4" fill="#3d4654">「何段辿るか」を人が SQL に書きます。</text>
-    <text x="28" y="695" font-size="8.4" fill="#3d4654">3 段なら JOIN を 3 回、5 段なら 5 回。</text>
-    <text x="28" y="708" font-size="8.4" fill="#3d4654">段数が変わるたびにクエリを直します。</text>
-    <line x1="418" y1="656" x2="418" y2="712" stroke="#6b7480" stroke-width="0.8" opacity="0.4"/>
-    <text x="434" y="666" font-size="9.6" font-weight="900" fill="#1f6f4a">オントロジーなら</text>
-    <text x="434" y="682" font-size="8.4" fill="#3d4654">「この関係は推移的」と<tspan font-weight="800">1 行宣言する</tspan>だけ。</text>
-    <text x="434" y="695" font-size="8.4" fill="#3d4654">段数は機械が勝手に辿ります。</text>
-    <text x="434" y="708" font-size="8.4" fill="#3d4654">書いていない事実が、あとから出てきます。</text>
-    <rect x="14" y="730" width="852" height="44" rx="8" fill="#fbf7ef" stroke="#a8710f" stroke-width="2.2"/>
-    <text x="28" y="749" font-size="9.8" font-weight="900" fill="#6b4708">まとめると、オントロジーは「意味を、機械が計算できる形で書いたもの」です</text>
-    <text x="28" y="765" font-size="8.6" fill="#3d4654">① 点と線で書き、② 型にまとめ、③ 宣言しておけば機械が導く。<tspan font-weight="800">この 3 つが揃うと、人が書いていない答えを機械が出せます</tspan> — 第 3 章から順に組み立てます。</text>
+    <rect x="14" y="574" width="852" height="44" rx="8" fill="#fbf7ef" stroke="#a8710f" stroke-width="2.2"/>
+    <text x="28" y="593" font-size="9.8" font-weight="900" fill="#6b4708">まとめると、オントロジーは「意味を、機械が計算できる形で書いたもの」です</text>
+    <text x="28" y="609" font-size="8.6" fill="#3d4654">① 点と線で書き、② 型にまとめ、③ 宣言しておけば機械が導く。<tspan font-weight="800">この 3 つが揃うと、人が書いていない答えを機械が出せます</tspan> — 第 3 章から順に組み立てます。</text>
   </svg>
   <p class="fc"><strong>③ が肝</strong>です。①②だけなら「線で繋がった図」で終わります。<strong>推移律のような宣言があるから、機械が計算に使えます</strong></p>
 </div>
@@ -574,7 +560,6 @@
   <p><strong>② 個別のものを「クラス」にまとめる。</strong>佐藤さんも鈴木さんも田中さんも「顧客」です。1 人ずつ関係を書くのではなく、<strong>「顧客」という型に 1 度書けば、その型の全員に効きます</strong>。「顧客は注文する」と書いておけば、これから増える人にも同じことが言えます（第 5 章）。</p>
   <p><strong>③ 書いていないことが、機械に導ける。</strong>ここがオントロジーの本題です。薬を例にします。<strong>人が書くのは分類だけ</strong> — 「アスピリンは NSAIDs」「NSAIDs は解熱鎮痛薬」「解熱鎮痛薬は医薬品」。分類の関係は<strong>推移的</strong>だと仕様で決まっているので、<strong>「アスピリンは医薬品」は書かなくても出てきます</strong>。</p>
   <p>さらに効くのが<strong>制約の継承</strong>です。「NSAIDs は妊娠中禁忌」と<strong>上位クラスに 1 度書く</strong>と、アスピリンにもイブプロフェンにもナプロキセンにも、<strong>あとから承認された新薬にも同じ禁忌が効きます</strong>。薬は何千種類もあって新薬も増えるので、1 つずつ書くのは無理です。<strong>分類だけ書いて、あとは機械に任せます。</strong></p>
-  <p>しかも効きすぎません。アセトアミノフェンは「解熱鎮痛薬」ですが「NSAIDs」ではないので、<strong>この禁忌は継承されません</strong>。<strong>分類を正しく書いておけば、効く範囲と効かない範囲を機械が区別します。</strong></p>
   <div class="box key">
     <div class="bh">③ が RDB と決定的に違うところです</div>
     <p>RDB で同じことをやるなら、<strong>「何段辿るか」を人が SQL に書きます</strong>。3 段なら <code>JOIN</code> を 3 回、5 段なら 5 回。階層が深くなればクエリを直すことになります。</p>

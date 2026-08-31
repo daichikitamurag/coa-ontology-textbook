@@ -437,10 +437,134 @@
     
   </div>
 
+  <h3>そもそもオントロジーとは何か</h3>
+  <p>言葉の広さを整理する前に、<strong>オントロジーが具体的にどんなものか</strong>を先に見ておきます。難しい定義から入らずに、<strong>やっていること 3 つ</strong>で押さえます。</p>
+  <div class="fig">
+  <p class="cap">図 0-3<span>オントロジーとは何か — 点と線で書き、型にまとめ、機械に導かせる</span></p>
+  <svg viewBox="0 0 880 562" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+    <defs>
+      <marker id="z0a0" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#1c5b9c"/></marker>
+      <marker id="z0a2" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b3fa0"/></marker>
+      <marker id="z0a3" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#1f6f4a"/></marker>
+      <marker id="z0a4" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#b3261e"/></marker>
+    </defs>
+    <rect x="14" y="14" width="852" height="30" rx="8" fill="#1c5b9c"/>
+    <circle cx="34" cy="29" r="10" fill="#fff" opacity="0.94"/>
+    <text x="34" y="33" text-anchor="middle" font-size="10.4" font-weight="900" fill="#1c5b9c">1</text>
+    <text x="52" y="28" font-size="10.8" font-weight="900" fill="#fff">世の中のことを、点と線で書く</text>
+    <text x="52" y="40" font-size="8.2" fill="#fff" opacity="0.9">ノード（もの）とエッジ（関係）。エッジには向きと名前がある</text>
+    <rect x="24" y="56" width="132" height="34" rx="6" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2"/>
+    <text x="90.0" y="72" text-anchor="middle" font-size="9.2" font-weight="800" fill="#1c5b9c">佐藤 花子</text>
+    <text x="90.0" y="85" text-anchor="middle" font-size="7.4" fill="#6b7480">個別のもの</text>
+    <path d="M160,73 L254,73" stroke="#1c5b9c" stroke-width="2" marker-end="url(#z0a0)"/>
+    <text x="207.0" y="66.0" text-anchor="middle" font-size="8.0" font-weight="800" fill="#1c5b9c">注文した</text>
+    <rect x="258" y="56" width="132" height="34" rx="6" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2"/>
+    <text x="324.0" y="72" text-anchor="middle" font-size="9.2" font-weight="800" fill="#1c5b9c">注文 #1001</text>
+    <text x="324.0" y="85" text-anchor="middle" font-size="7.4" fill="#6b7480">個別のもの</text>
+    <path d="M394,73 L488,73" stroke="#1c5b9c" stroke-width="2" marker-end="url(#z0a0)"/>
+    <text x="441.0" y="66.0" text-anchor="middle" font-size="8.0" font-weight="800" fill="#1c5b9c">含む</text>
+    <rect x="492" y="56" width="132" height="34" rx="6" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2"/>
+    <text x="558.0" y="72" text-anchor="middle" font-size="9.2" font-weight="800" fill="#1c5b9c">ノート PC</text>
+    <text x="558.0" y="85" text-anchor="middle" font-size="7.4" fill="#6b7480">個別のもの</text>
+    <rect x="640" y="52" width="216" height="42" rx="6" fill="#f7f8fa" stroke="#6b7480" stroke-width="1.6"/>
+    <text x="650" y="67" font-size="8.2" fill="#3d4654">1 本の矢印が <tspan font-weight="800">（主語 → 述語 → 目的語）</tspan></text>
+    <text x="650" y="80" font-size="8.2" fill="#3d4654">これを<tspan font-weight="800">トリプル</tspan>と呼びます（第 3 章）</text>
+    <text x="650" y="91" font-size="7.4" fill="#6b7480">向きがあるので「誰が誰に」を取り違えません</text>
+    <rect x="14" y="106" width="852" height="30" rx="8" fill="#6b3fa0"/>
+    <circle cx="34" cy="121" r="10" fill="#fff" opacity="0.94"/>
+    <text x="34" y="125" text-anchor="middle" font-size="10.4" font-weight="900" fill="#6b3fa0">2</text>
+    <text x="52" y="120" font-size="10.8" font-weight="900" fill="#fff">個別のものを「クラス」にまとめる</text>
+    <text x="52" y="132" font-size="8.2" fill="#fff" opacity="0.9">1 人ずつ書かない。型に 1 度書けば、その型の全員に効く</text>
+    <rect x="24" y="200" width="100" height="26" rx="6" fill="#f7f8fa" stroke="#6b7480" stroke-width="2"/>
+    <text x="74.0" y="217.0" text-anchor="middle" font-size="9.2" font-weight="800" fill="#6b7480">佐藤 花子</text>
+    <path d="M74,198 L184,178" stroke="#6b3fa0" stroke-width="2" marker-end="url(#z0a2)"/>
+    <rect x="134" y="200" width="100" height="26" rx="6" fill="#f7f8fa" stroke="#6b7480" stroke-width="2"/>
+    <text x="184.0" y="217.0" text-anchor="middle" font-size="9.2" font-weight="800" fill="#6b7480">鈴木 一郎</text>
+    <path d="M184,198 L184,178" stroke="#6b3fa0" stroke-width="2" marker-end="url(#z0a2)"/>
+    <text x="184.0" y="192.0" text-anchor="middle" font-size="8.0" font-weight="800" fill="#6b3fa0">a</text>
+    <rect x="244" y="200" width="100" height="26" rx="6" fill="#f7f8fa" stroke="#6b7480" stroke-width="2"/>
+    <text x="294.0" y="217.0" text-anchor="middle" font-size="9.2" font-weight="800" fill="#6b7480">田中 太郎</text>
+    <path d="M294,198 L184,178" stroke="#6b3fa0" stroke-width="2" marker-end="url(#z0a2)"/>
+    <rect x="134" y="148" width="132" height="28" rx="6" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
+    <text x="200.0" y="166.0" text-anchor="middle" font-size="9.2" font-weight="800" fill="#6b3fa0">顧客（クラス）</text>
+    <text x="24" y="244" font-size="7.4" fill="#6b7480">個体（インスタンス）— 実データ側</text>
+    <text x="360" y="214" font-size="7.4" font-weight="800" fill="#6b3fa0">矢印は a（rdf:type）</text>
+    <text x="360" y="225" font-size="7.2" fill="#6b7480">「佐藤 花子 は 顧客 である」</text>
+    <path d="M270,162 L394,162" stroke="#6b3fa0" stroke-width="2" marker-end="url(#z0a2)"/>
+    <text x="332.0" y="155.0" text-anchor="middle" font-size="8.0" font-weight="800" fill="#6b3fa0">注文する</text>
+    <rect x="398" y="148" width="132" height="28" rx="6" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
+    <text x="464.0" y="166.0" text-anchor="middle" font-size="9.2" font-weight="800" fill="#6b3fa0">注文（クラス）</text>
+    <text x="334" y="178" text-anchor="middle" font-size="7.2" fill="#6b7480">domain / range（第 5 章）</text>
+    <rect x="554" y="144" width="302" height="88" rx="6" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="1.6"/>
+    <text x="564" y="159" font-size="8" fill="#3d4654">クラスに 1 度書けば、その型の<tspan font-weight="800">すべての個体に効きます</tspan>。</text>
+    <text x="564" y="172" font-size="8" fill="#3d4654">「顧客は注文する」と書いておけば、佐藤さんにも</text>
+    <text x="564" y="185" font-size="8" fill="#3d4654">鈴木さんにも、これから増える人にも同じことが言えます。</text>
+    <text x="564" y="211" font-size="8" fill="#3d4654">RDB でいえば<tspan font-weight="800">テーブル定義に近い</tspan>ですが、</text>
+    <text x="564" y="224" font-size="8" fill="#3d4654">クラス同士の関係まで書けるところが違います。</text>
+    <rect x="14" y="252" width="852" height="30" rx="8" fill="#1f6f4a"/>
+    <circle cx="34" cy="267" r="10" fill="#fff" opacity="0.94"/>
+    <text x="34" y="271" text-anchor="middle" font-size="10.4" font-weight="900" fill="#1f6f4a">3</text>
+    <text x="52" y="266" font-size="10.8" font-weight="900" fill="#fff">書いていないことが、機械に導ける</text>
+    <text x="52" y="278" font-size="8.2" fill="#fff" opacity="0.9">「この関係は推移的だ」と宣言しておくと、機械が何段でも辿る</text>
+    <text x="24" y="304" font-size="9" font-weight="900" fill="#2b3440">例 A — 包摂は推移的（<tspan font-family="Menlo,monospace" font-size="8">rdfs:subClassOf</tspan>）</text>
+    <rect x="24" y="314" width="116" height="26" rx="6" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2"/>
+    <text x="82.0" y="331.0" text-anchor="middle" font-size="9.2" font-weight="800" fill="#1f6f4a">優良顧客</text>
+    <path d="M144,327 L194,327" stroke="#1f6f4a" stroke-width="2" marker-end="url(#z0a3)"/>
+    <rect x="198" y="314" width="116" height="26" rx="6" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2"/>
+    <text x="256.0" y="331.0" text-anchor="middle" font-size="9.2" font-weight="800" fill="#1f6f4a">顧客</text>
+    <path d="M318,327 L368,327" stroke="#1f6f4a" stroke-width="2" marker-end="url(#z0a3)"/>
+    <rect x="372" y="314" width="116" height="26" rx="6" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2"/>
+    <text x="430.0" y="331.0" text-anchor="middle" font-size="9.2" font-weight="800" fill="#1f6f4a">取引先</text>
+    <path d="M82,344 C82,372 430,372 430,344" fill="none" stroke="#b3261e" stroke-width="2.2" stroke-dasharray="5 4" marker-end="url(#z0a4)"/>
+    <text x="256" y="388" text-anchor="middle" font-size="8.2" font-weight="900" fill="#b3261e">機械が導いた — 書いていない線が増える</text>
+    <text x="514" y="304" font-size="9" font-weight="900" fill="#2b3440">例 B — 部分関係を推移的と宣言する（<tspan font-family="Menlo,monospace" font-size="8">owl:TransitiveProperty</tspan>）</text>
+    <rect x="514" y="314" width="104" height="26" rx="6" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2"/>
+    <text x="566.0" y="331.0" text-anchor="middle" font-size="9.2" font-weight="800" fill="#1f6f4a">ネジ</text>
+    <path d="M622,327 L662,327" stroke="#1f6f4a" stroke-width="2" marker-end="url(#z0a3)"/>
+    <rect x="666" y="314" width="104" height="26" rx="6" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2"/>
+    <text x="718.0" y="331.0" text-anchor="middle" font-size="9.2" font-weight="800" fill="#1f6f4a">基板</text>
+    <path d="M774,327 L812,327" stroke="#1f6f4a" stroke-width="2" marker-end="url(#z0a3)"/>
+    <rect x="816" y="314" width="50" height="26" rx="6" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2"/>
+    <text x="841.0" y="331.0" text-anchor="middle" font-size="9.2" font-weight="800" fill="#1f6f4a">本体</text>
+    <path d="M566,344 C566,372 841,372 841,344" fill="none" stroke="#b3261e" stroke-width="2.2" stroke-dasharray="5 4" marker-end="url(#z0a4)"/>
+    <text x="704" y="388" text-anchor="middle" font-size="8.2" font-weight="900" fill="#b3261e">「ネジは本体の一部」も出てくる</text>
+    <rect x="14" y="400" width="852" height="96" rx="8" fill="#fff" stroke="#2b3440" stroke-width="2.2"/>
+    <text x="28" y="421" font-size="10.8" font-weight="900" fill="#2b3440">これが RDB と決定的に違うところです</text>
+    <text x="28" y="442" font-size="9.6" font-weight="900" fill="#b3261e">RDB で同じことをやると</text>
+    <text x="28" y="458" font-size="8.4" fill="#3d4654">「何段辿るか」を人が SQL に書きます。</text>
+    <text x="28" y="471" font-size="8.4" fill="#3d4654">3 段なら JOIN を 3 回、5 段なら 5 回。</text>
+    <text x="28" y="484" font-size="8.4" fill="#3d4654">段数が変わるたびにクエリを直します。</text>
+    <line x1="418" y1="432" x2="418" y2="488" stroke="#6b7480" stroke-width="0.8" opacity="0.4"/>
+    <text x="434" y="442" font-size="9.6" font-weight="900" fill="#1f6f4a">オントロジーなら</text>
+    <text x="434" y="458" font-size="8.4" fill="#3d4654">「この関係は推移的」と<tspan font-weight="800">1 行宣言する</tspan>だけ。</text>
+    <text x="434" y="471" font-size="8.4" fill="#3d4654">段数は機械が勝手に辿ります。</text>
+    <text x="434" y="484" font-size="8.4" fill="#3d4654">書いていない事実が、あとから出てきます。</text>
+    <rect x="14" y="506" width="852" height="44" rx="8" fill="#fbf7ef" stroke="#a8710f" stroke-width="2.2"/>
+    <text x="28" y="525" font-size="9.8" font-weight="900" fill="#6b4708">まとめると、オントロジーは「意味を、機械が計算できる形で書いたもの」です</text>
+    <text x="28" y="541" font-size="8.6" fill="#3d4654">① 点と線で書き、② 型にまとめ、③ 宣言しておけば機械が導く。<tspan font-weight="800">この 3 つが揃うと、人が書いていない答えを機械が出せます</tspan> — 第 3 章から順に組み立てます。</text>
+  </svg>
+  <p class="fc"><strong>③ が肝</strong>です。①②だけなら「線で繋がった図」で終わります。<strong>推移律のような宣言があるから、機械が計算に使えます</strong></p>
+</div>
+  <p>順に見ていきます。</p>
+  <p><strong>① 世の中のことを、点と線で書く。</strong>「佐藤さんが注文 #1001 を注文した」「その注文はノート PC を含む」— これを<strong>点（もの）と、向きのある線（関係）</strong>で書きます。線 1 本が <strong>（主語 → 述語 → 目的語）</strong>の 3 つ組で、これを<strong>トリプル</strong>と呼びます（第 3 章）。</p>
+  <p><strong>② 個別のものを「クラス」にまとめる。</strong>佐藤さんも鈴木さんも田中さんも「顧客」です。1 人ずつ関係を書くのではなく、<strong>「顧客」という型に 1 度書けば、その型の全員に効きます</strong>。「顧客は注文する」と書いておけば、これから増える人にも同じことが言えます（第 5 章）。</p>
+  <p><strong>③ 書いていないことが、機械に導ける。</strong>ここがオントロジーの本題です。「優良顧客は顧客の一種」「顧客は取引先の一種」と 2 本書いておくと、<strong>「優良顧客は取引先の一種」という 3 本目が、書かなくても出てきます</strong>。包摂の関係は<strong>推移的</strong>だと仕様で決まっているからです。</p>
+  <div class="box key">
+    <div class="bh">③ が RDB と決定的に違うところです</div>
+    <p>RDB で同じことをやるなら、<strong>「何段辿るか」を人が SQL に書きます</strong>。3 段なら <code>JOIN</code> を 3 回、5 段なら 5 回。階層が深くなればクエリを直すことになります。</p>
+    <p style="margin-top:10px">オントロジーでは<strong>「この関係は推移的だ」と 1 行宣言するだけ</strong>です。あとは段数を問わず機械が辿ります。部品表なら「ネジは基板の一部」「基板は本体の一部」から「ネジは本体の一部」が、組織なら「課は部の下」「部は本部の下」から「課は本部の下」が出てきます。</p>
+    <p style="margin-top:12px;font-weight:800;color:var(--grn)">人が書いていない答えを機械が出せる — これがオントロジーを使う理由です。</p>
+  </div>
+  <div class="box note">
+    <div class="bh">①②だけなら、ただの「線で繋がった図」です</div>
+    <p>点と線で書いて型にまとめるだけなら、ホワイトボードの関係図や ER 図と大差ありません。<strong>③ の「宣言しておけば機械が導く」が加わって初めて、機械が計算に使えるものになります。</strong></p>
+    <p style="margin-top:10px">だから本書は第 3 章から、<strong>①（トリプル）→ ②（クラスと関係）→ ③（公理と推論）</strong>の順に積み上げます。そして第 12 章以降の実物では、この 3 つのどこまでが実際に効いているのかを実測で確かめます。</p>
+  </div>
+
   <h3>「オントロジー」という言葉の広さ — 本書が扱うのはどこか</h3>
   <p>もう 1 つ先に片付けます。<strong>「オントロジー」という言葉は、指しているものがかなり広い</strong>ということです。哲学の存在論から、機械が読める公理、RDB のオブジェクト化、さらには「自分で業務を回す基盤」まで、同じ 1 語で呼ばれています。話が噛み合わなくなる前に、本書がどこを扱うのかをはっきりさせておきます。</p>
   <div class="fig">
-  <p class="cap">図 0-3<span>「オントロジー」が指しうる範囲 — 本書が正面から扱うのは C と D</span></p>
+  <p class="cap">図 0-4<span>「オントロジー」が指しうる範囲 — 本書が正面から扱うのは C と D</span></p>
   <svg viewBox="0 0 880 296" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
     <defs><marker id="sp-a" markerWidth="9" markerHeight="9" refX="7.2" refY="3.1" orient="auto"><path d="M0,0 L7.2,3.1 L0,6.2 z" fill="#aab1bb"/></marker></defs>
     <text x="20" y="24" font-size="10" font-weight="800" fill="#6b7480">静的 — 意味を「定義する」</text>
@@ -538,7 +662,7 @@
   </div>
 
   <div class="fig">
-    <p class="cap">図 0-4<span>3 人の登場人物 — 何が読めて、何が得意か</span></p>
+    <p class="cap">図 0-5<span>3 人の登場人物 — 何が読めて、何が得意か</span></p>
     <svg viewBox="0 0 880 330" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
       <rect x="16" y="16" width="276" height="298" rx="9" fill="#faf5ee" stroke="#8b5a2b" stroke-width="2"/>
       <rect x="302" y="16" width="276" height="298" rx="9" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
@@ -600,7 +724,7 @@
   <p>ここで用語を 1 つ片付けておきます。この 2 つは混同されがちですが、はっきり違います。<strong>AI Agent とは「LLM と機械を組み合わせたもの」</strong>です。</p>
 
   <div class="fig">
-    <p class="cap">図 0-5<span>LLM 単体 と AI Agent の違い</span></p>
+    <p class="cap">図 0-6<span>LLM 単体 と AI Agent の違い</span></p>
     <svg viewBox="0 0 880 376" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
       <defs>
         <marker id="ag1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#6b3fa0"/></marker>
@@ -718,7 +842,7 @@
       <tr><td><strong>第 2 部 — 意味を書く道具</strong></td><td>3〜9</td><td>トリプル・Turtle・RDFS・OWL・SPARQL・SHACL・推論器。<strong>製品を使わず、すべて手で書きます</strong></td></tr>
       <tr><td><strong>第 3 部 — 実際に動かす</strong></td><td>10〜12</td><td>手で書いた道具を製品に載せます。4 層のスタック → VKG（RDB を動かさない）→ AWS COA の公開ソース実測</td></tr>
       <tr><td><strong>第 4 部 — 判断のために</strong></td><td>13</td><td>どこまで効いて、どこから効かないか。<strong>導入するかどうかを決める材料</strong></td></tr>
-      <tr><td><strong>第 5 部 — デモ</strong></td><td>14〜16</td><td>AWS COA / Palantir Foundry / Minecraft の 3 本。図 0-3 の <strong>D</strong> と、その先の <strong>E</strong> を実物で見ます</td></tr>
+      <tr><td><strong>第 5 部 — デモ</strong></td><td>14〜16</td><td>AWS COA / Palantir Foundry / Minecraft の 3 本。図 0-4 の <strong>D</strong> と、その先の <strong>E</strong> を実物で見ます</td></tr>
       <tr><td><strong>付録</strong></td><td>A・B</td><td>用語集と記法チートシート。読みながら引くためのもの</td></tr>
     </tbody>
   </table></div>
@@ -6518,7 +6642,7 @@ g.add_edge(<span class="s">"cobblestone"</span>, <span class="s">"stone_block"</
   <div class="box col">
     <p class="bt">RAG の限界と、オントロジーの真価</p>
     <p><strong>RAG は「関連情報を LLM に届ける」ことしかできません。</strong>LLM が読み違えたとき — 順序を間違える、前提を飛ばす、同じ手順を 2 回書く — それを<strong>外から検証する仕組みが無い</strong>のです。</p>
-    <p>オントロジーの真価は、構造化されているので <strong>プログラムが LLM を検証し、矯正できる</strong>ことにあります。「LLM に情報を渡す」だけでなく「<strong>LLM の間違いを直す</strong>」まで含めて設計できる。第 0 章の図 0-5 で言えば、<strong>機械の担当</strong>が仕事をできるようになる、ということです。</p>
+    <p>オントロジーの真価は、構造化されているので <strong>プログラムが LLM を検証し、矯正できる</strong>ことにあります。「LLM に情報を渡す」だけでなく「<strong>LLM の間違いを直す</strong>」まで含めて設計できる。第 0 章の図 0-6 で言えば、<strong>機械の担当</strong>が仕事をできるようになる、ということです。</p>
     <p>結論は <strong>RAG はオントロジーの代替ではなく補完</strong>です。参考知識の供給は RAG、実行構造の保証はオントロジー。目的で使い分けます。</p>
   </div>
 
@@ -6546,7 +6670,7 @@ g.add_edge(<span class="s">"cobblestone"</span>, <span class="s">"stone_block"</
   </div>
   <p>LLM が出したのは <strong>3 ステップで、しかも重複あり、しかも木を切る工程が丸ごと抜けている</strong>プランでした。それが <strong>6 ステップの正しい実行</strong>になっています。LLM を賢くしたわけではありません。<strong>同じ 7B のモデルのまま、機械側が直しています。</strong></p>
   <div class="box key">
-    <p class="bt">これが第 0 章の図 0-5 の実物</p>
+    <p class="bt">これが第 0 章の図 0-6 の実物</p>
     <p>LLM の担当は「何をすべきか、だいたいの見当をつける」。機械の担当は「順序を保証し、抜けを補い、実行する」。<strong>どちらか一方では動きません。</strong></p>
     <p>業務システムに置き換えると、LLM が出した処理計画を、依存関係の定義に照らして並べ替え・不足分を補完してから実行する、という構造になります。<strong>第 16 章の COA で「生成後に 4 つの関所で検査する」と言ったのと、同じ発想の別の実装</strong>です。</p>
   </div>
@@ -6608,7 +6732,7 @@ g.add_edge(<span class="s">"cobblestone"</span>, <span class="s">"stone_block"</
     <tr><td><strong>マテリアライズ</strong></td><td>materialization / 実体化。推論や変換の<strong>結果を先に計算して保存しておく</strong>こと。ここでは ABox も RDF に変換して Triple Store に入れる方式を指す。仮想化 (VKG) の対概念 (§11.4)</td></tr>
       <tr><td><strong>owl:disjointWith</strong></td><td>2 つのクラスが<strong>重ならない</strong>（両方に属するものは存在しない）と宣言する構文。OWL ではクラス名が違うだけでは重ならないことにならないので、これを書いて初めて「両方の一種」が矛盾になる (§11.5)</td></tr>
       <tr><td><strong>セマンティックレイヤー</strong></td><td>業務用語（「優良顧客」「売上」）を物理データに対応させ、指標の定義を 1 箇所に置く層の総称。RDF や推論は必須ではなく、SQL と YAML で実装する製品（dbt Semantic Layer・Cube 等）もある。<strong>オントロジーは、これを RDF で実装する流派</strong> (第 0 章)</td></tr>
-      <tr><td><strong>Ontology-grounded Agent</strong></td><td>オントロジーを土台に据えた Agent。単にデータを引くのではなく、<strong>行動・権限・業務の手順までオントロジー側に書いてあるので、Agent が一連の流れを自分で繋げる</strong>。図 0-3 の <strong>E</strong> にあたり、今後の競争軸になる領域 (第 0 章)</td></tr>
+      <tr><td><strong>Ontology-grounded Agent</strong></td><td>オントロジーを土台に据えた Agent。単にデータを引くのではなく、<strong>行動・権限・業務の手順までオントロジー側に書いてあるので、Agent が一連の流れを自分で繋げる</strong>。図 0-4 の <strong>E</strong> にあたり、今後の競争軸になる領域 (第 0 章)</td></tr>
       </tbody>
   </table></div>
 </section>

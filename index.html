@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>オントロジーの教科書</title>
+<title>オントロジーの教科書 / 発表資料</title>
 <style>
   :root{
     --ink:#14181f; --ink3:#3d4654; --mut:#6b7480; --line:#e3e7ed;
@@ -27,6 +27,7 @@
     border-radius:11px;padding:20px 22px;margin:0 0 16px;transition:border-color .15s,box-shadow .15s}
   a.card:hover{border-color:var(--aline);box-shadow:0 3px 16px rgba(139,90,43,.10)}
   a.card .t{font-family:var(--serif);font-size:17.5px;font-weight:700;color:var(--ink);line-height:1.5;margin:0 0 7px}
+  a.card .t .sub2{font-family:var(--sans);font-size:12px;font-weight:700;color:var(--acc);letter-spacing:.06em}
   a.card .d{font-size:13.5px;color:var(--mut);margin:0;line-height:1.75}
   a.card .go{display:inline-block;margin-top:12px;font-size:12.5px;font-weight:800;color:var(--acc);letter-spacing:.04em}
   .note{background:var(--asoft);border:1px solid var(--aline);border-radius:10px;padding:17px 19px;margin:30px 0 0}
@@ -47,10 +48,10 @@
   <div class="k">社内クラウド勉強会 — A Textbook</div>
   <h1>オントロジーの教科書</h1>
   <p class="au">北村</p>
-  <p>RDF / RDFS / OWL / SPARQL / SHACL から、VKG と AWS Context Ontology Accelerator の実測まで。同じ内容を、2 つのタイトルで置いています。</p>
+  <p>RDF / RDFS / OWL / SPARQL / SHACL から、VKG と AWS Context Ontology Accelerator の実測まで。教科書（全文）と、そこから作った発表資料（スライド 88 枚）を置いています。</p>
 </div></div>
 <main>
-  <h2>2 つの版</h2>
+  <h2>教科書 — 2 つの版</h2>
   <p class="lead">中身は同じです。読む人に合わせて選んでください。</p>
 
   <a class="card" href="aws-coa-ontology-textbook.html">
@@ -65,6 +66,15 @@
     <span class="go">開く →</span>
   </a>
 
+  <h2>発表資料</h2>
+  <p class="lead">教科書の内容を、勉強会で話す順に組み直したスライドです。</p>
+
+  <a class="card" href="ontology-slides.html">
+    <p class="t">オントロジーで、意味を機械に渡す<br><span class="sub2">スライド 88 枚</span></p>
+    <p class="d">3 部構成。なぜ意味を書くのか → 意味を書く道具（RDF〜推論器〜VKG）→ 3 つの実装（AWS COA / Palantir Foundry・AIP / 自作 Minecraft Agent）。図はすべて教科書から。</p>
+    <span class="go">開く →</span>
+  </a>
+
   <div class="note">
     <p><b>読むときの注意</b></p>
     <p>第 12 章には実機の AWS COA を触った実測が入っています。<b>COA はベータ版で、開発が進行中です。</b>「現時点では未実装」と書いてある箇所は、読んでいる時点では動いているかもしれません。設計の評価ではなく、ある日の記録として読んでください。</p>
@@ -73,6 +83,7 @@
       <li>図と表は<b>横スクロール</b>できます。細かい図はピンチで拡大してください</li>
       <li>1 ファイル約 3 MB です。Wi-Fi での最初の読み込みをおすすめします</li>
       <li>目次はページ<b>上部</b>にあります（PC では左側）</li>
+      <li>発表資料は 1 枚ずつ縦に並びます。図はパネルごと<b>横スクロール</b>してください</li>
     </ul>
   </div>
 

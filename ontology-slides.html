@@ -1366,11 +1366,12 @@ ec:C001 ec:会員ランク <span class="s">"VIP"</span> .
     <pre><span class="k">@prefix</span> ec:   &lt;http://example.com/ec#&gt; .
 <span class="k">@prefix</span> rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
 <span class="k">@prefix</span> xsd:  &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+<span class="k">@prefix</span> owl:  &lt;http://www.w3.org/2002/07/owl#&gt; .
 
 <span class="c"># ── どんな種類のものがあるか（クラス）──────────────</span>
-ec:顧客     <span class="k">a</span> rdfs:Class .
-ec:注文     <span class="k">a</span> rdfs:Class .
-ec:優良顧客 <span class="k">a</span> rdfs:Class <span class="k">;</span> rdfs:subClassOf ec:顧客 .
+ec:顧客     <span class="k">a</span> owl:Class .
+ec:注文     <span class="k">a</span> owl:Class .
+ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span> rdfs:subClassOf ec:顧客 .
 
 <span class="c"># ── どんな関係があるか（プロパティ）────────────────</span>
 ec:注文者
@@ -1385,7 +1386,8 @@ ec:累計購入額
 
 <span class="c"># 「優良顧客 = 累計 5 万円以上」を型として書くのは ACT 6。</span>
 <span class="c"># ここではまだ「そういうクラスがある」までしか言っていない。</span></pre>
-        <p class="sm" style="text-align:left;margin:12px 0 0">これを図にすると、こうなります。下半分が、右の ABox に入っているデータです。</p>
+        <p class="sm" style="text-align:left;margin:12px 0 0">クラス宣言は <code>owl:Class</code> です。RDFS だけで済ませるなら <code>rdfs:Class</code> でも通り、OWL Full の意味論では<strong>この 2 つの外延は同じ</strong>ですが、ACT 6 で OWL の制約（<code>owl:equivalentClass</code> / <code>owl:Restriction</code>）を足し、ACT 9 で推論器 HermiT に渡します。<strong>OWL 2 DL はクラスを <code>rdf:type owl:Class</code> で宣言することを求める</strong>ので、そちらに揃えています。</p>
+    <p class="sm" style="text-align:left;margin:12px 0 0">これを図にすると、こうなります。下半分が、右の ABox に入っているデータです。</p>
     <svg viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif" style="margin-top:6px">
       <defs>
         <marker id="t30v" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto">
@@ -1657,9 +1659,10 @@ ec:累計購入額
 </div>
     <div>  <div class="panel">
     <p class="ptitle">クラス階層</p>
-    <pre>ec:顧客     <span class="k">a</span> rdfs:Class .
-ec:優良顧客 <span class="k">a</span> rdfs:Class <span class="k">;</span> rdfs:subClassOf ec:顧客 .
-ec:法人顧客 <span class="k">a</span> rdfs:Class <span class="k">;</span> rdfs:subClassOf ec:顧客 .</pre>
+    <pre>ec:顧客     <span class="k">a</span> owl:Class .
+ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span> rdfs:subClassOf ec:顧客 .
+ec:法人顧客 <span class="k">a</span> owl:Class <span class="k">;</span> rdfs:subClassOf ec:顧客 .</pre>
+    <p class="sm" style="text-align:left;margin-top:10px">クラス宣言は <code>owl:Class</code> に揃えています。RDFS だけなら <code>rdfs:Class</code> でも同じことが言えますが、第 6 章で OWL の制約を足し、第 9 章で推論器 HermiT に渡すので、<strong>OWL 2 DL の書き方</strong>にしています。階層そのものは <code>rdfs:subClassOf</code> のままです。</p>
   </div>
 </div>
   </div>

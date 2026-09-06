@@ -859,12 +859,51 @@
     <span class="big" style="font-size:32px;margin-top:16px;line-height:1.5">「<span style="text-decoration:underline;text-decoration-color:#b3261e;text-decoration-thickness:3px;text-underline-offset:6px;font-weight:900">先月</span>の<span style="text-decoration:underline;text-decoration-color:#b3261e;text-decoration-thickness:3px;text-underline-offset:6px;font-weight:900">アクティブな</span><span style="text-decoration:underline;text-decoration-color:#b3261e;text-decoration-thickness:3px;text-underline-offset:6px;font-weight:900">優良顧客</span>の<span style="text-decoration:underline;text-decoration-color:#b3261e;text-decoration-thickness:3px;text-underline-offset:6px;font-weight:900">売上</span>をレポートにして」</span>
     <span class="note" style="font-size:13px;margin-top:16px">赤線の 4 つが、<strong>データベースを見ても分からない言葉</strong>です</span>
   </div>
-  <div class="g3" style="margin-top:20px">
-    <div class="card blue"><h4>第 1 部　この一文を SQL にする</h4><p class="sm">定義を知らずに書くと <strong>89,000 円</strong>、知っている人が書くと <strong>84,500 円</strong>。どちらもエラーは出ません</p></div>
-    <div class="card violet"><h4>第 2 部　4 つの言葉を書く</h4><p class="sm">道具を 1 つずつ足して、4 つの定義を<strong>機械が読める形</strong>にします。最後に SPARQL で 84,500 円を出します</p></div>
-    <div class="card green"><h4>第 3 部　同じ一文を AI に投げる</h4><p class="sm">AWS COA にこの一文をそのまま投げて、3 通りの経路を実機で比べます</p></div>
+  <div class="panel">
+    <p class="ptitle">人が Agent に頼み、Agent が RDB を見る</p>
+    <svg viewBox="0 0 880 176" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+      <defs>
+        <marker id="p13v" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto">
+          <path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b3fa0"/></marker>
+        <marker id="p13b" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto">
+          <path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#1c5b9c"/></marker>
+        <marker id="p13g" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto">
+          <path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#9aa3af"/></marker>
+      </defs>
+
+      <rect x="20" y="46" width="122" height="76" rx="10" fill="#f7f8fa" stroke="#6b7480" stroke-width="2.2"/>
+      <text x="81" y="80" text-anchor="middle" font-size="16" font-weight="900" fill="#3d4654">人</text>
+      <text x="81" y="100" text-anchor="middle" font-size="8" fill="#6b7480">日本語で頼む</text>
+
+      <rect x="380" y="26" width="200" height="116" rx="11" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2.6"/>
+      <text x="480" y="54" text-anchor="middle" font-size="13" font-weight="900" fill="#4c1d95">AI Agent</text>
+      <text x="480" y="76" text-anchor="middle" font-size="8.4" fill="#3d4654">LLM が日本語を読んで</text>
+      <text x="480" y="90" text-anchor="middle" font-size="8.4" fill="#3d4654">SQL を書く</text>
+      <text x="480" y="112" text-anchor="middle" font-size="8.4" fill="#3d4654">DB に接続して実行する</text>
+      <text x="480" y="128" text-anchor="middle" font-size="7.6" fill="#6b7480">結果をまとめて返す</text>
+
+      <rect x="720" y="26" width="140" height="116" rx="11" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2.6"/>
+      <text x="790" y="54" text-anchor="middle" font-size="13" font-weight="900" fill="#144a80">RDB</text>
+      <text x="790" y="76" text-anchor="middle" font-size="8.4" font-family="Menlo,monospace" fill="#3d4654">customers</text>
+      <text x="790" y="92" text-anchor="middle" font-size="8.4" font-family="Menlo,monospace" fill="#3d4654">orders</text>
+      <text x="790" y="108" text-anchor="middle" font-size="8.4" font-family="Menlo,monospace" fill="#3d4654">refunds</text>
+      <text x="790" y="128" text-anchor="middle" font-size="7.6" fill="#6b7480">列と型と外部キーだけ</text>
+
+      <text x="260" y="42" text-anchor="middle" font-size="9" font-weight="900" fill="#6b3fa0">プロンプト</text>
+      <text x="260" y="56" text-anchor="middle" font-size="7.4" fill="#6b7480">「先月のアクティブな優良顧客の</text>
+      <text x="260" y="67" text-anchor="middle" font-size="7.4" fill="#6b7480">売上をレポートにして」</text>
+      <path d="M142,78 H370" stroke="#6b3fa0" stroke-width="2.2" marker-end="url(#p13v)"/>
+      <path d="M378,106 H150" stroke="#9aa3af" stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#p13g)"/>
+      <text x="264" y="120" text-anchor="middle" font-size="7.8" fill="#6b7480">レポート</text>
+
+      <text x="650" y="66" text-anchor="middle" font-size="9" font-weight="900" fill="#1c5b9c">SQL</text>
+      <path d="M582,78 H710" stroke="#1c5b9c" stroke-width="2.2" marker-end="url(#p13b)"/>
+      <path d="M718,106 H590" stroke="#9aa3af" stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#p13g)"/>
+      <text x="654" y="120" text-anchor="middle" font-size="7.8" fill="#6b7480">行が返る</text>
+
+      <text x="20" y="164" font-size="8.2" fill="#6b7480">人は日本語で頼み、<tspan font-weight="800" fill="#3d4654">SQL を書くのは Agent</tspan> です。4 つの言葉をどう SQL にするかは、この Agent が決めることになります。</text>
+    </svg>
   </div>
-  <p class="hl">データも同じで、<strong>顧客 5 人・注文 5 件・返金 1 件</strong>です。第 3 部の実機デモもこのデータを使います。<span class="sm">（Palantir と Minecraft は題材が別なので、そこだけ切り替わります）</span></p>
 </section>
 
 <section class="slide">

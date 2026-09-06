@@ -1114,6 +1114,26 @@
 </section>
 
 <section class="slide">
+  <div class="eyebrow">ACT 3 — 見取り図</div>
+  <h2>4 つの定義を、どの道具で書くのか</h2>
+  <p class="lead">ここから道具の話に入りますが、<strong>覚えるべきなのは「どの道具で、4 つのうちどれが書けるのか」だけ</strong>です。この表が、この部の目次そのものです。</p>
+  <div class="panel">
+    <p class="ptitle">4 つの定義 → 書く場所</p>
+    <table class="tw"><thead><tr><th style="width:14%">言葉</th><th style="width:34%">この会社の定義</th><th style="width:30%">どこに書くか</th><th style="width:22%">出てくるところ</th></tr></thead>
+      <tr><td><strong>優良顧客</strong></td><td>累計購入額 50,000 円以上</td><td><strong>OWL</strong> — 列ではなく<strong>型</strong>として定義できる</td><td>ACT 6（このあと）</td></tr>
+      <tr><td><strong>アクティブ</strong></td><td>直近 90 日以内に購入、かつ未解約</td><td>未解約は <strong>OWL</strong>。<span class="no">「直近 90 日」は OWL では書けない</span> → <strong>SPARQL</strong></td><td>ACT 6 → ACT 7</td></tr>
+      <tr><td><strong>売上</strong></td><td>amount − tax − 返金、confirmed のみ</td><td><span class="no">算術は OWL では書けない</span> → <strong>SPARQL</strong></td><td>ACT 7</td></tr>
+      <tr><td><strong>先月</strong></td><td>暦月</td><td><strong>SPARQL</strong>（「今日」を扱えるのはクエリ側だけ）</td><td>ACT 7</td></tr>
+    </table>
+  </div>
+  <div class="g3" style="margin-top:18px">
+    <div class="card blue"><h4>先に記法を 2 つ</h4><p class="sm"><strong>トリプル</strong>（ACT 3）と <strong>Turtle</strong>（ACT 4）— 定義を書くための紙とペンです</p></div>
+    <div class="card violet"><h4>語彙に意味を与える</h4><p class="sm"><strong>RDFS</strong>（ACT 5）— ラベル・両端・階層。ここが第 3 部で LLM に効いてきます</p></div>
+    <div class="card green"><h4>書いた定義を使う 3 つ</h4><p class="sm"><strong>SPARQL</strong> で引き出し（ACT 7）、<strong>SHACL</strong> で守らせ（ACT 8）、<strong>推論器</strong>で導く（ACT 9）</p></div>
+  </div>
+</section>
+
+<section class="slide">
   <div class="eyebrow">ACT 3 — 外部の測定</div>
   <h2>定義文を渡すかどうかで、実行精度が 20 ポイント変わる</h2>
   <p class="lead">これは社内固有の話ではありません。Text-to-SQL の公開ベンチマーク <strong>BIRD</strong>（NeurIPS 2023）は、実在の企業データベース <strong>95 個・33.4 GB・12,751 問</strong>で同じことを測っています。</p>
@@ -1137,26 +1157,6 @@
     BIRD: Li et al., <a href="https://arxiv.org/abs/2305.03111" target="_blank" rel="noopener">Can LLM Already Serve as A Database Interface?</a> (NeurIPS 2023) Table 2 ／ <a href="https://bird-bench.github.io/" target="_blank" rel="noopener">bird-bench.github.io</a> リーダーボード。
     Spider 2.0: Lei et al., <a href="https://arxiv.org/abs/2411.07763" target="_blank" rel="noopener">Spider 2.0: Evaluating Language Models on Real-World Enterprise Text-to-SQL Workflows</a> (ICLR 2025) 要旨。
   </p>
-</section>
-
-<section class="slide">
-  <div class="eyebrow">ACT 3 — 見取り図</div>
-  <h2>4 つの定義を、どの道具で書くのか</h2>
-  <p class="lead">ここから道具の話に入りますが、<strong>覚えるべきなのは「どの道具で、4 つのうちどれが書けるのか」だけ</strong>です。この表が、この部の目次そのものです。</p>
-  <div class="panel">
-    <p class="ptitle">4 つの定義 → 書く場所</p>
-    <table class="tw"><thead><tr><th style="width:14%">言葉</th><th style="width:34%">この会社の定義</th><th style="width:30%">どこに書くか</th><th style="width:22%">出てくるところ</th></tr></thead>
-      <tr><td><strong>優良顧客</strong></td><td>累計購入額 50,000 円以上</td><td><strong>OWL</strong> — 列ではなく<strong>型</strong>として定義できる</td><td>ACT 6（このあと）</td></tr>
-      <tr><td><strong>アクティブ</strong></td><td>直近 90 日以内に購入、かつ未解約</td><td>未解約は <strong>OWL</strong>。<span class="no">「直近 90 日」は OWL では書けない</span> → <strong>SPARQL</strong></td><td>ACT 6 → ACT 7</td></tr>
-      <tr><td><strong>売上</strong></td><td>amount − tax − 返金、confirmed のみ</td><td><span class="no">算術は OWL では書けない</span> → <strong>SPARQL</strong></td><td>ACT 7</td></tr>
-      <tr><td><strong>先月</strong></td><td>暦月</td><td><strong>SPARQL</strong>（「今日」を扱えるのはクエリ側だけ）</td><td>ACT 7</td></tr>
-    </table>
-  </div>
-  <div class="g3" style="margin-top:18px">
-    <div class="card blue"><h4>先に記法を 2 つ</h4><p class="sm"><strong>トリプル</strong>（ACT 3）と <strong>Turtle</strong>（ACT 4）— 定義を書くための紙とペンです</p></div>
-    <div class="card violet"><h4>語彙に意味を与える</h4><p class="sm"><strong>RDFS</strong>（ACT 5）— ラベル・両端・階層。ここが第 3 部で LLM に効いてきます</p></div>
-    <div class="card green"><h4>書いた定義を使う 3 つ</h4><p class="sm"><strong>SPARQL</strong> で引き出し（ACT 7）、<strong>SHACL</strong> で守らせ（ACT 8）、<strong>推論器</strong>で導く（ACT 9）</p></div>
-  </div>
 </section>
 
 <section class="slide">

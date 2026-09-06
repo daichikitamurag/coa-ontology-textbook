@@ -1574,31 +1574,35 @@ ec:C001 <span class="k">a</span> ec:顧客 .         <span class="c"># ← 「C0
   <p class="lead">第 2 章で間違えた原因を、並べ直します。<strong>①「直近 90 日」という基準を知らなかった ② <code>churned_at</code>（解約日）という列の存在に気づかなかった ③「売上」が税抜・返金差引後だと知らなかった</strong>。<strong>3 つとも「列の名前を見ただけでは分からない」こと</strong>です。<code>rdfs:label</code> と <code>rdfs:comment</code> は、この情報を<strong>列そのものに貼り付ける</strong>ための語彙です。</p>
   <div class="g2 vtop" style="margin-top:16px;align-items:stretch">
     <div class="panel">
-      <p class="ptitle" style="text-transform:none">ラベルを付ける</p>
+      <p class="ptitle" style="text-transform:none">ラベル — 同じものの「呼び方」を全部ぶら下げる</p>
       <pre><span class="k">@prefix</span> rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+<span class="k">@prefix</span> skos: &lt;http://www.w3.org/2004/02/skos/core#&gt; .
 
-ec:会員ランク
-    rdfs:label   <span class="s">"会員ランク"</span>@ja <span class="k">;</span>
-    rdfs:label   <span class="s">"Membership Rank"</span>@en <span class="k">;</span>
-    rdfs:comment <span class="s">"VIP または Regular。営業部が四半期ごとに"</span>
-                 <span class="s">"手動更新している"</span>@ja .</pre>
-      <p class="sm" style="text-align:left;margin-top:10px"><code>@ja</code> / <code>@en</code> は<strong>言語タグ</strong>です。同じ概念に複数言語のラベルを付けられるので、<strong>「取引先」と「customer」が同じ URI にぶら下がります</strong>。</p>
+ec:顧客
+    rdfs:label    <span class="s">"顧客"</span>@ja <span class="k">;</span>          <span class="c"># 正式な呼び方</span>
+    rdfs:label    <span class="s">"Customer"</span>@en <span class="k">;</span>
+    skos:altLabel <span class="s">"取引先"</span>@ja <span class="k">,</span>        <span class="c"># 営業部の言い方</span>
+                  <span class="s">"お取引先様"</span>@ja <span class="k">,</span>     <span class="c"># 顧客向け文書</span>
+                  <span class="s">"customers"</span>@en .        <span class="c"># DB の表名</span></pre>
+      <p class="sm" style="text-align:left;margin-top:10px"><code>rdfs:label</code> だけだとクラス名の言い換えに見えますが、効くのは<strong>その下です</strong>。社内では同じ顧客を「取引先」とも「お取引先様」とも呼び、DB の表名は <code>customers</code>。<strong>この呼び方すべてが 1 つの URI にぶら下がります</strong>。<br><span class="sm">※ <code>skos:altLabel</code> は厳密には RDFS ではなく SKOS の語彙ですが、呼び方の登録は実務でこれを使います。第 12 章で AWS COA が同義語を入れる先も <code>skos:altLabel</code> です。</span></p>
     </div>
     <div class="panel">
-      <p class="ptitle" style="text-transform:none">事故の原因になった 2 つの列に注意書きを貼る</p>
+      <p class="ptitle" style="text-transform:none">コメント — その列の「扱い方」を残す</p>
       <pre>ec:最終注文日
-    rdfs:label   <span class="s">"最終注文日"</span>@ja <span class="k">;</span>
     rdfs:comment <span class="s">"アクティブ顧客の判定に使う。"</span>
                  <span class="s">"基準は直近 90 日"</span>@ja .
 
 ec:解約日
-    rdfs:label   <span class="s">"解約日"</span>@ja <span class="k">;</span>
     rdfs:comment <span class="s">"値があれば解約済み。アクティブ顧客の"</span>
-                 <span class="s">"判定では必ず除外する"</span>@ja .</pre>
-      <p class="sm" style="text-align:left;margin-top:10px">ラベルは名前を与えるだけですが、<code>rdfs:comment</code> は<strong>「この列をどう扱うべきか」を運べます</strong>。</p>
+                 <span class="s">"判定では必ず除外する"</span>@ja .
+
+ec:会員ランク
+    rdfs:comment <span class="s">"VIP または Regular。営業部が四半期"</span>
+                 <span class="s">"ごとに手動更新している"</span>@ja .</pre>
+      <p class="sm" style="text-align:left;margin-top:10px">ラベルは名前を与えるだけですが、<code>rdfs:comment</code> は<strong>「この列をどう扱うべきか」を運べます</strong>。<code>@ja</code> / <code>@en</code> は言語タグです。</p>
     </div>
-  </div>
-  <p class="hl">もしこの 2 つが書かれていれば、<strong>「30 日くらいかな」と推測する必要がなく</strong>、<code>churned_at</code>（解約日）を見落とすこともありませんでした。</p>
+</div>
+  <p class="hl">右のコメントが書かれていれば、<strong>「30 日くらいかな」と推測する必要がなく</strong>、<code>churned_at</code>（解約日）を見落とすこともありませんでした。左のラベルが書かれていれば、<strong>「取引先」と言われても <code>ec:顧客</code> に行き着けます</strong>。</p>
   <div class="card amber" style="margin-top:16px">
     <h4>rdfs:comment が地味に重要です</h4>
     <p class="sm">「営業部が四半期ごとに手動更新している」と書いておけば、<strong>この列を信用しすぎてはいけないこと</strong>が、後任者にも、そして LLM にも伝わります。第 6 章で <code>member_rank</code> を使わずに累計購入額で判定する理由が、ここに書いてあることになります。</p>

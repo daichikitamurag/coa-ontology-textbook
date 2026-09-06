@@ -1164,7 +1164,7 @@
 
 <section class="slide chapter sub">
   <div class="part">第 3 章</div>
-  <h1>トリプル — 世界を 3 語で書く</h1>
+  <h1>トリプル <span style="font-size:.62em;font-weight:700;opacity:.72">(triple)</span> — 世界を 3 語で書く</h1>
   <p>まず記法の土台です。表の 1 行を <strong>「誰が・何の・何である」の 3 語</strong>に分解します。並べると、点と矢印のグラフになります。</p>
   <div class="agenda"><span>表の 1 行を文に分解する</span><span>行ではなくトリプル</span><span>並べるとグラフになる</span></div>
 </section>
@@ -1535,7 +1535,7 @@ ec:C001 <span class="k">a</span> ec:顧客 .         <span class="c"># ← 「C0
 
 <section class="slide chapter sub">
   <div class="part">第 5 章</div>
-  <h1>RDFS — 語彙に意味を与える</h1>
+  <h1>RDFS <span style="font-size:.62em;font-weight:700;opacity:.72">(RDF Schema)</span> — 語彙に意味を与える</h1>
   <p>ここまでは<strong>表の写し</strong>でした。ここから記号に意味を付けます。<strong>4 つの定義のうち「優良顧客」の階層</strong>が、この章で書けます。</p>
   <div class="agenda"><span>rdfs:label / comment</span><span>rdfs:domain / range</span><span>rdfs:subClassOf</span></div>
 </section>
@@ -1763,7 +1763,7 @@ ec:法人顧客 <span class="k">a</span> owl:Class <span class="k">;</span> rdfs
 
 <section class="slide chapter sub">
   <div class="part">第 6 章</div>
-  <h1>OWL — 型とルールを定義する</h1>
+  <h1>OWL <span style="font-size:.62em;font-weight:700;opacity:.72">(Web Ontology Language)</span> — 型とルールを定義する</h1>
   <p><strong>「優良顧客 = 累計 5 万円以上」</strong>を、列ではなく<strong>型</strong>として書きます。同時に、OWL では書けないもの（「直近 90 日」と算術）もここで分かります。</p>
   <div class="agenda"><span>列では作れない型</span><span>ルールと列のズレ</span><span>書ける範囲・書けない範囲</span></div>
 </section>
@@ -1860,7 +1860,7 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
 
 <section class="slide chapter sub">
   <div class="part">第 7 章</div>
-  <h1>SPARQL — 書いた意味を引き出す</h1>
+  <h1>SPARQL <span style="font-size:.62em;font-weight:700;opacity:.72">(SPARQL Protocol and RDF Query Language)</span> — 書いた意味を引き出す</h1>
   <p>RDB に対する SQL が、RDF に対する SPARQL です。<strong>OWL で書けなかった「直近 90 日」と「売上」をここで足して、84,500 円を出します</strong>。</p>
   <div class="agenda"><span>穴あきトリプルを並べる</span><span>JOIN を書かない</span><span>逆向き ^ と多段 / +</span><span>依頼への完全な答え</span></div>
 </section>
@@ -1941,7 +1941,7 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
 
 <section class="slide chapter sub">
   <div class="part">第 8 章</div>
-  <h1>SHACL — ルールを守らせる</h1>
+  <h1>SHACL <span style="font-size:.62em;font-weight:700;opacity:.72">(Shapes Constraint Language)</span> — ルールを守らせる</h1>
   <p>推論器が「導く」道具なら、SHACL は<strong>「止める」</strong>道具です。Agent が業務データを書き換える時代には、こちらのほうが先に必要になります。</p>
   <div class="agenda"><span>守らせたいルール</span><span>Agent が暴走したとき</span><span>OWL との決定的な違い</span></div>
 </section>
@@ -2212,7 +2212,7 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
 
 <section class="slide chapter sub">
   <div class="part">第 11 章</div>
-  <h1>VKG — RDB を 1 バイトも動かさない</h1>
+  <h1>VKG <span style="font-size:.62em;font-weight:700;opacity:.72">(Virtual Knowledge Graph)</span> — RDB を 1 バイトも動かさない</h1>
   <p>「既存 DB を全部 RDF 化するコスト」という最大の壁を、丸ごと回避する技術です。第 3 部の AWS COA と Palantir は、どちらもこの考え方の上に立っています。</p>
   <div class="agenda"><span>対応表を書くだけ</span><span>外部キーが矢印になる</span><span>TBox と ABox</span><span>推論が難しくなる</span><span>TBox 検査だけに使う</span></div>
 </section>

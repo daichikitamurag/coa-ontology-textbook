@@ -296,6 +296,7 @@
   /* パネル内の表は左揃え（.panel は図のために中央寄せなので上書き） */
   .panel td, .panel th{text-align:left}
   .panel pre{text-align:left}
+  .panel .stack, .panel .stack .it{text-align:left}
   .panel table{text-align:left}
   /* 帯（.hl 系）に余白を付ける */
   .hl,.hlg,.hlr{padding:13px 16px;border-radius:10px;margin-top:16px;line-height:1.8}
@@ -1298,6 +1299,23 @@ ec:C001 ec:名前 <span class="s">"佐藤 花子"</span> <span class="k">;</span
         <pre><span class="c"># 「金額 5500 円の返金がある」— 返金そのものに ID を振らない</span>
 ec:O101 ec:返金 [ ec:金額 <span class="n">5500</span> ] .</pre>
         <p class="sm" style="text-align:left;margin-top:9px">URI を付ける必要がない中間的な存在を書くときに使います。<strong>空白ノード (blank node)</strong> と呼びます。いまは「こういう書き方がある」だけで十分で、ACT 6 で本格的に使います。</p>
+      </div>
+      <div class="panel" style="margin-top:14px">
+        <p class="ptitle" style="text-transform:none">なぜ URI なのか — 業界で使い回せるようにするため</p>
+        <pre><span class="c"># ① で短く書いた略記</span>
+ec:C001 ec:会員ランク <span class="s">"VIP"</span> .
+
+<span class="c"># 本当の姿</span>
+&lt;http://example.com/ec#C001&gt;
+  &lt;http://example.com/ec#会員ランク&gt;
+  <span class="s">"VIP"</span> .</pre>
+        <p class="sm" style="text-align:left;margin-top:10px">RDF では主語と述語に、文字列ではなく <strong>URI</strong> を使います。理由は、<strong>同じ名前の別物を機械が確実に区別できるようにするため</strong>です。</p>
+        <div class="stack" style="margin-top:11px">
+          <div class="it b"><b>部門をまたいでも別物と分かる</b>「顧客」が営業部と経理部で違うものを指していても、<code>sales#顧客</code> と <code>fin#顧客</code> は別の URI なので機械が区別できます</div>
+          <div class="it b"><b>他社のデータと突き合わせても衝突しない</b>URI にドメインが入るので、名前がぶつかりません</div>
+          <div class="it g"><b>業界標準の用語集をそのまま参照できる</b>医療の SNOMED CT のように公開されている URI があれば、<strong>同じ業界なら定義を作り直さずに使い回せます</strong>。オントロジーが「1 社で書いて終わり」にならないのは、これが理由です</div>
+        </div>
+        <p class="sm" style="text-align:left;margin-top:10px">正直に言うと、URI だけで第 1 部の事故は防げません。あれは「アクティブ顧客」の定義が 2 通りに解釈されたからです。<strong>URI が用意するのは「定義を貼り付ける場所」</strong>。<code>ec:優良顧客</code> という一意な URI があれば、そこに「累計 5 万円以上」をぶら下げられます。<strong>場所を作るのがここまで、実際に貼るのが ACT 5〜6</strong> という分担です。</p>
       </div>
       <p class="hl">Turtle は<strong>記法</strong>、オントロジーは<strong>中身</strong>です。「オントロジーを Turtle で書く」が正しい言い方になります。</p>
     </div>

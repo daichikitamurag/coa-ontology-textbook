@@ -2489,11 +2489,77 @@ ec:返金Shape <span class="k">a</span> sh:NodeShape <span class="k">;</span>
       <text x="594" y="320" font-size="9.5" fill="#3d4654">監査で問われても、根拠を提示できる形です。</text>
     </svg>
   </div>
+  <p class="hlr">RDB でこれをやると<strong>「薬 × 状態」の禁忌マトリクス</strong>を人手で維持することになります。実務では万件規模。<strong>そして怖いのは、1 行抜けてもエラーが出ないこと</strong>です。</p>
 </section>
 
 <section class="slide">
   <div class="eyebrow">第 9 章 — 推論器</div>
   <h2>誰も書いていない事実が出てくる</h2>
+  <p class="lead">推論器に何を渡して、何が返ってくるのか。<strong>TBox と ABox を渡すと、導ける ABox が返ってきます</strong>。</p>
+  <div class="panel">
+    <p class="ptitle" style="text-transform:none">推論器がやっていること — 受け取るもの、出すもの</p>
+    <svg viewBox="0 0 880 296" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+      <defs>
+        <marker id="r9v" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto">
+          <path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b3fa0"/></marker>
+        <marker id="r9b" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto">
+          <path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#1c5b9c"/></marker>
+        <marker id="r9g" markerWidth="8" markerHeight="8" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L7,3 L0,6 z" fill="#1f6f4a"/></marker>
+      </defs>
+
+      <text x="14" y="16" font-size="8.6" font-weight="900" fill="#6b7480">人が書いたもの</text>
+
+      <rect x="14" y="24" width="240" height="92" rx="9" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2.2"/>
+      <text x="28" y="42" font-size="9.4" font-weight="900" fill="#4c1d95">TBox（定義）</text>
+      <text x="28" y="60" font-size="7.8" font-family="Menlo,monospace" fill="#3d4654">優良顧客 ≡ 顧客 かつ 累計 ≥ 50000</text>
+      <text x="28" y="76" font-size="7.8" font-family="Menlo,monospace" fill="#3d4654">優良顧客 ⊑ 顧客</text>
+      <text x="28" y="92" font-size="7.8" font-family="Menlo,monospace" fill="#3d4654">VIP対応必須 ⊑ 優良顧客</text>
+      <text x="28" y="108" font-size="7.4" fill="#6b3fa0">3 行だけ。1 度書いたら触りません</text>
+
+      <rect x="14" y="130" width="240" height="130" rx="9" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2.2"/>
+      <text x="28" y="148" font-size="9.4" font-weight="900" fill="#144a80">ABox（実データ）</text>
+      <text x="28" y="166" font-size="7.8" font-family="Menlo,monospace" fill="#3d4654">C001 a 顧客 ; 累計 82,000</text>
+      <text x="28" y="182" font-size="7.8" font-family="Menlo,monospace" fill="#3d4654">C002 a 顧客 ; 累計 55,000</text>
+      <text x="28" y="198" font-size="7.8" font-family="Menlo,monospace" fill="#3d4654">C003 a 顧客 ; 累計 61,000</text>
+      <text x="28" y="214" font-size="7.8" font-family="Menlo,monospace" fill="#3d4654">C004 a 顧客 ; 累計 12,000</text>
+      <text x="28" y="230" font-size="7.8" font-family="Menlo,monospace" fill="#3d4654">C005 a 顧客 ; 累計 94,000</text>
+      <text x="28" y="250" font-size="7.4" fill="#1c5b9c">「優良顧客」とは 1 文字も書いていません</text>
+
+      <path d="M258,70 L318,140" stroke="#6b3fa0" stroke-width="2" marker-end="url(#r9v)"/>
+      <path d="M258,195 L318,170" stroke="#1c5b9c" stroke-width="2" marker-end="url(#r9b)"/>
+
+      <rect x="326" y="126" width="150" height="60" rx="10" fill="#fbf7ef" stroke="#a8710f" stroke-width="2.8"/>
+      <text x="401" y="150" text-anchor="middle" font-size="11" font-weight="900" fill="#6b4708">推論器</text>
+      <text x="401" y="166" text-anchor="middle" font-size="8" fill="#a8710f">HermiT</text>
+      <text x="401" y="178" text-anchor="middle" font-size="7.4" fill="#a8710f">両方を受け取って計算する</text>
+
+      <path d="M480,156 H524" stroke="#1f6f4a" stroke-width="2.2" marker-end="url(#r9g)"/>
+
+      <text x="532" y="16" font-size="8.6" font-weight="900" fill="#155c3c">機械が導いたもの（誰も書いていない）</text>
+      <rect x="532" y="24" width="334" height="146" rx="9" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2.4"/>
+      <text x="548" y="44" font-size="8.4" font-family="Menlo,monospace" fill="#155c3c">ec:C001 a ec:優良顧客 .</text>
+      <text x="770" y="44" text-anchor="end" font-size="7.4" fill="#1f6f4a">82,000 ≥ 50,000</text>
+      <text x="548" y="62" font-size="8.4" font-family="Menlo,monospace" fill="#155c3c">ec:C002 a ec:優良顧客 .</text>
+      <text x="770" y="62" text-anchor="end" font-size="7.4" fill="#1f6f4a">55,000 ≥ 50,000</text>
+      <text x="548" y="80" font-size="8.4" font-family="Menlo,monospace" fill="#155c3c">ec:C003 a ec:優良顧客 .</text>
+      <text x="770" y="80" text-anchor="end" font-size="7.4" fill="#1f6f4a">61,000 ≥ 50,000</text>
+      <text x="548" y="98" font-size="8.4" font-family="Menlo,monospace" fill="#155c3c">ec:C005 a ec:優良顧客 .</text>
+      <text x="770" y="98" text-anchor="end" font-size="7.4" fill="#1f6f4a">94,000 ≥ 50,000</text>
+      <line x1="548" y1="110" x2="850" y2="110" stroke="#b9d9c8" stroke-width="1"/>
+      <text x="548" y="126" font-size="7.8" fill="#b3261e">C004 高橋（12,000）は導出されません — 条件を満たさないので</text>
+      <text x="548" y="144" font-size="7.8" fill="#6b7480">階層も遡ります。<tspan font-weight="800" fill="#3d4654">C001 a VIP対応必須</tspan> と書けば、</text>
+      <text x="548" y="158" font-size="7.8" fill="#6b7480">優良顧客 も 顧客 も自動で付きます（TBox の 3 行目）</text>
+
+      <rect x="532" y="184" width="334" height="76" rx="9" fill="#fbf7ef" stroke="#a8710f" stroke-width="1.8"/>
+      <text x="548" y="204" font-size="8.6" font-weight="900" fill="#6b4708">元の ABox は書き換わりません</text>
+      <text x="548" y="222" font-size="7.8" fill="#3d4654">推論器は<tspan font-weight="800">足すだけ</tspan>です。<tspan font-family="Menlo,monospace">ec:会員ランク</tspan> は触られません。</text>
+      <text x="548" y="240" font-size="7.8" fill="#3d4654">だから <tspan font-weight="800">member_rank との「ズレ」は残ったまま</tspan>で、</text>
+      <text x="548" y="254" font-size="7.8" fill="#3d4654">あとから比べられます（第 6 章）。</text>
+
+      <text x="14" y="286" font-size="7.8" fill="#6b7480">型が付いたので、第 7 章の SPARQL で 2 行書いていた優良顧客の条件は <tspan font-family="Menlo,monospace" font-weight="800" fill="#3d4654">?c a ec:優良顧客 .</tspan> の 1 行になります。</text>
+    </svg>
+  </div>
   <div class="g2 vtop">
     <div>  <div class="panel">
     <p class="ptitle">推論器に渡すもの</p>
@@ -2523,7 +2589,6 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
   </div>
 </div>
   </div>
-  <p class="hlr">RDB でこれをやると<strong>「薬 × 状態」の禁忌マトリクス</strong>を人手で維持することになります。実務では万件規模。<strong>そして怖いのは、1 行抜けてもエラーが出ないこと</strong>です。</p>
 </section>
 
 <section class="slide">

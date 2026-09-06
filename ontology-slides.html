@@ -2421,7 +2421,7 @@ ec:返金Shape <span class="k">a</span> sh:NodeShape <span class="k">;</span>
   <div class="part">第 9 章</div>
   <h1>HermiT — 書いてない事実を導く</h1>
   <p><strong>誰も書いていない事実</strong>が出てきます。推論器は TBox と ABox の両方を受け取って、新しい ABox を導き出します。</p>
-  <div class="agenda"><span>階層は自動で遡る</span><span>入力と出力</span><span>推論器がやらないこと</span><span>どの道具がどこで働いたか</span></div>
+  <div class="agenda"><span>階層は自動で遡る</span><span>入力と出力</span><span>推論器がやらないこと</span></div>
 </section>
 
 <section class="slide">
@@ -2601,26 +2601,63 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
 <section class="slide">
   <div class="eyebrow">第 10 章 — スタック</div>
   <h2>オントロジーを動かす 4 層</h2>
-  <div class="panel">    <svg viewBox="0 0 880 330" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
-      <rect x="20" y="18" width="840" height="66" rx="8" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2"/>
-      <circle cx="52" cy="51" r="15" fill="#1c5b9c"/><text x="52" y="56" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">1</text>
-      <text x="82" y="45" font-size="13.5" font-weight="800" fill="#154a80">Triple Store — トリプルを格納する</text>
-      <text x="82" y="68" font-size="11" fill="#1c5b9c">Amazon Neptune / GraphDB / Stardog / Apache Jena TDB　　この本の第 4 章で書いた Turtle の置き場所</text>
+  <p class="lead">4 層はそれぞれ<strong>別のソフトウェア</strong>です。<strong>「何を書いたか」と「それを誰が動かすか」は別</strong> — ここが要点です。</p>
+  <div class="panel">    <svg viewBox="0 0 880 430" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+      <defs>
+        <marker id="st1" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto">
+          <path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#1c5b9c"/></marker>
+        <marker id="st2" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto">
+          <path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b7480"/></marker>
+      </defs>
 
-      <rect x="20" y="98" width="840" height="66" rx="8" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
-      <circle cx="52" cy="131" r="15" fill="#6b3fa0"/><text x="52" y="136" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">2</text>
-      <text x="82" y="125" font-size="13.5" font-weight="800" fill="#553180">Reasoner — 書いてない事実を導く</text>
-      <text x="82" y="148" font-size="11" fill="#6b3fa0">HermiT / Pellet / ELK / RDFox　　第 9 章で 4 件の型付与を出したのはこの層</text>
+      <rect x="40" y="8" width="264" height="30" rx="9" fill="#f7f8fa" stroke="#6b7480" stroke-width="1.8"/>
+      <text x="172" y="28" text-anchor="middle" font-size="9.4" font-weight="800" fill="#3d4654">人 / AI Agent</text>
+      <path d="M172,40 V50" stroke="#1c5b9c" stroke-width="2" marker-end="url(#st1)"/>
+      <text x="182" y="49" font-size="7.6" font-family="Menlo,monospace" fill="#1c5b9c">SPARQL</text>
 
-      <rect x="20" y="178" width="840" height="66" rx="8" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2"/>
-      <circle cx="52" cy="211" r="15" fill="#1f6f4a"/><text x="52" y="216" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">3</text>
-      <text x="82" y="205" font-size="13.5" font-weight="800" fill="#175539">SHACL Validator — 違反を見つける</text>
-      <text x="82" y="228" font-size="11" fill="#1f6f4a">pySHACL / Apache Jena SHACL / TopBraid　　第 8 章で高橋さんを検出したのはこの層</text>
+      <rect x="40" y="54" width="264" height="54" rx="9" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2.6"/>
+      <text x="56" y="74" font-size="10" font-weight="900" fill="#144a80">① 格納 — Triple Store</text>
+      <text x="56" y="90" font-size="7.8" fill="#1c5b9c">トリプルを保存し、SPARQL を受け付ける</text>
+      <text x="56" y="103" font-size="7.6" fill="#b3261e">ここだけでは推論も検証もしない</text>
+      <text x="324" y="70" font-size="7.8" fill="#6b7480">実装 — Amazon Neptune / GraphDB / Jena</text>
+      <text x="324" y="86" font-size="7.8" fill="#3d4654">入力 — <tspan font-weight="800">第 4 章の Turtle（TBox = 定義）</tspan></text>
+      <text x="324" y="102" font-size="7.8" fill="#1f6f4a"><tspan font-weight="800">この層だけでも価値が出ます</tspan> — 第 6 章の「ルールでは 4 名、member_rank 列では 2 名」のズレ検出は、ここだけで得られました</text>
 
-      <rect x="20" y="258" width="840" height="66" rx="8" fill="#fdf8ec" stroke="#96650a" stroke-width="2.6"/>
-      <circle cx="52" cy="291" r="15" fill="#96650a"/><text x="52" y="296" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">4</text>
-      <text x="82" y="285" font-size="13.5" font-weight="800" fill="#7a5208">Virtualization (VKG) — RDB を Turtle に見せかける</text>
-      <text x="82" y="308" font-size="11" fill="#96650a">Ontop / D2RQ / Morph-KGC　　次章のテーマ。<tspan font-weight="800">これが実務での最大の障壁を取り除く</tspan></text>
+      <path d="M172,110 V122" stroke="#6b7480" stroke-width="1.6" marker-end="url(#st2)"/>
+      <rect x="60" y="126" width="244" height="52" rx="9" fill="#fbf7ef" stroke="#a8710f" stroke-width="2" stroke-dasharray="6 4"/>
+      <text x="76" y="145" font-size="10" font-weight="900" fill="#6b4708">② 推論 — Reasoner</text>
+      <text x="76" y="160" font-size="7.8" fill="#a8710f">書いていない事実を導いて ABox に足す</text>
+      <text x="76" y="172" font-size="7.6" fill="#a8710f">開世界 — 「無いこと」は結論にしない</text>
+      <text x="324" y="142" font-size="7.8" fill="#6b7480">実装 — HermiT / ELK / Pellet / RDFox</text>
+      <text x="324" y="158" font-size="7.8" fill="#3d4654">入力 — <tspan font-weight="800">第 5 章の rdfs:subClassOf、第 6 章の owl:equivalentClass</tspan></text>
+      <text x="324" y="174" font-size="7.8" fill="#6b7480">第 9 章で 4 件の型付与を出したのは、この層です</text>
+
+      <path d="M172,180 V192" stroke="#6b7480" stroke-width="1.6" marker-end="url(#st2)"/>
+      <rect x="60" y="196" width="244" height="52" rx="9" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2" stroke-dasharray="6 4"/>
+      <text x="76" y="215" font-size="10" font-weight="900" fill="#4c1d95">③ 検証 — Validator</text>
+      <text x="76" y="230" font-size="7.8" fill="#6b3fa0">違反を理由つきで報告する</text>
+      <text x="76" y="242" font-size="7.6" fill="#6b3fa0">閉世界 — 「無いこと」を判定できる</text>
+      <text x="324" y="212" font-size="7.8" fill="#6b7480">実装 — pySHACL / Apache Jena SHACL / TopBraid</text>
+      <text x="324" y="228" font-size="7.8" fill="#3d4654">入力 — <tspan font-weight="800">第 8 章の sh:NodeShape</tspan></text>
+      <text x="324" y="244" font-size="7.8" fill="#6b7480">第 8 章で 50,000 円の返金を弾いたのは、この層です</text>
+
+      <path d="M172,250 V262" stroke="#6b7480" stroke-width="1.6" marker-end="url(#st2)"/>
+      <rect x="40" y="266" width="264" height="54" rx="9" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2.6"/>
+      <text x="56" y="286" font-size="10" font-weight="900" fill="#155c3c">④ 仮想化 — VKG</text>
+      <text x="56" y="302" font-size="7.8" fill="#1f6f4a">SPARQL を SQL に翻訳して RDB に投げる</text>
+      <text x="56" y="315" font-size="7.6" font-weight="800" fill="#1f6f4a">データを移さない</text>
+      <text x="324" y="282" font-size="7.8" fill="#6b7480">実装 — Ontop / Stardog / Ultrawrap</text>
+      <text x="324" y="298" font-size="7.8" fill="#3d4654">入力 — <tspan font-weight="800">第 11 章の R2RML（対応表）</tspan></text>
+      <text x="324" y="314" font-size="7.8" fill="#6b7480">次の章で扱います</text>
+
+      <path d="M172,322 V336" stroke="#6b7480" stroke-width="2" marker-end="url(#st2)"/>
+      <text x="182" y="334" font-size="7.6" font-family="Menlo,monospace" fill="#6b7480">SQL</text>
+      <rect x="40" y="340" width="264" height="40" rx="9" fill="#f7f8fa" stroke="#6b7480" stroke-width="2"/>
+      <text x="172" y="357" text-anchor="middle" font-size="9.4" font-weight="800" fill="#3d4654">RDB</text>
+      <text x="172" y="371" text-anchor="middle" font-size="7.6" fill="#6b7480">実データ（ABox）はここに居続ける</text>
+
+      <text x="44" y="398" font-size="8" font-weight="900" fill="#a8710f">破線の ②③ は「あれば効く」層です。4 層を全部揃えないとオントロジーが使えない、ということはありません。</text>
+      <text x="44" y="416" font-size="8" fill="#3d4654">そして第 12 章で見るように、<tspan font-weight="800">AWS COA は ②③ を「常時」ではなく「構築時だけ」動かしています</tspan>。層があることと、それが常に走っていることは別問題です。</text>
     </svg>
   </div>
 </section>

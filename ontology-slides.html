@@ -1877,10 +1877,57 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
                   <span class="k">]</span> <span class="k">]</span>
         <span class="k">)</span> <span class="k">]</span> .</pre>
   </div>
-  <div class="g3" style="margin-top:16px">
-    <div class="card green"><h4>名前で指せる</h4><p class="sm">割引表も SHACL の検査も、<code>ec:優良顧客</code> という<strong>名前を指すだけ</strong>で済みます</p></div>
-    <div class="card green"><h4>条件は 1 箇所</h4><p class="sm">「6 万円に変更」なら、<strong>この 1 箇所を直すだけ</strong>。参照している側は触りません</p></div>
-    <div class="card green"><h4>型が個体に付く</h4><p class="sm">推論器が <code>:C001 a ec:優良顧客</code> を<strong>導きます</strong>（第 9 章）。人は書きません</p></div>
+  <div class="panel" style="margin-top:16px">
+    <p class="ptitle" style="text-transform:none">型にすると、みんなが 1 つの名前を指すようになる</p>
+    <svg viewBox="0 0 880 324" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+      <defs>
+        <marker id="o6b" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto">
+          <path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#1c5b9c"/></marker>
+        <marker id="o6a" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto">
+          <path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#a8710f"/></marker>
+      </defs>
+
+      <text x="24" y="24" font-size="9" font-weight="900" fill="#1c5b9c">① 使う側は、名前を指すだけ</text>
+      <rect x="24" y="38" width="152" height="28" rx="7" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="1.8"/>
+      <text x="100" y="56" text-anchor="middle" font-size="9" font-weight="700" fill="#144a80">優良顧客だけの割引表</text>
+      <rect x="24" y="74" width="152" height="28" rx="7" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="1.8"/>
+      <text x="100" y="92" text-anchor="middle" font-size="9" font-weight="700" fill="#144a80">SHACL の検査（第 8 章）</text>
+      <rect x="24" y="110" width="152" height="28" rx="7" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="1.8"/>
+      <text x="100" y="128" text-anchor="middle" font-size="9" font-weight="700" fill="#144a80">SPARQL（第 7 章）</text>
+      <rect x="24" y="146" width="152" height="28" rx="7" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="1.8"/>
+      <text x="100" y="164" text-anchor="middle" font-size="9" font-weight="700" fill="#144a80">Agent のプロンプト</text>
+      <path d="M180,52 L318,128" stroke="#1c5b9c" stroke-width="1.6" marker-end="url(#o6b)"/>
+      <path d="M180,88 L318,134" stroke="#1c5b9c" stroke-width="1.6" marker-end="url(#o6b)"/>
+      <path d="M180,124 L318,138" stroke="#1c5b9c" stroke-width="1.6" marker-end="url(#o6b)"/>
+      <path d="M180,160 L318,148" stroke="#1c5b9c" stroke-width="1.6" marker-end="url(#o6b)"/>
+      <text x="196" y="222" font-size="8" fill="#1c5b9c">どれも <tspan font-weight="800">ec:優良顧客</tspan> と書くだけ。条件は書きません</text>
+
+      <rect x="326" y="94" width="228" height="88" rx="12" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="3"/>
+      <text x="440" y="120" text-anchor="middle" font-size="13" font-weight="900" fill="#4c1d95">ec:優良顧客</text>
+      <line x1="342" y1="130" x2="538" y2="130" stroke="#c9b6e0" stroke-width="1"/>
+      <text x="440" y="148" text-anchor="middle" font-size="8.4" font-family="Menlo,monospace" fill="#4c1d95">≡ 顧客 かつ 累計購入額 ≥ 50000</text>
+      <text x="440" y="168" text-anchor="middle" font-size="8" font-weight="800" fill="#6b3fa0">② 条件を書くのは、ここ 1 箇所だけ</text>
+
+      <text x="856" y="24" text-anchor="end" font-size="9" font-weight="900" fill="#a8710f">③ 個体には、推論器が型を付ける</text>
+      <rect x="704" y="52" width="152" height="28" rx="14" fill="#fbf7ef" stroke="#a8710f" stroke-width="1.8"/>
+      <text x="780" y="70" text-anchor="middle" font-size="9" font-weight="700" fill="#6b4708">:C001 佐藤（82,000）</text>
+      <rect x="704" y="94" width="152" height="28" rx="14" fill="#fbf7ef" stroke="#a8710f" stroke-width="1.8"/>
+      <text x="780" y="112" text-anchor="middle" font-size="9" font-weight="700" fill="#6b4708">:C002 鈴木（55,000）</text>
+      <rect x="704" y="136" width="152" height="28" rx="14" fill="#fbf7ef" stroke="#a8710f" stroke-width="1.8"/>
+      <text x="780" y="154" text-anchor="middle" font-size="9" font-weight="700" fill="#6b4708">:C003 田中（61,000）</text>
+      <path d="M700,66 L562,126" stroke="#a8710f" stroke-width="1.6" marker-end="url(#o6a)"/>
+      <path d="M700,108 L562,136" stroke="#a8710f" stroke-width="1.6" marker-end="url(#o6a)"/>
+      <path d="M700,150 L562,146" stroke="#a8710f" stroke-width="1.6" marker-end="url(#o6a)"/>
+      <rect x="704" y="178" width="152" height="28" rx="14" fill="#fbf7ef" stroke="#a8710f" stroke-width="1.8"/>
+      <text x="780" y="196" text-anchor="middle" font-size="9" font-weight="700" fill="#6b4708">:C005 伊藤（94,000）</text>
+      <path d="M700,192 L562,156" stroke="#a8710f" stroke-width="1.6" marker-end="url(#o6a)"/>
+      <text x="856" y="222" text-anchor="end" font-size="8" fill="#a8710f"><tspan font-weight="800">a</tspan> は推論器が導きます。人は 1 行も書きません（第 9 章）</text>
+
+      <rect x="24" y="238" width="832" height="70" rx="9" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2"/>
+      <text x="42" y="260" font-size="9.6" font-weight="900" fill="#155c3c">営業部が「6 万円に変更」と言ってきたら</text>
+      <text x="42" y="280" font-size="8.6" fill="#3d4654">直すのは<tspan font-weight="800">中央の 1 行だけ</tspan>です。指している 4 つは 1 つも触りません。個体の型は推論器が付け直します。</text>
+      <text x="42" y="298" font-size="8.6" fill="#6b7480">SQL の VIEW だと、指している側を全部探して書き直すことになります（前のスライド）。</text>
+    </svg>
   </div>
   <p class="hl">読み方は <code>owl:intersectionOf</code> の 2 つだけです — <strong>① 顧客であって、② 累計購入額が 50000 以上</strong>。入れ子が深いのは、「50000 以上の decimal」という型をその場で作っているからです。</p>
 </section>

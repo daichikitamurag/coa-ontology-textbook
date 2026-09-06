@@ -1845,7 +1845,7 @@ ec:法人顧客 <span class="k">a</span> owl:Class <span class="k">;</span> rdfs
   <p class="hlr">しかし <code>VIEW</code> は<strong>「型」ではなく「その場の検索結果」</strong>でしかありません。佐藤さんは<strong>「優良顧客」という型になるのではなく、View の結果に現れるだけ</strong>です。</p>
   <div class="g2" style="margin-top:16px">
     <div class="card red"><h4>他の場所から名前で指せない</h4><p class="sm">優良顧客だけの割引表を作ろうとしても、SQL の <code>REFERENCES</code> が指せるのは<strong>テーブルだけ</strong>で、View は指せません。顧客テーブル全体を参照するしかありません。</p></div>
-    <div class="card red"><h4>条件が 2 箇所に増える</h4><p class="sm">「優良顧客だけ」を守らせたければ、<code>total_purchase &gt;= 50000</code> を<strong>もう一度どこかに書く</strong>ことになります。営業部が「6 万円に変更」と言えば、両方直すことになります。</p></div>
+    <div class="card red"><h4>使う場所の数だけ、条件が散る</h4><p class="sm">別の場所で「優良顧客だけ」を参照したくなるたびに、<code>total_purchase &gt;= 50000</code> を<strong>もう一度クエリとして書くことになります</strong>。割引表・帳票・検査・Agent のプロンプト… 使う場所の数だけ条件が散り、営業部が「6 万円に変更」と言えば<strong>全部を探して直すことになります</strong>。</p></div>
   </div>
   <div class="punch" style="padding:26px 24px">
     <span style="font-size:20px;font-weight:900;line-height:1.55">欲しいのは <strong>「優良顧客」という名前で参照できる型</strong>です。<br>条件は 1 箇所に書き、<strong>割引表も制約も検査も、その名前を指すだけで済む</strong>形。</span>

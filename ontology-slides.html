@@ -1135,27 +1135,23 @@
 
 <section class="slide">
   <div class="eyebrow">ACT 3 — 外部の測定</div>
-  <h2>定義文を渡すかどうかで、実行精度が 20 ポイント変わる</h2>
-  <p class="lead">これは社内固有の話ではありません。Text-to-SQL の公開ベンチマーク <strong>BIRD</strong>（NeurIPS 2023）は、実在の企業データベース <strong>95 個・33.4 GB・12,751 問</strong>で同じことを測っています。</p>
+  <h2>LLM に SQL を書かせると、正答率はこのくらいです</h2>
+  <p class="lead">実在の企業データベース <strong>95 個・12,751 問</strong>で測った公開ベンチマーク <strong>BIRD</strong>（NeurIPS 2023）の結果です。正答率は、実行して答えが一致した割合です。</p>
   <div class="panel">
-    <p class="ptitle">BIRD テストセットの実行精度（Execution Accuracy）</p>
-    <table><thead><tr><th style="width:44%">解いた主体</th><th style="width:28%">定義文なし</th><th style="width:28%">定義文あり</th></tr></thead>
-      <tr><td><strong>人間</strong>（データエンジニア＋DB 専攻の学生）</td><td>—</td><td><strong>92.96%</strong></td></tr>
-      <tr><td><strong>GPT-4</strong></td><td><span class="no">34.88%</span></td><td><strong>54.89%</strong></td></tr>
-      <tr><td><strong>ChatGPT</strong></td><td><span class="no">26.77%</span></td><td>39.30%</td></tr>
-    </table>
+    <p class="ptitle">BIRD テストセットの正答率</p>
+    <div class="statrow">
+      <div class="stat"><b class="gr">92.96%</b><span>人間<br>（データエンジニア）</span></div>
+      <div class="stat"><b>54.89%</b><span>GPT-4<br>業務定義を渡した場合</span></div>
+      <div class="stat"><b class="rd">34.88%</b><span>GPT-4<br>渡さなかった場合</span></div>
+    </div>
   </div>
-  <div class="punch" style="padding:26px 24px">
-    <span style="font-size:20px;font-weight:900;line-height:1.55">同じモデル・同じデータベースでも、<strong>定義文を 1 文添えるかどうかで 34.88% → 54.89%</strong>。<br>定義が無い状態では、GPT-4 でも 3 分の 1 しか当たりません。</span>
+  <div class="punch" style="padding:30px 26px">
+    <span style="font-size:23px;font-weight:900;line-height:1.5">業務定義を渡しても<strong>半分</strong>。渡さなければ <strong>3 分の 1</strong>。</span>
   </div>
-  <div class="g2" style="margin-top:18px">
-    <div class="card blue"><h4>BIRD の「定義文」とは何か</h4><p class="sm">1 問につき 1 文の業務知識を、質問と一緒に渡します。<strong>列の値が業務上どういう意味なのか</strong>、どう計算するのかを人が書いたものです。スキーマには書かれていないので、外から渡すしかありません。<br><strong>今日の 4 つの定義と、同じ性質のものです。</strong></p></div>
-    <div class="card amber"><h4>現実の DB に近づけると、さらに落ちる</h4><p class="sm"><strong>Spider 2.0</strong>（ICLR 2025）は 632 問。<strong>1,000 列を超える</strong>データベースが普通に出てきます。o1-preview を使った code agent の成功率は、<br>Spider 1.0 <strong>91.2%</strong> → BIRD <strong>73.0%</strong> → <span class="no">Spider 2.0 <strong>21.3%</strong></span></p></div>
-  </div>
-  <p class="hl">読み方はこうです。<strong>モデルが弱いのではなく、スキーマだけでは答えが決まらない</strong>。BIRD は 1 問ごとに人が定義文を書いて渡していますが、それを毎回書く代わりに<strong>機械が読める形で 1 箇所に置く</strong>のが、ここから話す道具です。</p>
+  <p class="hl">差の 20 ポイントは、<strong>1 問に 1 文の業務定義を添えたかどうかだけ</strong>です。モデルも DB も同じです。<span class="sm">より企業の実環境に近い Spider 2.0（ICLR 2025・1,000 列超の DB）では、o1-preview を使った agent の成功率は 21.3% です。</span></p>
   <p class="src">出典 —
-    BIRD: Li et al., <a href="https://arxiv.org/abs/2305.03111" target="_blank" rel="noopener">Can LLM Already Serve as A Database Interface?</a> (NeurIPS 2023) Table 2 ／ <a href="https://bird-bench.github.io/" target="_blank" rel="noopener">bird-bench.github.io</a> リーダーボード。
-    Spider 2.0: Lei et al., <a href="https://arxiv.org/abs/2411.07763" target="_blank" rel="noopener">Spider 2.0: Evaluating Language Models on Real-World Enterprise Text-to-SQL Workflows</a> (ICLR 2025) 要旨。
+    BIRD: Li et al., <a href="https://arxiv.org/abs/2305.03111" target="_blank" rel="noopener">Can LLM Already Serve as A Database Interface?</a> (NeurIPS 2023) Table 2 ／ <a href="https://bird-bench.github.io/" target="_blank" rel="noopener">bird-bench.github.io</a>。
+    Spider 2.0: Lei et al., <a href="https://arxiv.org/abs/2411.07763" target="_blank" rel="noopener">Spider 2.0</a> (ICLR 2025)。
   </p>
 </section>
 

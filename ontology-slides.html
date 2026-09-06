@@ -334,7 +334,7 @@
   <h1>オントロジーで、<em>意味</em>を機械に渡す</h1>
   <p class="sub">AWS Context Ontology Accelerator / Palantir Foundry・AIP / 自作 Minecraft Agent — 3 つの実装を実機で確かめた記録</p>
   <p class="meta">社内クラウド勉強会 ／ SI部 北村</p>
-  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 96 枚</span></div>
+  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 97 枚</span></div>
 </section>
 
 <section class="slide">
@@ -1157,8 +1157,51 @@
 
 <section class="slide">
   <div class="eyebrow">ACT 3 — トリプル</div>
-  <h2>表の 2 行が、グラフになる</h2>
-  <p class="lead">RDB の行は<strong>「列という入れ物」に値が入った形</strong>。トリプルは<strong>「誰が・何を・どうした」を 1 本ずつ</strong>書きます。</p>
+  <h2>表の 1 行は、3 語の文に分解できる</h2>
+  <p class="lead">さきほどの <code>customers</code> から、佐藤さんの行だけを取り出します。これを日本語の文にばらしてみます。</p>
+  <div class="panel">
+    <p class="ptitle">customers — 佐藤さんの 1 行</p>
+    <table><thead><tr><th>customer_id</th><th>name</th><th>member_rank</th><th>total_purchase</th><th>last_order_at</th><th>churned_at</th></tr></thead>
+      <tr><td>C001</td><td>佐藤 花子</td><td>VIP</td><td>82,000</td><td>2026-07-28</td><td>(null)</td></tr>
+    </table>
+  </div>
+  <div class="g2" style="margin-top:18px">
+    <div class="card blue">
+      <h4>日本語の文にばらす</h4>
+      <p class="sm">C001 <strong>の</strong> 名前<strong>は</strong> 佐藤 花子 <strong>である</strong><br>
+      C001 <strong>の</strong> 会員ランク<strong>は</strong> VIP <strong>である</strong><br>
+      C001 <strong>の</strong> 累計購入額<strong>は</strong> 82000 <strong>である</strong><br>
+      C001 <strong>の</strong> 最終注文日<strong>は</strong> 2026-07-28 <strong>である</strong></p>
+      <p class="sm" style="margin-top:9px">どの文も<strong>「誰が」「何の」「何である」の 3 語</strong>でできています。</p>
+    </div>
+    <div class="card violet">
+      <h4>これがトリプル (triple)</h4>
+      <pre style="margin-bottom:9px">:C001  :会員ランク  "VIP" .
+└主語┘  └─述語─┘  └目的語┘</pre>
+      <p class="sm"><strong>主語 (Subject) — 述語 (Predicate) — 目的語 (Object)</strong> の 3 つ組で表す、1 つの事実。英語の語順と同じで、最後にピリオド <code>.</code> を打って 1 文が終わります。<br>RDF の世界では、<strong>すべてをこの 3 語の文で書きます</strong>。</p>
+    </div>
+  </div>
+  <p class="hl">RDB は<strong>「行」が最小単位</strong>で、1 行が複数の列を抱えています。RDF は <strong>1 事実 = 1 トリプル</strong>。行をばらばらに分解した粒度です。面倒に見えますが、これで効いてくることが次にあります。</p>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">ACT 3 — トリプル</div>
+  <h2>事実を足すのは、行を足すだけ</h2>
+  <p class="lead">RDB なら <code>ALTER TABLE</code> が必要な変更が、トリプルでは<strong>1 行足すだけ</strong>で済みます。スキーマを先に決めなくていい、ということです。</p>
+  <div class="panel">    <pre><span class="c"># もともとあった事実</span>
+:C001 :会員ランク <span class="s">"VIP"</span> .
+:C001 :累計購入額 <span class="n">82000</span> .
+
+<span class="c"># 後から足したい事実 → テーブル定義を変えずに 1 行足すだけ</span>
+:C001 :担当営業 :S07 .
+:C001 :優先サポート対象 <span class="k">true</span> .</pre>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">ACT 3 — トリプル</div>
+  <h2>顧客 1 行と注文 1 行が、1 つのグラフになる</h2>
+  <p class="lead"><code>customers</code> の 1 行と <code>orders</code> の 1 行を、どちらもトリプルにばらして並べます。<strong>主語と目的語が点、述語が矢印</strong>になり、<code>:C001 → :O101</code> でつながります。</p>
   <div class="panel">    <svg viewBox="0 0 880 320" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
       <defs><marker id="d8g3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#8b5a2b"/></marker></defs>
       <circle cx="180" cy="150" r="42" fill="#faf5ee" stroke="#8b5a2b" stroke-width="2.4"/>
@@ -1197,20 +1240,6 @@
       <text x="690" y="246" font-size="10" font-weight="700" fill="#1c5b9c">:金額</text>
       <text x="440" y="306" text-anchor="middle" font-size="11.5" fill="#6b7480">丸 = 「もの」 (URI) / 四角 = 「値」 (リテラル) / 矢印 = 述語</text>
     </svg>
-  </div>
-</section>
-
-<section class="slide">
-  <div class="eyebrow">ACT 3 — トリプル</div>
-  <h2>事実を足すのは、行を足すだけ</h2>
-  <p class="lead">RDB なら <code>ALTER TABLE</code> が必要な変更が、トリプルでは<strong>1 行足すだけ</strong>で済みます。スキーマを先に決めなくていい、ということです。</p>
-  <div class="panel">    <pre><span class="c"># もともとあった事実</span>
-:C001 :会員ランク <span class="s">"VIP"</span> .
-:C001 :累計購入額 <span class="n">82000</span> .
-
-<span class="c"># 後から足したい事実 → テーブル定義を変えずに 1 行足すだけ</span>
-:C001 :担当営業 :S07 .
-:C001 :優先サポート対象 <span class="k">true</span> .</pre>
   </div>
 </section>
 

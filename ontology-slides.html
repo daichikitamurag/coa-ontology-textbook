@@ -1739,36 +1739,50 @@ ec:累計購入額
         <span class="k">rdfs:range</span>  xsd:decimal <span class="k">.</span>    <span class="c"># 値は数値 (型)</span></pre>
       </div>
       <div class="panel" style="margin-top:14px">
-        <svg viewBox="0 0 560 254" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+        <svg viewBox="0 0 560 306" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
       <defs>
         <marker id="drv" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto">
           <path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b3fa0"/></marker>
+        <marker id="drk" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto">
+          <path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b7480"/></marker>
         <marker id="drg" markerWidth="8" markerHeight="8" refX="8" refY="3" orient="auto">
           <path d="M0,0 L7,3 L0,6 z" fill="#1f6f4a"/></marker>
       </defs>
-      <rect x="24" y="18" width="118" height="30" rx="15" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
-      <text x="83" y="37" text-anchor="middle" font-size="10.5" font-weight="800" fill="#4c1d95">ec:注文</text>
-      <path d="M144,33 H246" stroke="#6b3fa0" stroke-width="2" marker-end="url(#drv)"/>
-      <text x="196" y="26" text-anchor="middle" font-size="8" font-family="Menlo,monospace" fill="#6b3fa0">ec:注文者</text>
-      <rect x="254" y="18" width="118" height="30" rx="15" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
-      <text x="313" y="37" text-anchor="middle" font-size="10.5" font-weight="800" fill="#4c1d95">ec:顧客</text>
-      <path d="M83,52 V66" stroke="#9aa3af" stroke-width="1.2" stroke-dasharray="3 3"/>
-      <text x="83" y="80" text-anchor="middle" font-size="8.6" font-weight="900" fill="#3d4654">rdfs:domain</text>
-      <text x="83" y="92" text-anchor="middle" font-size="7.6" fill="#6b7480">矢印の元は「注文」だ</text>
-      <path d="M313,52 V66" stroke="#9aa3af" stroke-width="1.2" stroke-dasharray="3 3"/>
-      <text x="313" y="80" text-anchor="middle" font-size="8.6" font-weight="900" fill="#3d4654">rdfs:range</text>
-      <text x="313" y="92" text-anchor="middle" font-size="7.6" fill="#6b7480">矢印の先は「顧客」だ</text>
-      <rect x="14" y="110" width="532" height="102" rx="8" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
-      <text x="28" y="128" font-size="8.6" font-weight="900" fill="#155c3c">機械が導けること</text>
-      <text x="28" y="146" font-size="8.4" font-family="Menlo,monospace" fill="#3d4654">:O101 ec:注文者 :C001 .</text>
-      <text x="290" y="146" font-size="7.8" fill="#6b7480">← 人が書くのはこの 1 行だけ</text>
-      <path d="M40,154 V170" stroke="#1f6f4a" stroke-width="1.8" marker-end="url(#drg)"/>
-      <text x="54" y="168" font-size="7.8" fill="#1f6f4a">推論器が足す</text>
-      <text x="28" y="188" font-size="8.4" font-family="Menlo,monospace" fill="#155c3c">:O101 a ec:注文 .　　:C001 a ec:顧客 .</text>
-      <text x="28" y="204" font-size="7.8" font-weight="800" fill="#3d4654">型を 1 つも書いていないのに、両端の型が付く</text>
-      <text x="14" y="234" font-size="7.8" fill="#6b7480">述語 1 本につき両端の型を 1 度だけ宣言します。</text>
-      <text x="14" y="247" font-size="7.8" fill="#3d4654"><tspan font-weight="800">これが JOIN の代わりになります</tspan>（第 7 章）。</text>
-        </svg>
+
+      <text x="14" y="14" font-size="8.4" font-weight="900" fill="#6b3fa0">① 値がクラス — クラスとクラスを結ぶ（ObjectProperty）</text>
+      <rect x="24" y="24" width="112" height="28" rx="14" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
+      <text x="80" y="42" text-anchor="middle" font-size="10" font-weight="800" fill="#4c1d95">ec:注文</text>
+      <path d="M138,38 H236" stroke="#6b3fa0" stroke-width="2" marker-end="url(#drv)"/>
+      <text x="187" y="32" text-anchor="middle" font-size="7.6" font-family="Menlo,monospace" fill="#6b3fa0">ec:注文者</text>
+      <rect x="244" y="24" width="112" height="28" rx="14" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
+      <text x="300" y="42" text-anchor="middle" font-size="10" font-weight="800" fill="#4c1d95">ec:顧客</text>
+      <text x="372" y="35" font-size="7.6" font-weight="800" fill="#3d4654">domain = 注文</text>
+      <text x="372" y="47" font-size="7.6" font-weight="800" fill="#3d4654">range = 顧客（クラス）</text>
+
+      <text x="14" y="78" font-size="8.4" font-weight="900" fill="#6b7480">② 値がデータ型 — クラスと値を結ぶ（DatatypeProperty）</text>
+      <rect x="24" y="88" width="112" height="28" rx="14" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
+      <text x="80" y="106" text-anchor="middle" font-size="10" font-weight="800" fill="#4c1d95">ec:顧客</text>
+      <path d="M138,102 H236" stroke="#6b7480" stroke-width="1.8" marker-end="url(#drk)"/>
+      <text x="187" y="96" text-anchor="middle" font-size="7.6" font-family="Menlo,monospace" fill="#6b7480">ec:累計購入額</text>
+      <rect x="244" y="90" width="112" height="24" rx="4" fill="#f7f8fa" stroke="#6b7480" stroke-width="1.8"/>
+      <text x="300" y="106" text-anchor="middle" font-size="9" font-weight="700" fill="#3d4654">xsd:decimal</text>
+      <text x="372" y="99" font-size="7.6" font-weight="800" fill="#3d4654">domain = 顧客</text>
+      <text x="372" y="111" font-size="7.6" font-weight="800" fill="#3d4654">range = 数値（データ型）</text>
+
+      <text x="14" y="140" font-size="7.8" fill="#6b7480"><tspan font-weight="800" fill="#3d4654">domain は必ずクラス</tspan>、<tspan font-weight="800" fill="#3d4654">range はクラスかデータ型</tspan>。列の数だけ ② ができ、外部キーの数だけ ① ができます。</text>
+
+      <rect x="14" y="152" width="532" height="102" rx="8" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
+      <text x="28" y="170" font-size="8.6" font-weight="900" fill="#155c3c">機械が導けること（① の場合）</text>
+      <text x="28" y="188" font-size="8.4" font-family="Menlo,monospace" fill="#3d4654">:O101 ec:注文者 :C001 .</text>
+      <text x="290" y="188" font-size="7.8" fill="#6b7480">← 人が書くのはこの 1 行だけ</text>
+      <path d="M40,196 V212" stroke="#1f6f4a" stroke-width="1.8" marker-end="url(#drg)"/>
+      <text x="54" y="210" font-size="7.8" fill="#1f6f4a">推論器が足す</text>
+      <text x="28" y="230" font-size="8.4" font-family="Menlo,monospace" fill="#155c3c">:O101 a ec:注文 .　　:C001 a ec:顧客 .</text>
+      <text x="28" y="246" font-size="7.8" font-weight="800" fill="#3d4654">型を 1 つも書いていないのに、両端の型が付く</text>
+
+      <text x="14" y="276" font-size="7.8" fill="#6b7480">① は<tspan font-weight="800" fill="#3d4654">グラフとして辿れる辺</tspan>になります。第 11 章の「外部キーの値が、</text>
+      <text x="14" y="289" font-size="7.8" fill="#6b7480">辿れるリンクに変わる」はこれのことです。<tspan font-weight="800" fill="#3d4654">これが JOIN の代わりになります</tspan>（第 7 章）。</text>
+    </svg>
       </div>
     </div>
     <div>

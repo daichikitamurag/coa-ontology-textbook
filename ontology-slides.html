@@ -2237,26 +2237,26 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
 <section class="slide chapter sub">
   <div class="part">第 8 章</div>
   <h1>SHACL <span style="font-size:.62em;font-weight:700;opacity:.72">(Shapes Constraint Language)</span> — ルールを守らせる</h1>
-  <p>ここまでは<strong>「読む」</strong>話でした。この章は<strong>「書き込みを止める」</strong>話です。あわせて、<strong>OWL と SHACL がなぜ両方あるのか</strong>を決着させます。</p>
+  <p><strong>SPARQL が「読む」道具</strong>なら、<strong>SHACL は「書き込みを止める」道具</strong>です。あわせて、<strong>OWL と SHACL がなぜ両方あるのか</strong>を決着させます。</p>
   <div class="agenda"><span>守らせたいルール</span><span>Agent が暴走したとき</span><span>OWL との決定的な違い</span></div>
 </section>
 
 <section class="slide">
   <div class="eyebrow">第 8 章 — SHACL</div>
-  <h2>ここまでは「読む」話でした。ここからは「止める」話です</h2>
-  <p class="lead">第 3〜7 章でやってきたのは、<strong>意味を書いて、それを引き出すこと</strong>でした。SHACL は向きが逆です。<strong>Agent が業務データを追加・更新しようとしたとき</strong>に — たとえば「<strong>44,000 円の注文 O101 に対して 50,000 円の返金を追加する</strong>」— <strong>その書き込みの形を、データに届く前に検査して、おかしければ理由つきで弾きます</strong>。</p>
+  <h2>SPARQL は「読む」話でした。SHACL は「止める」話です</h2>
+  <p class="lead">第 5〜6 章で定義を書き、第 7 章の <strong>SPARQL でそれを読み出しました</strong>。SHACL は向きが違います。<strong>Agent が業務データを追加・更新しようとしたとき</strong>に — たとえば「<strong>44,000 円の注文 O101 に対して 50,000 円の返金を追加する</strong>」— <strong>その書き込みの形を、データに届く前に検査して、おかしければ理由つきで弾きます</strong>。</p>
   <div class="g2 vtop" style="margin-top:16px">
     <div class="card blue">
-      <h4>ここまで（読む側）</h4>
-      <p class="sm">RDFS で語彙に意味を付け（第 5 章）、OWL で型を定義し（第 6 章）、SPARQL で引き出しました（第 7 章）。<strong>どれもデータを読む側の道具</strong>です。</p>
+      <h4>SPARQL（第 7 章）— 読む</h4>
+      <p class="sm">第 5〜6 章で書いた定義を使って、データを<strong>読み出す</strong>道具です。読むだけなので、<strong>「通す・弾く」という判断はありません</strong>。</p>
     </div>
     <div class="card red">
-      <h4>ここから（書く側）</h4>
+      <h4>SHACL（この章）— 止める</h4>
       <p class="sm">Agent が業務データを<strong>書き換える</strong>時代には、「その書き込みは通していいのか」を判定する仕組みが要ります。<strong>SHACL はそのための関所</strong>です。</p>
     </div>
   </div>
   <div class="panel" style="margin-top:16px">
-    <p class="ptitle" style="text-transform:none">SHACL が居る場所 — 読む経路ではなく、書き込みの手前</p>
+    <p class="ptitle" style="text-transform:none">SHACL が居る場所 — SPARQL の経路ではなく、書き込みの手前</p>
     <svg viewBox="0 0 880 258" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
       <defs>
         <marker id="s8b" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto">
@@ -2276,7 +2276,7 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
       <text x="690" y="152" font-size="7.8" fill="#6b7480">ここに入っているもの、</text>
       <text x="690" y="166" font-size="7.8" fill="#6b7480">これから入るもの</text>
 
-      <text x="24" y="22" font-size="8.6" font-weight="900" fill="#1c5b9c">これまで（第 3〜7 章）— 読む側</text>
+      <text x="24" y="22" font-size="8.6" font-weight="900" fill="#1c5b9c">SPARQL（第 7 章）— 読む</text>
       <rect x="24" y="32" width="140" height="34" rx="9" fill="#f7f8fa" stroke="#6b7480" stroke-width="1.8"/>
       <text x="94" y="53" text-anchor="middle" font-size="9.4" font-weight="800" fill="#3d4654">人 / AI Agent</text>
       <path d="M168,49 H664" stroke="#1c5b9c" stroke-width="2" marker-end="url(#s8b)"/>
@@ -2284,7 +2284,7 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
 
       <line x1="14" y1="86" x2="866" y2="86" stroke="#c9ccd2" stroke-width="1.2" stroke-dasharray="6 5"/>
 
-      <text x="24" y="108" font-size="8.6" font-weight="900" fill="#b3261e">この章（第 8 章）— 書く側</text>
+      <text x="24" y="108" font-size="8.6" font-weight="900" fill="#b3261e">SHACL（第 8 章）— 書き込みを止める</text>
       <rect x="24" y="118" width="140" height="34" rx="9" fill="#f7f8fa" stroke="#6b7480" stroke-width="1.8"/>
       <text x="94" y="139" text-anchor="middle" font-size="9.4" font-weight="800" fill="#3d4654">AI Agent</text>
       <path d="M168,135 H236" stroke="#b3261e" stroke-width="2" marker-end="url(#s8r)"/>

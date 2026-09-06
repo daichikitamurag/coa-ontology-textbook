@@ -1723,126 +1723,94 @@ ec:会員ランク
 <section class="slide">
   <div class="eyebrow">第 5 章 — RDFS</div>
   <h2>domain / range / subClassOf — 公理を書く</h2>
+  <p class="lead">公理は 3 つです。ラベルと違って<strong>推論器が読み、結論を出します</strong>。それぞれのコードの下に、機械が何を導けるのかを置きました。</p>
   <div class="g2 vtop">
-    <div>  <div class="panel">
-    <p class="ptitle">題材のプロパティを 2 つ宣言する</p>
-    <pre>ec:注文者
-    <span class="k">rdfs:label</span>  <span class="s">"注文した顧客"</span>@ja <span class="k">;</span>
-    <span class="k">rdfs:domain</span> ec:注文 <span class="k">;</span>       <span class="c"># 注文に付く</span>
-    <span class="k">rdfs:range</span>  ec:顧客 <span class="k">.</span>        <span class="c"># 値は顧客 (クラス)</span>
+    <div>
+      <div class="panel">
+        <p class="ptitle">題材のプロパティを 2 つ宣言する</p>
+        <pre>ec:注文者
+        <span class="k">rdfs:label</span>  <span class="s">"注文した顧客"</span>@ja <span class="k">;</span>
+        <span class="k">rdfs:domain</span> ec:注文 <span class="k">;</span>       <span class="c"># 注文に付く</span>
+        <span class="k">rdfs:range</span>  ec:顧客 <span class="k">.</span>        <span class="c"># 値は顧客 (クラス)</span>
 
 ec:累計購入額
-    <span class="k">rdfs:label</span>  <span class="s">"累計購入額"</span>@ja <span class="k">;</span>
-    <span class="k">rdfs:domain</span> ec:顧客 <span class="k">;</span>       <span class="c"># 顧客に付く</span>
-    <span class="k">rdfs:range</span>  xsd:decimal <span class="k">.</span>    <span class="c"># 値は数値 (型)</span></pre>
-  </div>
-</div>
-    <div>  <div class="panel">
-    <p class="ptitle">クラス階層</p>
-    <pre>ec:顧客     <span class="k">a</span> owl:Class .
-ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span> rdfs:subClassOf ec:顧客 .
-ec:法人顧客 <span class="k">a</span> owl:Class <span class="k">;</span> rdfs:subClassOf ec:顧客 .</pre>
-    <p class="sm" style="text-align:left;margin-top:10px">クラス宣言は <code>owl:Class</code> に揃えています。RDFS だけなら <code>rdfs:Class</code> でも同じことが言えますが、第 6 章で OWL の制約を足し、第 9 章で推論器 HermiT に渡すので、<strong>OWL 2 DL の書き方</strong>にしています。階層そのものは <code>rdfs:subClassOf</code> のままです。</p>
-  </div>
-</div>
-  </div>
-  <div class="panel">
-    <p class="ptitle" style="text-transform:none">domain / range — 述語の両端を宣言すると、型が付く</p>
-    <svg viewBox="0 0 880 186" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+        <span class="k">rdfs:label</span>  <span class="s">"累計購入額"</span>@ja <span class="k">;</span>
+        <span class="k">rdfs:domain</span> ec:顧客 <span class="k">;</span>       <span class="c"># 顧客に付く</span>
+        <span class="k">rdfs:range</span>  xsd:decimal <span class="k">.</span>    <span class="c"># 値は数値 (型)</span></pre>
+      </div>
+      <div class="panel" style="margin-top:14px">
+        <svg viewBox="0 0 560 254" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
       <defs>
-        <marker id="d39v" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto">
+        <marker id="drv" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto">
           <path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b3fa0"/></marker>
-        <marker id="d39g" markerWidth="8" markerHeight="8" refX="8" refY="3" orient="auto">
+        <marker id="drg" markerWidth="8" markerHeight="8" refX="8" refY="3" orient="auto">
           <path d="M0,0 L7,3 L0,6 z" fill="#1f6f4a"/></marker>
       </defs>
-
-      <rect x="34" y="52" width="130" height="34" rx="17" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
-      <text x="99" y="74" text-anchor="middle" font-size="11" font-weight="800" fill="#4c1d95">ec:注文</text>
-      <path d="M166,69 H294" stroke="#6b3fa0" stroke-width="2.2" marker-end="url(#d39v)"/>
-      <text x="230" y="61" text-anchor="middle" font-size="8.6" font-family="Menlo,monospace" fill="#6b3fa0">ec:注文者</text>
-      <rect x="302" y="52" width="130" height="34" rx="17" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
-      <text x="367" y="74" text-anchor="middle" font-size="11" font-weight="800" fill="#4c1d95">ec:顧客</text>
-
-      <path d="M99,96 V112" stroke="#9aa3af" stroke-width="1.2" stroke-dasharray="3 3"/>
-      <text x="99" y="126" text-anchor="middle" font-size="9" font-weight="900" fill="#3d4654">rdfs:domain</text>
-      <text x="99" y="139" text-anchor="middle" font-size="8" fill="#6b7480">矢印の元は「注文」だ</text>
-      <path d="M367,96 V112" stroke="#9aa3af" stroke-width="1.2" stroke-dasharray="3 3"/>
-      <text x="367" y="126" text-anchor="middle" font-size="9" font-weight="900" fill="#3d4654">rdfs:range</text>
-      <text x="367" y="139" text-anchor="middle" font-size="8" fill="#6b7480">矢印の先は「顧客」だ</text>
-      <text x="34" y="166" font-size="8" fill="#6b7480">述語 1 本につき、両端の型を 1 度だけ宣言します。<tspan font-weight="800" fill="#3d4654">これが JOIN の代わりになります</tspan>（第 7 章）。</text>
-
-      <rect x="482" y="20" width="384" height="150" rx="8" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
-      <text x="498" y="40" font-size="9" font-weight="900" fill="#155c3c">機械が導けること</text>
-      <text x="498" y="60" font-size="8" fill="#6b7480">人が書くのは 1 行だけ</text>
-      <text x="498" y="77" font-size="8.8" font-family="Menlo,monospace" fill="#3d4654">:O101 ec:注文者 :C001 .</text>
-      <path d="M510,88 V106" stroke="#1f6f4a" stroke-width="1.8" marker-end="url(#d39g)"/>
-      <text x="526" y="103" font-size="8" fill="#1f6f4a">推論器が足す</text>
-      <text x="498" y="126" font-size="8.8" font-family="Menlo,monospace" fill="#155c3c">:O101 a ec:注文 .</text>
-      <text x="498" y="142" font-size="8.8" font-family="Menlo,monospace" fill="#155c3c">:C001 a ec:顧客 .</text>
-      <text x="498" y="161" font-size="8" font-weight="800" fill="#3d4654">型を 1 つも書いていないのに、両端の型が付きます。</text>
-    </svg>
-  </div>
-  <p class="ptitle" style="text-transform:none;margin:6px 0 8px">rdfs:subClassOf — 上位に 1 度書けば、下位すべてに効く</p>
-  <div class="panel">    <svg viewBox="0 0 880 434" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+      <rect x="24" y="18" width="118" height="30" rx="15" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
+      <text x="83" y="37" text-anchor="middle" font-size="10.5" font-weight="800" fill="#4c1d95">ec:注文</text>
+      <path d="M144,33 H246" stroke="#6b3fa0" stroke-width="2" marker-end="url(#drv)"/>
+      <text x="196" y="26" text-anchor="middle" font-size="8" font-family="Menlo,monospace" fill="#6b3fa0">ec:注文者</text>
+      <rect x="254" y="18" width="118" height="30" rx="15" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
+      <text x="313" y="37" text-anchor="middle" font-size="10.5" font-weight="800" fill="#4c1d95">ec:顧客</text>
+      <path d="M83,52 V66" stroke="#9aa3af" stroke-width="1.2" stroke-dasharray="3 3"/>
+      <text x="83" y="80" text-anchor="middle" font-size="8.6" font-weight="900" fill="#3d4654">rdfs:domain</text>
+      <text x="83" y="92" text-anchor="middle" font-size="7.6" fill="#6b7480">矢印の元は「注文」だ</text>
+      <path d="M313,52 V66" stroke="#9aa3af" stroke-width="1.2" stroke-dasharray="3 3"/>
+      <text x="313" y="80" text-anchor="middle" font-size="8.6" font-weight="900" fill="#3d4654">rdfs:range</text>
+      <text x="313" y="92" text-anchor="middle" font-size="7.6" fill="#6b7480">矢印の先は「顧客」だ</text>
+      <rect x="14" y="110" width="532" height="102" rx="8" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
+      <text x="28" y="128" font-size="8.6" font-weight="900" fill="#155c3c">機械が導けること</text>
+      <text x="28" y="146" font-size="8.4" font-family="Menlo,monospace" fill="#3d4654">:O101 ec:注文者 :C001 .</text>
+      <text x="290" y="146" font-size="7.8" fill="#6b7480">← 人が書くのはこの 1 行だけ</text>
+      <path d="M40,154 V170" stroke="#1f6f4a" stroke-width="1.8" marker-end="url(#drg)"/>
+      <text x="54" y="168" font-size="7.8" fill="#1f6f4a">推論器が足す</text>
+      <text x="28" y="188" font-size="8.4" font-family="Menlo,monospace" fill="#155c3c">:O101 a ec:注文 .　　:C001 a ec:顧客 .</text>
+      <text x="28" y="204" font-size="7.8" font-weight="800" fill="#3d4654">型を 1 つも書いていないのに、両端の型が付く</text>
+      <text x="14" y="234" font-size="7.8" fill="#6b7480">述語 1 本につき両端の型を 1 度だけ宣言します。</text>
+      <text x="14" y="247" font-size="7.8" fill="#3d4654"><tspan font-weight="800">これが JOIN の代わりになります</tspan>（第 7 章）。</text>
+        </svg>
+      </div>
+    </div>
+    <div>
+      <div class="panel">
+        <p class="ptitle">クラス階層</p>
+        <pre>ec:顧客     <span class="k">a</span> owl:Class .
+ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span> rdfs:subClassOf ec:顧客 .
+ec:法人顧客 <span class="k">a</span> owl:Class <span class="k">;</span> rdfs:subClassOf ec:顧客 .</pre>
+        <p class="sm" style="text-align:left;margin-top:10px">クラス宣言は <code>owl:Class</code> に揃えています。RDFS だけなら <code>rdfs:Class</code> でも同じことが言えますが、第 6 章で OWL の制約を足し、第 9 章で推論器 HermiT に渡すので、<strong>OWL 2 DL の書き方</strong>にしています。階層そのものは <code>rdfs:subClassOf</code> のままです。</p>
+      </div>
+      <div class="panel" style="margin-top:14px">
+        <svg viewBox="0 0 560 254" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
       <defs>
-        <marker id="d10l53a" markerWidth="9" markerHeight="9" refX="7.2" refY="3.1" orient="auto">
-          <path d="M0,0 L7.2,3.1 L0,6.2 z" fill="#6b3fa0"/></marker>
-        <marker id="d10l53b" markerWidth="9" markerHeight="9" refX="7.2" refY="3.1" orient="auto">
-          <path d="M0,0 L7.2,3.1 L0,6.2 z" fill="#8b5a2b"/></marker>
+        <marker id="scv" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto">
+          <path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b3fa0"/></marker>
+        <marker id="scg" markerWidth="8" markerHeight="8" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L7,3 L0,6 z" fill="#1f6f4a"/></marker>
       </defs>
-
-      <text x="16" y="20" font-size="12" font-weight="800" fill="#6b3fa0">リスト 5-3 が表現している形</text>
-
-      <!-- 上位クラス -->
-      <rect x="345" y="40" width="190" height="46" rx="9" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2.6"/>
-      <text x="440" y="62" font-size="12" font-weight="800" fill="#4c1d95" text-anchor="middle">ec:顧客</text>
-      <text x="440" y="78" font-size="8.5" fill="#6b7480" text-anchor="middle">上位クラス</text>
-
-      <!-- バスと矢印 -->
-      <polyline points="300,126 300,106 440,106" fill="none" stroke="#6b3fa0" stroke-width="1.8"/>
-      <polyline points="580,126 580,106 440,106" fill="none" stroke="#6b3fa0" stroke-width="1.8"/>
-      <line x1="440" y1="106" x2="440" y2="90" stroke="#6b3fa0" stroke-width="1.8" marker-end="url(#d10l53a)"/>
-      <text x="452" y="102" font-size="8.5" font-family="Menlo,monospace" fill="#6b3fa0">rdfs:subClassOf</text>
-
-      <!-- 下位クラス -->
-      <rect x="210" y="126" width="180" height="46" rx="9" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="1.8"/>
-      <text x="300" y="148" font-size="11" font-weight="800" fill="#4c1d95" text-anchor="middle">ec:優良顧客</text>
-      <text x="300" y="164" font-size="8.5" fill="#6b7480" text-anchor="middle">下位クラス</text>
-
-      <rect x="490" y="126" width="180" height="46" rx="9" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="1.8"/>
-      <text x="580" y="148" font-size="11" font-weight="800" fill="#4c1d95" text-anchor="middle">ec:法人顧客</text>
-      <text x="580" y="164" font-size="8.5" fill="#6b7480" text-anchor="middle">下位クラス</text>
-
-      <!-- インスタンス -->
-      <line x1="300" y1="212" x2="300" y2="176" stroke="#8b5a2b" stroke-width="1.8" marker-end="url(#d10l53b)"/>
-      <text x="312" y="196" font-size="9" font-family="Menlo,monospace" fill="#8b5a2b">a　(人が書いた 1 行)</text>
-      <rect x="210" y="212" width="180" height="46" rx="9" fill="#faf5ee" stroke="#8b5a2b" stroke-width="1.8"/>
-      <text x="300" y="234" font-size="11" font-weight="800" fill="#7a4a1c" text-anchor="middle">ec:C001 佐藤</text>
-      <text x="300" y="250" font-size="8.5" fill="#6b7480" text-anchor="middle">インスタンス (データ)</text>
-
-      <text x="470" y="228" font-size="9" fill="#3d4654">クラスは「集合」。<tspan font-weight="700">優良顧客の集合は、顧客の集合にまるごと含まれる</tspan></text>
-      <text x="470" y="246" font-size="9" fill="#3d4654">この形を書くだけで、下の 2 つが自動で成り立つ</text>
-
-      <line x1="16" y1="278" x2="864" y2="278" stroke="#e3e7ed" stroke-width="1"/>
-
-      <text x="16" y="302" font-size="12" font-weight="800" fill="#1f6f4a">階層を書くと、2 つのことが自動で起きる</text>
-
-      <rect x="16" y="316" width="414" height="102" rx="9" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
-      <text x="30" y="337" font-size="10.5" font-weight="800" fill="#14532d">① 型が上に遡る — 推論器の仕事</text>
-      <text x="30" y="357" font-size="8.5" font-family="Menlo,monospace" fill="#3d4654">ec:C001 a ec:優良顧客 .    ← 人が書いた</text>
-      <text x="30" y="374" font-size="8.5" font-family="Menlo,monospace" fill="#14532d">ec:C001 a ec:顧客 .        ← 推論器が導く</text>
-      <text x="30" y="396" font-size="8.5" fill="#3d4654">「顧客」と一言も書いていないのに、顧客になる。</text>
-      <text x="30" y="411" font-size="8.5" fill="#3d4654">これが第 9 章の推論の、いちばん単純な形</text>
-
-      <rect x="450" y="316" width="414" height="102" rx="9" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
-      <text x="464" y="337" font-size="10.5" font-weight="800" fill="#14532d">② 上位に書いたものが、下位に効く</text>
-      <text x="464" y="357" font-size="8.5" fill="#3d4654"><tspan font-family="Menlo,monospace">ec:顧客</tspan> に付けた domain / range や SHACL の検査が、</text>
-      <text x="464" y="372" font-size="8.5" fill="#3d4654"><tspan font-family="Menlo,monospace">ec:優良顧客</tspan> のインスタンスにも<tspan font-weight="700">そのまま効く</tspan></text>
-      <text x="464" y="394" font-size="8.5" fill="#3d4654">下位クラスを新しく足しても、<tspan font-weight="700">ルールを書き足さなくていい</tspan></text>
-      <text x="464" y="411" font-size="8.5" fill="#6b7480">「NSAIDs は妊娠中禁忌」と 1 度書けばロキソプロフェンにも効く、と同じ</text>
-    </svg>
+      <rect x="222" y="18" width="116" height="30" rx="15" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2.6"/>
+      <text x="280" y="37" text-anchor="middle" font-size="10.5" font-weight="800" fill="#4c1d95">ec:顧客</text>
+      <path d="M280,64 V52" stroke="#6b3fa0" stroke-width="2" marker-end="url(#scv)"/>
+      <polyline points="122,84 122,66 438,66 438,84" fill="none" stroke="#6b3fa0" stroke-width="1.8"/>
+      <text x="290" y="62" font-size="7.8" font-family="Menlo,monospace" fill="#6b3fa0">rdfs:subClassOf</text>
+      <rect x="60" y="86" width="124" height="30" rx="15" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
+      <text x="122" y="105" text-anchor="middle" font-size="9.6" font-weight="800" fill="#4c1d95">ec:優良顧客</text>
+      <rect x="376" y="86" width="124" height="30" rx="15" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
+      <text x="438" y="105" text-anchor="middle" font-size="9.6" font-weight="800" fill="#4c1d95">ec:法人顧客</text>
+      <path d="M122,140 V120" stroke="#a8710f" stroke-width="1.8" marker-end="url(#scv)"/>
+      <text x="132" y="134" font-size="8" font-family="Menlo,monospace" fill="#a8710f">a</text>
+      <rect x="60" y="142" width="124" height="30" rx="8" fill="#fbf7ef" stroke="#a8710f" stroke-width="1.8"/>
+      <text x="122" y="161" text-anchor="middle" font-size="9.2" font-weight="800" fill="#6b4708">ec:C001 佐藤</text>
+      <text x="196" y="152" font-size="7.8" fill="#6b7480">クラスは「集合」。優良顧客の集合は、</text>
+      <text x="196" y="164" font-size="7.8" fill="#6b7480">顧客の集合にまるごと含まれます。</text>
+      <rect x="14" y="184" width="532" height="62" rx="8" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
+      <text x="28" y="201" font-size="8.6" font-weight="900" fill="#155c3c">機械が導けること</text>
+      <text x="28" y="218" font-size="8.4" font-family="Menlo,monospace" fill="#3d4654">:C001 a ec:優良顧客 .</text>
+      <text x="230" y="218" font-size="8.4" font-family="Menlo,monospace" fill="#155c3c">→ :C001 a ec:顧客 .</text>
+      <text x="28" y="236" font-size="7.8" font-weight="800" fill="#3d4654">上位に付けた domain / range や SHACL の検査も、下位にそのまま効きます</text>
+        </svg>
+      </div>
+    </div>
   </div>
-  <p class="hlg"><code>rdfs:domain</code> / <code>rdfs:range</code> / <code>rdfs:subClassOf</code> は<strong>公理</strong>です。ラベルと違って<strong>推論器が読み、結論を出します</strong>。</p>
 </section>
 
 <section class="slide chapter sub">

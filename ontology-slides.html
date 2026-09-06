@@ -1105,6 +1105,28 @@
   </div>
 </section>
 
+<section class="slide">
+  <div class="eyebrow">ACT 2 — 外部の測定</div>
+  <h2>LLM に SQL を書かせると、正答率はこのくらいです</h2>
+  <p class="lead">実在の企業データベース <strong>95 個・12,751 問</strong>で測った公開ベンチマーク <strong>BIRD</strong>（NeurIPS 2023）の結果です。正答率は、実行して答えが一致した割合です。</p>
+  <div class="panel">
+    <p class="ptitle">BIRD テストセットの正答率</p>
+    <div class="statrow">
+      <div class="stat"><b class="gr">92.96%</b><span>人間<br>（データエンジニア）</span></div>
+      <div class="stat"><b>54.89%</b><span>GPT-4<br>業務定義を渡した場合</span></div>
+      <div class="stat"><b class="rd">34.88%</b><span>GPT-4<br>渡さなかった場合</span></div>
+    </div>
+  </div>
+  <div class="punch" style="padding:30px 26px">
+    <span style="font-size:23px;font-weight:900;line-height:1.5">業務定義を渡しても<strong>半分</strong>。渡さなければ <strong>3 分の 1</strong>。</span>
+  </div>
+  <p class="hl">差の 20 ポイントは、<strong>1 問に 1 文の業務定義を添えたかどうかだけ</strong>です。モデルも DB も同じです。<span class="sm">より企業の実環境に近い Spider 2.0（ICLR 2025・1,000 列超の DB）では、o1-preview を使った agent の成功率は 21.3% です。</span></p>
+  <p class="src">出典 —
+    BIRD: Li et al., <a href="https://arxiv.org/abs/2305.03111" target="_blank" rel="noopener">Can LLM Already Serve as A Database Interface?</a> (NeurIPS 2023) Table 2 ／ <a href="https://bird-bench.github.io/" target="_blank" rel="noopener">bird-bench.github.io</a>。
+    Spider 2.0: Lei et al., <a href="https://arxiv.org/abs/2411.07763" target="_blank" rel="noopener">Spider 2.0</a> (ICLR 2025)。
+  </p>
+</section>
+
 <section class="slide chapter">
   <div class="part">PART 2</div>
   <h1>意味を書く道具</h1>
@@ -1131,28 +1153,6 @@
     <div class="card violet"><h4>語彙に意味を与える</h4><p class="sm"><strong>RDFS</strong>（ACT 5）— ラベル・両端・階層。ここが第 3 部で LLM に効いてきます</p></div>
     <div class="card green"><h4>書いた定義を使う 3 つ</h4><p class="sm"><strong>SPARQL</strong> で引き出し（ACT 7）、<strong>SHACL</strong> で守らせ（ACT 8）、<strong>推論器</strong>で導く（ACT 9）</p></div>
   </div>
-</section>
-
-<section class="slide">
-  <div class="eyebrow">ACT 3 — 外部の測定</div>
-  <h2>LLM に SQL を書かせると、正答率はこのくらいです</h2>
-  <p class="lead">実在の企業データベース <strong>95 個・12,751 問</strong>で測った公開ベンチマーク <strong>BIRD</strong>（NeurIPS 2023）の結果です。正答率は、実行して答えが一致した割合です。</p>
-  <div class="panel">
-    <p class="ptitle">BIRD テストセットの正答率</p>
-    <div class="statrow">
-      <div class="stat"><b class="gr">92.96%</b><span>人間<br>（データエンジニア）</span></div>
-      <div class="stat"><b>54.89%</b><span>GPT-4<br>業務定義を渡した場合</span></div>
-      <div class="stat"><b class="rd">34.88%</b><span>GPT-4<br>渡さなかった場合</span></div>
-    </div>
-  </div>
-  <div class="punch" style="padding:30px 26px">
-    <span style="font-size:23px;font-weight:900;line-height:1.5">業務定義を渡しても<strong>半分</strong>。渡さなければ <strong>3 分の 1</strong>。</span>
-  </div>
-  <p class="hl">差の 20 ポイントは、<strong>1 問に 1 文の業務定義を添えたかどうかだけ</strong>です。モデルも DB も同じです。<span class="sm">より企業の実環境に近い Spider 2.0（ICLR 2025・1,000 列超の DB）では、o1-preview を使った agent の成功率は 21.3% です。</span></p>
-  <p class="src">出典 —
-    BIRD: Li et al., <a href="https://arxiv.org/abs/2305.03111" target="_blank" rel="noopener">Can LLM Already Serve as A Database Interface?</a> (NeurIPS 2023) Table 2 ／ <a href="https://bird-bench.github.io/" target="_blank" rel="noopener">bird-bench.github.io</a>。
-    Spider 2.0: Lei et al., <a href="https://arxiv.org/abs/2411.07763" target="_blank" rel="noopener">Spider 2.0</a> (ICLR 2025)。
-  </p>
 </section>
 
 <section class="slide">

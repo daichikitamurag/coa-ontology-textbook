@@ -383,7 +383,6 @@
   <h1>なぜ意味を書くのか</h1>
   <p>Agent を業務に載せようとすると、必ず 3 つの壁にぶつかります。今日扱うのは、そのうち 1 本です。</p>
   <div class="agenda"><span>Agentic AI の 3 つの壁</span><span>オントロジーとは何か</span><span>言葉の広さ</span><span>登場人物</span><span>RDB の限界</span><span>第 2 章の事故</span></div>
-  <div class="actnum">1</div>
 </section>
 
 <section class="slide">
@@ -1117,7 +1116,7 @@
 <section class="slide">
   <div class="eyebrow">ACT 2 — 研究の結果</div>
   <h2>研究でも測られています — LLM が書く SQL の正答率</h2>
-  <p class="lead">Text-to-SQL の評価で広く使われている公開ベンチマーク <strong>BIRD</strong>（NeurIPS 2023）の結果です。実在の企業データベース <strong>95 個・12,751 問</strong>。正答率は、生成した SQL を実行して答えが一致した割合です。</p>
+  <p class="lead">Text-to-SQL の正答率は、<strong>Spider</strong> と <strong>BIRD</strong> という公開ベンチマークで測られています。下は <strong>BIRD</strong>（NeurIPS 2023）の結果 — 実在の企業データベース <strong>95 個・12,751 問</strong>。正答率は、生成した SQL を実行して答えが一致した割合です。</p>
   <div class="panel">
     <p class="ptitle">BIRD テストセットの正答率</p>
     <div class="statrow">
@@ -1129,7 +1128,7 @@
   <div class="punch" style="padding:30px 26px">
     <span style="font-size:23px;font-weight:900;line-height:1.5">業務定義を渡しても<strong>半分</strong>。渡さなければ <strong>3 分の 1</strong>。</span>
   </div>
-  <p class="hl">差の 20 ポイントは、<strong>1 問に 1 文の業務定義を添えたかどうかだけ</strong>です。モデルも DB も同じです。<span class="sm">より企業の実環境に近い Spider 2.0（ICLR 2025・1,000 列超の DB）では、o1-preview を使った agent の成功率は 21.3% です。</span></p>
+  <p class="hl">差の 20 ポイントは、<strong>1 問に 1 文の業務定義を添えたかどうかだけ</strong>です。モデルも DB も同じです。<br>より企業の実環境に近い <strong>Spider 2.0</strong>（ICLR 2025・1,000 列を超える DB）だと、同じ枠組みで <strong>Spider 1.0 が 91.2% → BIRD が 73.0% → Spider 2.0 は 21.3%</strong> まで落ちます。</p>
   <p class="src">出典 —
     BIRD: Li et al., <a href="https://arxiv.org/abs/2305.03111" target="_blank" rel="noopener">Can LLM Already Serve as A Database Interface?</a> (NeurIPS 2023) Table 2 ／ <a href="https://bird-bench.github.io/" target="_blank" rel="noopener">bird-bench.github.io</a>。
     Spider 2.0: Lei et al., <a href="https://arxiv.org/abs/2411.07763" target="_blank" rel="noopener">Spider 2.0</a> (ICLR 2025)。
@@ -1141,7 +1140,6 @@
   <h1>意味を書く道具</h1>
   <p>まず<strong>第 3 章 トリプル</strong>と<strong>第 4 章 Turtle</strong>で書き方を覚え、そのあと章ごとに道具を 1 つずつ足していきます。実装で何が効いて何が効かなかったかは第 3 部で確かめます。</p>
   <div class="agenda"><span>トリプル</span><span>Turtle</span><span>RDFS</span><span>OWL</span><span>SPARQL</span><span>SHACL</span><span>推論器</span><span>4 層スタック</span><span>VKG</span></div>
-  <div class="actnum">3</div>
 </section>
 
 <section class="slide">

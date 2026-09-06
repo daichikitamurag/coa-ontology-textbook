@@ -909,10 +909,11 @@
   <div class="punch" style="padding:30px 26px">
     <span style="font-size:22px;font-weight:900;line-height:1.5">問題は、<strong>書ける SQL が何通りもあって、どれも動いてしまう</strong>ことです。</span>
   </div>
-  <div class="g3" style="margin-top:20px">
+  <div class="g4" style="margin-top:20px">
     <div class="card"><h4>「優良顧客」の書き方</h4><p class="sm"><code>member_rank = 'VIP'</code><br><code>total_purchase &gt;= 50000</code><br>あるいは条件を書かない<br><span class="no">どれも SQL として通ります</span></p></div>
-    <div class="card"><h4>「アクティブ」の書き方</h4><p class="sm"><code>last_order_at &gt;= 30 日前</code><br><code>last_order_at &gt;= 90 日前</code><br><code>churned_at IS NULL</code> を入れるかどうか<br><span class="no">どれも SQL として通ります</span></p></div>
-    <div class="card"><h4>「売上」の書き方</h4><p class="sm"><code>SUM(amount)</code><br><code>SUM(amount - tax - 返金)</code><br><code>status = 'confirmed'</code> を入れるかどうか<br><span class="no">どれも SQL として通ります</span></p></div>
+    <div class="card"><h4>「アクティブ」の書き方</h4><p class="sm"><code>last_order_at &gt;= 30 日前</code><br><code>last_order_at &gt;= 90 日前</code><br><code>churned_at IS NULL</code> を入れるか<br><span class="no">どれも SQL として通ります</span></p></div>
+    <div class="card"><h4>「売上」の書き方</h4><p class="sm"><code>SUM(amount)</code><br><code>SUM(amount - tax - 返金)</code><br><code>status = 'confirmed'</code> を入れるか<br><span class="no">どれも SQL として通ります</span></p></div>
+    <div class="card"><h4>「先月」の書き方</h4><p class="sm"><code>order_date</code> で暦月を切る<br>会計月で切る<br>「直近 30 日」と読み替える<br><span style="color:var(--muted);font-weight:800">ここは暦月なので差が出ません</span></p></div>
   </div>
   <p class="hl">この一文は、人に頼めば依頼、AI に投げればプロンプトです。<strong>文字は 1 つも変わりません</strong>。書き手が新人でも LLM でも、選択肢は同じだけあります。</p>
 </section>

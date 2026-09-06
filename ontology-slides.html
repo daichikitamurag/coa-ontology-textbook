@@ -852,28 +852,28 @@
 
 <section class="slide">
   <div class="eyebrow">題材</div>
-  <h2>この 1 行だけを、最後まで追いかけます</h2>
-  <p class="lead">道具が 8 つ、実装が 3 つ出てきますが、<strong>題材はずっと同じ一文だけ</strong>です。話が分からなくなったら、この一文に戻ってください。</p>
+  <h2>この一文を題材にします</h2>
+  <p class="lead">道具や実装がいくつか出てきますが、<strong>題材はこの一文です</strong>。分からなくなったら、ここに戻ってください。</p>
   <div class="punch" style="padding:42px 30px">
     <span style="display:block;font-size:11.5px;font-weight:800;letter-spacing:.18em;color:var(--muted)">今日の題材</span>
     <span class="big" style="font-size:32px;margin-top:16px;line-height:1.5">「<span style="text-decoration:underline;text-decoration-color:#b3261e;text-decoration-thickness:3px;text-underline-offset:6px;font-weight:900">先月</span>の<span style="text-decoration:underline;text-decoration-color:#b3261e;text-decoration-thickness:3px;text-underline-offset:6px;font-weight:900">アクティブな</span><span style="text-decoration:underline;text-decoration-color:#b3261e;text-decoration-thickness:3px;text-underline-offset:6px;font-weight:900">優良顧客</span>の<span style="text-decoration:underline;text-decoration-color:#b3261e;text-decoration-thickness:3px;text-underline-offset:6px;font-weight:900">売上</span>をレポートにして」</span>
-    <span class="note" style="font-size:13px;margin-top:16px">赤線を引いた 4 つが、<strong>データベースを見ても分からない言葉</strong>です</span>
+    <span class="note" style="font-size:13px;margin-top:16px">赤線の 4 つが、<strong>データベースを見ても分からない言葉</strong>です</span>
   </div>
   <div class="g3" style="margin-top:20px">
-    <div class="card blue"><h4>第 1 部　この一文で事故が起きる</h4><p class="sm">新人が SQL にすると <strong>89,000 円</strong>、定義を知っている人が書くと <strong>84,500 円</strong>。<strong>どちらもエラーは出ません</strong></p></div>
-    <div class="card violet"><h4>第 2 部　4 つの言葉を書いていく</h4><p class="sm">道具を 1 つずつ足して、<strong>4 つの定義を機械が読める形にする</strong>。最後に SPARQL で 84,500 円を導きます</p></div>
-    <div class="card green"><h4>第 3 部　同じ一文を AI に投げる</h4><p class="sm">AWS COA に<strong>この一文をそのまま</strong>投げて、3 通りの経路を実機で比べます</p></div>
+    <div class="card blue"><h4>第 1 部　この一文を SQL にする</h4><p class="sm">定義を知らずに書くと <strong>89,000 円</strong>、知っている人が書くと <strong>84,500 円</strong>。どちらもエラーは出ません</p></div>
+    <div class="card violet"><h4>第 2 部　4 つの言葉を書く</h4><p class="sm">道具を 1 つずつ足して、4 つの定義を<strong>機械が読める形</strong>にします。最後に SPARQL で 84,500 円を出します</p></div>
+    <div class="card green"><h4>第 3 部　同じ一文を AI に投げる</h4><p class="sm">AWS COA にこの一文をそのまま投げて、3 通りの経路を実機で比べます</p></div>
   </div>
-  <p class="hl">データも同じです。<strong>顧客 5 人・注文 5 件・返金 1 件</strong>だけで、第 3 部の実機デモまで通します。<span class="sm">（Palantir と Minecraft は題材が別なので、そこだけ切り替わります）</span></p>
+  <p class="hl">データも同じで、<strong>顧客 5 人・注文 5 件・返金 1 件</strong>です。第 3 部の実機デモもこのデータを使います。<span class="sm">（Palantir と Minecraft は題材が別なので、そこだけ切り替わります）</span></p>
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 2 — 題材</div>
-  <h2>データはこれだけ — 顧客 5 人・注文 5 件・返金 1 件</h2>
-  <p class="lead">EC サイトのデータベース担当だとします。今日は <strong>2026 年 8 月 1 日</strong>。この小さなデータを、<strong>この資料の最後まで使います</strong> — 第 3 部の AWS COA の実機デモも、同じ 5 人です。</p>
+  <div class="eyebrow">ACT 2 — 前提</div>
+  <h2>こういうリレーショナルデータベースがあるとします</h2>
+  <p class="lead">EC サイトの RDB を、<strong>テーブル 3 つ・顧客 5 人</strong>に絞ったものを想定します。今日は 2026 年 8 月 1 日とします。第 3 部の AWS COA の実機デモも、このデータを使います。</p>
   <div class="panel">
     <p class="ptitle">customers — 顧客マスタ</p>
-    <table class="tw"><thead><tr><th>customer_id</th><th>name</th><th>member_rank</th><th>total_purchase</th><th>last_order_at</th><th>churned_at</th></tr></thead>
+    <table class="tw"><thead><tr><th>customer_id</th><th>name</th><th>member_rank</th><th>total_purchase</th><th>last_order_at</th><th>churned_at<br><span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">（解約日。null なら未解約）</span></th></tr></thead>
       <tr><td>C001</td><td>佐藤 花子</td><td>VIP</td><td>82,000</td><td>2026-07-28</td><td>(null)</td></tr>
       <tr><td>C002</td><td>鈴木 一郎</td><td>Regular</td><td>55,000</td><td>2026-06-15</td><td>(null)</td></tr>
       <tr><td>C003</td><td>田中 太郎</td><td>Regular</td><td>61,000</td><td>2026-05-02</td><td>(null)</td></tr>
@@ -897,7 +897,7 @@
       <table class="tw"><thead><tr><th>refund_id</th><th>order_id</th><th>amount</th></tr></thead>
         <tr><td>R01</td><td>O101</td><td>5,500</td></tr>
       </table>
-      <p class="sm" style="margin-top:12px">返金は 1 件だけ。佐藤さんの 7/5 の注文 (O101) に対して 5,500 円。<br><strong>この 1 件が、あとで 4,500 円の差を生みます。</strong></p>
+      <p class="sm" style="margin-top:12px">返金は 1 件。佐藤さんの 7/5 の注文 (O101) に対して 5,500 円です。<br>この 1 件が、あとの 4,500 円の差に関係します。</p>
     </div>
   </div>
 </section>
@@ -905,19 +905,19 @@
 <section class="slide">
   <div class="eyebrow">ACT 2 — 依頼</div>
   <h2>依頼が来る — これがそのままプロンプトになる</h2>
-  <p class="lead">そこへ、営業部から依頼が届きます。<strong>「先月のアクティブな優良顧客の売上をレポートにして」</strong> — さきほど見せた、あの一文です。</p>
+  <p class="lead">そこへ、営業部から依頼が届きます。<strong>「先月のアクティブな優良顧客の売上をレポートにして」</strong> — さきほどの一文です。</p>
   <div class="g3" style="margin-top:20px">
     <div class="card blue"><h4>人に頼めば「依頼」</h4><p class="sm">新人がこれを受け取ると何が起きるか — この直後に見ます</p></div>
     <div class="card violet"><h4>AI に投げれば「プロンプト」</h4><p class="sm">第 3 部で、AWS COA に<strong>この一文をそのまま</strong>投げます</p></div>
     <div class="card amber"><h4>文字は 1 つも変わらない</h4><p class="sm">そして<strong>どちらも、同じ 4 つの言葉でつまずきます</strong></p></div>
   </div>
-  <p class="hl">SQL を書けば済む話に見えます。実際、書けます。問題は<strong>「書ける SQL が何通りもあって、どれも動いてしまう」</strong>ことです。</p>
+  <p class="hl">SQL を書けば済む話に見えます。実際、書けます。問題は<strong>書ける SQL が何通りもあって、どれも動いてしまう</strong>ことです。</p>
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 2 — 核心</div>
-  <h2>この一文に埋まっている、社内にしか無い定義が 4 つ</h2>
-  <p class="lead">この一文の中に、<strong>データベースを見ても絶対に分からないもの</strong>が 4 つあります。この 4 つが、この資料の最後まで追いかける対象です。</p>
+  <div class="eyebrow">ACT 2 — 4 つの定義</div>
+  <h2>この一文には、社内にしか無い定義が 4 つ入っています</h2>
+  <p class="lead">この一文の中に、<strong>データベースを見ても分からないもの</strong>が 4 つあります。この 4 つを、以降で 1 つずつ扱います。</p>
   <div class="panel">
     <p class="ptitle">DB から分かること / 分からないこと</p>
     <table class="tw"><thead><tr><th style="width:15%">言葉</th><th style="width:30%">DB から分かること</th><th style="width:55%">DB から分からないこと ＝ この会社の答え</th></tr></thead>
@@ -1016,24 +1016,24 @@
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 2 — 本当の問題</div>
-  <h2>怖いのは金額差ではなく、違う人を数えていたこと</h2>
+  <div class="eyebrow">ACT 2 — 何が起きたのか</div>
+  <h2>金額差よりも、違う人を数えていたことが問題</h2>
   <div class="g2">
     <div class="card red"><h4>89,000 円 が数えた人</h4><p class="sm">佐藤 (C001) ・ <strong>高橋 (C004)</strong><br><span class="no">高橋さんは 7/25 に解約済み</span>。それでも last_order_at が 7/20 なので「先月買った人」として通ってしまう</p></div>
     <div class="card green"><h4>84,500 円 が数えた人</h4><p class="sm">佐藤 (C001) ・ <strong>鈴木 (C002)</strong><br>鈴木さんは累計 55,000 円で<strong>優良顧客</strong>。でも member_rank 列は Regular なので、列で判定すると落ちる</p></div>
   </div>
   <div class="punch" style="margin-top:18px;padding:26px 24px">
-    <span style="font-size:20px;font-weight:900;line-height:1.55">同じ「アクティブな優良顧客」という言葉で、<span class="no">指している人が違う</span>。<br>そして<strong>両方の SQL が正常に実行され、エラーは 1 つも出ません。</strong></span>
+    <span style="font-size:20px;font-weight:900;line-height:1.55">同じ「アクティブな優良顧客」という言葉で、<span class="no">指している人が違う</span>。<br>そして両方の SQL が正常に実行され、エラーは出ません。</span>
   </div>
   <div class="g3" style="margin-top:18px">
-    <div class="card amber"><h4>気づく手がかりが無い</h4><p class="sm">構文エラーも実行時エラーも出ない。<strong>間違いに気づく材料がどこにも現れない</strong></p></div>
-    <div class="card amber"><h4>金額が近いほど危ない</h4><p class="sm">差は 4,500 円。桁が違えば気づきますが、<strong>「もっともらしい間違い」は通ってしまう</strong></p></div>
-    <div class="card red"><h4>下流に広がる</h4><p class="sm">依頼は「<strong>レポートにして</strong>」でした。この数字は会議資料になり、他システムに連携されます</p></div>
+    <div class="card amber"><h4>気づく手がかりが無い</h4><p class="sm">構文エラーも実行時エラーも出ないので、間違いに気づく材料が出てきません</p></div>
+    <div class="card amber"><h4>金額が近いと気づきにくい</h4><p class="sm">差は 4,500 円。桁が違えば気づきますが、この程度の差だと通ってしまいます</p></div>
+    <div class="card red"><h4>下流に流れる</h4><p class="sm">依頼は「レポートにして」でした。この数字は会議資料になり、他システムに連携されます</p></div>
   </div>
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 2 — 行き止まり</div>
+  <div class="eyebrow">ACT 2 — 別の案</div>
   <h2>「プロンプトに書けばいい」では続かない</h2>
   <p class="lead">ここで多くの人が思いつく解決策があります。<strong>AI に SQL を書かせるなら、定義をプロンプトに書いておけばいい</strong>。実際、小さいうちは動きます。しかし 4 つの理由で続きません。</p>
   <div class="panel">
@@ -1047,7 +1047,7 @@
   </div>
   <p class="hl"><strong>④ が本質です。</strong>プロンプトに書いた定義は「LLM が読んで解釈する対象」になります。つまり適用されるかどうかが<strong>確率的</strong>になり、しかも「適用されたか」を<strong>後から機械的に確かめられません</strong>。</p>
   <div class="punch" style="margin-top:16px;padding:24px">
-    <span style="font-size:19px;font-weight:900;line-height:1.55">必要なのは、定義を「文章」ではなく<strong>「機械が計算に使えるデータ」</strong>として書くこと。<br>そうすれば、<strong>同じ 1 つの定義を LLM も・推論器も・検証器も・SQL 生成器も参照できます。</strong></span>
+    <span style="font-size:19px;font-weight:900;line-height:1.55">必要なのは、定義を「文章」ではなく<strong>機械が計算に使えるデータ</strong>として書くこと。<br>そうすれば、同じ 1 つの定義を LLM も・推論器も・検証器も・SQL 生成器も参照できます。</span>
   </div>
 </section>
 

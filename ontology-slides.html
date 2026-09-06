@@ -2257,7 +2257,7 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
   </div>
   <div class="panel" style="margin-top:16px">
     <p class="ptitle" style="text-transform:none">SHACL が居る場所 — SPARQL の経路ではなく、書き込みの手前</p>
-    <svg viewBox="0 0 880 258" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+    <svg viewBox="0 0 880 242" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
       <defs>
         <marker id="s8b" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto">
           <path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#1c5b9c"/></marker>
@@ -2287,28 +2287,31 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
       <text x="24" y="108" font-size="8.6" font-weight="900" fill="#b3261e">SHACL（第 8 章）— 書き込みを止める</text>
       <rect x="24" y="118" width="140" height="34" rx="9" fill="#f7f8fa" stroke="#6b7480" stroke-width="1.8"/>
       <text x="94" y="139" text-anchor="middle" font-size="9.4" font-weight="800" fill="#3d4654">AI Agent</text>
-      <path d="M168,135 H236" stroke="#b3261e" stroke-width="2" marker-end="url(#s8r)"/>
-      <rect x="244" y="116" width="176" height="38" rx="8" fill="#fdf3f2" stroke="#b3261e" stroke-width="1.8"/>
-      <text x="332" y="132" text-anchor="middle" font-size="8.6" font-weight="800" fill="#8f1f18">書き込もうとしている中身</text>
-      <text x="332" y="147" text-anchor="middle" font-size="8.2" font-family="Menlo,monospace" fill="#8f1f18">ec:R01 返金 50,000 円</text>
-      <path d="M424,135 H462" stroke="#b3261e" stroke-width="2" marker-end="url(#s8r)"/>
+      <path d="M168,137 H236" stroke="#b3261e" stroke-width="2" marker-end="url(#s8r)"/>
+      <rect x="244" y="108" width="176" height="58" rx="8" fill="#fdf3f2" stroke="#b3261e" stroke-width="1.8"/>
+      <text x="332" y="124" text-anchor="middle" font-size="8.6" font-weight="800" fill="#8f1f18">書き込もうとしている中身</text>
+      <text x="332" y="139" text-anchor="middle" font-size="8.2" font-family="Menlo,monospace" fill="#8f1f18">ec:R01 返金 50,000 円</text>
+      <line x1="256" y1="146" x2="408" y2="146" stroke="#e8b4b0" stroke-width="1"/>
+      <text x="332" y="159" text-anchor="middle" font-size="7.8" fill="#8f1f18">対象注文 O101 は 44,000 円</text>
+      <path d="M424,137 H462" stroke="#b3261e" stroke-width="2" marker-end="url(#s8r)"/>
 
-      <rect x="470" y="110" width="140" height="50" rx="9" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2.8"/>
-      <text x="540" y="130" text-anchor="middle" font-size="10" font-weight="900" fill="#4c1d95">SHACL 検証器</text>
-      <text x="540" y="146" text-anchor="middle" font-size="7.6" fill="#6b3fa0">形が Shape に合うか調べる</text>
+      <rect x="470" y="108" width="140" height="58" rx="9" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2.8"/>
+      <text x="540" y="126" text-anchor="middle" font-size="10" font-weight="900" fill="#4c1d95">SHACL 検証器</text>
+      <line x1="482" y1="134" x2="598" y2="134" stroke="#c9b6e0" stroke-width="1"/>
+      <text x="540" y="147" text-anchor="middle" font-size="8" font-family="Menlo,monospace" fill="#4c1d95">返金額 ≤ 注文額</text>
+      <text x="540" y="159" text-anchor="middle" font-size="7.4" fill="#6b3fa0">を Shape として書いておく</text>
 
       <path d="M614,128 H664" stroke="#1f6f4a" stroke-width="2" marker-end="url(#s8g)"/>
       <text x="640" y="120" text-anchor="middle" font-size="7.4" font-weight="800" fill="#1f6f4a">通れば反映</text>
 
-      <path d="M540,164 V190" stroke="#b3261e" stroke-width="2" marker-end="url(#s8r)"/>
-      <text x="549" y="180" font-size="7.8" font-weight="800" fill="#b3261e">違反なら</text>
+      <path d="M540,170 V190" stroke="#b3261e" stroke-width="2" marker-end="url(#s8r)"/>
+      <text x="549" y="184" font-size="7.8" font-weight="800" fill="#b3261e">50,000 &gt; 44,000 なので違反</text>
       <rect x="400" y="194" width="282" height="38" rx="8" fill="#fdf3f2" stroke="#b3261e" stroke-width="2"/>
       <text x="541" y="210" text-anchor="middle" font-size="9" font-weight="800" fill="#8f1f18">却下。データは 1 トリプルも変わらない</text>
-      <text x="541" y="225" text-anchor="middle" font-size="7.8" fill="#b3261e">sh:message を理由として返す（Agent が読んで直せる）</text>
+      <text x="541" y="225" text-anchor="middle" font-size="7.6" fill="#b3261e">sh:message「返金額が対象注文の金額を超えています」を返す</text>
 
       <text x="24" y="212" font-size="7.8" fill="#6b7480">SHACL は<tspan font-weight="800" fill="#3d4654">データの中には居ません</tspan>。</text>
       <text x="24" y="226" font-size="7.8" fill="#6b7480">書き込みが<tspan font-weight="800" fill="#3d4654">データに届く前</tspan>に通る関所です。</text>
-      <text x="24" y="248" font-size="7.8" fill="#6b7480">対象注文 O101 は 44,000 円なので、50,000 円の返金は「返金額 ≤ 注文額」に違反します。</text>
     </svg>
   </div>
   <p class="hl">SQL の <code>CHECK</code> 制約は<strong>同一行しか見られません</strong>。SHACL は「返金額 ≤ 対象注文の金額」のように、<strong>テーブルを跨いだ制約</strong>が書けます。</p>
@@ -2318,43 +2321,7 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
   <div class="eyebrow">第 8 章 — SHACL</div>
   <h2>ルールを守らせる — 書き込みの関所</h2>
   <p class="lead">表 1-3 の返金 R01 は 5,500 円で、対象の注文 O101 は 44,000 円です。<strong>返金額が注文額を超えてはいけない</strong> — この制約を書きます。</p>
-  <div class="g2 vtop">
-    <div>  <div class="panel">
-    <p class="ptitle">SHACL Shape — 返金の制約</p>
-    <pre><span class="k">@prefix</span> sh: <span class="u">&lt;http://www.w3.org/ns/shacl#&gt;</span> .
-
-ec:返金Shape <span class="k">a</span> sh:NodeShape <span class="k">;</span>
-    <span class="k">sh:targetClass</span> ec:返金 <span class="k">;</span>          <span class="c"># 検査対象 = 返金クラスの全インスタンス</span>
-
-    <span class="c"># ① 対象注文は必須</span>
-    <span class="k">sh:property</span> <span class="k">[</span>
-        <span class="k">sh:path</span>     ec:対象注文 <span class="k">;</span>
-        <span class="k">sh:minCount</span> <span class="n">1</span> <span class="k">;</span>
-        <span class="k">sh:message</span> <span class="s">"返金には対象注文が必須です"</span>@ja <span class="k">]</span> <span class="k">;</span>
-
-    <span class="c"># ② 金額は 0 以上の decimal</span>
-    <span class="k">sh:property</span> <span class="k">[</span>
-        <span class="k">sh:path</span>          ec:金額 <span class="k">;</span>
-        <span class="k">sh:datatype</span>      xsd:decimal <span class="k">;</span>
-        <span class="k">sh:minInclusive</span> <span class="n">0</span> <span class="k">;</span>
-        <span class="k">sh:message</span>      <span class="s">"返金額は 0 円以上でなければなりません"</span>@ja <span class="k">]</span> <span class="k">;</span>
-
-    <span class="c"># ③ 返金額は対象注文の金額を超えてはいけない</span>
-    <span class="c">#    ← 別ノード (注文) の値と比べるので sh:sparql を使う</span>
-    <span class="k">sh:sparql</span> <span class="k">[</span>
-        <span class="k">sh:message</span>  <span class="s">"返金額が対象注文の金額を超えています"</span>@ja <span class="k">;</span>
-        <span class="k">sh:prefixes</span> ec: <span class="k">;</span>
-        <span class="k">sh:select</span>   <span class="s">"""</span>
-            <span class="k">SELECT</span> $this ?返金額 ?注文額 <span class="k">WHERE</span> <span class="k">{</span>
-                $this ec:金額     ?返金額 <span class="k">;</span>
-                      ec:対象注文 ?注文 .
-                ?注文 ec:金額     ?注文額 .
-                <span class="k">FILTER</span> (?返金額 &gt; ?注文額)
-            <span class="k">}</span>
-        <span class="s">"""</span> <span class="k">]</span> .</pre>
-  </div>
-</div>
-    <div>  <div class="panel">
+  <div class="panel">
     <p class="ptitle">SHACL の関所が Agent を止める</p>
     <svg viewBox="0 0 880 250" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
       <defs><marker id="d12s8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#6b3fa0"/></marker></defs>
@@ -2385,31 +2352,65 @@ ec:返金Shape <span class="k">a</span> sh:NodeShape <span class="k">;</span>
       <path d="M244 184 L120 184 L120 102" fill="none" stroke="#8b5a2b" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#d12s8)"/>
     </svg>
   </div>
-</div>
-  </div>
-  <div class="panel" style="margin-top:16px">
-    <p class="ptitle" style="text-transform:none">上のコードで使った書き方 — SHACL はこの 4 つだけ</p>
-    <table><thead><tr><th style="width:26%">書き方</th><th style="width:74%">役割</th></tr></thead>
-      <tr><td><code>a sh:NodeShape</code></td><td>「これは検査ルールの束である」という宣言。ルールはこの単位で書きます</td></tr>
-      <tr><td><span class="ok"><code>sh:targetClass</code></span></td><td><strong>誰を検査するか</strong>。たとえば「返金クラスの全インスタンス」</td></tr>
-      <tr><td><code>sh:property [ … ]</code></td><td><strong>どのプロパティについて、何を要求するか</strong>。<code>sh:path</code> で見る先を、<code>sh:minCount</code> で個数を、<code>sh:datatype</code> / <code>sh:minInclusive</code> で値の型と下限を指定します。いくつでも並べられます</td></tr>
-      <tr><td><span class="ok"><code>sh:message</code></span></td><td><strong>違反したら何と言うか</strong>。これが<strong>機械可読な「理由」</strong>になり、Agent が読んで自分で直せます</td></tr>
-    </table>
-    <p class="sm" style="text-align:left;margin-top:10px"><code>sh:property</code> を並べていくだけなので、<strong>ルールを足すのは行を足すこと</strong>です。既存のルールを触る必要がありません。</p>
+  <div class="g2 vtop">
+    <div class="panel">
+      <p class="ptitle">SHACL Shape — 返金の制約</p>
+      <pre><span class="k">@prefix</span> sh: <span class="u">&lt;http://www.w3.org/ns/shacl#&gt;</span> .
+
+ec:返金Shape <span class="k">a</span> sh:NodeShape <span class="k">;</span>
+      <span class="k">sh:targetClass</span> ec:返金 <span class="k">;</span>          <span class="c"># 検査対象 = 返金クラスの全インスタンス</span>
+
+      <span class="c"># ① 対象注文は必須</span>
+      <span class="k">sh:property</span> <span class="k">[</span>
+          <span class="k">sh:path</span>     ec:対象注文 <span class="k">;</span>
+          <span class="k">sh:minCount</span> <span class="n">1</span> <span class="k">;</span>
+          <span class="k">sh:message</span> <span class="s">"返金には対象注文が必須です"</span>@ja <span class="k">]</span> <span class="k">;</span>
+
+      <span class="c"># ② 金額は 0 以上の decimal</span>
+      <span class="k">sh:property</span> <span class="k">[</span>
+          <span class="k">sh:path</span>          ec:金額 <span class="k">;</span>
+          <span class="k">sh:datatype</span>      xsd:decimal <span class="k">;</span>
+          <span class="k">sh:minInclusive</span> <span class="n">0</span> <span class="k">;</span>
+          <span class="k">sh:message</span>      <span class="s">"返金額は 0 円以上でなければなりません"</span>@ja <span class="k">]</span> <span class="k">;</span>
+
+      <span class="c"># ③ 返金額は対象注文の金額を超えてはいけない</span>
+      <span class="c">#    ← 別ノード (注文) の値と比べるので sh:sparql を使う</span>
+      <span class="k">sh:sparql</span> <span class="k">[</span>
+          <span class="k">sh:message</span>  <span class="s">"返金額が対象注文の金額を超えています"</span>@ja <span class="k">;</span>
+          <span class="k">sh:prefixes</span> ec: <span class="k">;</span>
+          <span class="k">sh:select</span>   <span class="s">"""</span>
+              <span class="k">SELECT</span> $this ?返金額 ?注文額 <span class="k">WHERE</span> <span class="k">{</span>
+                  $this ec:金額     ?返金額 <span class="k">;</span>
+                        ec:対象注文 ?注文 .
+                  ?注文 ec:金額     ?注文額 .
+                  <span class="k">FILTER</span> (?返金額 &gt; ?注文額)
+              <span class="k">}</span>
+          <span class="s">"""</span> <span class="k">]</span> .</pre>
+    </div>
+    <div class="panel">
+      <p class="ptitle" style="text-transform:none">左のコードで使った書き方 — SHACL はこの 4 つだけ</p>
+      <table><thead><tr><th style="width:26%">書き方</th><th style="width:74%">役割</th></tr></thead>
+        <tr><td><code>a sh:NodeShape</code></td><td>「これは検査ルールの束である」という宣言。ルールはこの単位で書きます</td></tr>
+        <tr><td><span class="ok"><code>sh:targetClass</code></span></td><td><strong>誰を検査するか</strong>。たとえば「返金クラスの全インスタンス」</td></tr>
+        <tr><td><code>sh:property [ … ]</code></td><td><strong>どのプロパティについて、何を要求するか</strong>。<code>sh:path</code> で見る先を、<code>sh:minCount</code> で個数を、<code>sh:datatype</code> / <code>sh:minInclusive</code> で値の型と下限を指定します。いくつでも並べられます</td></tr>
+        <tr><td><span class="ok"><code>sh:message</code></span></td><td><strong>違反したら何と言うか</strong>。これが<strong>機械可読な「理由」</strong>になり、Agent が読んで自分で直せます</td></tr>
+      </table>
+      <p class="sm" style="text-align:left;margin-top:10px"><code>sh:property</code> を並べていくだけなので、<strong>ルールを足すのは行を足すこと</strong>です。既存のルールを触る必要がありません。</p>
+    </div>
   </div>
 </section>
 
 <section class="slide">
   <div class="eyebrow">第 8 章 — SHACL</div>
   <h2>OWL と SHACL の決定的な違い</h2>
-  <p class="lead">どちらも「ルールを書く」ように見えます。<strong>しかし、やることが正反対です</strong>。ここが第 8 章の核心です。</p>
+  <p class="lead">どちらも「ルールを書く」ように見えます。<strong>しかし、やることが正反対です</strong>。第 4 章の <strong>TBox（定義）</strong>と <strong>ABox（実データ）</strong>を使うと、違いがはっきりします。</p>
   <div class="panel">
     <p class="ptitle" style="text-transform:none">走る例で並べる</p>
     <table><thead><tr><th style="width:16%"></th><th style="width:42%">OWL（第 6 章）</th><th style="width:42%">SHACL（この章）</th></tr></thead>
-      <tr><td><strong>何をするか</strong></td><td><span class="ok">書いていない事実を導き足す</span></td><td><span class="no">書かれた事実の形を検査して報告する</span></td></tr>
-      <tr><td><strong>具体例</strong></td><td>「累計 5 万以上は優良顧客」と 1 度書いておくと、<code>ec:C002 a ec:優良顧客</code> が<strong>誰も書かないのに付く</strong></td><td>「返金額 ≤ 注文額」と 1 度書いておくと、44,000 円の注文に 50,000 円返そうとしたときに<strong>理由つきで弾く</strong></td></tr>
+      <tr><td><strong>何をするか</strong></td><td><span class="ok">TBox から、書いていない事実を導いて ABox に足す</span></td><td><span class="no">書き込まれる事実の形を検査して報告する</span></td></tr>
+      <tr><td><strong>具体例</strong></td><td><strong>TBox（定義）</strong>に「累計 5 万以上は優良顧客」と 1 度書いておくと、<strong>ABox（実データ）</strong>に <code>ec:C002 a ec:優良顧客</code> が<strong>増える</strong>。人は 1 行も書いていません</td><td>「返金額 ≤ 注文額」を <strong>Shape</strong> として 1 度書いておくと、44,000 円の注文に 50,000 円返そうとしたときに<strong>理由つきで弾く</strong>。<strong>ABox は 1 トリプルも変わりません</strong></td></tr>
       <tr><td><strong>「書いていないこと」の扱い</strong></td><td><strong>開世界仮説</strong>「まだ分からない」とみなす。佐藤さんに解約日が書かれていなくても、「解約していない」とは結論しない</td><td><strong>閉世界仮説</strong>「無い」とみなす。佐藤さんに解約日が書かれていなければ、「解約していない」と断定する</td></tr>
-      <tr><td><strong>実行後どうなるか</strong></td><td>トリプルが増える。次のクエリから使える</td><td>データは変わらない。<strong>違反レポートが出るだけ</strong></td></tr>
+      <tr><td><strong>実行後どうなるか</strong></td><td><strong>ABox にトリプルが増える</strong>。次のクエリから使える</td><td><strong>ABox も TBox も変わらない</strong>。<strong>違反レポートが出るだけ</strong></td></tr>
       <tr><td><strong>向いている仕事</strong></td><td>分類（優良顧客の判定）／階層の展開（上位クラスの型も自動で付く）／同義の統合（別システムの顧客 ID を同一人物にまとめる）</td><td>書き込みの関所（Agent を止める）／必須項目の検査（対象注文が空の返金を見つける）／<strong>「無いこと」の判定</strong>（解約日が無い顧客を継続顧客と判定する）</td></tr>
     </table>
   </div>

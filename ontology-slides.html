@@ -334,7 +334,7 @@
   <h1>オントロジーで、<em>意味</em>を機械に渡す</h1>
   <p class="sub">AWS Context Ontology Accelerator / Palantir Foundry・AIP / 自作 Minecraft Agent — 3 つの実装を実機で確かめた記録</p>
   <p class="meta">社内クラウド勉強会 ／ SI部 北村</p>
-  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 97 枚</span></div>
+  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 98 枚</span></div>
 </section>
 
 <section class="slide">
@@ -1275,16 +1275,40 @@ ec:C001 ec:名前 <span class="s">"佐藤 花子"</span> <span class="k">;</span
 
 <section class="slide">
   <div class="eyebrow">ACT 4 — Turtle</div>
-  <h2>この資料で使うデータ全体</h2>
-  <p class="lead">顧客 5 人・注文 5 件・返金 1 件。<strong>第 2 章の 89,000 / 84,500 も、第 12 章の実機デモも、全部このデータです</strong>。</p>
+  <h2>この資料で使う定義とデータ、全体</h2>
+  <p class="lead">上が<strong>定義（TBox）</strong>、下が<strong>データ（ABox）</strong>です。データは顧客 5 人・注文 5 件・返金 1 件。<strong>89,000 / 84,500 も、第 3 部の実機デモも、全部このデータです</strong>。</p>
   <div class="panel">
-    <p class="ptitle">第 1 章のデータ全体 (これが以降の全章で使うデータ)</p>
+    <p class="ptitle">TBox（定義）— 第 5 章までに書く分の抜粋</p>
+    <pre><span class="k">@prefix</span> ec:   &lt;http://example.com/ec#&gt; .
+<span class="k">@prefix</span> rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+<span class="k">@prefix</span> xsd:  &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+
+<span class="c"># ── どんな種類のものがあるか（クラス）──────────────</span>
+ec:顧客     <span class="k">a</span> rdfs:Class .
+ec:注文     <span class="k">a</span> rdfs:Class .
+ec:優良顧客 <span class="k">a</span> rdfs:Class <span class="k">;</span> rdfs:subClassOf ec:顧客 .
+
+<span class="c"># ── どんな関係があるか（プロパティ）────────────────</span>
+ec:注文者
+    rdfs:label  <span class="s">"注文した顧客"</span>@ja <span class="k">;</span>
+    rdfs:domain ec:注文 <span class="k">;</span>       <span class="c"># 注文に付く</span>
+    rdfs:range  ec:顧客 .        <span class="c"># 値は顧客 (クラス)</span>
+
+ec:累計購入額
+    rdfs:label  <span class="s">"累計購入額"</span>@ja <span class="k">;</span>
+    rdfs:domain ec:顧客 <span class="k">;</span>       <span class="c"># 顧客に付く</span>
+    rdfs:range  xsd:decimal .    <span class="c"># 値は数値 (型)</span>
+
+<span class="c"># 「優良顧客 = 累計 5 万円以上」を型として書くのは ACT 6。</span>
+<span class="c"># ここではまだ「そういうクラスがある」までしか言っていない。</span></pre>
+  </div>
+  <div class="panel">
+    <p class="ptitle">ABox（データ）— これが以降ずっと使うデータ</p>
     <pre><span class="k">@prefix</span> ec:  <span class="u">&lt;http://example.com/ec#&gt;</span> .
 <span class="k">@prefix</span> xsd: <span class="u">&lt;http://www.w3.org/2001/XMLSchema#&gt;</span> .
 
-<span class="c"># ここに書いてあるのは「データ」だけ。</span>
-<span class="c"># 「ec:顧客 はクラスである」のような定義 (ec:顧客 a owl:Class .) は書いていない。</span>
-<span class="c"># データと定義を分ける理由は §4.3、定義の書き方は第 5〜6 章。</span>
+<span class="c"># ここから下は「データ」だけ。定義は上のブロック。</span>
+<span class="c"># 分ける理由は次のスライド。定義の書き方は ACT 5〜6。</span>
 
 <span class="c"># ── 顧客 5 人 ──────────────────────────────</span>
 ec:C001 <span class="k">a</span> ec:顧客 <span class="k">;</span> ec:名前 <span class="s">"佐藤 花子"</span> <span class="k">;</span> ec:会員ランク <span class="s">"VIP"</span> <span class="k">;</span>
@@ -1331,6 +1355,33 @@ ec:O105 <span class="k">a</span> ec:注文 <span class="k">;</span> ec:注文者
 
 <span class="c"># ── 返金 1 件 ──────────────────────────────</span>
 ec:R01  <span class="k">a</span> ec:返金 <span class="k">;</span> ec:対象注文 ec:O101 <span class="k">;</span> ec:金額 <span class="s">"5500"</span>^^xsd:decimal .</pre>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">ACT 4 — Turtle</div>
+  <h2>TBox（定義）と ABox（データ）を分ける</h2>
+  <p class="lead">形は同じ 3 語の文ですが、性質がまったく違う 2 行があります。</p>
+  <div class="panel">
+    <p class="ptitle">定義とデータ</p>
+    <pre>ec:顧客 <span class="k">a</span> owl:Class .        <span class="c"># ← 「顧客というクラスが存在する」= 定義</span>
+ec:C001 <span class="k">a</span> ec:顧客 .         <span class="c"># ← 「C001 は顧客である」    = データ</span></pre>
+  </div>
+  <div class="g2" style="margin-top:18px">
+    <div class="card violet"><h4>TBox (Terminological Box) ＝ 定義</h4><p class="sm">クラスやプロパティの定義。<strong>「世界にはどんな種類のものがあるか」</strong><br>狭い意味で「オントロジー」と呼ばれるのは、こちらのほうです。</p></div>
+    <div class="card blue"><h4>ABox (Assertional Box) ＝ データ</h4><p class="sm">個々の事実データ。<strong>「実際にどんなものがあるか」</strong><br>さきほど Turtle で書いた顧客 5 人・注文 5 件は、全部こちらです。</p></div>
+  </div>
+  <p class="hl">ACT 9 で出てくる推論器は、<strong>TBox と ABox の両方を受け取って、新しい ABox を導き出します</strong>。この関係が推論を理解する鍵になります。</p>
+  <div class="card amber" style="margin-top:16px">
+    <h4>実務では ABox を手で書きません</h4>
+    <p class="sm">さきほど 5 人分を Turtle で書いたのは記法を学ぶためです。実務でやると、<strong>元の DB と Turtle の二重管理</strong>が始まります。AWS COA などが採る方式では、Triple Store に入るのは <strong>TBox と対応表だけ</strong>です。</p>
+    <table style="margin-top:11px"><thead><tr><th style="width:46%">Triple Store (Neptune 等) に入るもの</th><th style="width:54%">入らないもの</th></tr></thead>
+      <tr><td><span class="ok">クラス定義 <code>ec:顧客 a owl:Class</code></span></td><td><span class="no">佐藤さんの実データ</span></td></tr>
+      <tr><td><span class="ok">プロパティ定義 domain / range / label</span></td><td><span class="no">注文 5 件・返金の実データ</span></td></tr>
+      <tr><td><span class="ok">階層 <code>rdfs:subClassOf</code></span></td><td><span class="no">— つまり ABox 全体</span></td></tr>
+      <tr><td><span class="ok">RDB との対応表（ACT 11 の R2RML）</span></td><td>ABox は<strong>元の RDB に居続けます</strong></td></tr>
+    </table>
+    <p class="sm" style="margin-top:9px">SPARQL を投げた瞬間に SQL へ翻訳して取りに行きます。<strong>保存せずに、あるように見せる</strong>。この方式を <strong>VKG</strong> と呼び、ACT 11 で扱います。</p>
   </div>
 </section>
 

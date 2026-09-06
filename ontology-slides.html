@@ -1574,20 +1574,28 @@ ec:C001 <span class="k">a</span> ec:顧客 .         <span class="c"># ← 「C0
   <p class="lead">第 2 章で間違えた原因を、並べ直します。<strong>①「直近 90 日」という基準を知らなかった ② <code>churned_at</code>（解約日）という列の存在に気づかなかった ③「売上」が税抜・返金差引後だと知らなかった</strong>。<strong>3 つとも「列の名前を見ただけでは分からない」こと</strong>です。<code>rdfs:label</code> と <code>rdfs:comment</code> は、この情報を<strong>列そのものに貼り付ける</strong>ための語彙です。</p>
   <div class="g2 vtop" style="margin-top:16px;align-items:stretch">
     <div class="panel">
-      <p class="ptitle" style="text-transform:none">ラベル — 同じものの「呼び方」を全部ぶら下げる</p>
+      <p class="ptitle" style="text-transform:none">ラベル — 記号と人間の言葉をつなぐ</p>
       <pre><span class="k">@prefix</span> skos: &lt;http://www.w3.org/2004/02/skos/core#&gt; .
 
-<span class="c"># 実務では URI は ASCII か、機械が作った識別子です</span>
-ec:Customer
-    rdfs:label    <span class="s">"顧客"</span>@ja <span class="k">;</span>          <span class="c"># 日本語はここにしか無い</span>
-    skos:altLabel <span class="s">"取引先"</span>@ja <span class="k">,</span>        <span class="c"># 営業部の言い方</span>
-                  <span class="s">"お取引先様"</span>@ja <span class="k">,</span>     <span class="c"># 顧客向け文書</span>
-                  <span class="s">"customers"</span>@en .        <span class="c"># DB の表名</span>
+<span class="c"># URI は DB の列名から作られるのが普通です</span>
+ec:member_rank
+    rdfs:label    <span class="s">"会員ランク"</span>@ja <span class="k">;</span>        <span class="c"># 列名だけでは読めない</span>
+    rdfs:label    <span class="s">"Membership Rank"</span>@en <span class="k">;</span>  <span class="c"># snake_case をほどく</span>
+    skos:altLabel <span class="s">"ランク"</span>@ja <span class="k">,</span>           <span class="c"># 社内の略称</span>
+                  <span class="s">"loyalty_tier"</span> .          <span class="c"># 別システムの列名</span>
 
 <span class="c"># 逆に、これは書いても言い換えにしかならない</span>
-<span class="c">#   ec:Customer rdfs:label "Customer"@en</span>
-<span class="c">#   ec:顧客     rdfs:label "顧客"@ja</span></pre>
-      <p class="sm" style="text-align:left;margin-top:10px"><strong>label が効くのは、URI と人間の言葉が違うときだけです。</strong>効く場面は 3 つ — <strong>① 別の言語</strong>（<code>ec:Customer</code> → 「顧客」）、<strong>② 別の言い方</strong>（「取引先」「お取引先様」）、<strong>③ 機械が作った識別子</strong>（<code>member_rank</code> や、第 12 章で COA が生成した <code>ind:PreferredCustomer</code>）。<br>この資料は読みやすさのため URI を日本語（<code>ec:顧客</code>）で書いているので、このあとのリストに出てくる <code>rdfs:label</code> は<strong>ほぼ言い換えです</strong>。実務では URI が人間の言葉であることはまずないので、<strong>そこでは label と altLabel しか手がかりがありません</strong>。<br><span class="sm">※ <code>skos:altLabel</code> は厳密には RDFS ではなく SKOS の語彙ですが、呼び方の登録は実務でこれを使います。</span></p>
+<span class="c">#   ec:顧客     rdfs:label "顧客"@ja</span>
+<span class="c">#   ec:Customer rdfs:label "Customer"@en</span></pre>
+      <p class="sm" style="text-align:left;margin:10px 0 0"><strong>label が効くのは、URI と人間の言葉が違うときだけです。</strong>効く場面は 3 つ — <strong>① 別の言語</strong>、<strong>② 別の言い方</strong>（「ランク」「loyalty_tier」）、<strong>③ 機械が作った識別子</strong>。<code>ec:member_rank</code> は ③ に当たるので、ラベルが無いと日本語からは辿れません。</p>
+      <p class="ptitle" style="text-transform:none;margin:16px 0 8px">実際に第 12 章で COA が生成したもの（そのまま）</p>
+      <pre>ind:customers_memberRank <span class="k">a</span> owl:DatatypeProperty <span class="k">;</span>
+    rdfs:label <span class="s">"member_rank"</span> <span class="k">;</span>
+    rdfs:comment <span class="s">"Membership tier or classification level</span>
+                  <span class="s">indicating customer loyalty status and</span>
+                  <span class="s">benefits eligibility"</span> <span class="k">;</span>
+    skos:altLabel <span class="s">"loyalty_tier"</span><span class="k">,</span> <span class="s">"membership_level"</span><span class="k">,</span> <span class="s">"rank"</span> .</pre>
+      <p class="sm" style="text-align:left;margin-top:10px">URI は<strong>機械が作った識別子</strong>（<code>ind:customers_memberRank</code>）、ラベルは<strong>列名そのまま</strong>、同義語は <code>skos:altLabel</code>。<strong>人間の言葉から辿る手がかりは、この 2 つしかありません。</strong><br><span class="sm">※ <code>skos:altLabel</code> は厳密には RDFS ではなく SKOS の語彙です。<br>この資料は読みやすさのため URI を日本語（<code>ec:顧客</code>）で書いているので、以降のリストの <code>rdfs:label</code> はほぼ言い換えだと思って読んでください。</span></p>
     </div>
     <div class="panel">
       <p class="ptitle" style="text-transform:none">コメント — その列の「扱い方」を残す</p>
@@ -1605,7 +1613,7 @@ ec:会員ランク
       <p class="sm" style="text-align:left;margin-top:10px">ラベルは名前を与えるだけですが、<code>rdfs:comment</code> は<strong>「この列をどう扱うべきか」を運べます</strong>。<code>@ja</code> / <code>@en</code> は言語タグです。</p>
     </div>
 </div>
-  <p class="hl">右のコメントが書かれていれば、<strong>「30 日くらいかな」と推測する必要がなく</strong>、<code>churned_at</code>（解約日）を見落とすこともありませんでした。左のラベルが書かれていれば、<strong>「取引先」と言われても同じクラスに行き着けます</strong>。</p>
+  <p class="hl">右のコメントが書かれていれば、<strong>「30 日くらいかな」と推測する必要がなく</strong>、<code>churned_at</code>（解約日）を見落とすこともありませんでした。左のラベルが書かれていれば、<strong>「ランク」と言われても <code>member_rank</code> に行き着けます</strong>。</p>
   <div class="card amber" style="margin-top:16px">
     <h4>rdfs:comment が地味に重要です</h4>
     <p class="sm">「営業部が四半期ごとに手動更新している」と書いておけば、<strong>この列を信用しすぎてはいけないこと</strong>が、後任者にも、そして LLM にも伝わります。第 6 章で <code>member_rank</code> を使わずに累計購入額で判定する理由が、ここに書いてあることになります。</p>

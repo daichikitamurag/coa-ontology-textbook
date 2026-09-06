@@ -2057,11 +2057,12 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
     <div class="panel">
       <p class="ptitle" style="text-transform:none">SPARQL — 変数を共有するだけ</p>
       <pre><span class="k">SELECT</span> ?name ?amt <span class="k">WHERE</span> {
-  ?c ec:名前 ?name .
-  ?o ec:注文者 ?c <span class="k">;</span>
-     ec:金額 ?amt .
+  ?c ec:名前 ?name .      <span class="c"># 名前を持つものを ?c、その名前を ?name とする</span>
+  ?o ec:注文者 ?c <span class="k">;</span>       <span class="c"># 注文者が その ?c である注文を ?o とする</span>
+     ec:金額 ?amt .       <span class="c"># その ?o の金額を ?amt とする</span>
 }
-<span class="c"># ?c を共有 = これが JOIN の代わり</span></pre>
+<span class="c"># ?c が 2 行に出てくる = 変数の共有。これが JOIN の代わり</span>
+<span class="c"># 対応（どの列とどの列を突き合わせるか）は 1 文字も書いていない</span></pre>
     </div>
   </div>
   <div class="panel" style="margin-top:16px">
@@ -2070,6 +2071,48 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
     rdfs:domain ec:注文 <span class="k">;</span>   <span class="c"># 注文に付くプロパティ</span>
     rdfs:range  ec:顧客 .    <span class="c"># 値は顧客</span></pre>
     <p class="sm" style="text-align:left;margin-top:10px">「注文 1 件は、注文者として顧客 1 人を持つ」という知識が、<strong>データベース側に 1 度だけ定義してあります</strong>（TBox）。だから問い合わせ側で繰り返す必要がありません。</p>
+    <p class="sm" style="text-align:left;margin:14px 0 0">この 1 行が説明しているのは、こういう形です。</p>
+    <svg viewBox="0 0 880 258" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+      <defs>
+        <marker id="f71" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto">
+          <path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b3fa0"/></marker>
+      </defs>
+      <text x="440" y="20" text-anchor="middle" font-size="9" font-family="Menlo,monospace" font-weight="800" fill="#6b3fa0">ec:注文者</text>
+      <text x="440" y="33" text-anchor="middle" font-size="7.6" fill="#6b7480">矢印 1 本 = トリプル 1 本</text>
+
+      <rect x="40" y="44" width="200" height="166" rx="10" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
+      <text x="140" y="64" text-anchor="middle" font-size="10.5" font-weight="900" fill="#4c1d95">ec:注文（5 件）</text>
+      <rect x="640" y="44" width="200" height="166" rx="10" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
+      <text x="740" y="64" text-anchor="middle" font-size="10.5" font-weight="900" fill="#4c1d95">ec:顧客（5 人）</text>
+      <text x="58" y="78" font-size="8.6" font-family="Menlo,monospace" fill="#3d4654">O101</text>
+      <text x="222" y="78" text-anchor="end" font-size="8.6" fill="#6b7480">44,000</text>
+      <text x="58" y="106" font-size="8.6" font-family="Menlo,monospace" fill="#3d4654">O102</text>
+      <text x="222" y="106" text-anchor="end" font-size="8.6" fill="#6b7480">33,000</text>
+      <text x="58" y="134" font-size="8.6" font-family="Menlo,monospace" fill="#3d4654">O103</text>
+      <text x="222" y="134" text-anchor="end" font-size="8.6" fill="#6b7480">22,000</text>
+      <text x="58" y="162" font-size="8.6" font-family="Menlo,monospace" fill="#3d4654">O104</text>
+      <text x="222" y="162" text-anchor="end" font-size="8.6" fill="#6b7480">12,000</text>
+      <text x="58" y="190" font-size="8.6" font-family="Menlo,monospace" fill="#3d4654">O105</text>
+      <text x="222" y="190" text-anchor="end" font-size="8.6" fill="#6b7480">27,500</text>
+      <text x="658" y="78" font-size="8.6" font-family="Menlo,monospace" fill="#3d4654">C001</text>
+      <text x="822" y="78" text-anchor="end" font-size="8.6" fill="#6b7480">佐藤 花子</text>
+      <text x="658" y="106" font-size="8.6" font-family="Menlo,monospace" fill="#3d4654">C002</text>
+      <text x="822" y="106" text-anchor="end" font-size="8.6" fill="#6b7480">鈴木 一郎</text>
+      <text x="658" y="134" font-size="8.6" font-family="Menlo,monospace" fill="#3d4654">C003</text>
+      <text x="822" y="134" text-anchor="end" font-size="8.6" fill="#6b7480">田中 太郎</text>
+      <text x="658" y="162" font-size="8.6" font-family="Menlo,monospace" fill="#3d4654">C004</text>
+      <text x="822" y="162" text-anchor="end" font-size="8.6" fill="#6b7480">高橋 実</text>
+      <text x="658" y="190" font-size="8.6" font-family="Menlo,monospace" fill="#3d4654">C005</text>
+      <text x="822" y="190" text-anchor="end" font-size="8.6" fill="#6b7480">伊藤 桃子</text>
+      <path d="M244,75 L632,75" stroke="#6b3fa0" stroke-width="1.5" marker-end="url(#f71)"/>
+      <path d="M244,103 L632,75" stroke="#6b3fa0" stroke-width="1.5" marker-end="url(#f71)"/>
+      <path d="M244,131 L632,103" stroke="#6b3fa0" stroke-width="1.5" marker-end="url(#f71)"/>
+      <path d="M244,159 L632,159" stroke="#6b3fa0" stroke-width="1.5" marker-end="url(#f71)"/>
+      <path d="M244,187 L632,131" stroke="#6b3fa0" stroke-width="1.5" marker-end="url(#f71)"/>
+      <text x="440" y="228" text-anchor="middle" font-size="8" fill="#6b7480">O101 と O102 は<tspan font-weight="800" fill="#3d4654">同じ佐藤さん</tspan>。C005 伊藤さんには注文がないので、矢印が来ていません。</text>
+      <text x="440" y="246" text-anchor="middle" font-size="8" fill="#6b7480">注文と顧客は<tspan font-weight="800" fill="#3d4654">別の集合</tspan>です。線で繋がっているだけで、注文が顧客の中に入っているわけではありません。</text>
+    </svg>
+    <p class="sm" style="text-align:left;margin-top:10px"><strong>線 1 本 1 本が実際のトリプル</strong>です。たとえば 1 本目が <code>ec:O101 ec:注文者 ec:C001 .</code> にあたります。<strong>リスト 5-2 の 1 行が、この 5 本すべてを説明しています。</strong></p>
   </div>
   <p class="hlr">逆に SQL の <code>ON o.customer_id = c.customer_id</code> は、<strong>クエリを書くたびに同じ対応を書き直している</strong>ことになります。100 本のクエリがあれば 100 回書きます。そして<strong>1 回書き間違えても、SQL はエラーになりません</strong> — 第 2 章と同じ形の事故です。</p>
 </section>

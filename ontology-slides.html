@@ -2724,6 +2724,10 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
       <circle cx="530" cy="146" r="11" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2"/>
       <circle cx="568" cy="176" r="11" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2"/>
       <circle cx="494" cy="182" r="11" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2"/>
+      <rect x="592" y="118" width="80" height="30" rx="7" fill="#fff" stroke="#6b3fa0" stroke-width="1.6"/>
+      <text x="632" y="131" text-anchor="middle" font-size="7.6" font-weight="800" fill="#6b7480">第 10 章の</text>
+      <text x="632" y="143" text-anchor="middle" font-size="8.4" font-weight="900" fill="#4c1d95">① 格納</text>
+      <text x="632" y="160" text-anchor="middle" font-size="7" fill="#6b7480">TBox だけが居る</text>
       <text x="694" y="144" font-size="9" font-weight="700" fill="#1f6f4a">保存はゼロ</text>
       <text x="694" y="159" font-size="8.5" fill="#6b7480">形は TBox が決める</text>
       <text x="694" y="173" font-size="8.5" fill="#6b7480">(第 4〜6 章で書いた語彙)</text>
@@ -2739,6 +2743,9 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
         <path d="M8,4 H-6"/><path d="M-3,1 L-6.5,4 L-3,7"/></g>
       <text x="190" y="245" font-size="12.5" font-weight="800" fill="#7a4a1c">R2RML の対応表</text>
       <text x="190" y="263" font-size="9.5" fill="#96650a">RDB の列 → オントロジーのプロパティ。ここで SPARQL が SQL に翻訳される</text>
+      <rect x="592" y="232" width="80" height="30" rx="7" fill="#fff" stroke="#1f6f4a" stroke-width="1.6"/>
+      <text x="632" y="245" text-anchor="middle" font-size="7.6" font-weight="800" fill="#6b7480">第 10 章の</text>
+      <text x="632" y="257" text-anchor="middle" font-size="8.4" font-weight="900" fill="#155c3c">④ 仮想化</text>
       <text x="694" y="246" font-size="9" font-weight="700" fill="#96650a">人が書くのは</text>
       <text x="694" y="262" font-size="9" font-weight="700" fill="#96650a">これだけ</text>
 
@@ -2756,10 +2763,14 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
         <path d="M-9,0 a9,3.4 0 0 0 18,0"/></g>
       <text x="192" y="325" font-size="14" font-weight="800" fill="#0f3f6b">RDB (物理)</text>
       <text x="192" y="344" font-size="10" fill="#3d4654">customers / orders / refunds — いまのシステムがそのまま使い続ける</text>
+      <rect x="592" y="312" width="80" height="30" rx="7" fill="#f7f8fa" stroke="#6b7480" stroke-width="1.6"/>
+      <text x="632" y="325" text-anchor="middle" font-size="7.6" font-weight="800" fill="#6b7480">第 10 章の</text>
+      <text x="632" y="337" text-anchor="middle" font-size="8.4" font-weight="900" fill="#3d4654">4 層の外</text>
       <text x="694" y="322" font-size="9" font-weight="700" fill="#1c5b9c">データはここだけ</text>
       <text x="694" y="338" font-size="9" fill="#6b7480">1 バイトも動かさない</text>
     </svg>
   </div>
+  <div class="hlr">第 10 章の <strong>② 推論・③ 検証</strong> は、この構成では走りません。推論器は全データをメモリに載せてから動きますが、ABox（実データ）は下の RDB に居続けるからです。このあとのスライドで扱います。</div>
 </section>
 
 <section class="slide">

@@ -327,7 +327,7 @@
   <h1>オントロジーで、<em>意味</em>を機械に渡す</h1>
   <p class="sub">AWS Context Ontology Accelerator / Palantir Foundry・AIP / 自作 Minecraft Agent — 3 つの実装を実機で確かめた記録</p>
   <p class="meta">社内クラウド勉強会 ／ SI部 北村</p>
-  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 89 枚</span></div>
+  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 88 枚</span></div>
 </section>
 
 <section class="slide">
@@ -633,21 +633,6 @@
     <text x="28" y="629" font-size="9.8" font-weight="900" fill="#6b4708">まとめると、オントロジーは「意味を、機械が計算できる形で書いたもの」です</text>
     <text x="28" y="645" font-size="8.6" fill="#3d4654">① 点と線で書き、② 型にまとめ、③ 宣言しておけば機械が導く。<tspan font-weight="800">この 3 つが揃うと、人が書いていない答えを機械が出せます</tspan> — 第 3 章から順に組み立てます。</text>
   </svg>
-  </div>
-</section>
-
-<section class="slide">
-  <div class="eyebrow">ACT 1 — 定義</div>
-  <h2>③ が肝 — ①②だけなら、ただの「線で繋がった図」</h2>
-  <div class="g3">
-    <div class="card blue"><h4>① 点と線で書く</h4><p class="sm">「佐藤さんが注文 #1001 を注文した」を、点（もの）と向きのある線（関係）で書く。線 1 本が <strong>（主語 → 述語 → 目的語）</strong>= トリプル</p></div>
-    <div class="card violet"><h4>② 型にまとめる</h4><p class="sm">佐藤・鈴木・田中は「顧客」。<strong>型に 1 度書けば、その型の全員に効く</strong>。これから増える人にも同じことが言える</p></div>
-    <div class="card green"><h4>③ 機械的に導く</h4><p class="sm">「NSAIDs は妊娠中禁忌」と<strong>上位に 1 度</strong>書けば、ロキソプロフェンにもイブプロフェンにも、<strong>あとから承認された新薬にも</strong>効く</p></div>
-  </div>
-  <p class="hl">点と線で書いて型にまとめるだけなら、<strong>ホワイトボードの関係図や ER 図と大差ありません</strong>。③ の「宣言しておけば機械が導く」が加わって初めて、機械が計算に使えるものになります。</p>
-  <div class="g2">
-    <div class="card red"><h4>RDB で同じことをやると</h4><p class="sm">「何段辿るか」を人が SQL に書く。3 段なら JOIN を 3 回、5 段なら 5 回。<strong>階層が深くなればクエリを直す</strong></p></div>
-    <div class="card green"><h4>オントロジーなら</h4><p class="sm"><strong>分類を書いておくだけ</strong>。段数を問わず機械が辿り、<strong>上位に書いた制約が下位すべてに継承される</strong></p></div>
   </div>
 </section>
 

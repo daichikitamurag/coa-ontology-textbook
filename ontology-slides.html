@@ -1096,6 +1096,10 @@
     </table>
   </div>
   <p class="hl"><strong>④ が本質です。</strong>プロンプトに書いた定義は「LLM が読んで解釈する対象」になります。つまり適用されるかどうかが<strong>確率的</strong>になり、しかも「適用されたか」を<strong>後から機械的に確かめられません</strong>。</p>
+  <div class="card" style="margin-top:16px">
+    <h4>Skills や RAG で渡す方法も、同じところで止まります</h4>
+    <p class="sm">定義書を Markdown にして Skills に置く、検索で引いて渡す（RAG）— どちらも<strong>置き場所をプロンプトの外に出しただけ</strong>で、最後に <strong>LLM が読んで解釈する</strong>点は変わりません。引けるかどうかは検索結果次第なので <strong>100% にはならず、同じ質問でも出力が揺れます</strong>。第 3 部の Minecraft の実測では、<strong>RAG が正しいページを引いていたのに、同じ間違いを出しました</strong>。</p>
+  </div>
   <div class="punch" style="margin-top:16px;padding:24px">
     <span style="font-size:19px;font-weight:900;line-height:1.55">必要なのは、定義を「文章」ではなく<strong>機械が計算に使えるデータ</strong>として書くこと。<br>そうすれば、同じ 1 つの定義を LLM も・推論器も・検証器も・SQL 生成器も参照できます。</span>
   </div>

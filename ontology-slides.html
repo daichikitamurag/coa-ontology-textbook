@@ -337,7 +337,7 @@
   <h1>オントロジーで、<em>意味</em>を機械に渡す</h1>
   <p class="sub">AWS Context Ontology Accelerator / Palantir Foundry・AIP / 自作 Minecraft Agent — 3 つの実装を実機で確かめた記録</p>
   <p class="meta">社内クラウド勉強会 ／ SI部 北村</p>
-  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 98 枚</span></div>
+  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 99 枚</span></div>
 </section>
 
 <section class="slide">
@@ -1300,26 +1300,42 @@ ec:C001 ec:名前 <span class="s">"佐藤 花子"</span> <span class="k">;</span
 ec:O101 ec:返金 [ ec:金額 <span class="n">5500</span> ] .</pre>
         <p class="sm" style="text-align:left;margin-top:9px">URI を付ける必要がない中間的な存在を書くときに使います。<strong>空白ノード (blank node)</strong> と呼びます。いまは「こういう書き方がある」だけで十分で、ACT 6 で本格的に使います。</p>
       </div>
-      <div class="panel" style="margin-top:14px">
-        <p class="ptitle" style="text-transform:none">なぜ URI なのか — 業界で使い回せるようにするため</p>
-        <pre><span class="c"># ① で短く書いた略記</span>
+      <p class="hl">Turtle は<strong>記法</strong>、オントロジーは<strong>中身</strong>です。「オントロジーを Turtle で書く」が正しい言い方になります。</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">ACT 4 — URI</div>
+  <h2>なぜ URI を使うのか</h2>
+  <p class="lead">RDF では主語と述語に <strong>URI</strong> を使います。<code>ec:C001</code> や <code>ec:会員ランク</code> は略記で、本当はもっと長い識別子です。</p>
+  <div class="panel">
+    <p class="ptitle" style="text-transform:none">略記の正体</p>
+    <pre><span class="c"># @prefix で短く書いた略記</span>
 ec:C001 ec:会員ランク <span class="s">"VIP"</span> .
 
 <span class="c"># 本当の姿</span>
 &lt;http://example.com/ec#C001&gt;
   &lt;http://example.com/ec#会員ランク&gt;
   <span class="s">"VIP"</span> .</pre>
-        <p class="sm" style="text-align:left;margin-top:10px">RDF では主語と述語に、文字列ではなく <strong>URI</strong> を使います。理由は、<strong>同じ名前の別物を機械が確実に区別できるようにするため</strong>です。</p>
-        <div class="stack" style="margin-top:11px">
-          <div class="it b"><b>部門をまたいでも別物と分かる</b>「顧客」が営業部と経理部で違うものを指していても、<code>sales#顧客</code> と <code>fin#顧客</code> は別の URI なので機械が区別できます</div>
-          <div class="it b"><b>他社のデータと突き合わせても衝突しない</b>URI にドメインが入るので、名前がぶつかりません</div>
-          <div class="it g"><b>業界標準の用語集をそのまま参照できる</b>医療の SNOMED CT のように公開されている URI があれば、<strong>同じ業界なら定義を作り直さずに使い回せます</strong>。オントロジーが「1 社で書いて終わり」にならないのは、これが理由です</div>
-        </div>
-        <p class="sm" style="text-align:left;margin-top:10px">正直に言うと、URI だけで第 1 部の事故は防げません。あれは「アクティブ顧客」の定義が 2 通りに解釈されたからです。<strong>URI が用意するのは「定義を貼り付ける場所」</strong>。<code>ec:優良顧客</code> という一意な URI があれば、そこに「累計 5 万円以上」をぶら下げられます。<strong>場所を作るのがここまで、実際に貼るのが ACT 5〜6</strong> という分担です。</p>
-      </div>
-      <p class="hl">Turtle は<strong>記法</strong>、オントロジーは<strong>中身</strong>です。「オントロジーを Turtle で書く」が正しい言い方になります。</p>
+  </div>
+  <div class="g3" style="margin-top:18px">
+    <div class="card blue"><h4>① 名前が同じでも、別物と分かる</h4><p class="sm">営業部の「顧客」と経理部の「顧客」が違うものを指していても、<code>sales#顧客</code> と <code>fin#顧客</code> は<strong>別の URI</strong>。機械が取り違えません</p></div>
+    <div class="card blue"><h4>② 他社のデータと混ぜても衝突しない</h4><p class="sm">URI には<strong>ドメインが入っています</strong>。どこの誰が定義した語かが識別子そのものに含まれるので、名前がぶつかりません</p></div>
+    <div class="card green"><h4>③ 業界で共有して使い回せる</h4><p class="sm">医療の SNOMED CT のように<strong>公開されている URI</strong> があれば、そのまま参照できます。<strong>同じ業界なら、定義を作り直さずに使い回せます</strong></p></div>
+  </div>
+  <div class="g2" style="margin-top:18px">
+    <div class="card green">
+      <h4>医療の例 — SNOMED CT / ICD</h4>
+      <p class="sm">「糖尿病」や「妊娠中」に相当する概念に、<strong>業界で一意の識別子</strong>が振られて公開されています。病院やベンダごとに定義し直す必要がありません。第 1 部の NSAIDs の例も、この世界の話です。</p>
+    </div>
+    <div class="card blue">
+      <h4>通信の例 — TM Forum SID / Intent Ontology (TIO)</h4>
+      <p class="sm"><strong>SID</strong> は Party / Product / Service / Resource / Customer / Order といった通信事業者の情報モデルの標準で、TM Forum Open API の土台になっています。<br>
+      さらに <strong>Intent Ontology (TIO)</strong> は、<strong>RDF (Turtle) そのものとして公開</strong>されています。v3.6.0 で <strong>15 モジュール・87 クラス・109 プロパティ</strong>。ネットワークの「意図」を各社が別々に定義せず、<strong>同じ URI を参照します</strong>。</p>
     </div>
   </div>
+  <p class="src">TM Forum Intent Ontology (TIO) v3.6.0 — <a href="https://www.tmforum.org/resources/introductory-guide/tr292-tm-forum-intent-ontology-tio-v3-6-0/" target="_blank" rel="noopener">TR292</a>（normative な RDF / Turtle ファイルとして配布）。モジュール数・クラス数は <a href="https://arxiv.org/abs/2604.27359" target="_blank" rel="noopener">TIO-SHACL (arXiv 2604.27359)</a> の集計。</p>
 </section>
 
 <section class="slide">
@@ -1351,6 +1367,67 @@ ec:累計購入額
 
 <span class="c"># 「優良顧客 = 累計 5 万円以上」を型として書くのは ACT 6。</span>
 <span class="c"># ここではまだ「そういうクラスがある」までしか言っていない。</span></pre>
+        <p class="sm" style="text-align:left;margin:12px 0 0">これを図にすると、こうなります。下半分が、右の ABox に入っているデータです。</p>
+    <svg viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif" style="margin-top:6px">
+      <defs>
+        <marker id="t30v" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto">
+          <path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b3fa0"/></marker>
+        <marker id="t30g" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto">
+          <path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b7480"/></marker>
+        <marker id="t30b" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto">
+          <path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#1c5b9c"/></marker>
+      </defs>
+
+      <text x="16" y="14" font-size="8.6" font-weight="900" fill="#6b3fa0">TBox（定義）— 種類と、その繋がり方 ↓</text>
+
+      <rect x="206" y="22" width="118" height="30" rx="15" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
+      <text x="265" y="41" text-anchor="middle" font-size="10.5" font-weight="800" fill="#4c1d95">ec:優良顧客</text>
+      <path d="M265,54 V80" stroke="#6b3fa0" stroke-width="2" marker-end="url(#t30v)"/>
+      <text x="273" y="70" font-size="7.6" font-family="Menlo,monospace" fill="#6b3fa0">rdfs:subClassOf</text>
+
+      <rect x="206" y="82" width="118" height="30" rx="15" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2.6"/>
+      <text x="265" y="101" text-anchor="middle" font-size="10.5" font-weight="800" fill="#4c1d95">ec:顧客</text>
+
+      <rect x="16" y="82" width="110" height="30" rx="15" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
+      <text x="71" y="101" text-anchor="middle" font-size="10.5" font-weight="800" fill="#4c1d95">ec:注文</text>
+      <path d="M128,97 H198" stroke="#6b3fa0" stroke-width="2" marker-end="url(#t30v)"/>
+      <text x="163" y="91" text-anchor="middle" font-size="7.6" font-family="Menlo,monospace" fill="#6b3fa0">ec:注文者</text>
+
+      <rect x="410" y="84" width="136" height="26" rx="4" fill="#f7f8fa" stroke="#6b7480" stroke-width="1.8"/>
+      <text x="478" y="101" text-anchor="middle" font-size="9" font-weight="700" fill="#3d4654">xsd:decimal</text>
+      <path d="M326,97 H402" stroke="#6b7480" stroke-width="1.8" marker-end="url(#t30g)"/>
+      <text x="364" y="91" text-anchor="middle" font-size="7.6" font-family="Menlo,monospace" fill="#6b7480">ec:累計購入額</text>
+
+      <line x1="8" y1="132" x2="552" y2="132" stroke="#c9ccd2" stroke-width="1.4" stroke-dasharray="6 5"/>
+      <text x="546" y="126" text-anchor="end" font-size="8.6" font-weight="900" fill="#1c5b9c">ABox（データ）— 実際にあるもの ↓</text>
+
+      <rect x="206" y="162" width="118" height="38" rx="19" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2.6"/>
+      <text x="265" y="179" text-anchor="middle" font-size="10.5" font-weight="800" fill="#144a80">ec:C001</text>
+      <text x="265" y="193" text-anchor="middle" font-size="8" fill="#1c5b9c">佐藤 花子</text>
+      <path d="M265,160 V118" stroke="#1c5b9c" stroke-width="2" marker-end="url(#t30b)"/>
+      <text x="273" y="142" font-size="8.6" font-weight="800" font-family="Menlo,monospace" fill="#1c5b9c">a</text>
+
+      <rect x="16" y="164" width="110" height="34" rx="17" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2"/>
+      <text x="71" y="181" text-anchor="middle" font-size="10" font-weight="800" fill="#144a80">ec:O101</text>
+      <text x="71" y="193" text-anchor="middle" font-size="8" fill="#1c5b9c">注文 1 件</text>
+      <path d="M71,162 V118" stroke="#1c5b9c" stroke-width="2" marker-end="url(#t30b)"/>
+      <text x="79" y="142" font-size="8.6" font-weight="800" font-family="Menlo,monospace" fill="#1c5b9c">a</text>
+      <path d="M128,181 H198" stroke="#1c5b9c" stroke-width="1.8" marker-end="url(#t30b)"/>
+      <text x="163" y="175" text-anchor="middle" font-size="7.6" font-family="Menlo,monospace" fill="#1c5b9c">ec:注文者</text>
+
+      <rect x="410" y="166" width="136" height="28" rx="4" fill="#fff" stroke="#1c5b9c" stroke-width="1.8"/>
+      <text x="478" y="184" text-anchor="middle" font-size="8.6" font-weight="700" font-family="Menlo,monospace" fill="#144a80">"82000"^^xsd:decimal</text>
+      <path d="M326,181 H402" stroke="#1c5b9c" stroke-width="1.8" marker-end="url(#t30b)"/>
+      <text x="364" y="175" text-anchor="middle" font-size="7.6" font-family="Menlo,monospace" fill="#1c5b9c">ec:累計購入額</text>
+      <path d="M478,114 V162" stroke="#9aa3af" stroke-width="1.2" stroke-dasharray="3 3"/>
+      <text x="484" y="142" font-size="7.2" fill="#6b7480">この型の値</text>
+
+      <text x="16" y="224" font-size="7.8" fill="#6b7480">丸角 = クラス／個体　角 = データ型／値　矢印 = プロパティ。TBox の矢印の元が domain、先が range です。</text>
+      <rect x="14" y="234" width="532" height="56" rx="7" fill="#fbf7ef" stroke="#a8710f" stroke-width="1.6"/>
+      <text x="26" y="252" font-size="8.8" font-weight="900" fill="#6b4708">上の 3 つを 1 度書けば、下は何人増えても同じ形で入ります。</text>
+      <text x="26" y="267" font-size="8.2" fill="#3d4654">佐藤さんは <tspan font-family="Menlo,monospace">a</tspan> で「ec:顧客 の一種である」と宣言するだけ。累計購入額が数値であることは、</text>
+      <text x="26" y="281" font-size="8.2" fill="#3d4654">TBox の <tspan font-family="Menlo,monospace">rdfs:range xsd:decimal</tspan> が決めています。<tspan font-weight="800">鈴木さんも田中さんも、同じ型に沿って入るだけです。</tspan></text>
+    </svg>
   </div>
   <div class="panel">
     <p class="ptitle">ABox（データ）— これが以降ずっと使うデータ</p>

@@ -386,7 +386,7 @@
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 1 — 動機</div>
+  <div class="eyebrow">第 1 章 — 動機</div>
   <h2>Agent は、社内システムを横断して動く</h2>
   <p class="lead">1 つの Agent が、ERP・CRM・在庫・文書を横断して読み書きする。<strong>そのとき、どのシステムの「顧客」も同じ意味なのか</strong>が問題になります。</p>
   <div class="panel">
@@ -459,7 +459,7 @@
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 1 — 動機</div>
+  <div class="eyebrow">第 1 章 — 動機</div>
   <h2>Agentic AI の前に立つ 3 つの壁</h2>
   <p class="lead">順番はありません。<strong>3 つとも要ります</strong>。今日扱うのは <strong>① 意味の壁</strong>です。</p>
   <div class="panel">
@@ -521,7 +521,7 @@
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 1 — 定義</div>
+  <div class="eyebrow">第 1 章 — 定義</div>
   <h2>オントロジーとは何か</h2>
   <p class="lead"><strong>やっていること 3 つ</strong>で押さえます。</p>
   <div class="panel">
@@ -646,7 +646,7 @@
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 1 — 定義</div>
+  <div class="eyebrow">第 1 章 — 定義</div>
   <h2>「オントロジー」という言葉は、かなり広い</h2>
   <p class="lead">哲学の存在論から、機械可読な公理、RDB のオブジェクト化、「自分で業務を回す基盤」まで、<strong>同じ 1 語で呼ばれています</strong>。噛み合わない議論のほとんどは、お互いが別の段階を指していることが原因です。</p>
   <div class="panel">
@@ -701,7 +701,7 @@
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 1 — 登場人物</div>
+  <div class="eyebrow">第 1 章 — 登場人物</div>
   <h2>この資料に出てくる 3 人</h2>
   <p class="lead">以降、<strong>「LLM」「機械」「人」</strong>を厳密に呼び分けます。<strong>「機械」は LLM ではないソフトウェア</strong> — 決まった手続きで動くプログラムのことです。</p>
   <div class="panel">
@@ -764,7 +764,7 @@
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 1 — 用語</div>
+  <div class="eyebrow">第 1 章 — 用語</div>
   <h2>LLM 単体 と AI Agent は同じものではない</h2>
   <div class="panel">
     <p class="ptitle">LLM 単体 と AI Agent の違い</p>
@@ -909,7 +909,7 @@
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 2 — 前提</div>
+  <div class="eyebrow">第 1 章 — 前提</div>
   <h2>こういうリレーショナルデータベースがあるとします</h2>
   <p class="lead">EC サイトの RDB を、<strong>テーブル 3 つ・顧客 5 人</strong>に絞ったものを想定します。今日は 2026 年 8 月 1 日とします。第 3 部の AWS COA の実機デモも、このデータを使います。</p>
   <div class="panel">
@@ -944,7 +944,7 @@
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 2 — 依頼</div>
+  <div class="eyebrow">第 1 章 — 依頼</div>
   <h2>SQL は書けます。ただし何通りも書けて、どれも動きます</h2>
   <p class="lead">そこへ、営業部から依頼が届きます。<strong>「先月のアクティブな優良顧客の売上をレポートにして」</strong> — さきほどの一文です。SQL を書けば済む話に見えますし、実際に書けます。</p>
   <div class="punch" style="padding:30px 26px">
@@ -960,7 +960,7 @@
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 2 — 4 つの定義</div>
+  <div class="eyebrow">第 1 章 — 4 つの定義</div>
   <h2>この一文には、社内にしか無い定義が 4 つ入っています</h2>
   <p class="lead">この一文の中に、<strong>データベースを見ても分からないもの</strong>が 4 つあります。この 4 つを、以降で 1 つずつ扱います。</p>
   <div class="panel">
@@ -976,7 +976,7 @@
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 2 — 限界</div>
+  <div class="eyebrow">第 1 章 — 限界</div>
   <h2>DDL に書けるのは、置き場所と形だけ</h2>
   <p class="lead">さきほどの 4 つは、<strong>書き忘れではありません</strong>。型・長さ・NULL 可否・外部キーは書けますが、<strong>業務概念を書く場所がそもそも用意されていない</strong>のです。</p>
   <div class="panel">
@@ -1015,7 +1015,7 @@
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 2 — 事故</div>
+  <div class="eyebrow">第 2 章 — 事故</div>
   <h2>同じ依頼に、2 つの答えが出る</h2>
   <p class="lead">では実際に SQL を書いてみます。<strong>まずは人が書いた場合</strong>です — <strong>配属されたばかりで 4 つの定義を知らない担当者（以下「新人」）</strong>と、<strong>定義を知っている人</strong>。同じ依頼から違う数字が出ます。<span class="sm">同じ一文を AI Agent に投げた場合は第 3 部で見ます。<strong>つまずくのは同じ 4 つの言葉です。</strong></span></p>
   <div class="panel">
@@ -1041,7 +1041,7 @@
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 2 — 事故</div>
+  <div class="eyebrow">第 2 章 — 事故</div>
   <h2>89,000 円 と 84,500 円 — どちらもエラーは出ない</h2>
   <div class="g2 vtop">
     <div>  <div class="panel">
@@ -1074,7 +1074,7 @@
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 2 — 何が起きたのか</div>
+  <div class="eyebrow">第 2 章 — 何が起きたのか</div>
   <h2>金額差よりも、違う人を数えていたことが問題</h2>
   <div class="g2">
     <div class="card red"><h4>89,000 円 が数えた人</h4><p class="sm">佐藤 (C001) ・ <strong>高橋 (C004)</strong><br><span class="no">高橋さんは 7/25 に解約済み</span>。それでも last_order_at が 7/20 なので「先月買った人」として通ってしまう</p></div>
@@ -1091,7 +1091,7 @@
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 2 — 別の案</div>
+  <div class="eyebrow">第 2 章 — 別の案</div>
   <h2>「プロンプトに書けばいい」では続かない</h2>
   <p class="lead">ここで多くの人が思いつく解決策があります。<strong>AI に SQL を書かせるなら、定義をプロンプトに書いておけばいい</strong>。実際、小さいうちは動きます。しかし 4 つの理由で続きません。</p>
   <div class="panel">
@@ -1114,7 +1114,7 @@
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 2 — 研究の結果</div>
+  <div class="eyebrow">第 2 章 — 研究の結果</div>
   <h2>研究でも測られています — LLM が書く SQL の正答率</h2>
   <p class="lead">Text-to-SQL の正答率は、<strong>Spider</strong> と <strong>BIRD</strong> という公開ベンチマークで測られています。下は <strong>BIRD</strong>（NeurIPS 2023）の結果 — 実在の企業データベース <strong>95 個・12,751 問</strong>。正答率は、生成した SQL を実行して答えが一致した割合です。</p>
   <div class="panel">
@@ -1143,22 +1143,22 @@
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 3 — 見取り図</div>
+  <div class="eyebrow">第 3 章 — 見取り図</div>
   <h2>4 つの定義を、どの道具で書くのか</h2>
   <p class="lead">ここから道具の話に入りますが、<strong>覚えるべきなのは「どの道具で、4 つのうちどれが書けるのか」だけ</strong>です。この表が、この部の目次そのものです。</p>
   <div class="panel">
     <p class="ptitle">4 つの定義 → 書く場所</p>
     <table class="tw"><thead><tr><th style="width:14%">言葉</th><th style="width:34%">この会社の定義</th><th style="width:30%">どこに書くか</th><th style="width:22%">出てくるところ</th></tr></thead>
-      <tr><td><strong>優良顧客</strong></td><td>累計購入額 50,000 円以上</td><td><strong>OWL</strong> — 列ではなく<strong>型</strong>として定義できる</td><td>ACT 6（このあと）</td></tr>
-      <tr><td><strong>アクティブ</strong></td><td>直近 90 日以内に購入、かつ未解約</td><td>未解約は <strong>OWL</strong>。<span class="no">「直近 90 日」は OWL では書けない</span> → <strong>SPARQL</strong></td><td>ACT 6 → ACT 7</td></tr>
-      <tr><td><strong>売上</strong></td><td>amount − tax − 返金、confirmed のみ</td><td><span class="no">算術は OWL では書けない</span> → <strong>SPARQL</strong></td><td>ACT 7</td></tr>
-      <tr><td><strong>先月</strong></td><td>暦月</td><td><strong>SPARQL</strong>（「今日」を扱えるのはクエリ側だけ）</td><td>ACT 7</td></tr>
+      <tr><td><strong>優良顧客</strong></td><td>累計購入額 50,000 円以上</td><td><strong>OWL</strong> — 列ではなく<strong>型</strong>として定義できる</td><td>第 6 章（このあと）</td></tr>
+      <tr><td><strong>アクティブ</strong></td><td>直近 90 日以内に購入、かつ未解約</td><td>未解約は <strong>OWL</strong>。<span class="no">「直近 90 日」は OWL では書けない</span> → <strong>SPARQL</strong></td><td>第 6 章 → 第 7 章</td></tr>
+      <tr><td><strong>売上</strong></td><td>amount − tax − 返金、confirmed のみ</td><td><span class="no">算術は OWL では書けない</span> → <strong>SPARQL</strong></td><td>第 7 章</td></tr>
+      <tr><td><strong>先月</strong></td><td>暦月</td><td><strong>SPARQL</strong>（「今日」を扱えるのはクエリ側だけ）</td><td>第 7 章</td></tr>
     </table>
   </div>
   <div class="g3" style="margin-top:18px">
-    <div class="card blue"><h4>先に記法を 2 つ</h4><p class="sm"><strong>トリプル</strong>（ACT 3）と <strong>Turtle</strong>（ACT 4）— 定義を書くための紙とペンです</p></div>
-    <div class="card violet"><h4>語彙に意味を与える</h4><p class="sm"><strong>RDFS</strong>（ACT 5）— ラベル・両端・階層。ここが第 3 部で LLM に効いてきます</p></div>
-    <div class="card green"><h4>書いた定義を使う 3 つ</h4><p class="sm"><strong>SPARQL</strong> で引き出し（ACT 7）、<strong>SHACL</strong> で守らせ（ACT 8）、<strong>推論器</strong>で導く（ACT 9）</p></div>
+    <div class="card blue"><h4>先に記法を 2 つ</h4><p class="sm"><strong>トリプル</strong>（第 3 章）と <strong>Turtle</strong>（第 4 章）— 定義を書くための紙とペンです</p></div>
+    <div class="card violet"><h4>語彙に意味を与える</h4><p class="sm"><strong>RDFS</strong>（第 5 章）— ラベル・両端・階層。ここが第 3 部で LLM に効いてきます</p></div>
+    <div class="card green"><h4>書いた定義を使う 3 つ</h4><p class="sm"><strong>SPARQL</strong> で引き出し（第 7 章）、<strong>SHACL</strong> で守らせ（第 8 章）、<strong>推論器</strong>で導く（第 9 章）</p></div>
   </div>
 </section>
 
@@ -1170,7 +1170,7 @@
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 3 — トリプル</div>
+  <div class="eyebrow">第 3 章 — トリプル</div>
   <h2>表の 1 行は、3 語の文に分解できる</h2>
   <p class="lead">さきほどの <code>customers</code> から、佐藤さんの行だけを取り出します。これを日本語の文にばらしてみます。</p>
   <div class="panel">
@@ -1199,7 +1199,7 @@
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 3 — トリプル</div>
+  <div class="eyebrow">第 3 章 — トリプル</div>
   <h2>事実を足すのは、行を足すだけ</h2>
   <p class="lead">RDB なら <code>ALTER TABLE</code> が必要な変更が、トリプルでは<strong>1 行足すだけ</strong>で済みます。スキーマを先に決めなくていい、ということです。</p>
   <div class="panel">    <pre><span class="c"># もともとあった事実</span>
@@ -1213,7 +1213,7 @@
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 3 — トリプル</div>
+  <div class="eyebrow">第 3 章 — トリプル</div>
   <h2>顧客 1 行と注文 1 行が、1 つのグラフになる</h2>
   <p class="lead"><code>customers</code> の 1 行と <code>orders</code> の 1 行を、どちらもトリプルにばらして並べます。<strong>主語と目的語が点、述語が矢印</strong>になり、<code>:C001 → :O101</code> でつながります。</p>
   <div class="panel">    <svg viewBox="0 0 880 320" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
@@ -1265,7 +1265,7 @@
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 4 — Turtle</div>
+  <div class="eyebrow">第 4 章 — Turtle</div>
   <h2>覚えるべき記法は 5 つ</h2>
   <p class="lead">先に句読点だけ。Turtle では <code>.</code>（ピリオド）が<strong>「トリプル 1 本の終わり」</strong>です。改行や空白は自由で、<strong>区切りを決めるのはピリオドだけ</strong>。そのうえで 5 つ覚えれば、この資料のコードは全部読めます。</p>
   <div class="g2 vtop" style="align-items:start">
@@ -1310,13 +1310,13 @@ ec:C001 ec:名前 <span class="s">"佐藤 花子"</span> <span class="k">;</span
   <span class="k">;</span> ec:最終注文日 <span class="s">"2026-07-28"</span>^^xsd:date    <span class="c"># 日付</span>
   <span class="k">;</span> ec:優先対象   <span class="s">"true"</span>^^xsd:boolean       <span class="c"># 真偽値</span>
   .</pre>
-        <p class="sm" style="text-align:left;margin-top:9px">目的語が「値」のとき、その型を <code>^^</code> で指定できます。<strong>この型指定が ACT 6 と ACT 9 で罠になります</strong>ので、ここで覚えてください。</p>
+        <p class="sm" style="text-align:left;margin-top:9px">目的語が「値」のとき、その型を <code>^^</code> で指定できます。<strong>この型指定が 第 6 章 と 第 9 章 で罠になります</strong>ので、ここで覚えてください。</p>
       </div>
       <div class="panel" style="margin-top:14px">
         <p class="ptitle" style="text-transform:none">⑤ [ ] — 名前のない「もの」を作る</p>
         <pre><span class="c"># 「金額 5500 円の返金がある」— 返金そのものに ID を振らない</span>
 ec:O101 ec:返金 [ ec:金額 <span class="n">5500</span> ] .</pre>
-        <p class="sm" style="text-align:left;margin-top:9px">URI を付ける必要がない中間的な存在を書くときに使います。<strong>空白ノード (blank node)</strong> と呼びます。いまは「こういう書き方がある」だけで十分で、ACT 6 で本格的に使います。</p>
+        <p class="sm" style="text-align:left;margin-top:9px">URI を付ける必要がない中間的な存在を書くときに使います。<strong>空白ノード (blank node)</strong> と呼びます。いまは「こういう書き方がある」だけで十分で、第 6 章 で本格的に使います。</p>
       </div>
       <p class="hl">Turtle は<strong>記法</strong>、オントロジーは<strong>中身</strong>です。「オントロジーを Turtle で書く」が正しい言い方になります。</p>
     </div>
@@ -1324,7 +1324,7 @@ ec:O101 ec:返金 [ ec:金額 <span class="n">5500</span> ] .</pre>
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 4 — URI</div>
+  <div class="eyebrow">第 4 章 — URI</div>
   <h2>なぜ URI を使うのか</h2>
   <p class="lead">RDF では主語と述語に <strong>URI</strong> を使います。<code>ec:C001</code> や <code>ec:会員ランク</code> は略記で、本当はもっと長い識別子です。</p>
   <div class="panel">
@@ -1357,7 +1357,7 @@ ec:C001 ec:会員ランク <span class="s">"VIP"</span> .
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 4 — Turtle</div>
+  <div class="eyebrow">第 4 章 — Turtle</div>
   <h2>この資料で使う定義とデータ、全体</h2>
   <p class="lead">左が<strong>定義（TBox）</strong>、右が<strong>データ（ABox）</strong>です。データは顧客 5 人・注文 5 件・返金 1 件。<strong>89,000 / 84,500 も、第 3 部の実機デモも、全部このデータです</strong>。</p>
   <div class="g2 vtop" style="align-items:stretch">
@@ -1384,9 +1384,9 @@ ec:累計購入額
     rdfs:domain ec:顧客 <span class="k">;</span>       <span class="c"># 顧客に付く</span>
     rdfs:range  xsd:decimal .    <span class="c"># 値は数値 (型)</span>
 
-<span class="c"># 「優良顧客 = 累計 5 万円以上」を型として書くのは ACT 6。</span>
+<span class="c"># 「優良顧客 = 累計 5 万円以上」を型として書くのは 第 6 章。</span>
 <span class="c"># ここではまだ「そういうクラスがある」までしか言っていない。</span></pre>
-        <p class="sm" style="text-align:left;margin:12px 0 0">クラス宣言は <code>owl:Class</code> です。RDFS だけで済ませるなら <code>rdfs:Class</code> でも通り、OWL Full の意味論では<strong>この 2 つの外延は同じ</strong>ですが、ACT 6 で OWL の制約（<code>owl:equivalentClass</code> / <code>owl:Restriction</code>）を足し、ACT 9 で推論器 HermiT に渡します。<strong>OWL 2 DL はクラスを <code>rdf:type owl:Class</code> で宣言することを求める</strong>ので、そちらに揃えています。</p>
+        <p class="sm" style="text-align:left;margin:12px 0 0">クラス宣言は <code>owl:Class</code> です。RDFS だけで済ませるなら <code>rdfs:Class</code> でも通り、OWL Full の意味論では<strong>この 2 つの外延は同じ</strong>ですが、第 6 章 で OWL の制約（<code>owl:equivalentClass</code> / <code>owl:Restriction</code>）を足し、第 9 章 で推論器 HermiT に渡します。<strong>OWL 2 DL はクラスを <code>rdf:type owl:Class</code> で宣言することを求める</strong>ので、そちらに揃えています。</p>
     <p class="sm" style="text-align:left;margin:12px 0 0">これを図にすると、こうなります。下半分が、右の ABox に入っているデータです。</p>
     <svg viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif" style="margin-top:6px">
       <defs>
@@ -1455,7 +1455,7 @@ ec:累計購入額
 <span class="k">@prefix</span> xsd: <span class="u">&lt;http://www.w3.org/2001/XMLSchema#&gt;</span> .
 
 <span class="c"># ここにあるのは「データ」だけ。定義は左のブロック。</span>
-<span class="c"># 分ける理由は次のスライド。定義の書き方は ACT 5〜6。</span>
+<span class="c"># 分ける理由は次のスライド。定義の書き方は 第 5〜6 章。</span>
 
 <span class="c"># ── 顧客 5 人 ──────────────────────────────</span>
 ec:C001 <span class="k">a</span> ec:顧客 <span class="k">;</span> ec:名前 <span class="s">"佐藤 花子"</span> <span class="k">;</span> ec:会員ランク <span class="s">"VIP"</span> <span class="k">;</span>
@@ -1507,7 +1507,7 @@ ec:R01  <span class="k">a</span> ec:返金 <span class="k">;</span> ec:対象注
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 4 — Turtle</div>
+  <div class="eyebrow">第 4 章 — Turtle</div>
   <h2>TBox（定義）と ABox（データ）を分ける</h2>
   <p class="lead">形は同じ 3 語の文ですが、性質がまったく違う 2 行があります。</p>
   <div class="panel">
@@ -1519,7 +1519,7 @@ ec:C001 <span class="k">a</span> ec:顧客 .         <span class="c"># ← 「C0
     <div class="card violet"><h4>TBox (Terminological Box) ＝ 定義</h4><p class="sm">クラスやプロパティの定義。<strong>「世界にはどんな種類のものがあるか」</strong><br>狭い意味で「オントロジー」と呼ばれるのは、こちらのほうです。</p></div>
     <div class="card blue"><h4>ABox (Assertional Box) ＝ データ</h4><p class="sm">個々の事実データ。<strong>「実際にどんなものがあるか」</strong><br>さきほど Turtle で書いた顧客 5 人・注文 5 件は、全部こちらです。</p></div>
   </div>
-  <p class="hl">ACT 9 で出てくる推論器は、<strong>TBox と ABox の両方を受け取って、新しい ABox を導き出します</strong>。この関係が推論を理解する鍵になります。</p>
+  <p class="hl">第 9 章 で出てくる推論器は、<strong>TBox と ABox の両方を受け取って、新しい ABox を導き出します</strong>。この関係が推論を理解する鍵になります。</p>
   <div class="card amber" style="margin-top:16px">
     <h4>実務では ABox を手で書きません</h4>
     <p class="sm">さきほど 5 人分を Turtle で書いたのは記法を学ぶためです。実務でやると、<strong>元の DB と Turtle の二重管理</strong>が始まります。AWS COA などが採る方式では、Triple Store に入るのは <strong>TBox と対応表だけ</strong>です。</p>
@@ -1527,9 +1527,9 @@ ec:C001 <span class="k">a</span> ec:顧客 .         <span class="c"># ← 「C0
       <tr><td><span class="ok">クラス定義 <code>ec:顧客 a owl:Class</code></span></td><td><span class="no">佐藤さんの実データ</span></td></tr>
       <tr><td><span class="ok">プロパティ定義 domain / range / label</span></td><td><span class="no">注文 5 件・返金の実データ</span></td></tr>
       <tr><td><span class="ok">階層 <code>rdfs:subClassOf</code></span></td><td><span class="no">— つまり ABox 全体</span></td></tr>
-      <tr><td><span class="ok">RDB との対応表（ACT 11 の R2RML）</span></td><td>ABox は<strong>元の RDB に居続けます</strong></td></tr>
+      <tr><td><span class="ok">RDB との対応表（第 11 章 の R2RML）</span></td><td>ABox は<strong>元の RDB に居続けます</strong></td></tr>
     </table>
-    <p class="sm" style="margin-top:9px">SPARQL を投げた瞬間に SQL へ翻訳して取りに行きます。<strong>保存せずに、あるように見せる</strong>。この方式を <strong>VKG</strong> と呼び、ACT 11 で扱います。</p>
+    <p class="sm" style="margin-top:9px">SPARQL を投げた瞬間に SQL へ翻訳して取りに行きます。<strong>保存せずに、あるように見せる</strong>。この方式を <strong>VKG</strong> と呼び、第 11 章 で扱います。</p>
   </div>
 </section>
 
@@ -1541,7 +1541,7 @@ ec:C001 <span class="k">a</span> ec:顧客 .         <span class="c"># ← 「C0
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 5 — RDFS</div>
+  <div class="eyebrow">第 5 章 — RDFS</div>
   <h2>Turtle だけでは、まだ「表の写し」です</h2>
   <p class="lead">第 4 章までで書けたのは、<strong>表と同じ内容を 3 語の文に並べ替えたもの</strong>です。<code>ec:会員ランク</code> という記号が何を指すのか、その値を業務でどう扱うのかは、<strong>まだどこにも書いていません</strong>。</p>
   <div class="g2 vtop" style="margin-top:16px">
@@ -1558,33 +1558,34 @@ ec:C001 <span class="k">a</span> ec:顧客 .         <span class="c"># ← 「C0
       <tr><td><code>rdfs:comment</code></td><td>注釈</td><td><span class="ok">○</span></td><td><span class="ok">○</span></td><td><span class="no">×</span></td><td><strong>第 1 部の事故そのもの</strong> — 「基準は 90 日」「解約者は除外」を残せる場所ができる</td></tr>
       <tr><td><code>rdfs:domain</code></td><td><strong>公理</strong></td><td><span class="ok">○</span></td><td><span class="ok">○</span></td><td><span class="ok">○</span></td><td>JOIN 問題 — 参照関係が明示される</td></tr>
       <tr><td><code>rdfs:range</code></td><td><strong>公理</strong></td><td><span class="ok">○</span></td><td><span class="ok">○</span></td><td><span class="ok">○</span></td><td>同上 ＋ 値の型の明示</td></tr>
-      <tr><td><code>rdfs:subClassOf</code></td><td><strong>公理</strong></td><td><span class="ok">○</span></td><td><span class="ok">○</span></td><td><span class="ok">○</span></td><td>階層。上位の性質が下位に自動で効く土台（ACT 9 の推論）</td></tr>
+      <tr><td><code>rdfs:subClassOf</code></td><td><strong>公理</strong></td><td><span class="ok">○</span></td><td><span class="ok">○</span></td><td><span class="ok">○</span></td><td>階層。上位の性質が下位に自動で効く土台（第 9 章 の推論）</td></tr>
     </table>
   </div>
   <div class="g2" style="margin-top:16px">
     <div class="card violet"><h4>注釈（label / comment）— 人間と LLM に向けた言葉</h4><p class="sm">人間の言葉と URI の橋渡しをします。<strong>推論器はこれを読みません</strong>が、意味が薄いわけではありません。むしろ第 1 部の事故を防ぐのはこちらです。ただし機械が計算に使える形ではないので、<strong>効かせるには LLM に渡す必要があります</strong> — 第 3 部で COA がこれをプロンプトに入れるのは、そのためです。</p></div>
-    <div class="card green"><h4>公理（domain / range / subClassOf）— 機械が計算に使える意味</h4><p class="sm">推論器が計算に使い、<strong>書いていない事実を導きます</strong>。<code>ec:C001 a ec:優良顧客</code> から <code>ec:C001 a ec:顧客</code> が出てくるのは、<strong>LLM が推測したのではなく機械が導いた結果</strong>です（ACT 9）。</p></div>
+    <div class="card green"><h4>公理（domain / range / subClassOf）— 機械が計算に使える意味</h4><p class="sm">推論器が計算に使い、<strong>書いていない事実を導きます</strong>。<code>ec:C001 a ec:優良顧客</code> から <code>ec:C001 a ec:顧客</code> が出てくるのは、<strong>LLM が推測したのではなく機械が導いた結果</strong>です（第 9 章）。</p></div>
   </div>
   <p class="hl">この章は、<strong>「人間の言葉と機械の形を LLM が対応づけるための橋」</strong>と<strong>「機械が推論するための土台」</strong>を同時に用意します。ただし <strong>「アクティブ顧客とは何か」はまだ書けません</strong> — それには次の OWL が必要です。</p>
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 5 — 注釈</div>
-  <h2>rdfs:label — 記号に人間の言葉を与える</h2>
+  <div class="eyebrow">第 5 章 — 注釈</div>
+  <h2>rdfs:label と rdfs:comment — 呼び方と扱い方を書く</h2>
   <p class="lead">第 2 章で間違えた原因を、並べ直します。<strong>①「直近 90 日」という基準を知らなかった ② <code>churned_at</code>（解約日）という列の存在に気づかなかった ③「売上」が税抜・返金差引後だと知らなかった</strong>。<strong>3 つとも「列の名前を見ただけでは分からない」こと</strong>です。<code>rdfs:label</code> と <code>rdfs:comment</code> は、この情報を<strong>列そのものに貼り付ける</strong>ための語彙です。</p>
   <div class="g2 vtop" style="margin-top:16px;align-items:stretch">
     <div class="panel">
       <p class="ptitle" style="text-transform:none">ラベル — 同じものの「呼び方」を全部ぶら下げる</p>
-      <pre><span class="k">@prefix</span> rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
-<span class="k">@prefix</span> skos: &lt;http://www.w3.org/2004/02/skos/core#&gt; .
+      <pre><span class="k">@prefix</span> skos: &lt;http://www.w3.org/2004/02/skos/core#&gt; .
 
-ec:顧客
-    rdfs:label    <span class="s">"顧客"</span>@ja <span class="k">;</span>          <span class="c"># 正式な呼び方</span>
+<span class="c"># 実務では URI は ASCII が普通です</span>
+<span class="c"># （この資料は読みやすさのため ec:顧客 と日本語で書いています）</span>
+ec:Customer
+    rdfs:label    <span class="s">"顧客"</span>@ja <span class="k">;</span>          <span class="c"># ← ここで初めて日本語が付く</span>
     rdfs:label    <span class="s">"Customer"</span>@en <span class="k">;</span>
     skos:altLabel <span class="s">"取引先"</span>@ja <span class="k">,</span>        <span class="c"># 営業部の言い方</span>
                   <span class="s">"お取引先様"</span>@ja <span class="k">,</span>     <span class="c"># 顧客向け文書</span>
                   <span class="s">"customers"</span>@en .        <span class="c"># DB の表名</span></pre>
-      <p class="sm" style="text-align:left;margin-top:10px"><code>rdfs:label</code> だけだとクラス名の言い換えに見えますが、効くのは<strong>その下です</strong>。社内では同じ顧客を「取引先」とも「お取引先様」とも呼び、DB の表名は <code>customers</code>。<strong>この呼び方すべてが 1 つの URI にぶら下がります</strong>。<br><span class="sm">※ <code>skos:altLabel</code> は厳密には RDFS ではなく SKOS の語彙ですが、呼び方の登録は実務でこれを使います。第 12 章で AWS COA が同義語を入れる先も <code>skos:altLabel</code> です。</span></p>
+      <p class="sm" style="text-align:left;margin-top:10px"><strong>URI が日本語なら label は冗長です。</strong>この資料の <code>ec:顧客</code> に <code>rdfs:label "顧客"@ja</code> を付けても、ほぼ言い換えにしかなりません。ただし実務では URI は ASCII です — 第 12 章で AWS COA が実際に生成したクラスは <code>ind:PreferredCustomer</code> で、日本語は <code>skos:altLabel "優良顧客"</code> として付いていました。<strong>そこでは label と altLabel しか、日本語から辿る手がかりがありません。</strong><br><span class="sm">※ <code>skos:altLabel</code> は厳密には RDFS ではなく SKOS の語彙ですが、呼び方の登録は実務でこれを使います。</span></p>
     </div>
     <div class="panel">
       <p class="ptitle" style="text-transform:none">コメント — その列の「扱い方」を残す</p>
@@ -1602,7 +1603,7 @@ ec:会員ランク
       <p class="sm" style="text-align:left;margin-top:10px">ラベルは名前を与えるだけですが、<code>rdfs:comment</code> は<strong>「この列をどう扱うべきか」を運べます</strong>。<code>@ja</code> / <code>@en</code> は言語タグです。</p>
     </div>
 </div>
-  <p class="hl">右のコメントが書かれていれば、<strong>「30 日くらいかな」と推測する必要がなく</strong>、<code>churned_at</code>（解約日）を見落とすこともありませんでした。左のラベルが書かれていれば、<strong>「取引先」と言われても <code>ec:顧客</code> に行き着けます</strong>。</p>
+  <p class="hl">右のコメントが書かれていれば、<strong>「30 日くらいかな」と推測する必要がなく</strong>、<code>churned_at</code>（解約日）を見落とすこともありませんでした。左のラベルが書かれていれば、<strong>「取引先」と言われても同じクラスに行き着けます</strong>。</p>
   <div class="card amber" style="margin-top:16px">
     <h4>rdfs:comment が地味に重要です</h4>
     <p class="sm">「営業部が四半期ごとに手動更新している」と書いておけば、<strong>この列を信用しすぎてはいけないこと</strong>が、後任者にも、そして LLM にも伝わります。第 6 章で <code>member_rank</code> を使わずに累計購入額で判定する理由が、ここに書いてあることになります。</p>
@@ -1610,7 +1611,7 @@ ec:会員ランク
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 5 — RDFS</div>
+  <div class="eyebrow">第 5 章 — RDFS</div>
   <h2>ラベルと注釈 — 人間の言葉と機械の世界をつなぐ足場</h2>
   <p class="lead"><code>rdfs:label</code> と <code>rdfs:comment</code> は<strong>注釈</strong>です。推論器はここを見ません。<strong>でも LLM は読みます</strong> — 第 3 部でこれが決定的に効いてきます。</p>
   <div class="panel">
@@ -1710,7 +1711,7 @@ ec:会員ランク
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 5 — RDFS</div>
+  <div class="eyebrow">第 5 章 — RDFS</div>
   <h2>domain / range — プロパティに「誰の何か」を書く</h2>
   <div class="g2 vtop">
     <div>  <div class="panel">
@@ -1739,7 +1740,7 @@ ec:法人顧客 <span class="k">a</span> owl:Class <span class="k">;</span> rdfs
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 5 — RDFS</div>
+  <div class="eyebrow">第 5 章 — RDFS</div>
   <h2>subClassOf — 上位に 1 度書けば、下位すべてに効く</h2>
   <div class="panel">    <svg viewBox="0 0 880 434" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
       <defs>
@@ -1810,7 +1811,7 @@ ec:法人顧客 <span class="k">a</span> owl:Class <span class="k">;</span> rdfs
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 6 — OWL</div>
+  <div class="eyebrow">第 6 章 — OWL</div>
   <h2>「優良顧客」を、列ではなく型として定義する</h2>
   <p class="lead">SQL でやろうとすると <code>VIEW</code> にしかなりません。<strong>OWL なら「型」になり、推論器が個体に付与できます</strong>。</p>
   <div class="g2 vtop">
@@ -1846,7 +1847,7 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 6 — OWL</div>
+  <div class="eyebrow">第 6 章 — OWL</div>
   <h2>ルールが示す集合と、列が示す集合はズレる</h2>
   <p class="lead">累計購入額で判定すると 4 人。<code>member_rank</code> 列は 2 人。<strong>鈴木さんと田中さんが、ルール上は優良顧客なのに列では Regular</strong> — 第 2 章の事故の正体がこれです。</p>
   <div class="panel">
@@ -1876,7 +1877,7 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 6 — OWL</div>
+  <div class="eyebrow">第 6 章 — OWL</div>
   <h2>書ける部分だけ書く — 「直近 90 日」は OWL では書けない</h2>
   <div class="panel">
     <p class="ptitle">書ける部分だけ書く — 未解約の表現</p>
@@ -1907,7 +1908,7 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 7 — SPARQL</div>
+  <div class="eyebrow">第 7 章 — SPARQL</div>
   <h2>書いた意味を引き出す</h2>
   <p class="lead">RDB に対する SQL が、RDF に対する SPARQL です。<strong>第 2 章の 84,500 円を、ここで正しく導きます</strong>。</p>
   <div class="g2 vtop">
@@ -1945,7 +1946,7 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 7 — SPARQL</div>
+  <div class="eyebrow">第 7 章 — SPARQL</div>
   <h2>依頼への完全な答え</h2>
   <p class="lead">90 日と未解約が<strong>クエリに明示され、レビュー可能</strong>になりました。答えは <strong>84,500 円</strong>。</p>
   <div class="panel">    <pre><span class="k">PREFIX</span> ec:  <span class="u">&lt;http://example.com/ec#&gt;</span>
@@ -1988,7 +1989,7 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 8 — SHACL</div>
+  <div class="eyebrow">第 8 章 — SHACL</div>
   <h2>ルールを守らせる — 書き込みの関所</h2>
   <p class="lead">推論器が「導く」道具なら、SHACL は<strong>「止める」道具</strong>です。Agent が業務データを書き換える時代には、こちらのほうが先に必要になります。</p>
   <div class="g2 vtop">
@@ -2070,7 +2071,7 @@ ec:返金Shape <span class="k">a</span> sh:NodeShape <span class="k">;</span>
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 9 — 推論器</div>
+  <div class="eyebrow">第 9 章 — 推論器</div>
   <h2>上位に 1 度書けば、下位すべてに効く — 医療の定番例</h2>
   <p class="lead">この図は<strong>第 1 部でも出てきました</strong>。今度は Turtle と推論器の実物つきです。</p>
   <div class="panel">    <svg viewBox="0 0 880 336" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
@@ -2137,7 +2138,7 @@ ec:返金Shape <span class="k">a</span> sh:NodeShape <span class="k">;</span>
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 9 — 推論器</div>
+  <div class="eyebrow">第 9 章 — 推論器</div>
   <h2>誰も書いていない事実が出てくる</h2>
   <div class="g2 vtop">
     <div>  <div class="panel">
@@ -2172,7 +2173,7 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 9 — 推論器</div>
+  <div class="eyebrow">第 9 章 — 推論器</div>
   <h2>依頼を解くのに、どの道具がどこで働いたか</h2>
   <div class="panel">    <svg viewBox="0 0 880 340" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
       <rect x="20" y="20" width="840" height="42" rx="7" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
@@ -2225,7 +2226,7 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 10 — スタック</div>
+  <div class="eyebrow">第 10 章 — スタック</div>
   <h2>オントロジーを動かす 4 層</h2>
   <div class="panel">    <svg viewBox="0 0 880 330" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
       <rect x="20" y="18" width="840" height="66" rx="8" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2"/>
@@ -2259,7 +2260,7 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 11 — VKG</div>
+  <div class="eyebrow">第 11 章 — VKG</div>
   <h2>上はグラフに見え、下は RDB のまま</h2>
   <p class="lead"><code>R2RML</code> という<strong>対応表を書くだけ</strong>。データはコピーしません。SPARQL は実行時に SQL へ翻訳されます。</p>
   <div class="panel">
@@ -2352,7 +2353,7 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 11 — VKG</div>
+  <div class="eyebrow">第 11 章 — VKG</div>
   <h2>外部キーの「値」が、辿れるリンクに変わる — ここが核心</h2>
   <div class="panel">
     <p class="ptitle">外部キーの値を、辿れるリンクに変える — ここが核心</p>
@@ -2437,7 +2438,7 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 11 — VKG</div>
+  <div class="eyebrow">第 11 章 — VKG</div>
   <h2>TBox（定義）と ABox（実データ）— 規模が非対称</h2>
   <p class="lead">定義は数百〜数千トリプル。実データは数億行。<strong>この非対称が、次のスライドの制約を生みます</strong>。</p>
   <div class="panel">
@@ -2487,7 +2488,7 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 11 — VKG</div>
+  <div class="eyebrow">第 11 章 — VKG</div>
   <h2>仮想化を選ぶと、推論が難しくなる</h2>
   <p class="lead">推論器は<strong>全データをメモリに載せて</strong>初めて動きます。仮想化では ABox が DB の中にあるので、条件が揃いません。</p>
   <div class="panel">
@@ -2583,7 +2584,7 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 11 — VKG</div>
+  <div class="eyebrow">第 11 章 — VKG</div>
   <h2>③ が実は一番効く — データを 1 行も読まずにバグを止める</h2>
   <p class="lead">オントロジーは 1 人が一気に書くものではありません。<strong>何人かが何ヶ月かけて足していきます</strong>。そのとき起きることです。</p>
   <div class="panel">
@@ -2657,7 +2658,7 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 12 — COA とは</div>
+  <div class="eyebrow">第 12 章 — COA とは</div>
   <h2>AWS Context Ontology Accelerator</h2>
   <p class="lead">正式名称は <strong>AWS Context Ontology Accelerator</strong>。<strong>買えるマネージドサービスではなく、Apache 2.0 のオープンソース実装</strong>で、自分の AWS に展開して使います。</p>
   <blockquote style="margin:0 0 18px;padding:14px 18px;background:var(--brandsoft);border-left:4px solid var(--brand);border-radius:8px;font-size:14px">An open-source <strong>semantic context layer</strong> for AWS that combines knowledge graphs, formal ontologies, and rule-based systems with modern AI — enabling agents to retrieve context, validate it against business logic, and determine correct actions.</blockquote>
@@ -2675,7 +2676,7 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 12 — 狙い</div>
+  <div class="eyebrow">第 12 章 — 狙い</div>
   <h2>グラウンディング層とは何か</h2>
   <p class="lead">要点は<strong>「同じ層を 2 回使う」</strong>ことです。LLM に渡す材料と、LLM の出力を検査する物差しが<strong>同一のオントロジー</strong>。</p>
   <div class="panel">
@@ -2760,7 +2761,7 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 12 — 全体像</div>
+  <div class="eyebrow">第 12 章 — 全体像</div>
   <h2>構築フェーズとクエリフェーズが、完全に分かれている</h2>
   <p class="lead">そして<strong>推論器と SHACL は構築側にしかありません</strong>。「公理を書いたのに推論されない」はバグではなく設計どおりの挙動です。</p>
   <div class="panel">
@@ -2897,7 +2898,7 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 12 — 全体像</div>
+  <div class="eyebrow">第 12 章 — 全体像</div>
   <h2>AWS 構成 — 公開ソースから実測</h2>
   <div class="panel">
     <p class="ptitle">AWS 構成 — 2 フェーズと共有アーティファクト（公開ソースから実測）</p>
@@ -3032,7 +3033,7 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 12 — 構築</div>
+  <div class="eyebrow">第 12 章 — 構築</div>
   <h2>何が、どの段で、誰によって作られるのか</h2>
   <p class="lead"><strong>AI は確かにオントロジーを作ります。</strong>ただし「どこを」作るのかが直感と違いました — <strong>意味の側は LLM、書式に落とすのは決定論</strong>です。</p>
   <div class="panel">    <svg viewBox="0 0 880 752" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
@@ -3126,7 +3127,7 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 12 — 構築</div>
+  <div class="eyebrow">第 12 章 — 構築</div>
   <h2>Scan の実機 — 全列に AI-generated と確度が付く</h2>
   <div class="panel">
     <p class="ptitle">実機 — customers の列。全列に AI-generated と確度が付き、承認済みになっている</p>
@@ -3224,7 +3225,7 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 12 — 構築</div>
+  <div class="eyebrow">第 12 章 — 構築</div>
   <h2>外部キーまで AI が推論する — 確度 95%</h2>
   <p class="lead">本書は当初「CSV には外部キーが無いので JOIN 経路は導けない」と考えていました。<strong>導けました。</strong>ただし <code>AI_INFERRED</code> であって、<strong>確度つきの推測</strong>です。</p>
   <div class="panel">
@@ -3324,7 +3325,7 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 12 — 構築</div>
+  <div class="eyebrow">第 12 章 — 構築</div>
   <h2>AI が埋めたもの、埋めなかったもの</h2>
   <div class="panel">
     <p class="ptitle">実機が生成した member_rank の定義（そのまま抜粋）</p>
@@ -3339,7 +3340,7 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 12 — 検証</div>
+  <div class="eyebrow">第 12 章 — 検証</div>
   <h2>検証器 10 個 — 公開を止めるのは 3 個だけ</h2>
   <p class="lead">10 個のうち <strong>8 個は条件が COA 側のコードに固定</strong>されています。調べているのは「業務ルールが守られているか」ではなく <strong>「オントロジーが道具として壊れていないか」</strong>です。</p>
   <div class="panel">
@@ -3438,7 +3439,7 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 12 — 検証</div>
+  <div class="eyebrow">第 12 章 — 検証</div>
   <h2>壊してみる — 検証が公開を止めた</h2>
   <p class="lead">第 11 章の仕掛けを実機の提案に貼りました。<strong>1 つずつ見ればどれも正しい定義</strong>です。</p>
   <div class="g2 vtop">
@@ -3508,7 +3509,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 12 — クエリ</div>
+  <div class="eyebrow">第 12 章 — クエリ</div>
   <h2>答え方が 3 通りある — 上から順に試す</h2>
   <div class="panel">
     <p class="ptitle">クエリフェーズ — 3 通りの答え方を、上から順に試す</p>
@@ -3553,7 +3554,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 12 — クエリ</div>
+  <div class="eyebrow">第 12 章 — クエリ</div>
   <h2>指標 (Metric) — 何を登録すると、どこで効くのか</h2>
   <div class="panel">    <svg viewBox="0 0 880 444" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
     <defs><marker id="d30ma" markerWidth="9" markerHeight="9" refX="7.2" refY="3.1" orient="auto"><path d="M0,0 L7.2,3.1 L0,6.2 z" fill="#6b7480"/></marker></defs>
@@ -3630,7 +3631,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 12 — クエリ</div>
+  <div class="eyebrow">第 12 章 — クエリ</div>
   <h2>Standard と Agentic — トグル 1 つで経路が変わる</h2>
   <p class="lead">画面右上の小さなトグルですが、<strong>3 段を順に試すのか、いきなり Tier 3 に入るのか</strong>が変わります。</p>
   <div class="panel">
@@ -3712,7 +3713,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 12 — 実測 ①</div>
+  <div class="eyebrow">第 12 章 — 実測 ①</div>
   <h2>Standard — Tier 2 まで進んで、0 行</h2>
   <p class="lead">質問は<strong>「先月のアクティブな優良顧客の売上をレポートにして」</strong>。正解は <strong>84,500 円</strong>です。</p>
   <div class="panel">
@@ -3723,7 +3724,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 12 — 実測 ①</div>
+  <div class="eyebrow">第 12 章 — 実測 ①</div>
   <h2>生成された SPARQL は、4 つの定義を全部外した</h2>
   <div class="tw">
     <table>
@@ -3740,7 +3741,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 12 — 実測 ②</div>
+  <div class="eyebrow">第 12 章 — 実測 ②</div>
   <h2>Agentic — Tier 1・2 を飛ばして、答えを拒否</h2>
   <div class="panel">
     <p class="ptitle">実機 — Agentic の結果。Tier 3 — Knowledge Retrieval だけが走り、答えを返さなかった</p>
@@ -3750,7 +3751,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 12 — 実測 ③</div>
+  <div class="eyebrow">第 12 章 — 実測 ③</div>
   <h2>空白を 1 つ入れたら、2.06 秒で 84,500 が出た</h2>
   <p class="lead">同じ質問を、同義語の前後に空白を入れて投げ直しました。<strong>変えたのは空白 2 つだけ</strong>です。</p>
   <div class="panel">
@@ -3761,7 +3762,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 12 — 実測</div>
+  <div class="eyebrow">第 12 章 — 実測</div>
   <h2>3 つの経路を並べる — 違うのは通った経路だけ</h2>
   <div class="tw">
     <table>
@@ -3779,7 +3780,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 12 — 原因</div>
+  <div class="eyebrow">第 12 章 — 原因</div>
   <h2>なぜ Tier 1 が当たらなかったのか — 言語ではなく、空白</h2>
   <p class="lead">同義語に「アクティブな優良顧客の売上」を登録し、質問にも<strong>文字列として完全に含まれていました</strong>。それでも当たりませんでした。</p>
   <div class="g2">
@@ -3801,7 +3802,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 12 — 評価</div>
+  <div class="eyebrow">第 12 章 — 評価</div>
   <h2>オントロジーの仕事は 5 つ — 実装済みは 2 つ</h2>
   <p class="lead">「これ、言葉が一致したら保存済みの SQL を流しているだけでは？」<strong>今日の時点では、その通りです。</strong>ただし<strong>未実装であって、設計の誤りではありません</strong>。</p>
   <div class="panel">
@@ -3879,7 +3880,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 12 — 評価</div>
+  <div class="eyebrow">第 12 章 — 評価</div>
   <h2>β版でなければ、オントロジーはどこで効くのか</h2>
   <div class="panel">
     <p class="ptitle">最重要β版でなければ、オントロジーはどこで効くのか</p>
@@ -3955,7 +3956,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 12 — 評価</div>
+  <div class="eyebrow">第 12 章 — 評価</div>
   <h2>LLM の間違いを弾いてくれるのは、役に立っているのか</h2>
   <p class="lead">役に立っています。<strong>ただし弾ける間違いの種類が限られている</strong>ことを、実測がはっきり示しました。</p>
   <div class="panel">
@@ -4025,7 +4026,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 12 — 評価</div>
+  <div class="eyebrow">第 12 章 — 評価</div>
   <h2>指標だけで運用すると、定義は指標の数だけ複製される</h2>
   <div class="panel">    <svg viewBox="0 0 880 501" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
     <defs><marker id="d35ma2" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#a8710f"/></marker></defs>
@@ -4095,7 +4096,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 12 — まとめ</div>
+  <div class="eyebrow">第 12 章 — まとめ</div>
   <h2>この章の評価 — 方向は正しく、構造のグラウンディングは既に効いている</h2>
   <div class="g2">
     <div class="card green"><h4>今日すでに効いていたもの</h4><p class="sm">列名を 1 つも間違えない SPARQL／誘導が推論した JOIN 経路／公開前に矛盾を止める HermiT／権限に合わせて書き換わる SQL／指標に当たったときの 2.06 秒・確信度 100%</p></div>
@@ -4113,7 +4114,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 13 — 課題</div>
+  <div class="eyebrow">第 13 章 — 課題</div>
   <h2>なぜこの形なのか — 組み立てラインの 3 つの断絶</h2>
   <p class="lead">教材は、いまの多くの組織が<strong>データを「組み立てライン」のように扱っている</strong>と指摘します。この直線は<strong>3 箇所で切れている</strong>と。</p>
   <div class="panel">
@@ -4218,7 +4219,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 13 — 全体像</div>
+  <div class="eyebrow">第 13 章 — 全体像</div>
   <h2>Ontology が中心にある</h2>
   <p class="lead">教材にはこう書かれています。「<strong>このコースから 1 つだけ覚えるなら、Ontology がプラットフォーム全体の中心だということ</strong>」。そして説明が本書と重なります — <strong>「業務を構成する名詞と動詞」</strong>。</p>
   <div class="panel">
@@ -4348,7 +4349,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 13 — 3 つの柱</div>
+  <div class="eyebrow">第 13 章 — 3 つの柱</div>
   <h2>Data / Logic / Action — COA に無いものが 1 つある</h2>
   <div class="tw">
     <table>
@@ -4364,7 +4365,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 13 — 構成</div>
+  <div class="eyebrow">第 13 章 — 構成</div>
   <h2>アーキテクチャを層で見る — 右列は COA との対応</h2>
   <div class="panel">
     <p class="ptitle">アーキテクチャを層で見る — 下は配布、上は製品。中心は Ontology Services</p>
@@ -4406,7 +4407,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 13 — 自律</div>
+  <div class="eyebrow">第 13 章 — 自律</div>
   <h2>人と AI の配合を、段階的に動かす</h2>
   <p class="lead">教材は仕事の担い手を <strong>3 種類</strong>に分けます。人の判断・<strong>AI Labor</strong>・従来の計算。そして<strong>配合は固定しない</strong>と言います。</p>
   <div class="panel">
@@ -4460,7 +4461,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 13 — 実物</div>
+  <div class="eyebrow">第 13 章 — 実物</div>
   <h2>ワークショップ① — グラフィカルな UI で ETL を組む</h2>
   <p class="lead">箱を置いて線でつなぎ、変換を検索して選ぶだけ。<strong>コードは 1 行も書きません</strong>。</p>
   <div class="panel">
@@ -4470,7 +4471,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 13 — 実物</div>
+  <div class="eyebrow">第 13 章 — 実物</div>
   <h2>ワークショップ③ — Action を介して、オントロジー越しに書き戻す</h2>
   <p class="lead">ここが第 12 章との一番大きな違いです。<strong>LLM の出力が「文章」ではなく「操作」</strong>になります。</p>
   <div class="panel">
@@ -4537,7 +4538,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 13 — 実物</div>
+  <div class="eyebrow">第 13 章 — 実物</div>
   <h2>完成したアプリ — AI が書き込んだ列がある</h2>
   <div class="panel">
     <p class="ptitle">実機 — 完成した Clinical Trial Recruitment Hub。Eligibility Decision の列は AI が書き込んだもの（Palantir 公式教材より）</p>
@@ -4555,7 +4556,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 14 — 全体像</div>
+  <div class="eyebrow">第 14 章 — 全体像</div>
   <h2>1 枚で全部 — 構成・流れ・誰が何をやっているのか</h2>
   <div class="panel">
     <p class="ptitle">最重要全体像 1 枚 — 構成・流れ・誰が何をやっているのか</p>
@@ -4689,7 +4690,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 14 — 実体</div>
+  <div class="eyebrow">第 14 章 — 実体</div>
   <h2>オントロジーの実体 — NetworkX の 2 つの有向グラフ</h2>
   <p class="lead">実データをそのまま描いたものです。<strong>クラウドは 1 つも使っていません</strong>。</p>
   <div class="panel">
@@ -4800,7 +4801,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 14 — 実体</div>
+  <div class="eyebrow">第 14 章 — 実体</div>
   <h2>実コードは約 40 行</h2>
   <p class="lead"><code>g.add_edge("stone_pickaxe", "cobblestone", relation="material")</code> は <strong>(主語, 述語, 目的語)</strong> — 第 3 章のトリプルと形は同じです。<code>kind</code> は <code>rdf:type</code> にあたります。</p>
   <div class="panel">
@@ -4847,7 +4848,7 @@ ACTION_DEPS: dict[str, list[str]] = {
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 14 — 定義</div>
+  <div class="eyebrow">第 14 章 — 定義</div>
   <h2>オントロジーの定義の仕方が違う</h2>
   <p class="lead">①②は書き方が違うだけで内容は同じ。ところが <strong>③ は種類が違う情報</strong>です。</p>
   <div class="panel">
@@ -4903,7 +4904,7 @@ ACTION_DEPS: dict[str, list[str]] = {
     <text x="484" y="372" font-size="8.2" fill="#6b3fa0"><tspan font-weight="800">dict 1 つで書ける</tspan>。トポロジカルソートにそのまま渡せる</text>
     <rect x="14" y="406" width="852" height="62" rx="8" fill="#fbf7ef" stroke="#a8710f" stroke-width="2.4"/>
     <text x="26" y="426" font-size="10.4" font-weight="900" fill="#6b4708">「オントロジー」は広い言葉です。ここは<tspan font-weight="900">プログラム側に持たせた</tspan>例です。</text>
-    <text x="26" y="444" font-size="8.8" fill="#3d4654">第 0 章で「オントロジーという言葉はかなり広い」と書きました。RDB の隣に置く（第 11 章の VKG）だけでなく、<tspan font-weight="800">実行するプログラムの中に持つ</tspan>やり方もあります。</text>
+    <text x="26" y="444" font-size="8.8" fill="#3d4654">第 1 部で「オントロジーという言葉はかなり広い」と見ました。RDB の隣に置く（第 11 章の VKG）だけでなく、<tspan font-weight="800">実行するプログラムの中に持つ</tspan>やり方もあります。</text>
     <text x="26" y="460" font-size="8.8" fill="#3d4654">代わりに標準・相互運用・形式意味論を手放します。<tspan font-weight="800">得るのは速さと、手続きを書けること</tspan> — だから<tspan font-weight="800">その場の行動を制御できます</tspan>。</text>
   </svg>
   </div>
@@ -4912,7 +4913,7 @@ ACTION_DEPS: dict[str, list[str]] = {
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 14 — 実測</div>
+  <div class="eyebrow">第 14 章 — 実測</div>
   <h2>1 回の実行を追う — LLM が抜かした 2 手を、機械が挿入</h2>
   <div class="panel">
     <p class="ptitle">最重要1 回の実行を追う — LLM が抜かした 2 手を、機械が挿入して 8/8 成功</p>
@@ -4978,7 +4979,7 @@ ACTION_DEPS: dict[str, list[str]] = {
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 14 — 矯正</div>
+  <div class="eyebrow">第 14 章 — 矯正</div>
   <h2>LLM の出力を直す — 2 つの型</h2>
   <div class="panel">
     <p class="ptitle">最重要LLM の出力を直す 2 つの型 — 事前に一括で整えるか、毎ターン止めるか</p>
@@ -5047,7 +5048,7 @@ ACTION_DEPS: dict[str, list[str]] = {
 </section>
 
 <section class="slide">
-  <div class="eyebrow">ACT 14 — 実測</div>
+  <div class="eyebrow">第 14 章 — 実測</div>
   <h2>同じタスクを 3 方式で — RAG は正しいページを引いていた</h2>
   <div class="panel">
     <p class="ptitle">3 方式の実測 — 差は「渡した情報量」ではなく「出力を直せるか」</p>

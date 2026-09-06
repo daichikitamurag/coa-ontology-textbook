@@ -2256,17 +2256,6 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
     </div>
   </div>
   <div class="panel" style="margin-top:16px">
-    <p class="ptitle" style="text-transform:none">SHACL の書き方は、この 4 つだけ</p>
-    <table><thead><tr><th style="width:26%">書き方</th><th style="width:74%">役割</th></tr></thead>
-      <tr><td><code>a sh:NodeShape</code></td><td>「これは検査ルールの束である」という宣言。ルールはこの単位で書きます</td></tr>
-      <tr><td><span class="ok"><code>sh:targetClass</code></span></td><td><strong>誰を検査するか</strong>。たとえば「返金クラスの全インスタンス」</td></tr>
-      <tr><td><code>sh:property [ … ]</code></td><td><strong>どのプロパティについて、何を要求するか</strong>。<code>sh:path</code> で見る先を、<code>sh:minCount</code> で個数を、<code>sh:datatype</code> / <code>sh:minInclusive</code> で値の型と下限を指定します。いくつでも並べられます</td></tr>
-      <tr><td><span class="ok"><code>sh:message</code></span></td><td><strong>違反したら何と言うか</strong>。これが<strong>機械可読な「理由」</strong>になり、Agent が読んで自分で直せます</td></tr>
-    </table>
-    <p class="sm" style="text-align:left;margin-top:10px"><code>sh:property</code> を並べていくだけなので、<strong>ルールを足すのは行を足すこと</strong>です。既存のルールを触る必要がありません。</p>
-  </div>
-  <p class="hl">SQL の <code>CHECK</code> 制約は<strong>同一行しか見られません</strong>。SHACL は「返金額 ≤ 対象注文の金額」のように、<strong>テーブルを跨いだ制約</strong>が書けます。</p>
-  <div class="panel" style="margin-top:16px">
     <p class="ptitle" style="text-transform:none">SHACL が居る場所 — 読む経路ではなく、書き込みの手前</p>
     <svg viewBox="0 0 880 258" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
       <defs>
@@ -2322,6 +2311,7 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
       <text x="24" y="248" font-size="7.8" fill="#6b7480">対象注文 O101 は 44,000 円なので、50,000 円の返金は「返金額 ≤ 注文額」に違反します。</text>
     </svg>
   </div>
+  <p class="hl">SQL の <code>CHECK</code> 制約は<strong>同一行しか見られません</strong>。SHACL は「返金額 ≤ 対象注文の金額」のように、<strong>テーブルを跨いだ制約</strong>が書けます。</p>
 </section>
 
 <section class="slide">
@@ -2396,6 +2386,16 @@ ec:返金Shape <span class="k">a</span> sh:NodeShape <span class="k">;</span>
     </svg>
   </div>
 </div>
+  </div>
+  <div class="panel" style="margin-top:16px">
+    <p class="ptitle" style="text-transform:none">上のコードで使った書き方 — SHACL はこの 4 つだけ</p>
+    <table><thead><tr><th style="width:26%">書き方</th><th style="width:74%">役割</th></tr></thead>
+      <tr><td><code>a sh:NodeShape</code></td><td>「これは検査ルールの束である」という宣言。ルールはこの単位で書きます</td></tr>
+      <tr><td><span class="ok"><code>sh:targetClass</code></span></td><td><strong>誰を検査するか</strong>。たとえば「返金クラスの全インスタンス」</td></tr>
+      <tr><td><code>sh:property [ … ]</code></td><td><strong>どのプロパティについて、何を要求するか</strong>。<code>sh:path</code> で見る先を、<code>sh:minCount</code> で個数を、<code>sh:datatype</code> / <code>sh:minInclusive</code> で値の型と下限を指定します。いくつでも並べられます</td></tr>
+      <tr><td><span class="ok"><code>sh:message</code></span></td><td><strong>違反したら何と言うか</strong>。これが<strong>機械可読な「理由」</strong>になり、Agent が読んで自分で直せます</td></tr>
+    </table>
+    <p class="sm" style="text-align:left;margin-top:10px"><code>sh:property</code> を並べていくだけなので、<strong>ルールを足すのは行を足すこと</strong>です。既存のルールを触る必要がありません。</p>
   </div>
 </section>
 

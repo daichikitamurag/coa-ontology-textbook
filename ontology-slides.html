@@ -337,7 +337,7 @@
   <h1>オントロジーで、<em>意味</em>を機械に渡す</h1>
   <p class="sub">AWS Context Ontology Accelerator / Palantir Foundry・AIP / 自作 Minecraft Agent — 3 つの実装を実機で確かめた記録</p>
   <p class="meta">社内クラウド勉強会 ／ SI部 北村</p>
-  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 109 枚</span></div>
+  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 110 枚</span></div>
 </section>
 
 <section class="slide">
@@ -1772,16 +1772,15 @@ ec:累計購入額
       <text x="14" y="140" font-size="7.8" fill="#6b7480"><tspan font-weight="800" fill="#3d4654">domain は必ずクラス</tspan>、<tspan font-weight="800" fill="#3d4654">range はクラスかデータ型</tspan>。列の数だけ ② ができ、外部キーの数だけ ① ができます。</text>
 
       <rect x="14" y="152" width="532" height="102" rx="8" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
-      <text x="28" y="170" font-size="8.6" font-weight="900" fill="#155c3c">機械が導けること（① の場合）</text>
-      <text x="28" y="188" font-size="8.4" font-family="Menlo,monospace" fill="#3d4654">:O101 ec:注文者 :C001 .</text>
-      <text x="290" y="188" font-size="7.8" fill="#6b7480">← 人が書くのはこの 1 行だけ</text>
-      <path d="M40,196 V212" stroke="#1f6f4a" stroke-width="1.8" marker-end="url(#drg)"/>
-      <text x="54" y="210" font-size="7.8" fill="#1f6f4a">推論器が足す</text>
-      <text x="28" y="230" font-size="8.4" font-family="Menlo,monospace" fill="#155c3c">:O101 a ec:注文 .　　:C001 a ec:顧客 .</text>
-      <text x="28" y="246" font-size="7.8" font-weight="800" fill="#3d4654">型を 1 つも書いていないのに、両端の型が付く</text>
+      <text x="28" y="170" font-size="8.6" font-weight="900" fill="#155c3c">これを書くと決まること — 注文から顧客へ行く道が 1 本に定まる</text>
+      <text x="28" y="190" font-size="8.4" font-family="Menlo,monospace" fill="#3d4654">orders.customer_id = customers.customer_id</text>
+      <path d="M40,198 V214" stroke="#1f6f4a" stroke-width="1.8" marker-end="url(#drg)"/>
+      <text x="54" y="212" font-size="7.8" fill="#1f6f4a">この 1 本に定まるので</text>
+      <text x="28" y="232" font-size="8.2" fill="#155c3c"><tspan font-weight="800">LLM は JOIN 条件を推測しなくてよく</tspan>、</text>
+      <text x="28" y="246" font-size="8.2" fill="#155c3c"><tspan font-weight="800">Ontop は SPARQL を SQL に翻訳できます</tspan>（第 11・12 章）。</text>
 
-      <text x="14" y="276" font-size="7.8" fill="#6b7480">① は<tspan font-weight="800" fill="#3d4654">グラフとして辿れる辺</tspan>になります。第 11 章の「外部キーの値が、</text>
-      <text x="14" y="289" font-size="7.8" fill="#6b7480">辿れるリンクに変わる」はこれのことです。<tspan font-weight="800" fill="#3d4654">これが JOIN の代わりになります</tspan>（第 7 章）。</text>
+      <text x="14" y="276" font-size="7.8" fill="#6b7480">① は<tspan font-weight="800" fill="#3d4654">グラフとして辿れる辺</tspan>になります。第 11 章の「外部キーの値が、辿れる</text>
+      <text x="14" y="289" font-size="7.8" fill="#6b7480">リンクに変わる」はこれのことです。推論器を動かせば型も導かれます（第 9 章）。</text>
     </svg>
       </div>
     </div>
@@ -1835,17 +1834,29 @@ ec:法人顧客 <span class="k">a</span> owl:Class <span class="k">;</span> rdfs
 </section>
 
 <section class="slide">
-  <div class="eyebrow">第 6 章 — OWL</div>
-  <h2>「優良顧客」を、列ではなく型として定義する</h2>
-  <p class="lead">SQL でやろうとすると <code>VIEW</code> にしかなりません。<strong>OWL なら「型」になり、推論器が個体に付与できます</strong>。</p>
-  <div class="g2 vtop">
-    <div>  <div class="panel">
+  <div class="eyebrow">第 6 章 — SQL の限界</div>
+  <h2>SQL では「新しい型」を作れない</h2>
+  <p class="lead">「優良顧客 = 累計購入額 5 万円以上」を SQL で表そうとすると、<code>VIEW</code> になります。条件は 1 箇所に書けたように見えます。</p>
+  <div class="panel">
     <p class="ptitle">SQL でやろうとすると、VIEW にしかならない</p>
     <pre><span class="k">CREATE VIEW</span> good_customers <span class="k">AS</span>
   <span class="k">SELECT</span> * <span class="k">FROM</span> customers <span class="k">WHERE</span> total_purchase &gt;= <span class="n">50000</span>;</pre>
   </div>
-</div>
-    <div>  <div class="panel">
+  <p class="hlr">しかし <code>VIEW</code> は<strong>「型」ではなく「その場の検索結果」</strong>でしかありません。佐藤さんは<strong>「優良顧客」という型になるのではなく、View の結果に現れるだけ</strong>です。</p>
+  <div class="g2" style="margin-top:16px">
+    <div class="card red"><h4>他の場所から名前で指せない</h4><p class="sm">優良顧客だけの割引表を作ろうとしても、SQL の <code>REFERENCES</code> が指せるのは<strong>テーブルだけ</strong>で、View は指せません。顧客テーブル全体を参照するしかありません。</p></div>
+    <div class="card red"><h4>条件が 2 箇所に増える</h4><p class="sm">「優良顧客だけ」を守らせたければ、<code>total_purchase &gt;= 50000</code> を<strong>もう一度どこかに書く</strong>ことになります。営業部が「6 万円に変更」と言えば、両方直すことになります。</p></div>
+  </div>
+  <div class="punch" style="padding:26px 24px">
+    <span style="font-size:20px;font-weight:900;line-height:1.55">欲しいのは <strong>「優良顧客」という名前で参照できる型</strong>です。<br>条件は 1 箇所に書き、<strong>割引表も制約も検査も、その名前を指すだけで済む</strong>形。</span>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">第 6 章 — OWL</div>
+  <h2>OWL なら「型」として書ける</h2>
+  <p class="lead">同じ条件を <strong>クラスの定義</strong>として書きます。<code>owl:equivalentClass</code> は「この条件を満たすものは、すべてこのクラスである」という宣言です。<strong>推論器が個体に型を付与できる</strong>ようになります。</p>
+  <div class="panel">
     <p class="ptitle">優良顧客を「型」として定義する</p>
     <pre><span class="k">@prefix</span> owl: <span class="u">&lt;http://www.w3.org/2002/07/owl#&gt;</span> .
 
@@ -1866,8 +1877,12 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
                   <span class="k">]</span> <span class="k">]</span>
         <span class="k">)</span> <span class="k">]</span> .</pre>
   </div>
-</div>
+  <div class="g3" style="margin-top:16px">
+    <div class="card green"><h4>名前で指せる</h4><p class="sm">割引表も SHACL の検査も、<code>ec:優良顧客</code> という<strong>名前を指すだけ</strong>で済みます</p></div>
+    <div class="card green"><h4>条件は 1 箇所</h4><p class="sm">「6 万円に変更」なら、<strong>この 1 箇所を直すだけ</strong>。参照している側は触りません</p></div>
+    <div class="card green"><h4>型が個体に付く</h4><p class="sm">推論器が <code>:C001 a ec:優良顧客</code> を<strong>導きます</strong>（第 9 章）。人は書きません</p></div>
   </div>
+  <p class="hl">読み方は <code>owl:intersectionOf</code> の 2 つだけです — <strong>① 顧客であって、② 累計購入額が 50000 以上</strong>。入れ子が深いのは、「50000 以上の decimal」という型をその場で作っているからです。</p>
 </section>
 
 <section class="slide">

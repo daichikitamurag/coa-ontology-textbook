@@ -1571,7 +1571,7 @@ ec:C001 <span class="k">a</span> ec:顧客 .         <span class="c"># ← 「C0
 <section class="slide">
   <div class="eyebrow">ACT 5 — 注釈</div>
   <h2>rdfs:label — 記号に人間の言葉を与える</h2>
-  <p class="lead">第 2 章で新人が間違えた原因を、並べ直します。<strong>①「直近 90 日」という基準を知らなかった ② <code>churned_at</code>（解約日）という列の存在に気づかなかった ③「売上」が税抜・返金差引後だと知らなかった</strong>。<strong>3 つとも「列の名前を見ただけでは分からない」こと</strong>です。<code>rdfs:label</code> と <code>rdfs:comment</code> は、この情報を<strong>列そのものに貼り付ける</strong>ための語彙です。</p>
+  <p class="lead">第 2 章で間違えた原因を、並べ直します。<strong>①「直近 90 日」という基準を知らなかった ② <code>churned_at</code>（解約日）という列の存在に気づかなかった ③「売上」が税抜・返金差引後だと知らなかった</strong>。<strong>3 つとも「列の名前を見ただけでは分からない」こと</strong>です。<code>rdfs:label</code> と <code>rdfs:comment</code> は、この情報を<strong>列そのものに貼り付ける</strong>ための語彙です。</p>
   <div class="g2 vtop" style="margin-top:16px;align-items:stretch">
     <div class="panel">
       <p class="ptitle" style="text-transform:none">ラベルを付ける</p>
@@ -1598,7 +1598,7 @@ ec:解約日
       <p class="sm" style="text-align:left;margin-top:10px">ラベルは名前を与えるだけですが、<code>rdfs:comment</code> は<strong>「この列をどう扱うべきか」を運べます</strong>。</p>
     </div>
   </div>
-  <p class="hl">もしこの 2 つが書かれていれば、第 2 章の新人は<strong>「30 日くらいかな」と推測する必要がなく</strong>、<code>churned_at</code>（解約日）を見落とすこともありませんでした。</p>
+  <p class="hl">もしこの 2 つが書かれていれば、<strong>「30 日くらいかな」と推測する必要がなく</strong>、<code>churned_at</code>（解約日）を見落とすこともありませんでした。</p>
   <div class="card amber" style="margin-top:16px">
     <h4>rdfs:comment が地味に重要です</h4>
     <p class="sm">「営業部が四半期ごとに手動更新している」と書いておけば、<strong>この列を信用しすぎてはいけないこと</strong>が、後任者にも、そして LLM にも伝わります。第 6 章で <code>member_rank</code> を使わずに累計購入額で判定する理由が、ここに書いてあることになります。</p>

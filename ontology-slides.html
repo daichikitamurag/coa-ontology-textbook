@@ -1247,31 +1247,60 @@
 
 <section class="slide">
   <div class="eyebrow">ACT 4 — Turtle</div>
-  <h2>記法は 4 つ覚えれば読める</h2>
-  <p class="lead"><code>a</code>（型宣言）、<code>;</code>（主語の省略）、<code>"..."^^型</code>（型付きリテラル）、<code>[ ]</code>（空白ノード）。<strong>これで教科書の全リストが読めます</strong>。</p>
-  <div class="g2 vtop">
-    <div>  <div class="panel">
-    <p class="ptitle">a の使い方 — クラス宣言もインスタンス化も同じ記法</p>
-    <pre><span class="c"># 「顧客」という種類(クラス)を定義する</span>
+  <h2>覚えるべき記法は 5 つ</h2>
+  <p class="lead">先に句読点だけ。Turtle では <code>.</code>（ピリオド）が<strong>「トリプル 1 本の終わり」</strong>です。改行や空白は自由で、<strong>区切りを決めるのはピリオドだけ</strong>。そのうえで 5 つ覚えれば、この資料のコードは全部読めます。</p>
+  <div class="g2 vtop" style="align-items:start">
+    <div>
+      <div class="panel">
+        <p class="ptitle" style="text-transform:none">① @prefix — 長い URI に短い名前を付ける</p>
+        <pre><span class="k">@prefix</span> ec:  &lt;http://example.com/ec#&gt; .
+<span class="k">@prefix</span> xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; .  <span class="c"># 型を書くための語彙</span>
+<span class="k">@prefix</span> owl: &lt;http://www.w3.org/2002/07/owl#&gt; .     <span class="c"># クラスを宣言する語彙</span>
+
+<span class="c"># これで ec:C001 と書けば &lt;http://example.com/ec#C001&gt; の意味になる</span>
+ec:C001 ec:名前 <span class="s">"佐藤 花子"</span> .</pre>
+      </div>
+      <div class="panel" style="margin-top:14px">
+        <p class="ptitle" style="text-transform:none">② a — 「〜の一種である」を表す 1 文字</p>
+        <pre><span class="c"># 「顧客」という種類(クラス)を定義する</span>
 ec:顧客 <span class="k">a</span> owl:Class .
 
 <span class="c"># C001 は「顧客」の一種である と宣言する</span>
 ec:C001 <span class="k">a</span> ec:顧客 .</pre>
-  </div>
-</div>
-    <div>  <div class="panel">
-    <p class="ptitle">セミコロンで主語を省略する</p>
-    <pre><span class="c"># 冗長な書き方</span>
+        <p class="sm" style="text-align:left;margin-top:9px"><code>a</code> は <code>rdf:type</code> の略記。SQL で言えば上が <code>CREATE TABLE</code>、下が <code>INSERT</code> に相当します。RDF では両方を同じ <code>a</code> で書くので、<strong>DDL と DML の区別が要りません</strong>。</p>
+      </div>
+      <div class="panel" style="margin-top:14px">
+        <p class="ptitle" style="text-transform:none">③ ; — 主語を省略して続けて書く</p>
+        <pre><span class="c"># 冗長な書き方</span>
 ec:C001 ec:名前 <span class="s">"佐藤 花子"</span> .
 ec:C001 ec:会員ランク <span class="s">"VIP"</span> .
-ec:C001 ec:累計購入額 <span class="n">82000</span> .
 
-<span class="c"># セミコロンでまとめる (意味は全く同じ)</span>
+<span class="c"># セミコロンでまとめる（意味は全く同じ）</span>
 ec:C001 ec:名前 <span class="s">"佐藤 花子"</span> <span class="k">;</span>
         ec:会員ランク <span class="s">"VIP"</span> <span class="k">;</span>
         ec:累計購入額 <span class="n">82000</span> .</pre>
-  </div>
-</div>
+        <p class="sm" style="text-align:left;margin-top:9px">違いは 1 つだけ。<code>;</code> は「主語はさっきと同じ。次の述語へ」、<code>.</code> は「ここで 1 本おわり」。だから <code>;</code> で繋いだ最後には必ず <code>.</code> が来ます。</p>
+      </div>
+    </div>
+    <div>
+      <div class="panel">
+        <p class="ptitle" style="text-transform:none">④ 型付きリテラル — 値の種類を明示する</p>
+        <pre>ec:C001
+    ec:名前       <span class="s">"佐藤 花子"</span>                <span class="c"># 型なし = 文字列</span>
+  <span class="k">;</span> ec:累計購入額 <span class="s">"82000"</span>^^xsd:decimal      <span class="c"># 10 進数（正確な数）</span>
+  <span class="k">;</span> ec:最終注文日 <span class="s">"2026-07-28"</span>^^xsd:date    <span class="c"># 日付</span>
+  <span class="k">;</span> ec:優先対象   <span class="s">"true"</span>^^xsd:boolean       <span class="c"># 真偽値</span>
+  .</pre>
+        <p class="sm" style="text-align:left;margin-top:9px">目的語が「値」のとき、その型を <code>^^</code> で指定できます。<strong>この型指定が ACT 6 と ACT 9 で罠になります</strong>ので、ここで覚えてください。</p>
+      </div>
+      <div class="panel" style="margin-top:14px">
+        <p class="ptitle" style="text-transform:none">⑤ [ ] — 名前のない「もの」を作る</p>
+        <pre><span class="c"># 「金額 5500 円の返金がある」— 返金そのものに ID を振らない</span>
+ec:O101 ec:返金 [ ec:金額 <span class="n">5500</span> ] .</pre>
+        <p class="sm" style="text-align:left;margin-top:9px">URI を付ける必要がない中間的な存在を書くときに使います。<strong>空白ノード (blank node)</strong> と呼びます。いまは「こういう書き方がある」だけで十分で、ACT 6 で本格的に使います。</p>
+      </div>
+      <p class="hl">Turtle は<strong>記法</strong>、オントロジーは<strong>中身</strong>です。「オントロジーを Turtle で書く」が正しい言い方になります。</p>
+    </div>
   </div>
 </section>
 

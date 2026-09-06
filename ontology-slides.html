@@ -337,7 +337,7 @@
   <h1>オントロジーで、<em>意味</em>を機械に渡す</h1>
   <p class="sub">AWS Context Ontology Accelerator / Palantir Foundry・AIP / 自作 Minecraft Agent — 3 つの実装を実機で確かめた記録</p>
   <p class="meta">社内クラウド勉強会 ／ SI部 北村</p>
-  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 99 枚</span></div>
+  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 108 枚</span></div>
 </section>
 
 <section class="slide">
@@ -846,12 +846,11 @@
   </div>
 </section>
 
-<section class="slide chapter">
-  <div class="part">PART 1</div>
+<section class="slide chapter sub">
+  <div class="part">第 1 章</div>
   <h1>RDB は「置き場所」しか知らない</h1>
-  <p>そして、意味が無いと何が起きるのか。実際に測った 2 つの数字で見ます。</p>
-  <div class="agenda"><span>DDL に書けることの限界</span><span>同じ依頼、2 つの答え</span><span>89,000 と 84,500</span></div>
-  <div class="actnum">2</div>
+  <p>まず題材を置きます。<strong>依頼の一文と、そこに埋まっている 4 つの定義</strong>を確認して、DDL には書く場所が無いことを見ます。</p>
+  <div class="agenda"><span>題材の一文</span><span>題材の RDB</span><span>4 つの定義</span><span>DDL に書けることの限界</span></div>
 </section>
 
 <section class="slide">
@@ -1009,6 +1008,13 @@
   </div>
 </section>
 
+<section class="slide chapter sub">
+  <div class="part">第 2 章</div>
+  <h1>意味が無いと何が起きるか</h1>
+  <p>では実際に SQL を書いてみます。<strong>ここが本書で一番大事な章</strong>です。間違いの起き方が分かれば、あとの章はすべてその対策として読めます。</p>
+  <div class="agenda"><span>定義を知らない人の SQL</span><span>本当に欲しかった SQL</span><span>何が起きたのか</span><span>プロンプトに書く案の限界</span></div>
+</section>
+
 <section class="slide">
   <div class="eyebrow">ACT 2 — 事故</div>
   <h2>同じ依頼に、2 つの答えが出る</h2>
@@ -1133,7 +1139,7 @@
 <section class="slide chapter">
   <div class="part">PART 2</div>
   <h1>意味を書く道具</h1>
-  <p>トリプルから推論器まで。ここは<strong>道具の紹介</strong>です。実装で何が効いて何が効かなかったかは第 3 部で確かめます。</p>
+  <p>まず<strong>第 3 章 トリプル</strong>と<strong>第 4 章 Turtle</strong>で書き方を覚え、そのあと章ごとに道具を 1 つずつ足していきます。実装で何が効いて何が効かなかったかは第 3 部で確かめます。</p>
   <div class="agenda"><span>トリプル</span><span>Turtle</span><span>RDFS</span><span>OWL</span><span>SPARQL</span><span>SHACL</span><span>推論器</span><span>4 層スタック</span><span>VKG</span></div>
   <div class="actnum">3</div>
 </section>
@@ -1156,6 +1162,13 @@
     <div class="card violet"><h4>語彙に意味を与える</h4><p class="sm"><strong>RDFS</strong>（ACT 5）— ラベル・両端・階層。ここが第 3 部で LLM に効いてきます</p></div>
     <div class="card green"><h4>書いた定義を使う 3 つ</h4><p class="sm"><strong>SPARQL</strong> で引き出し（ACT 7）、<strong>SHACL</strong> で守らせ（ACT 8）、<strong>推論器</strong>で導く（ACT 9）</p></div>
   </div>
+</section>
+
+<section class="slide chapter sub">
+  <div class="part">第 3 章</div>
+  <h1>トリプル — 世界を 3 語で書く</h1>
+  <p>まず記法の土台です。表の 1 行を <strong>「誰が・何の・何である」の 3 語</strong>に分解します。並べると、点と矢印のグラフになります。</p>
+  <div class="agenda"><span>表の 1 行を文に分解する</span><span>行ではなくトリプル</span><span>並べるとグラフになる</span></div>
 </section>
 
 <section class="slide">
@@ -1244,6 +1257,13 @@
       <text x="440" y="306" text-anchor="middle" font-size="11.5" fill="#6b7480">丸 = 「もの」 (URI) / 四角 = 「値」 (リテラル) / 矢印 = 述語</text>
     </svg>
   </div>
+</section>
+
+<section class="slide chapter sub">
+  <div class="part">第 4 章</div>
+  <h1>Turtle — トリプルを書く記法</h1>
+  <p>トリプルを実際に書く記法です。覚えるのは 5 つ。あわせて <strong>なぜ URI なのか</strong>と、<strong>定義（TBox）とデータ（ABox）の区別</strong>をここで押さえます。</p>
+  <div class="agenda"><span>記法は 5 つ</span><span>なぜ URI か</span><span>定義とデータ、全体</span><span>TBox と ABox</span></div>
 </section>
 
 <section class="slide">
@@ -1513,6 +1533,13 @@ ec:C001 <span class="k">a</span> ec:顧客 .         <span class="c"># ← 「C0
   </div>
 </section>
 
+<section class="slide chapter sub">
+  <div class="part">第 5 章</div>
+  <h1>RDFS — 語彙に意味を与える</h1>
+  <p>ここまでは<strong>表の写し</strong>でした。ここから記号に意味を付けます。<strong>4 つの定義のうち「優良顧客」の階層</strong>が、この章で書けます。</p>
+  <div class="agenda"><span>rdfs:label / comment</span><span>rdfs:domain / range</span><span>rdfs:subClassOf</span></div>
+</section>
+
 <section class="slide">
   <div class="eyebrow">ACT 5 — RDFS</div>
   <h2>ラベルと注釈 — 人間の言葉と機械の世界をつなぐ足場</h2>
@@ -1705,6 +1732,13 @@ ec:法人顧客 <span class="k">a</span> rdfs:Class <span class="k">;</span> rdf
   </div>
 </section>
 
+<section class="slide chapter sub">
+  <div class="part">第 6 章</div>
+  <h1>OWL — 型とルールを定義する</h1>
+  <p><strong>「優良顧客 = 累計 5 万円以上」</strong>を、列ではなく<strong>型</strong>として書きます。同時に、OWL では書けないもの（「直近 90 日」と算術）もここで分かります。</p>
+  <div class="agenda"><span>列では作れない型</span><span>ルールと列のズレ</span><span>書ける範囲・書けない範囲</span></div>
+</section>
+
 <section class="slide">
   <div class="eyebrow">ACT 6 — OWL</div>
   <h2>「優良顧客」を、列ではなく型として定義する</h2>
@@ -1795,6 +1829,13 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
   <p class="hl">だから「直近 90 日」は <strong>SPARQL の FILTER / SHACL / バッチ</strong>の担当になります。<strong>オントロジーで全部解こうとしないこと</strong>が、実務では効きます。</p>
 </section>
 
+<section class="slide chapter sub">
+  <div class="part">第 7 章</div>
+  <h1>SPARQL — 書いた意味を引き出す</h1>
+  <p>RDB に対する SQL が、RDF に対する SPARQL です。<strong>OWL で書けなかった「直近 90 日」と「売上」をここで足して、84,500 円を出します</strong>。</p>
+  <div class="agenda"><span>穴あきトリプルを並べる</span><span>JOIN を書かない</span><span>逆向き ^ と多段 / +</span><span>依頼への完全な答え</span></div>
+</section>
+
 <section class="slide">
   <div class="eyebrow">ACT 7 — SPARQL</div>
   <h2>書いた意味を引き出す</h2>
@@ -1867,6 +1908,13 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
   <span class="k">BIND</span>(?amt - ?tax - <span class="k">COALESCE</span>(?ref, <span class="n">0</span>) <span class="k">AS</span> ?net)
 }</pre>
   </div>
+</section>
+
+<section class="slide chapter sub">
+  <div class="part">第 8 章</div>
+  <h1>SHACL — ルールを守らせる</h1>
+  <p>推論器が「導く」道具なら、SHACL は<strong>「止める」</strong>道具です。Agent が業務データを書き換える時代には、こちらのほうが先に必要になります。</p>
+  <div class="agenda"><span>守らせたいルール</span><span>Agent が暴走したとき</span><span>OWL との決定的な違い</span></div>
 </section>
 
 <section class="slide">
@@ -1942,6 +1990,13 @@ ec:返金Shape <span class="k">a</span> sh:NodeShape <span class="k">;</span>
   </div>
 </div>
   </div>
+</section>
+
+<section class="slide chapter sub">
+  <div class="part">第 9 章</div>
+  <h1>HermiT — 書いてない事実を導く</h1>
+  <p><strong>誰も書いていない事実</strong>が出てきます。推論器は TBox と ABox の両方を受け取って、新しい ABox を導き出します。</p>
+  <div class="agenda"><span>階層は自動で遡る</span><span>入力と出力</span><span>推論器がやらないこと</span><span>どの道具がどこで働いたか</span></div>
 </section>
 
 <section class="slide">
@@ -2092,6 +2147,13 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
   </div>
 </section>
 
+<section class="slide chapter sub">
+  <div class="part">第 10 章</div>
+  <h1>4 層のスタック — 誰が何を動かすのか</h1>
+  <p>ここまでの道具が<strong>どの層で動くのか</strong>を 1 枚に置きます。そして実務の最大の分岐 — <strong>データを「移すか、移さないか」</strong>へ入ります。</p>
+  <div class="agenda"><span>4 層のスタック</span><span>移すか、移さないか</span></div>
+</section>
+
 <section class="slide">
   <div class="eyebrow">ACT 10 — スタック</div>
   <h2>オントロジーを動かす 4 層</h2>
@@ -2119,12 +2181,11 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
   </div>
 </section>
 
-<section class="slide chapter">
-  <div class="part">PART 2</div>
+<section class="slide chapter sub">
+  <div class="part">第 11 章</div>
   <h1>VKG — RDB を 1 バイトも動かさない</h1>
   <p>「既存 DB を全部 RDF 化するコスト」という最大の壁を、丸ごと回避する技術です。第 3 部の AWS COA と Palantir は、どちらもこの考え方の上に立っています。</p>
   <div class="agenda"><span>対応表を書くだけ</span><span>外部キーが矢印になる</span><span>TBox と ABox</span><span>推論が難しくなる</span><span>TBox 検査だけに使う</span></div>
-  <div class="actnum">11</div>
 </section>
 
 <section class="slide">
@@ -2518,7 +2579,7 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
 </section>
 
 <section class="slide chapter">
-  <div class="part">PART 3</div>
+  <div class="part">PART 3 ・ 第 12 章</div>
   <h1>AWS Context Ontology Accelerator</h1>
   <p>ここから実機です。自分の AWS に展開して、デモ用データを入れ、実際に質問を投げた記録です。<strong>数値はすべて実測</strong>です。</p>
   <div class="agenda"><span>COA とは</span><span>グラウンディング層</span><span>構築フェーズ</span><span>検証器 10 個</span><span>クエリの 3 経路</span><span>実測 3 回</span><span>β版で欠けているもの</span></div>
@@ -3974,7 +4035,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide chapter">
-  <div class="part">PART 3</div>
+  <div class="part">PART 3 ・ 第 13 章</div>
   <h1>Palantir Foundry / AIP</h1>
   <p>もう 1 つの実装。オントロジーを製品の中心に据えている代表例です。公式教材 3 コースから骨格を整理しました。</p>
   <div class="agenda"><span>何を解こうとしているのか</span><span>Ontology が中心</span><span>3 つの柱</span><span>アーキテクチャ</span><span>人と AI の配合</span><span>ワークショップ</span></div>
@@ -4416,7 +4477,7 @@ ind:customers_signedUpAt <span class="k">a</span> owl:DatatypeProperty <span cla
 </section>
 
 <section class="slide chapter">
-  <div class="part">PART 3</div>
+  <div class="part">PART 3 ・ 第 14 章</div>
   <h1>Minecraft オントロジー Agent</h1>
   <p>3 つめは<strong>自分で作ったもの</strong>。Node.js 1 本・Python 1 本・ローカル LLM 1 本、<strong>約 1,800 行で全部読めます</strong>。</p>
   <div class="agenda"><span>全体像 1 枚</span><span>オントロジーの実体</span><span>定義の仕方が違う</span><span>1 回の実行</span><span>矯正の 2 つの型</span><span>3 方式の実測</span></div>

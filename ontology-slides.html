@@ -517,7 +517,7 @@
   <p class="lead"><strong>やっていること 3 つ</strong>で押さえます。</p>
   <div class="panel">
     <p class="ptitle">オントロジーとは何か — 点と線で書き、型にまとめ、機械的に導く</p>
-    <svg viewBox="0 0 880 630" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+    <svg viewBox="0 0 880 668" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
     <defs>
       <marker id="d3z0a0" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#1c5b9c"/></marker>
       <marker id="d3z0a2" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#6b3fa0"/></marker>
@@ -584,7 +584,13 @@
     <text x="52" y="278" font-size="8.2" fill="#fff" opacity="0.9">この図は第 9 章で、Turtle と推論器つきでもう一度出てきます（図 9-1）</text>
     <text x="22" y="302" font-size="9.4" font-weight="900" fill="#1f6f4a">① 人が書くこと</text>
     <text x="604" y="302" font-size="9.4" font-weight="900" fill="#b3261e">② 機械が導くこと</text>
-    <line x1="586" y1="292" x2="586" y2="510" stroke="#e3e7ed" stroke-width="1.4"/>
+    <rect x="604" y="310" width="254" height="56" rx="7" fill="#f7f8fa" stroke="#9aa3af" stroke-width="1.6"/>
+    <text x="615" y="324" font-size="7.8" font-weight="800" fill="#6b7480">患者の側も、同じように点と線で書く</text>
+    <rect x="613" y="330" width="98" height="18" rx="5" fill="#fff" stroke="#6b7480" stroke-width="1.6"/>
+    <text x="662" y="343" text-anchor="middle" font-size="8" font-weight="800" fill="#3d4654">田中さん（患者）</text>
+    <text x="721" y="343" font-size="7.6" fill="#6b7480">← 妊娠中であることを 1 行書くだけ</text>
+                        <text x="615" y="360" font-size="7.6" font-family="Menlo,monospace" fill="#6b3fa0">:田中 :state :妊娠 .</text>
+    <line x1="586" y1="292" x2="586" y2="596" stroke="#e3e7ed" stroke-width="1.4"/>
     <rect x="214.0" y="312" width="176" height="24" rx="6" fill="#f7f8fa" stroke="#6b7480" stroke-width="2"/>
     <text x="302.0" y="328.0" text-anchor="middle" font-size="9.2" font-weight="800" fill="#6b7480">医薬品</text>
     <path d="M302.0,372 V340" stroke="#1f6f4a" stroke-width="2" marker-end="url(#d3z0a3)"/>
@@ -609,25 +615,23 @@
     <path d="M376.0,506 V492" stroke="#1f6f4a" stroke-width="1.8"/>
     <path d="M302.0,492 V482" stroke="#1f6f4a" stroke-width="2" marker-end="url(#d3z0a3)"/>
     <text x="22" y="562" font-size="8.6" font-weight="900" fill="#b3261e">↑ この 4 つすべてに禁忌が効く。<tspan font-weight="400" fill="#6b7480">誰も 1 行も書いていない</tspan></text>
-    <rect x="604" y="312" width="254" height="52" rx="7" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
-    <text x="615" y="329" font-size="9.2" font-weight="900" fill="#6b3fa0">問い</text>
-    <text x="615" y="344" font-size="8.2" fill="#3d4654">妊娠中の患者に、</text>
-    <text x="615" y="357" font-size="8.2" fill="#3d4654">ロキソプロフェンを処方していいか？</text>
-    <rect x="604" y="374" width="254" height="96" rx="7" fill="#fdf3f2" stroke="#b3261e" stroke-width="2"/>
-    <text x="615" y="391" font-size="9.2" font-weight="900" fill="#b3261e">答え： ✗ 禁忌</text>
-    <text x="615" y="406" font-size="8.2" fill="#3d4654">機械が辿った道</text>
-    <text x="615" y="419" font-size="8.2" fill="#3d4654"><tspan font-weight="800">ロキソプロフェン</tspan> は <tspan font-weight="800">NSAIDs</tspan></text>
-    <text x="615" y="432" font-size="8.2" fill="#3d4654"><tspan font-weight="800">NSAIDs</tspan> は妊娠中禁忌</text>
-    <text x="615" y="445" font-size="8.2" fill="#3d4654">→ <tspan font-weight="800" fill="#b3261e">ロキソプロフェンも妊娠中禁忌</tspan></text>
-    <text x="615" y="464" font-size="7.6" fill="#6b7480">この結論はどこにも書かれていない</text>
-    <text x="604" y="490" font-size="7.8" fill="#6b7480">辿った道が残るので<tspan font-weight="800">「なぜ禁忌か」を説明できます</tspan>。</text>
-    <text x="604" y="503" font-size="7.8" fill="#6b7480">監査で問われても根拠を出せる形です。</text>
-    <text x="604" y="520" font-size="7.8" fill="#6b7480">新薬が承認されても、書くのは</text>
-    <text x="604" y="533" font-size="7.6" font-family="Menlo,monospace" fill="#1f6f4a">rdfs:subClassOf :NSAIDs</text>
-    <text x="604" y="546" font-size="7.8" fill="#6b7480">の 1 行だけ。<tspan font-weight="800">禁忌は書きません</tspan>。</text>
-    <rect x="14" y="574" width="852" height="44" rx="8" fill="#fbf7ef" stroke="#a8710f" stroke-width="2.2"/>
-    <text x="28" y="593" font-size="9.8" font-weight="900" fill="#6b4708">まとめると、オントロジーは「意味を、機械が計算できる形で書いたもの」です</text>
-    <text x="28" y="609" font-size="8.6" fill="#3d4654">① 点と線で書き、② 型にまとめ、③ 宣言しておけば機械が導く。<tspan font-weight="800">この 3 つが揃うと、人が書いていない答えを機械が出せます</tspan> — 第 3 章から順に組み立てます。</text>
+    <text x="22" y="580" font-size="7.8" fill="#6b7480">新薬が承認されても、書くのは <tspan font-family="Menlo,monospace" fill="#1f6f4a">rdfs:subClassOf :NSAIDs</tspan> の 1 行だけ。<tspan font-weight="800">禁忌は書きません</tspan>。</text>
+    <rect x="604" y="376" width="254" height="52" rx="7" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
+    <text x="615" y="393" font-size="9.2" font-weight="900" fill="#6b3fa0">問い</text>
+    <text x="615" y="408" font-size="8.2" fill="#3d4654">田中さんに、</text>
+    <text x="615" y="421" font-size="8.2" fill="#3d4654">ロキソプロフェンを処方していいか？</text>
+    <rect x="604" y="438" width="254" height="96" rx="7" fill="#fdf3f2" stroke="#b3261e" stroke-width="2"/>
+    <text x="615" y="455" font-size="9.2" font-weight="900" fill="#b3261e">答え： ✗ 禁忌</text>
+    <text x="615" y="470" font-size="8.2" fill="#3d4654">機械が辿った道</text>
+    <text x="615" y="483" font-size="8.2" fill="#3d4654"><tspan font-weight="800">ロキソプロフェン</tspan> は <tspan font-weight="800">NSAIDs</tspan></text>
+    <text x="615" y="496" font-size="8.2" fill="#3d4654"><tspan font-weight="800">NSAIDs</tspan> は妊娠中禁忌</text>
+    <text x="615" y="509" font-size="8.2" fill="#3d4654">→ <tspan font-weight="800" fill="#b3261e">田中さんには禁忌</tspan></text>
+    <text x="615" y="528" font-size="7.6" fill="#6b7480">この結論はどこにも書かれていない</text>
+    <text x="604" y="554" font-size="7.8" fill="#6b7480">辿った道が残るので<tspan font-weight="800">「なぜ禁忌か」を説明できます</tspan>。</text>
+    <text x="604" y="567" font-size="7.8" fill="#6b7480">監査で問われても根拠を出せる形です。</text>
+                <rect x="14" y="610" width="852" height="44" rx="8" fill="#fbf7ef" stroke="#a8710f" stroke-width="2.2"/>
+    <text x="28" y="629" font-size="9.8" font-weight="900" fill="#6b4708">まとめると、オントロジーは「意味を、機械が計算できる形で書いたもの」です</text>
+    <text x="28" y="645" font-size="8.6" fill="#3d4654">① 点と線で書き、② 型にまとめ、③ 宣言しておけば機械が導く。<tspan font-weight="800">この 3 つが揃うと、人が書いていない答えを機械が出せます</tspan> — 第 3 章から順に組み立てます。</text>
   </svg>
   </div>
 </section>

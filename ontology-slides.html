@@ -337,7 +337,7 @@
   <h1>オントロジーで、<em>意味</em>を機械に渡す</h1>
   <p class="sub">AWS Context Ontology Accelerator / Palantir Foundry・AIP / 自作 Minecraft Agent — 3 つの実装を実機で確かめた記録</p>
   <p class="meta">社内クラウド勉強会 ／ SI部 北村</p>
-  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 110 枚</span></div>
+  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 111 枚</span></div>
 </section>
 
 <section class="slide">
@@ -2007,45 +2007,71 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
   <div class="part">第 7 章</div>
   <h1>SPARQL <span style="font-size:.62em;font-weight:700;opacity:.72">(SPARQL Protocol and RDF Query Language)</span> — 書いた意味を引き出す</h1>
   <p>RDB に対する SQL が、RDF に対する SPARQL です。<strong>OWL で書けなかった「直近 90 日」と「売上」をここで足して、84,500 円を出します</strong>。</p>
-  <div class="agenda"><span>穴あきトリプルを並べる</span><span>JOIN を書かない</span><span>逆向き ^ と多段 / +</span><span>依頼への完全な答え</span></div>
+  <div class="agenda"><span>穴あきトリプルを並べる</span><span>JOIN を書かない</span><span>依頼への完全な答え</span></div>
 </section>
 
 <section class="slide">
   <div class="eyebrow">第 7 章 — SPARQL</div>
-  <h2>書いた意味を引き出す</h2>
-  <p class="lead">RDB に対する SQL が、RDF に対する SPARQL です。<strong>第 2 章の 84,500 円を、ここで正しく導きます</strong>。</p>
-  <div class="g2 vtop">
-    <div>  <div class="panel">
-    <p class="ptitle">いちばん簡単な SPARQL</p>
-    <pre><span class="k">PREFIX</span> ec: <span class="u">&lt;http://example.com/ec#&gt;</span>
+  <h2>SPARQL は「穴あきトリプル」を並べるだけ</h2>
+  <p class="lead">考え方は単純です。<strong>トリプルの一部を変数（<code>?</code> 付き）にして並べる。合致するものを探してくる。</strong>それだけです。</p>
+  <div class="panel">
+  <p class="ptitle">いちばん簡単な SPARQL</p>
+  <pre><span class="k">PREFIX</span> ec: <span class="u">&lt;http://example.com/ec#&gt;</span>
 
 <span class="k">SELECT</span> ?name <span class="k">WHERE</span> {
-  ?c <span class="k">a</span> ec:顧客 <span class="k">;</span>          <span class="c"># 「顧客であるもの」を ?c とする</span>
-     ec:名前 ?name .        <span class="c"># その名前を ?name とする</span>
+?c <span class="k">a</span> ec:顧客 <span class="k">;</span>          <span class="c"># 「顧客であるもの」を ?c とする</span>
+   ec:名前 ?name .        <span class="c"># その名前を ?name とする</span>
 }</pre>
-  </div>
 </div>
-    <div>  <div class="panel">
-    <p class="ptitle">逆向き (^) と多段 (/, +)</p>
-    <pre><span class="c"># ① 逆向き: ^ を付けると矢印を逆に辿れる</span>
-<span class="k">SELECT</span> ?order <span class="k">WHERE</span> {
-  ec:C001 <span class="b">^ec:注文者</span> ?order .   <span class="c"># 「C001 を注文者とする注文」</span>
-}
-
-<span class="c"># ② 多段: / で経路を繋ぐ</span>
-<span class="k">SELECT</span> ?amt <span class="k">WHERE</span> {
-  ec:C001 <span class="b">^ec:注文者/ec:金額</span> ?amt .   <span class="c"># 顧客→注文→金額 を 1 行で</span>
-}
-
-<span class="c"># ③ 再帰: + で「1 回以上繰り返す」</span>
-<span class="k">SELECT</span> ?sub <span class="k">WHERE</span> {
-  ec:田中 <span class="b">ec:部下+</span> ?sub .   <span class="c"># 部下の部下の部下… を全部</span>
-}
-<span class="c">#   SQL なら WITH RECURSIVE が必要な処理が、記号 1 つで済む</span></pre>
+  <div class="panel" style="margin-top:14px">
+    <p class="ptitle" style="text-transform:none">結果 — HTTP で問い合わせたときに返ってくる JSON (SPARQL Results JSON)</p>
+    <pre>{
+  <span class="s">"head"</span>: { <span class="s">"vars"</span>: [ <span class="s">"name"</span> ] },   <span class="c"># ← 変数名。? が取れている</span>
+  <span class="s">"results"</span>: {
+    <span class="s">"bindings"</span>: [
+      { <span class="s">"name"</span>: { <span class="s">"type"</span>: <span class="s">"literal"</span>, <span class="s">"value"</span>: <span class="s">"佐藤 花子"</span> } },
+      { <span class="s">"name"</span>: { <span class="s">"type"</span>: <span class="s">"literal"</span>, <span class="s">"value"</span>: <span class="s">"鈴木 一郎"</span> } },
+      { <span class="s">"name"</span>: { <span class="s">"type"</span>: <span class="s">"literal"</span>, <span class="s">"value"</span>: <span class="s">"田中 太郎"</span> } },
+      { <span class="s">"name"</span>: { <span class="s">"type"</span>: <span class="s">"literal"</span>, <span class="s">"value"</span>: <span class="s">"高橋 実"</span> } },
+      { <span class="s">"name"</span>: { <span class="s">"type"</span>: <span class="s">"literal"</span>, <span class="s">"value"</span>: <span class="s">"伊藤 桃子"</span> } }
+    ]
+  }
+}</pre>
+    <p class="sm" style="text-align:left;margin-top:10px">形は単純です。<code>head.vars</code> に<strong>列名</strong>が並び、<code>results.bindings</code> に<strong>行</strong>が並びます。SQL の結果セットと同じ構造だと思って構いません。<code>SELECT</code> に書いた変数名がそのまま列名になり（<code>?</code> は取れます）、<strong><code>FROM</code> も <code>JOIN</code> も書いていないのに顧客 5 人が返っています</strong>。</p>
   </div>
-</div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">第 7 章 — SPARQL</div>
+  <h2>なぜ JOIN を書かなくていいのか</h2>
+  <p class="lead">「顧客の名前と、その注文の金額」を取ってみます。<strong>返ってくるものは同じ 5 行</strong>です。違うのは書き方だけです。</p>
+  <div class="g2 vtop">
+    <div class="panel">
+      <p class="ptitle" style="text-transform:none">SQL — JOIN 条件を書く</p>
+      <pre><span class="k">SELECT</span> c.name, o.amount
+<span class="k">FROM</span> customers c
+<span class="k">JOIN</span> orders o
+  <span class="k">ON</span> o.customer_id = c.customer_id;
+<span class="c">-- ↑ この対応を人間が知っている必要がある</span></pre>
+    </div>
+    <div class="panel">
+      <p class="ptitle" style="text-transform:none">SPARQL — 変数を共有するだけ</p>
+      <pre><span class="k">SELECT</span> ?name ?amt <span class="k">WHERE</span> {
+  ?c ec:名前 ?name .
+  ?o ec:注文者 ?c <span class="k">;</span>
+     ec:金額 ?amt .
+}
+<span class="c"># ?c を共有 = これが JOIN の代わり</span></pre>
+    </div>
   </div>
-  <p class="hlg"><code>^</code>（逆向き）と <code>/</code> <code>+</code>（多段）が SQL に無いところです。<strong>「何段辿るか」を書かずに辿れます</strong>。</p>
+  <div class="panel" style="margin-top:16px">
+    <p class="ptitle" style="text-transform:none">これがあるから、問い合わせ側で対応を書かなくて済む（第 5 章の再掲）</p>
+    <pre>ec:注文者
+    rdfs:domain ec:注文 <span class="k">;</span>   <span class="c"># 注文に付くプロパティ</span>
+    rdfs:range  ec:顧客 .    <span class="c"># 値は顧客</span></pre>
+    <p class="sm" style="text-align:left;margin-top:10px">「注文 1 件は、注文者として顧客 1 人を持つ」という知識が、<strong>データベース側に 1 度だけ定義してあります</strong>（TBox）。だから問い合わせ側で繰り返す必要がありません。</p>
+  </div>
+  <p class="hlr">逆に SQL の <code>ON o.customer_id = c.customer_id</code> は、<strong>クエリを書くたびに同じ対応を書き直している</strong>ことになります。100 本のクエリがあれば 100 回書きます。そして<strong>1 回書き間違えても、SQL はエラーになりません</strong> — 第 2 章と同じ形の事故です。</p>
 </section>
 
 <section class="slide">

@@ -2123,37 +2123,115 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
 <section class="slide">
   <div class="eyebrow">第 7 章 — SPARQL</div>
   <h2>依頼への完全な答え</h2>
-  <p class="lead">90 日と未解約が<strong>クエリに明示され、レビュー可能</strong>になりました。答えは <strong>84,500 円</strong>。</p>
-  <div class="panel">    <pre><span class="k">PREFIX</span> ec:  <span class="u">&lt;http://example.com/ec#&gt;</span>
-<span class="k">PREFIX</span> xsd: <span class="u">&lt;http://www.w3.org/2001/XMLSchema#&gt;</span>
+  <div class="punch" style="padding:24px 26px">
+    <span style="display:block;font-size:11px;font-weight:800;letter-spacing:.18em;color:var(--muted)">もう一度、依頼はこれです</span>
+    <span class="big" style="font-size:25px;margin-top:12px;line-height:1.5">「<span style="text-decoration:underline;text-decoration-color:#b3261e;text-decoration-thickness:3px;text-underline-offset:5px;font-weight:900">先月</span>の<span style="text-decoration:underline;text-decoration-color:#b3261e;text-decoration-thickness:3px;text-underline-offset:5px;font-weight:900">アクティブな</span><span style="text-decoration:underline;text-decoration-color:#b3261e;text-decoration-thickness:3px;text-underline-offset:5px;font-weight:900">優良顧客</span>の<span style="text-decoration:underline;text-decoration-color:#b3261e;text-decoration-thickness:3px;text-underline-offset:5px;font-weight:900">売上</span>をレポートにして」</span>
+  </div>
+  <p class="lead" style="margin-top:16px">部品はすべて出そろいました。<strong>赤線の 4 つが、全部クエリの中に現れます</strong>。</p>
+  <div class="g2 vtop">
+    <div class="panel">
+      <p class="ptitle" style="text-transform:none">依頼への完全な答え（リスト 7-3）</p>
+      <pre><span class="k">PREFIX</span> ec:  &lt;http://example.com/ec#&gt;
+<span class="k">PREFIX</span> xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
 
 <span class="k">SELECT</span> (<span class="k">SUM</span>(?net) <span class="k">AS</span> ?revenue) <span class="k">WHERE</span> {
 
-  <span class="c"># ── アクティブ顧客の条件 ────────────────</span>
-  ?c <span class="k">a</span> ec:顧客 <span class="k">;</span> ec:最終注文日 ?last .
-  <span class="k">FILTER</span> (?last &gt;= <span class="s">"2026-05-03"</span>^^xsd:date)      <span class="c"># 直近 90 日</span>
-  <span class="k">FILTER NOT EXISTS</span> { ?c ec:解約日 ?any }         <span class="c"># 未解約</span>
+<span class="c">  # ── 定義 ①「アクティブ」 ───────────────────</span>
+  ?c <span class="k">a</span> ec:顧客 <span class="k">;</span> ec:最終注文日 ?last .   <span class="c"># 顧客と、その最終注文日</span>
+  <span class="k">FILTER</span> (?last &gt;= <span class="s">"2026-05-03"</span>^^xsd:date)  <span class="c"># 直近 90 日（今日 08-01 から数えた日付）</span>
+  <span class="k">FILTER NOT EXISTS</span> { ?c ec:解約日 ?any }   <span class="c"># 未解約（解約日を持たない）</span>
 
-  <span class="c"># ── 優良顧客の条件 ──────────────────────</span>
+<span class="c">  # ── 定義 ②「優良顧客」 ─────────────────────</span>
   ?c ec:累計購入額 ?tp .
-  <span class="k">FILTER</span> (?tp &gt;= <span class="n">50000</span>)                        <span class="c"># member_rank 列は使わない</span>
+  <span class="k">FILTER</span> (?tp &gt;= <span class="n">50000</span>)   <span class="c"># 累計 5 万円以上。member_rank 列は見ない</span>
 
-  <span class="c"># ── 先月の確定注文 ─────────────────────</span>
-  ?o ec:注文者 ?c <span class="k">;</span>
+<span class="c">  # ── 定義 ③「先月」＋ 確定注文 ────────────────</span>
+  ?o ec:注文者 ?c <span class="k">;</span>   <span class="c"># その顧客の注文（?c を共有＝ JOIN の代わり）</span>
      ec:金額   ?amt <span class="k">;</span>
      ec:税額   ?tax <span class="k">;</span>
-     ec:状態   <span class="s">"confirmed"</span> <span class="k">;</span>                    <span class="c"># pending を除外</span>
+     ec:状態   <span class="s">"confirmed"</span> <span class="k">;</span>   <span class="c"># pending を除外（O105 が落ちる）</span>
      ec:注文日 ?d .
   <span class="k">FILTER</span> (?d &gt;= <span class="s">"2026-07-01"</span>^^xsd:date
-       &amp;&amp; ?d &lt;  <span class="s">"2026-08-01"</span>^^xsd:date)
+       &amp;&amp; ?d &lt;  <span class="s">"2026-08-01"</span>^^xsd:date)   <span class="c"># 暦月で 7 月を切る</span>
 
-  <span class="c"># ── 返金があれば引く (無くても注文は残す) ──</span>
-  <span class="k">OPTIONAL</span> { ?r ec:対象注文 ?o <span class="k">;</span>
-                ec:金額     ?ref }
+<span class="c">  # ── 定義 ④「売上」＝ 税抜・返金差引後 ───────────</span>
+  <span class="k">OPTIONAL</span> { ?r ec:対象注文 ?o <span class="k">;</span>    <span class="c"># 返金は無いこともある</span>
+                ec:金額     ?ref }   <span class="c"># → OPTIONAL で囲まないと O102・O103 が消える</span>
 
   <span class="k">BIND</span>(?amt - ?tax - <span class="k">COALESCE</span>(?ref, <span class="n">0</span>) <span class="k">AS</span> ?net)
+<span class="c">  #      ↑ 税を引く  ↑ 返金を引く  ↑ 返金が無ければ 0 として扱う</span>
 }</pre>
+    </div>
+    <div>
+      <div class="panel">
+        <p class="ptitle" style="text-transform:none">ここで初めて出てくる書き方</p>
+        <table><thead><tr><th style="width:34%">SPARQL</th><th style="width:38%">意味</th><th style="width:28%">SQL でいうと</th></tr></thead>
+          <tr><td><code>FILTER (…)</code></td><td>条件で絞る</td><td><code>WHERE</code></td></tr>
+          <tr><td><code>FILTER NOT EXISTS {…}</code></td><td>その形が存在しないものだけ残す</td><td><code>NOT EXISTS</code></td></tr>
+          <tr><td><span class="ok"><code>OPTIONAL {…}</code></span></td><td>あれば取る。<strong>無くても行を落とさない</strong></td><td><code>LEFT JOIN</code></td></tr>
+          <tr><td><code>BIND(… AS ?x)</code></td><td>計算した値に名前を付ける</td><td>計算列の <code>AS</code></td></tr>
+          <tr><td><code>COALESCE(?x, 0)</code></td><td><code>?x</code> が空なら 0 を使う</td><td><code>COALESCE</code></td></tr>
+        </table>
+        <p class="sm" style="text-align:left;margin-top:10px">いちばん間違えやすいのが <code>OPTIONAL</code> です。SPARQL のパターンは並べるだけで「すべて合致すること」を要求します。返金があるのは O101 の 1 件だけなので、<strong><code>OPTIONAL</code> を外すと O102 と O103 がまるごと消えて、合計が 34,500 円になります</strong>。</p>
+      </div>
+      <div class="panel" style="margin-top:14px">
+        <p class="ptitle" style="text-transform:none">実行を追う — 5 人 5 件から 84,500 円まで</p>
+        <svg viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+      <defs>
+        <marker id="s48a" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto">
+          <path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#1f6f4a"/></marker>
+      </defs>
+      <text x="14" y="14" font-size="8.6" font-weight="900" fill="#155c3c">① 顧客を絞る（定義 ①②）</text>
+      <rect x="14" y="24" width="104" height="28" rx="8" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="1.8"/>
+      <text x="66" y="42" text-anchor="middle" font-size="9.4" font-weight="800" fill="#144a80">顧客 5 人</text>
+      <path d="M122,38 H196" stroke="#1f6f4a" stroke-width="1.8" marker-end="url(#s48a)"/>
+      <rect x="204" y="24" width="126" height="28" rx="8" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2.2"/>
+      <text x="267" y="42" text-anchor="middle" font-size="9.4" font-weight="800" fill="#155c3c">2 人 佐藤・鈴木</text>
+      <text x="344" y="32" font-size="7.4" fill="#6b7480">田中 … 最終注文日 05-02（1 日足りず）</text>
+      <text x="344" y="43" font-size="7.4" fill="#6b7480">高橋 … 解約済み ＋ 累計 12,000</text>
+      <text x="344" y="54" font-size="7.4" fill="#6b7480">伊藤 … 最終注文日 02-10</text>
+
+      <text x="14" y="82" font-size="8.6" font-weight="900" fill="#155c3c">② その 2 人の注文を絞る（定義 ③）</text>
+      <rect x="14" y="92" width="104" height="28" rx="8" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="1.8"/>
+      <text x="66" y="110" text-anchor="middle" font-size="9.4" font-weight="800" fill="#144a80">注文 5 件</text>
+      <path d="M122,106 H196" stroke="#1f6f4a" stroke-width="1.8" marker-end="url(#s48a)"/>
+      <rect x="204" y="92" width="126" height="28" rx="8" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2.2"/>
+      <text x="267" y="110" text-anchor="middle" font-size="9.4" font-weight="800" fill="#155c3c">3 件</text>
+      <text x="344" y="100" font-size="7.4" fill="#6b7480">O104 … 高橋さんの注文（顧客が落ちた）</text>
+      <text x="344" y="111" font-size="7.4" fill="#6b7480">O105 … pending ＋ 田中さんの注文</text>
+
+      <text x="14" y="150" font-size="8.6" font-weight="900" fill="#155c3c">③ 売上を計算する（定義 ④）</text>
+      <rect x="14" y="160" width="532" height="126" rx="8" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
+      <text x="30" y="178" font-size="8" fill="#6b7480">注文</text>
+      <text x="130" y="178" text-anchor="end" font-size="8" fill="#6b7480">amount</text>
+      <text x="215" y="178" text-anchor="end" font-size="8" fill="#6b7480">− tax</text>
+      <text x="300" y="178" text-anchor="end" font-size="8" fill="#6b7480">− 返金</text>
+      <text x="400" y="178" text-anchor="end" font-size="8" fill="#6b7480">小計</text>
+      <line x1="30" y1="184" x2="530" y2="184" stroke="#b9d9c8" stroke-width="1"/>
+      <text x="30" y="200" font-size="8.6" font-family="Menlo,monospace" fill="#3d4654">O101</text>
+      <text x="130" y="200" text-anchor="end" font-size="8.6" font-family="Menlo,monospace" fill="#3d4654">44,000</text>
+      <text x="215" y="200" text-anchor="end" font-size="8.6" font-family="Menlo,monospace" fill="#3d4654">−4,000</text>
+      <text x="300" y="200" text-anchor="end" font-size="8.6" font-family="Menlo,monospace" fill="#b3261e">−5,500</text>
+      <text x="400" y="200" text-anchor="end" font-size="8.6" font-family="Menlo,monospace" fill="#155c3c">34,500</text>
+      <text x="30" y="216" font-size="8.6" font-family="Menlo,monospace" fill="#3d4654">O102</text>
+      <text x="130" y="216" text-anchor="end" font-size="8.6" font-family="Menlo,monospace" fill="#3d4654">33,000</text>
+      <text x="215" y="216" text-anchor="end" font-size="8.6" font-family="Menlo,monospace" fill="#3d4654">−3,000</text>
+      <text x="300" y="216" text-anchor="end" font-size="8.6" font-family="Menlo,monospace" fill="#6b7480">—</text>
+      <text x="400" y="216" text-anchor="end" font-size="8.6" font-family="Menlo,monospace" fill="#155c3c">30,000</text>
+      <text x="30" y="232" font-size="8.6" font-family="Menlo,monospace" fill="#3d4654">O103</text>
+      <text x="130" y="232" text-anchor="end" font-size="8.6" font-family="Menlo,monospace" fill="#3d4654">22,000</text>
+      <text x="215" y="232" text-anchor="end" font-size="8.6" font-family="Menlo,monospace" fill="#3d4654">−2,000</text>
+      <text x="300" y="232" text-anchor="end" font-size="8.6" font-family="Menlo,monospace" fill="#6b7480">—</text>
+      <text x="400" y="232" text-anchor="end" font-size="8.6" font-family="Menlo,monospace" fill="#155c3c">20,000</text>
+      <line x1="30" y1="242" x2="530" y2="242" stroke="#b9d9c8" stroke-width="1"/>
+      <text x="30" y="262" font-size="9" font-weight="800" fill="#155c3c">SUM(?net)</text>
+      <text x="400" y="264" text-anchor="end" font-size="15" font-weight="900" fill="#155c3c">84,500 円</text>
+      <text x="30" y="278" font-size="7.6" fill="#6b7480">O101 の返金 5,500 円が、ここで初めて引かれます。これが 89,000 との 4,500 円差です。</text>
+    </svg>
+      </div>
+    </div>
   </div>
+  <p class="hlg">第 2 章との違いは、<strong>「90 日」と「解約」がどこに書かれているか</strong>だけです。あのときは書き手の中にありました。いまは <code>FILTER</code> としてクエリに明示され、<strong>レビューできる形</strong>になっています。<span class="sm">なお定義 ② の 2 行は、第 9 章で推論器を動かせば <code>?c a ec:優良顧客 .</code> の 1 行になります。</span></p>
 </section>
 
 <section class="slide chapter sub">

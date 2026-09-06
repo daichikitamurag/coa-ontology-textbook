@@ -337,7 +337,7 @@
   <h1>オントロジーで、<em>意味</em>を機械に渡す</h1>
   <p class="sub">AWS Context Ontology Accelerator / Palantir Foundry・AIP / 自作 Minecraft Agent — 3 つの実装を実機で確かめた記録</p>
   <p class="meta">社内クラウド勉強会 ／ SI部 北村</p>
-  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 113 枚</span></div>
+  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 112 枚</span></div>
 </section>
 
 <section class="slide">
@@ -2588,52 +2588,6 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
 <span class="c">#   C004 高橋 (12000) は導出されない — 条件を満たさないので</span></pre>
   </div>
 </div>
-  </div>
-</section>
-
-<section class="slide">
-  <div class="eyebrow">第 9 章 — 推論器</div>
-  <h2>依頼を解くのに、どの道具がどこで働いたか</h2>
-  <div class="panel">    <svg viewBox="0 0 880 340" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
-      <rect x="20" y="20" width="840" height="42" rx="7" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
-      <text x="440" y="47" text-anchor="middle" font-size="14" font-weight="800" fill="#553180">「先月のアクティブな優良顧客の売上をレポートにして」</text>
-
-      <rect x="20" y="86" width="200" height="98" rx="7" fill="#faf5ee" stroke="#8b5a2b" stroke-width="1.9"/>
-      <text x="120" y="110" text-anchor="middle" font-size="11.5" font-weight="800" fill="#7a4a1c">語彙を揃える</text>
-      <text x="120" y="132" text-anchor="middle" font-size="10.5" fill="#8b5a2b">rdfs:label で「会員ランク」</text>
-      <text x="120" y="148" text-anchor="middle" font-size="10.5" fill="#8b5a2b">domain/range で JOIN 経路</text>
-      <text x="120" y="172" text-anchor="middle" font-size="10.5" font-weight="800" fill="#7a4a1c">第 5 章 RDFS</text>
-
-      <rect x="240" y="86" width="200" height="98" rx="7" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="1.9"/>
-      <text x="340" y="110" text-anchor="middle" font-size="11.5" font-weight="800" fill="#553180">型とルールを定義</text>
-      <text x="340" y="132" text-anchor="middle" font-size="10.5" fill="#6b3fa0">優良顧客 = 累計 5 万以上</text>
-      <text x="340" y="148" text-anchor="middle" font-size="10.5" fill="#6b3fa0">(アクティブは書けない)</text>
-      <text x="340" y="172" text-anchor="middle" font-size="10.5" font-weight="800" fill="#553180">第 6 章 OWL</text>
-
-      <rect x="460" y="86" width="190" height="98" rx="7" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="1.9"/>
-      <text x="555" y="110" text-anchor="middle" font-size="11.5" font-weight="800" fill="#154a80">答えを引き出す</text>
-      <text x="555" y="132" text-anchor="middle" font-size="10.5" fill="#1c5b9c">90 日 / 未解約 / confirmed</text>
-      <text x="555" y="148" text-anchor="middle" font-size="10.5" font-weight="800" fill="#154a80">→ 84,500 円</text>
-      <text x="555" y="172" text-anchor="middle" font-size="10.5" font-weight="800" fill="#154a80">第 7 章 SPARQL</text>
-
-      <rect x="670" y="86" width="190" height="98" rx="7" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="1.9"/>
-      <text x="765" y="110" text-anchor="middle" font-size="11.5" font-weight="800" fill="#175539">書き込みを止める</text>
-      <text x="765" y="132" text-anchor="middle" font-size="10.5" fill="#1f6f4a">返金額 ≤ 注文額</text>
-      <text x="765" y="148" text-anchor="middle" font-size="10.5" fill="#1f6f4a">解約者を検出</text>
-      <text x="765" y="172" text-anchor="middle" font-size="10.5" font-weight="800" fill="#175539">第 8 章 SHACL</text>
-
-      <rect x="240" y="208" width="200" height="90" rx="7" fill="#fdf8ec" stroke="#96650a" stroke-width="2.2"/>
-      <text x="340" y="232" text-anchor="middle" font-size="11.5" font-weight="800" fill="#7a5208">書いてない事実を導く</text>
-      <text x="340" y="254" text-anchor="middle" font-size="10.5" fill="#96650a">鈴木・田中も優良顧客だと</text>
-      <text x="340" y="270" text-anchor="middle" font-size="10.5" fill="#96650a">判明 (member_rank 列は Regular)</text>
-      <text x="340" y="290" text-anchor="middle" font-size="10.5" font-weight="800" fill="#7a5208">第 9 章 HermiT</text>
-
-      <rect x="460" y="208" width="400" height="90" rx="7" fill="#fdf3f2" stroke="#b3261e" stroke-width="2.2"/>
-      <text x="660" y="232" text-anchor="middle" font-size="12" font-weight="900" fill="#8c1e18">得られた最大の価値</text>
-      <text x="660" y="256" text-anchor="middle" font-size="11.5" fill="#b3261e">答えの数字 (84,500) よりも、</text>
-      <text x="660" y="276" text-anchor="middle" font-size="12" font-weight="800" fill="#8c1e18">「定義が 1 箇所に書かれ、ズレが検知できる」こと</text>
-      <text x="660" y="293" text-anchor="middle" font-size="10.5" fill="#b3261e">member_rank 列 2 名 vs ルール 4 名 のズレが自動で見える</text>
-    </svg>
   </div>
 </section>
 

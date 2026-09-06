@@ -333,7 +333,7 @@
   <h1>オントロジーで、<em>意味</em>を機械に渡す</h1>
   <p class="sub">AWS Context Ontology Accelerator / Palantir Foundry・AIP / 自作 Minecraft Agent — 3 つの実装を実機で確かめた記録</p>
   <p class="meta">社内クラウド勉強会 ／ SI部 北村</p>
-  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 94 枚</span></div>
+  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 95 枚</span></div>
 </section>
 
 <section class="slide">
@@ -372,6 +372,23 @@
     <div class="card"><h4>第 3 部　実装 3 つを実機で</h4><p class="sm">AWS COA ／ Palantir Foundry・AIP ／ 自作 Minecraft Agent → 結論</p></div>
   </div>
   <p class="hl">結論を先に言うと — <strong>オントロジーは LLM を賢くする仕組みではなく、LLM に推測させないための仕組み</strong>でした。</p>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">題材</div>
+  <h2>この 1 行だけを、最後まで追いかけます</h2>
+  <p class="lead">道具が 8 つ、実装が 3 つ出てきますが、<strong>題材はずっと同じ一文だけ</strong>です。話が分からなくなったら、この一文に戻ってください。</p>
+  <div class="punch" style="padding:42px 30px">
+    <span style="display:block;font-size:11.5px;font-weight:800;letter-spacing:.18em;color:var(--muted)">今日の題材</span>
+    <span class="big" style="font-size:32px;margin-top:16px;line-height:1.5">「<span style="text-decoration:underline;text-decoration-color:#b3261e;text-decoration-thickness:3px;text-underline-offset:6px;font-weight:900">先月</span>の<span style="text-decoration:underline;text-decoration-color:#b3261e;text-decoration-thickness:3px;text-underline-offset:6px;font-weight:900">アクティブな</span><span style="text-decoration:underline;text-decoration-color:#b3261e;text-decoration-thickness:3px;text-underline-offset:6px;font-weight:900">優良顧客</span>の<span style="text-decoration:underline;text-decoration-color:#b3261e;text-decoration-thickness:3px;text-underline-offset:6px;font-weight:900">売上</span>をレポートにして」</span>
+    <span class="note" style="font-size:13px;margin-top:16px">赤線を引いた 4 つが、<strong>データベースを見ても分からない言葉</strong>です</span>
+  </div>
+  <div class="g3" style="margin-top:20px">
+    <div class="card blue"><h4>第 1 部　この一文で事故が起きる</h4><p class="sm">新人が SQL にすると <strong>89,000 円</strong>、定義を知っている人が書くと <strong>84,500 円</strong>。<strong>どちらもエラーは出ません</strong></p></div>
+    <div class="card violet"><h4>第 2 部　4 つの言葉を書いていく</h4><p class="sm">道具を 1 つずつ足して、<strong>4 つの定義を機械が読める形にする</strong>。最後に SPARQL で 84,500 円を導きます</p></div>
+    <div class="card green"><h4>第 3 部　同じ一文を AI に投げる</h4><p class="sm">AWS COA に<strong>この一文をそのまま</strong>投げて、3 通りの経路を実機で比べます</p></div>
+  </div>
+  <p class="hl">データも同じです。<strong>顧客 5 人・注文 5 件・返金 1 件</strong>だけで、第 3 部の実機デモまで通します。<span class="sm">（Palantir と Minecraft は題材が別なので、そこだけ切り替わります）</span></p>
 </section>
 
 <section class="slide chapter">

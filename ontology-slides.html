@@ -291,6 +291,12 @@
       min-height:560px;display:flex;flex-direction:column;justify-content:center;padding:60px 64px}
   @media print{ .slide{min-height:0} }
 
+  /* パネル内の表は左揃え（.panel は図のために中央寄せなので上書き） */
+  .panel td, .panel th{text-align:left}
+  .panel table{text-align:left}
+  /* 帯（.hl 系）に余白を付ける */
+  .hl,.hlg,.hlr{padding:13px 16px;border-radius:10px;margin-top:16px;line-height:1.8}
+
   /* ---------- スマートフォン ---------- */
   @media screen and (max-width:900px){
     .deck{padding:12px 10px 60px}
@@ -327,7 +333,7 @@
   <h1>オントロジーで、<em>意味</em>を機械に渡す</h1>
   <p class="sub">AWS Context Ontology Accelerator / Palantir Foundry・AIP / 自作 Minecraft Agent — 3 つの実装を実機で確かめた記録</p>
   <p class="meta">社内クラウド勉強会 ／ SI部 北村</p>
-  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 88 枚</span></div>
+  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 94 枚</span></div>
 </section>
 
 <section class="slide">
@@ -845,9 +851,75 @@
 </section>
 
 <section class="slide">
+  <div class="eyebrow">ACT 2 — 題材</div>
+  <h2>データはこれだけ — 顧客 5 人・注文 5 件・返金 1 件</h2>
+  <p class="lead">EC サイトのデータベース担当だとします。今日は <strong>2026 年 8 月 1 日</strong>。この小さなデータを、<strong>この資料の最後まで使います</strong> — 第 3 部の AWS COA の実機デモも、同じ 5 人です。</p>
+  <div class="panel">
+    <p class="ptitle">customers — 顧客マスタ</p>
+    <table class="tw"><thead><tr><th>customer_id</th><th>name</th><th>member_rank</th><th>total_purchase</th><th>last_order_at</th><th>churned_at</th></tr></thead>
+      <tr><td>C001</td><td>佐藤 花子</td><td>VIP</td><td>82,000</td><td>2026-07-28</td><td>(null)</td></tr>
+      <tr><td>C002</td><td>鈴木 一郎</td><td>Regular</td><td>55,000</td><td>2026-06-15</td><td>(null)</td></tr>
+      <tr><td>C003</td><td>田中 太郎</td><td>Regular</td><td>61,000</td><td>2026-05-02</td><td>(null)</td></tr>
+      <tr><td>C004</td><td>高橋 実</td><td>Regular</td><td>12,000</td><td>2026-07-20</td><td class="no">2026-07-25</td></tr>
+      <tr><td>C005</td><td>伊藤 桃子</td><td>VIP</td><td>94,000</td><td>2026-02-10</td><td>(null)</td></tr>
+    </table>
+  </div>
+  <div class="g2">
+    <div class="panel">
+      <p class="ptitle">orders — 2026 年 7 月の注文</p>
+      <table class="tw"><thead><tr><th>order_id</th><th>顧客</th><th>amount</th><th>tax</th><th>status</th><th>date</th></tr></thead>
+        <tr><td>O101</td><td>C001</td><td>44,000</td><td>4,000</td><td>confirmed</td><td>07-05</td></tr>
+        <tr><td>O102</td><td>C001</td><td>33,000</td><td>3,000</td><td>confirmed</td><td>07-28</td></tr>
+        <tr><td>O103</td><td>C002</td><td>22,000</td><td>2,000</td><td>confirmed</td><td>07-11</td></tr>
+        <tr><td>O104</td><td>C004</td><td>12,000</td><td>1,000</td><td>confirmed</td><td>07-20</td></tr>
+        <tr><td>O105</td><td>C003</td><td>27,500</td><td>2,500</td><td class="no">pending</td><td>07-30</td></tr>
+      </table>
+    </div>
+    <div class="panel">
+      <p class="ptitle">refunds — 返金</p>
+      <table class="tw"><thead><tr><th>refund_id</th><th>order_id</th><th>amount</th></tr></thead>
+        <tr><td>R01</td><td>O101</td><td>5,500</td></tr>
+      </table>
+      <p class="sm" style="margin-top:12px">返金は 1 件だけ。佐藤さんの 7/5 の注文 (O101) に対して 5,500 円。<br><strong>この 1 件が、あとで 4,500 円の差を生みます。</strong></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">ACT 2 — 依頼</div>
+  <h2>依頼が来る — これがそのままプロンプトになる</h2>
+  <div class="punch" style="padding:40px 30px">
+    <span style="display:block;font-size:11.5px;font-weight:800;letter-spacing:.18em;color:var(--muted)">依頼（＝プロンプト）</span>
+    <span class="big" style="font-size:31px;margin-top:16px;line-height:1.5">「<span style="text-decoration:underline;text-decoration-color:#b3261e;text-decoration-thickness:3px;text-underline-offset:5px;font-weight:900">先月</span>の<span style="text-decoration:underline;text-decoration-color:#b3261e;text-decoration-thickness:3px;text-underline-offset:5px;font-weight:900">アクティブな</span><span style="text-decoration:underline;text-decoration-color:#b3261e;text-decoration-thickness:3px;text-underline-offset:5px;font-weight:900">優良顧客</span>の<span style="text-decoration:underline;text-decoration-color:#b3261e;text-decoration-thickness:3px;text-underline-offset:5px;font-weight:900">売上</span>をレポートにして」</span>
+  </div>
+  <div class="g3" style="margin-top:20px">
+    <div class="card blue"><h4>人に頼めば「依頼」</h4><p class="sm">新人がこれを受け取ると何が起きるか — この直後に見ます</p></div>
+    <div class="card violet"><h4>AI に投げれば「プロンプト」</h4><p class="sm">第 3 部で、AWS COA に<strong>この一文をそのまま</strong>投げます</p></div>
+    <div class="card amber"><h4>文字は 1 つも変わらない</h4><p class="sm">そして<strong>どちらも、同じ 4 つの言葉でつまずきます</strong></p></div>
+  </div>
+  <p class="hl">SQL を書けば済む話に見えます。実際、書けます。問題は<strong>「書ける SQL が何通りもあって、どれも動いてしまう」</strong>ことです。</p>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">ACT 2 — 核心</div>
+  <h2>この一文に埋まっている、社内にしか無い定義が 4 つ</h2>
+  <p class="lead">この一文の中に、<strong>データベースを見ても絶対に分からないもの</strong>が 4 つあります。この 4 つが、この資料の最後まで追いかける対象です。</p>
+  <div class="panel">
+    <p class="ptitle">DB から分かること / 分からないこと</p>
+    <table class="tw"><thead><tr><th style="width:15%">言葉</th><th style="width:30%">DB から分かること</th><th style="width:55%">DB から分からないこと ＝ この会社の答え</th></tr></thead>
+      <tr><td><strong>優良顧客</strong></td><td>member_rank と total_purchase という<strong>列があること</strong>だけ</td><td>列で判定するのか、金額で判定するのか。<span class="no">答え: 累計購入額 50,000 円以上</span>。member_rank 列は営業部の手運用なので<strong>ズレている</strong></td></tr>
+      <tr><td><strong>アクティブ</strong></td><td>last_order_at と churned_at という<strong>列があること</strong>だけ</td><td>「直近 何日」なのか。解約者を除くのか。<span class="no">答え: 直近 90 日以内に購入、かつ未解約</span>。どこにも書かれていない</td></tr>
+      <tr><td><strong>売上</strong></td><td>amount / tax / refunds.amount / status という<strong>列があること</strong>だけ</td><td>税を引くのか。返金を引くのか。pending を含めるのか。<span class="no">答え: 税抜・返金差引後・confirmed のみ</span></td></tr>
+      <tr><td><strong>先月</strong></td><td>order_date がある</td><td>暦月か会計月か。この会社は暦月なので、<strong>ここは実害が少ない</strong></td></tr>
+    </table>
+  </div>
+  <p class="hl">大事なのは、これらが<strong>「書き忘れ」ではない</strong>ということです。DDL は格納構造を書くための言語であって、業務概念を書くための言語ではありません。<strong>書く場所が用意されていない</strong>のです。</p>
+</section>
+
+<section class="slide">
   <div class="eyebrow">ACT 2 — 限界</div>
   <h2>DDL に書けるのは、置き場所と形だけ</h2>
-  <p class="lead">型・長さ・NULL 可否・外部キー。<strong>書けないのは「その列が業務で何を意味するか」</strong>です。</p>
+  <p class="lead">さきほどの 4 つは、<strong>書き忘れではありません</strong>。型・長さ・NULL 可否・外部キーは書けますが、<strong>業務概念を書く場所がそもそも用意されていない</strong>のです。</p>
   <div class="panel">
     <p class="ptitle">DDL に書けることの限界</p>
     <pre><span class="k">CREATE TABLE</span> customers (
@@ -872,7 +944,7 @@
 <section class="slide">
   <div class="eyebrow">ACT 2 — 事故</div>
   <h2>同じ依頼に、2 つの答えが出る</h2>
-  <p class="lead">依頼は<strong>「先月のアクティブな優良顧客の売上をレポートにして」</strong>。この 1 行が、この資料の最後まで走り続ける題材です。</p>
+  <p class="lead">では実際に SQL を書いてみます。<strong>定義を知らない新人</strong>と、<strong>4 つの定義を知っている人</strong>。同じ依頼から、違う数字が出ます。</p>
   <div class="panel">
     <p class="ptitle">同じ依頼、2 つの答え</p>
     <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
@@ -929,12 +1001,68 @@
   <p class="hlg">この 2 つの数字は、実際に Athena で実行して確かめました。<strong>89,000 と 84,500</strong> — 教科書に書いた値と一致します。</p>
 </section>
 
+<section class="slide">
+  <div class="eyebrow">ACT 2 — 本当の問題</div>
+  <h2>怖いのは金額差ではなく、違う人を数えていたこと</h2>
+  <div class="g2">
+    <div class="card red"><h4>89,000 円 が数えた人</h4><p class="sm">佐藤 (C001) ・ <strong>高橋 (C004)</strong><br><span class="no">高橋さんは 7/25 に解約済み</span>。それでも last_order_at が 7/20 なので「先月買った人」として通ってしまう</p></div>
+    <div class="card green"><h4>84,500 円 が数えた人</h4><p class="sm">佐藤 (C001) ・ <strong>鈴木 (C002)</strong><br>鈴木さんは累計 55,000 円で<strong>優良顧客</strong>。でも member_rank 列は Regular なので、列で判定すると落ちる</p></div>
+  </div>
+  <div class="punch" style="margin-top:18px;padding:26px 24px">
+    <span style="font-size:20px;font-weight:900;line-height:1.55">同じ「アクティブな優良顧客」という言葉で、<span class="no">指している人が違う</span>。<br>そして<strong>両方の SQL が正常に実行され、エラーは 1 つも出ません。</strong></span>
+  </div>
+  <div class="g3" style="margin-top:18px">
+    <div class="card amber"><h4>気づく手がかりが無い</h4><p class="sm">構文エラーも実行時エラーも出ない。<strong>間違いに気づく材料がどこにも現れない</strong></p></div>
+    <div class="card amber"><h4>金額が近いほど危ない</h4><p class="sm">差は 4,500 円。桁が違えば気づきますが、<strong>「もっともらしい間違い」は通ってしまう</strong></p></div>
+    <div class="card red"><h4>下流に広がる</h4><p class="sm">依頼は「<strong>レポートにして</strong>」でした。この数字は会議資料になり、他システムに連携されます</p></div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">ACT 2 — 行き止まり</div>
+  <h2>「プロンプトに書けばいい」では続かない</h2>
+  <p class="lead">ここで多くの人が思いつく解決策があります。<strong>AI に SQL を書かせるなら、定義をプロンプトに書いておけばいい</strong>。実際、小さいうちは動きます。しかし 4 つの理由で続きません。</p>
+  <div class="panel">
+    <p class="ptitle">プロンプトに定義を書く方法の限界</p>
+    <table class="tw"><thead><tr><th style="width:24%">理由</th><th style="width:76%">中身</th></tr></thead>
+      <tr><td><strong>① 書き切れない</strong></td><td>アクティブ顧客・売上・解約・与信・稼働率… <strong>全部門分の定義</strong>を文章で書き溜めるのは現実的ではない</td></tr>
+      <tr><td><strong>② 長いほど弱くなる</strong></td><td>定義を足すほどプロンプトが伸び、真ん中の情報は読み飛ばされる。<strong>ルールを増やすと精度が下がる</strong>という逆転が起きる</td></tr>
+      <tr><td><strong>③ 変更が掛け算で効く</strong></td><td>「90 日を 60 日に変える」と決まったとき、<strong>Agent の数 × 業務の数</strong>だけプロンプトを直す必要がある</td></tr>
+      <tr><td><span class="no">④ 機械が再利用できない</span></td><td>文章なので、<strong>人間と LLM しか読めない</strong>。推論器・SHACL 検証器・クエリエンジンは文章を計算に使えないため、<strong>ルールが適用されたかを機械的に検証できない</strong></td></tr>
+    </table>
+  </div>
+  <p class="hl"><strong>④ が本質です。</strong>プロンプトに書いた定義は「LLM が読んで解釈する対象」になります。つまり適用されるかどうかが<strong>確率的</strong>になり、しかも「適用されたか」を<strong>後から機械的に確かめられません</strong>。</p>
+  <div class="punch" style="margin-top:16px;padding:24px">
+    <span style="font-size:19px;font-weight:900;line-height:1.55">必要なのは、定義を「文章」ではなく<strong>「機械が計算に使えるデータ」</strong>として書くこと。<br>そうすれば、<strong>同じ 1 つの定義を LLM も・推論器も・検証器も・SQL 生成器も参照できます。</strong></span>
+  </div>
+</section>
+
 <section class="slide chapter">
   <div class="part">PART 2</div>
   <h1>意味を書く道具</h1>
   <p>トリプルから推論器まで。ここは<strong>道具の紹介</strong>です。実装で何が効いて何が効かなかったかは第 3 部で確かめます。</p>
   <div class="agenda"><span>トリプル</span><span>Turtle</span><span>RDFS</span><span>OWL</span><span>SPARQL</span><span>SHACL</span><span>推論器</span><span>4 層スタック</span><span>VKG</span></div>
   <div class="actnum">3</div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">ACT 3 — 見取り図</div>
+  <h2>4 つの定義を、どの道具で書くのか</h2>
+  <p class="lead">ここから道具の話に入りますが、<strong>覚えるべきなのは「どの道具で、4 つのうちどれが書けるのか」だけ</strong>です。この表が、この部の目次そのものです。</p>
+  <div class="panel">
+    <p class="ptitle">4 つの定義 → 書く場所</p>
+    <table class="tw"><thead><tr><th style="width:14%">言葉</th><th style="width:34%">この会社の定義</th><th style="width:30%">どこに書くか</th><th style="width:22%">出てくるところ</th></tr></thead>
+      <tr><td><strong>優良顧客</strong></td><td>累計購入額 50,000 円以上</td><td><strong>OWL</strong> — 列ではなく<strong>型</strong>として定義できる</td><td>ACT 6（このあと）</td></tr>
+      <tr><td><strong>アクティブ</strong></td><td>直近 90 日以内に購入、かつ未解約</td><td>未解約は <strong>OWL</strong>。<span class="no">「直近 90 日」は OWL では書けない</span> → <strong>SPARQL</strong></td><td>ACT 6 → ACT 7</td></tr>
+      <tr><td><strong>売上</strong></td><td>amount − tax − 返金、confirmed のみ</td><td><span class="no">算術は OWL では書けない</span> → <strong>SPARQL</strong></td><td>ACT 7</td></tr>
+      <tr><td><strong>先月</strong></td><td>暦月</td><td><strong>SPARQL</strong>（「今日」を扱えるのはクエリ側だけ）</td><td>ACT 7</td></tr>
+    </table>
+  </div>
+  <div class="g3" style="margin-top:18px">
+    <div class="card blue"><h4>先に記法を 2 つ</h4><p class="sm"><strong>トリプル</strong>（ACT 3）と <strong>Turtle</strong>（ACT 4）— 定義を書くための紙とペンです</p></div>
+    <div class="card violet"><h4>語彙に意味を与える</h4><p class="sm"><strong>RDFS</strong>（ACT 5）— ラベル・両端・階層。ここが第 3 部で LLM に効いてきます</p></div>
+    <div class="card green"><h4>書いた定義を使う 3 つ</h4><p class="sm"><strong>SPARQL</strong> で引き出し（ACT 7）、<strong>SHACL</strong> で守らせ（ACT 8）、<strong>推論器</strong>で導く（ACT 9）</p></div>
+  </div>
 </section>
 
 <section class="slide">

@@ -999,7 +999,7 @@
   <p class="hlr"><code>member_rank</code> が <code>VARCHAR(16)</code> だと分かっても、<strong>'VIP' と 'vip' のどちらで入っているか</strong>、<strong>そもそも会員ランクで優良顧客を判定していいのか</strong>は分かりません。</p>
 
   <div class="card soft" style="margin-top:16px">
-    <h4>コラム — COMMENT があるじゃないか</h4>
+    <h4>COMMENT があるじゃないか</h4>
     <p class="sm"><code>COMMENT ON COLUMN customers.member_rank IS '会員ランク'</code> は書けます。ただし 2 つ問題があります。<br>
     <strong>① 実務でほとんど書かれていない</strong> — コメントが付いている列は、経験上、全体の数パーセントです。<br>
     <strong>② ただの文字列である</strong> — 人間と LLM は読めますが、<strong>推論器・検証器・クエリエンジンはコメントを一切見ません</strong>。3 者のうち機械だけが読めないので、ルールが適用されたかを検証する手段が無くなります。</p>

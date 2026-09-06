@@ -1935,13 +1935,13 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
 <section class="slide">
   <div class="eyebrow">第 6 章 — OWL</div>
   <h2>ルールが示す集合と、列が示す集合はズレる</h2>
-  <p class="lead">累計購入額で判定すると 4 人。<code>member_rank</code> 列は 2 人。<strong>鈴木さんと田中さんが、ルール上は優良顧客なのに列では Regular</strong> — 第 2 章の事故の正体がこれです。</p>
+  <p class="lead">「優良顧客」の定義を知らないと、<strong><code>member_rank = 'VIP'</code> がそれだろう</strong>と推測することになります。ルールで判定すると 4 人、<code>VIP</code> で判定すると 2 人。<strong>鈴木さんと田中さんが落ちます</strong> — 第 2 章の事故の正体がこれです。</p>
   <div class="panel">
     <p class="ptitle" style="text-transform:none">ルール（前のスライドで OWL に書いた <code>ec:優良顧客</code> ≡ 顧客 かつ 累計購入額 ≥ 50000）を、第 1 章の 5 人に当てはめる</p>
-    <p class="sm" style="text-align:left;margin:0 0 12px">比べるのは 2 つです。<strong>① ルールでの判定</strong> — 累計購入額が 50,000 以上かどうか。<strong>② <code>member_rank</code> 列</strong> — 営業部が四半期ごとに手で付けた値（<code>VIP</code> なら優良顧客とみなす運用）。この 2 つが食い違っている行が<span class="no">「ズレている」</span>です。</p>
+    <p class="sm" style="text-align:left;margin:0 0 12px">比べるのは 2 つです。<strong>① ルールでの判定</strong> — OWL に書いた定義（累計購入額 ≥ 50,000）。<strong>② <code>member_rank = 'VIP'</code> で判定</strong> — <strong>定義を知らない書き手が選びがちな推測</strong>です。第 1 部では新人がこれを選び、第 3 部では LLM も同じことをします。この 2 つが食い違う行が<span class="no">「ズレている」</span>です。</p>
     <table><thead><tr>
       <th style="width:18%">顧客</th><th style="width:18%">累計購入額</th>
-      <th style="width:22%">① ルールでの判定<br><span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">累計購入額 ≥ 50,000</span></th><th style="width:22%">② member_rank 列<br><span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">営業部の手運用</span></th><th style="width:20%">① と ② は<br><span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">同じ結論になるか</span></th></tr></thead>
+      <th style="width:22%">① ルールでの判定<br><span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">累計購入額 ≥ 50,000</span></th><th style="width:22%">② member_rank = 'VIP' で判定<br><span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">定義を知らない書き手の推測</span></th><th style="width:20%">① と ② は<br><span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">同じ結論になるか</span></th></tr></thead>
       <tr><td>C001 佐藤</td><td>82,000</td><td><span class="ok">優良顧客</span></td><td>VIP</td><td><span class="ok">一致</span></td></tr>
       <tr><td>C002 鈴木</td><td>55,000</td><td><span class="ok">優良顧客</span></td><td>Regular</td><td><span class="no">ズレている</span></td></tr>
       <tr><td>C003 田中</td><td>61,000</td><td><span class="ok">優良顧客</span></td><td>Regular</td><td><span class="no">ズレている</span></td></tr>
@@ -1950,27 +1950,31 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
     </table>
   </div>
   <div class="panel">
-    <p class="ptitle">ルールが示す集合と、列が示す集合</p>
+    <p class="ptitle" style="text-transform:none">① ルールで判定した 4 名と、② 推測で判定した 2 名</p>
     <svg viewBox="0 0 880 260" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
       <circle cx="300" cy="130" r="104" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2.4"/>
-      <circle cx="262" cy="130" r="62" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2.2" fill-opacity="0.85"/>
-      <text x="300" y="46" text-anchor="middle" font-size="12" font-weight="800" fill="#175539">ルールに合致する集合</text>
-      <text x="262" y="122" text-anchor="middle" font-size="11" font-family="Menlo,monospace" fill="#154a80">member_rank = 'VIP'</text>
-      <text x="262" y="146" text-anchor="middle" font-size="20" font-weight="900" fill="#154a80">2 名</text>
-      <text x="262" y="164" text-anchor="middle" font-size="9.5" fill="#1c5b9c">佐藤・伊藤</text>
-      <text x="372" y="126" text-anchor="middle" font-size="17" font-weight="900" fill="#96650a">+2 名</text>
-      <text x="372" y="146" text-anchor="middle" font-size="9.5" font-weight="700" fill="#96650a">鈴木・田中</text>
-      <text x="300" y="248" text-anchor="middle" font-size="11.5" fill="#6b7480">外側の輪 = 4 名 / 内側の輪 = 2 名</text>
+      <circle cx="262" cy="130" r="62" fill="#fdf3f2" stroke="#b3261e" stroke-width="2.2" fill-opacity="0.85"/>
+      <text x="300" y="48" text-anchor="middle" font-size="11.5" font-weight="800" fill="#175539">① OWL のルールで判定</text>
+      <text x="300" y="63" text-anchor="middle" font-size="9" fill="#1f6f4a">累計購入額 ≥ 50,000 → 4 名</text>
+      <text x="262" y="112" text-anchor="middle" font-size="8.6" font-weight="800" fill="#8f1f18">② 推測で判定</text>
+      <text x="262" y="126" text-anchor="middle" font-size="8.4" font-family="Menlo,monospace" fill="#8f1f18">member_rank = 'VIP'</text>
+      <text x="262" y="150" text-anchor="middle" font-size="18" font-weight="900" fill="#8f1f18">2 名</text>
+      <text x="262" y="166" text-anchor="middle" font-size="9" fill="#b3261e">佐藤・伊藤</text>
+      <text x="374" y="126" text-anchor="middle" font-size="17" font-weight="900" fill="#96650a">−2 名</text>
+      <text x="374" y="146" text-anchor="middle" font-size="9.5" font-weight="700" fill="#96650a">鈴木・田中</text>
+      <text x="374" y="160" text-anchor="middle" font-size="8.4" fill="#96650a">が落ちる</text>
+      <text x="300" y="248" text-anchor="middle" font-size="11" fill="#6b7480">② で数えると、外側の 2 名が数から抜けます</text>
 
-      <rect x="452" y="34" width="410" height="192" rx="8" fill="#fdf8ec" stroke="#96650a" stroke-width="2"/>
-      <text x="657" y="60" text-anchor="middle" font-size="13" font-weight="900" fill="#7a5208">この 2 名のズレが意味すること</text>
-      <text x="470" y="88" font-size="12" fill="#96650a">RDB の <tspan font-family="Menlo,monospace" font-size="11">member_rank</tspan> 列が持っているのは</text>
-      <text x="470" y="108" font-size="12.5" font-weight="900" fill="#7a5208">「いま記録されている状態」</text>
-      <text x="470" y="136" font-size="12" fill="#96650a">オントロジーが持っているのは</text>
-      <text x="470" y="156" font-size="12.5" font-weight="900" fill="#7a5208">「本来こうあるべきというルール」</text>
-      <text x="470" y="186" font-size="11.5" fill="#96650a">両方あるから、<tspan font-weight="800" fill="#7a5208">ズレを機械的に発見できる</tspan></text>
-      <text x="470" y="208" font-size="11" fill="#96650a">(rdfs:comment に「営業部が手動更新」と</text>
-      <text x="470" y="222" font-size="11" fill="#96650a"> 書いておいた理由がここで効く)</text>
+      <rect x="452" y="34" width="410" height="192" rx="8" fill="#fdf3f2" stroke="#b3261e" stroke-width="2"/>
+      <text x="657" y="60" text-anchor="middle" font-size="13" font-weight="900" fill="#8f1f18">なぜ ② を選んでしまうのか</text>
+      <text x="470" y="88" font-size="12" fill="#3d4654">「優良顧客」の定義がどこにも書かれていないので、</text>
+      <text x="470" y="108" font-size="12.5" font-weight="900" fill="#8f1f18">「member_rank = 'VIP' がそれだろう」と推測する</text>
+      <text x="470" y="130" font-size="11.5" fill="#3d4654">第 1 部では新人が、第 3 部では LLM が、同じ推測をします。</text>
+      <text x="470" y="152" font-size="11.5" fill="#3d4654">エラーは出ません。<tspan font-weight="800" fill="#8f1f18">2 名ぶんの売上が静かに落ちるだけ</tspan>です</text>
+      <text x="470" y="168" font-size="11.5" fill="#3d4654">（第 2 章で <tspan font-weight="800">77,000 円</tspan> になった、あの落ち方）。</text>
+      <line x1="470" y1="182" x2="844" y2="182" stroke="#e8b4b0" stroke-width="1"/>
+      <text x="470" y="202" font-size="12" fill="#155c3c">OWL に定義があれば、<tspan font-weight="900" fill="#155c3c">推測する余地がありません</tspan>。</text>
+      <text x="470" y="218" font-size="11.5" fill="#155c3c"><tspan font-family="Menlo,monospace" font-size="10.5">ec:優良顧客</tspan> を指すだけで、いつでも同じ 4 名になります。</text>
     </svg>
   </div>
 </section>

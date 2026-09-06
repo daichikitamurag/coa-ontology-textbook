@@ -337,7 +337,7 @@
   <h1>オントロジーで、<em>意味</em>を機械に渡す</h1>
   <p class="sub">AWS Context Ontology Accelerator / Palantir Foundry・AIP / 自作 Minecraft Agent — 3 つの実装を実機で確かめた記録</p>
   <p class="meta">社内クラウド勉強会 ／ SI部 北村</p>
-  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 108 枚</span></div>
+  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 109 枚</span></div>
 </section>
 
 <section class="slide">
@@ -1538,6 +1538,34 @@ ec:C001 <span class="k">a</span> ec:顧客 .         <span class="c"># ← 「C0
   <h1>RDFS — 語彙に意味を与える</h1>
   <p>ここまでは<strong>表の写し</strong>でした。ここから記号に意味を付けます。<strong>4 つの定義のうち「優良顧客」の階層</strong>が、この章で書けます。</p>
   <div class="agenda"><span>rdfs:label / comment</span><span>rdfs:domain / range</span><span>rdfs:subClassOf</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">ACT 5 — RDFS</div>
+  <h2>Turtle だけでは、まだ「表の写し」です</h2>
+  <p class="lead">第 4 章までで書けたのは、<strong>表と同じ内容を 3 語の文に並べ替えたもの</strong>です。<code>ec:会員ランク</code> という記号が何を指すのか、その値を業務でどう扱うのかは、<strong>まだどこにも書いていません</strong>。</p>
+  <div class="g2 vtop" style="margin-top:16px">
+    <div class="card"><h4>Turtle までで書けたこと</h4><p class="sm">・誰が・何の・何である（トリプル）<br>・値の型（<code>^^xsd:decimal</code>）<br>・どんな種類があるか（<code>a owl:Class</code>）<br><br><span class="no">つまり「形」だけです。</span>DDL に列の型を書いたのと、情報量はほとんど変わりません</p></div>
+    <div class="card blue"><h4>RDFS で書けるようになること</h4><p class="sm">・記号に<strong>人間の言葉</strong>を与える（label）<br>・その列を<strong>業務でどう扱うか</strong>を残す（comment）<br>・述語の<strong>両端</strong>を宣言する（domain / range）<br>・クラスの<strong>階層</strong>を作る（subClassOf）</p></div>
+  </div>
+  <div class="panel" style="margin-top:16px">
+    <p class="ptitle" style="text-transform:none">RDFS の 5 つの語彙 — 誰が読めて、何が解けるのか</p>
+    <table><thead><tr>
+      <th style="width:17%">語彙</th><th style="width:9%">種類</th>
+      <th style="width:7%">人間</th><th style="width:7%">LLM</th><th style="width:12%">機械が計算に使う</th>
+      <th style="width:48%">解決する問題</th></tr></thead>
+      <tr><td><code>rdfs:label</code></td><td>注釈</td><td><span class="ok">○</span></td><td><span class="ok">○</span></td><td><span class="no">×</span></td><td>用語の不一致 — 「取引先」と <code>customer</code> を同じ URI に結びつける</td></tr>
+      <tr><td><code>rdfs:comment</code></td><td>注釈</td><td><span class="ok">○</span></td><td><span class="ok">○</span></td><td><span class="no">×</span></td><td><strong>第 1 部の事故そのもの</strong> — 「基準は 90 日」「解約者は除外」を残せる場所ができる</td></tr>
+      <tr><td><code>rdfs:domain</code></td><td><strong>公理</strong></td><td><span class="ok">○</span></td><td><span class="ok">○</span></td><td><span class="ok">○</span></td><td>JOIN 問題 — 参照関係が明示される</td></tr>
+      <tr><td><code>rdfs:range</code></td><td><strong>公理</strong></td><td><span class="ok">○</span></td><td><span class="ok">○</span></td><td><span class="ok">○</span></td><td>同上 ＋ 値の型の明示</td></tr>
+      <tr><td><code>rdfs:subClassOf</code></td><td><strong>公理</strong></td><td><span class="ok">○</span></td><td><span class="ok">○</span></td><td><span class="ok">○</span></td><td>階層。上位の性質が下位に自動で効く土台（ACT 9 の推論）</td></tr>
+    </table>
+  </div>
+  <div class="g2" style="margin-top:16px">
+    <div class="card violet"><h4>注釈（label / comment）— 人間と LLM に向けた言葉</h4><p class="sm">人間の言葉と URI の橋渡しをします。<strong>推論器はこれを読みません</strong>が、意味が薄いわけではありません。むしろ第 1 部の事故を防ぐのはこちらです。ただし機械が計算に使える形ではないので、<strong>効かせるには LLM に渡す必要があります</strong> — 第 3 部で COA がこれをプロンプトに入れるのは、そのためです。</p></div>
+    <div class="card green"><h4>公理（domain / range / subClassOf）— 機械が計算に使える意味</h4><p class="sm">推論器が計算に使い、<strong>書いていない事実を導きます</strong>。<code>ec:C001 a ec:優良顧客</code> から <code>ec:C001 a ec:顧客</code> が出てくるのは、<strong>LLM が推測したのではなく機械が導いた結果</strong>です（ACT 9）。</p></div>
+  </div>
+  <p class="hl">この章は、<strong>「人間の言葉と機械の形を LLM が対応づけるための橋」</strong>と<strong>「機械が推論するための土台」</strong>を同時に用意します。ただし <strong>「アクティブ顧客とは何か」はまだ書けません</strong> — それには次の OWL が必要です。</p>
 </section>
 
 <section class="slide">

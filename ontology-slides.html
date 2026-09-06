@@ -881,10 +881,10 @@
       <tr><td>C005</td><td>伊藤 桃子</td><td>VIP</td><td>94,000</td><td>2026-02-10</td><td>(null)</td></tr>
     </table>
   </div>
-  <div class="g2">
+  <div class="g2" style="grid-template-columns:1.9fr 1fr">
     <div class="panel">
       <p class="ptitle">orders — 2026 年 7 月の注文</p>
-      <table class="tw"><thead><tr><th>order_id</th><th>顧客</th><th>amount</th><th>tax</th><th>status</th><th>date</th></tr></thead>
+      <table><thead><tr><th>order_id</th><th>customer_id</th><th>amount</th><th>tax</th><th>status</th><th>order_date</th></tr></thead>
         <tr><td>O101</td><td>C001</td><td>44,000</td><td>4,000</td><td>confirmed</td><td>07-05</td></tr>
         <tr><td>O102</td><td>C001</td><td>33,000</td><td>3,000</td><td>confirmed</td><td>07-28</td></tr>
         <tr><td>O103</td><td>C002</td><td>22,000</td><td>2,000</td><td>confirmed</td><td>07-11</td></tr>
@@ -894,7 +894,7 @@
     </div>
     <div class="panel">
       <p class="ptitle">refunds — 返金</p>
-      <table class="tw"><thead><tr><th>refund_id</th><th>order_id</th><th>amount</th></tr></thead>
+      <table><thead><tr><th>refund_id</th><th>order_id</th><th>amount</th></tr></thead>
         <tr><td>R01</td><td>O101</td><td>5,500</td></tr>
       </table>
       <p class="sm" style="margin-top:12px">返金は 1 件。佐藤さんの 7/5 の注文 (O101) に対して 5,500 円です。<br>この 1 件が、あとの 4,500 円の差に関係します。</p>
@@ -904,14 +904,17 @@
 
 <section class="slide">
   <div class="eyebrow">ACT 2 — 依頼</div>
-  <h2>依頼が来る — これがそのままプロンプトになる</h2>
-  <p class="lead">そこへ、営業部から依頼が届きます。<strong>「先月のアクティブな優良顧客の売上をレポートにして」</strong> — さきほどの一文です。</p>
-  <div class="g3" style="margin-top:20px">
-    <div class="card blue"><h4>人に頼めば「依頼」</h4><p class="sm">新人がこれを受け取ると何が起きるか — この直後に見ます</p></div>
-    <div class="card violet"><h4>AI に投げれば「プロンプト」</h4><p class="sm">第 3 部で、AWS COA に<strong>この一文をそのまま</strong>投げます</p></div>
-    <div class="card amber"><h4>文字は 1 つも変わらない</h4><p class="sm">そして<strong>どちらも、同じ 4 つの言葉でつまずきます</strong></p></div>
+  <h2>SQL は書けます。ただし何通りも書けて、どれも動きます</h2>
+  <p class="lead">そこへ、営業部から依頼が届きます。<strong>「先月のアクティブな優良顧客の売上をレポートにして」</strong> — さきほどの一文です。SQL を書けば済む話に見えますし、実際に書けます。</p>
+  <div class="punch" style="padding:30px 26px">
+    <span style="font-size:22px;font-weight:900;line-height:1.5">問題は、<strong>書ける SQL が何通りもあって、どれも動いてしまう</strong>ことです。</span>
   </div>
-  <p class="hl">SQL を書けば済む話に見えます。実際、書けます。問題は<strong>書ける SQL が何通りもあって、どれも動いてしまう</strong>ことです。</p>
+  <div class="g3" style="margin-top:20px">
+    <div class="card"><h4>「優良顧客」の書き方</h4><p class="sm"><code>member_rank = 'VIP'</code><br><code>total_purchase &gt;= 50000</code><br>あるいは条件を書かない<br><span class="no">どれも SQL として通ります</span></p></div>
+    <div class="card"><h4>「アクティブ」の書き方</h4><p class="sm"><code>last_order_at &gt;= 30 日前</code><br><code>last_order_at &gt;= 90 日前</code><br><code>churned_at IS NULL</code> を入れるかどうか<br><span class="no">どれも SQL として通ります</span></p></div>
+    <div class="card"><h4>「売上」の書き方</h4><p class="sm"><code>SUM(amount)</code><br><code>SUM(amount - tax - 返金)</code><br><code>status = 'confirmed'</code> を入れるかどうか<br><span class="no">どれも SQL として通ります</span></p></div>
+  </div>
+  <p class="hl">この一文は、人に頼めば依頼、AI に投げればプロンプトです。<strong>文字は 1 つも変わりません</strong>。書き手が新人でも LLM でも、選択肢は同じだけあります。</p>
 </section>
 
 <section class="slide">

@@ -437,10 +437,10 @@
     
   </div>
 
-  <h3>そもそもオントロジーとは何か</h3>
+  <h3>オントロジーとは何か</h3>
   <p>言葉の広さを整理する前に、<strong>オントロジーが具体的にどんなものか</strong>を先に見ておきます。難しい定義から入らずに、<strong>やっていること 3 つ</strong>で押さえます。</p>
   <div class="fig">
-  <p class="cap">図 0-3<span>オントロジーとは何か — 点と線で書き、型にまとめ、機械に導かせる</span></p>
+  <p class="cap">図 0-3<span>オントロジーとは何か — 点と線で書き、型にまとめ、機械的に導く</span></p>
   <svg viewBox="0 0 880 630" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
     <defs>
       <marker id="z0a0" markerWidth="8" markerHeight="8" refX="6.4" refY="2.8" orient="auto"><path d="M0,0 L6.4,2.8 L0,5.6 z" fill="#1c5b9c"/></marker>
@@ -504,7 +504,7 @@
     <rect x="14" y="252" width="852" height="30" rx="8" fill="#1f6f4a"/>
     <circle cx="34" cy="267" r="10" fill="#fff" opacity="0.94"/>
     <text x="34" y="271" text-anchor="middle" font-size="10.4" font-weight="900" fill="#1f6f4a">3</text>
-    <text x="52" y="266" font-size="10.8" font-weight="900" fill="#fff">書いていないことが、機械に導ける</text>
+    <text x="52" y="266" font-size="10.8" font-weight="900" fill="#fff">書いていないことが、機械的に導ける</text>
     <text x="52" y="278" font-size="8.2" fill="#fff" opacity="0.9">この図は第 9 章で、Turtle と推論器つきでもう一度出てきます（図 9-1）</text>
     <text x="22" y="302" font-size="9.4" font-weight="900" fill="#1f6f4a">① 人が書くこと</text>
     <text x="604" y="302" font-size="9.4" font-weight="900" fill="#b3261e">② 機械が導くこと</text>
@@ -558,7 +558,7 @@
   <p>順に見ていきます。なお <strong>③ の図は、第 9 章でまったく同じ構図でもう一度出てきます</strong>（図 9-1）。そちらでは Turtle と推論器の実物つきで扱います。</p>
   <p><strong>① 世の中のことを、点と線で書く。</strong>「佐藤さんが注文 #1001 を注文した」「その注文はノート PC を含む」— これを<strong>点（もの）と、向きのある線（関係）</strong>で書きます。線 1 本が <strong>（主語 → 述語 → 目的語）</strong>の 3 つ組で、これを<strong>トリプル</strong>と呼びます（第 3 章）。</p>
   <p><strong>② 個別のものを「クラス」にまとめる。</strong>佐藤さんも鈴木さんも田中さんも「顧客」です。1 人ずつ関係を書くのではなく、<strong>「顧客」という型に 1 度書けば、その型の全員に効きます</strong>。「顧客は注文する」と書いておけば、これから増える人にも同じことが言えます（第 5 章）。</p>
-  <p><strong>③ 書いていないことが、機械に導ける。</strong>ここがオントロジーの本題です。薬を例にします。<strong>人が書くのは分類だけ</strong> — 「ロキソプロフェンは NSAIDs」「NSAIDs は解熱鎮痛薬」「解熱鎮痛薬は医薬品」。分類の関係は<strong>推移的</strong>だと仕様で決まっているので、<strong>「ロキソプロフェンは医薬品」は書かなくても出てきます</strong>。</p>
+  <p><strong>③ 書いていないことが、機械的に導ける。</strong>ここがオントロジーの本題です。薬を例にします。<strong>人が書くのは分類だけ</strong> — 「ロキソプロフェンは NSAIDs」「NSAIDs は解熱鎮痛薬」「解熱鎮痛薬は医薬品」。分類の関係は<strong>推移的</strong>だと仕様で決まっているので、<strong>「ロキソプロフェンは医薬品」は書かなくても出てきます</strong>。</p>
   <p>さらに効くのが<strong>制約の継承</strong>です。「NSAIDs は妊娠中禁忌」と<strong>上位クラスに 1 度書く</strong>と、ロキソプロフェンにもイブプロフェンにもジクロフェナクにも、<strong>あとから承認された新薬にも同じ禁忌が効きます</strong>。薬は何千種類もあって新薬も増えるので、1 つずつ書くのは無理です。<strong>分類だけ書いて、あとは機械に任せます。</strong></p>
   <div class="box key">
     <div class="bh">③ が RDB と決定的に違うところです</div>

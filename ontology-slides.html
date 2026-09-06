@@ -293,6 +293,7 @@
 
   /* パネル内の表は左揃え（.panel は図のために中央寄せなので上書き） */
   .panel td, .panel th{text-align:left}
+  .panel pre{text-align:left}
   .panel table{text-align:left}
   /* 帯（.hl 系）に余白を付ける */
   .hl,.hlg,.hlr{padding:13px 16px;border-radius:10px;margin-top:16px;line-height:1.8}
@@ -982,7 +983,7 @@
     <pre><span class="k">CREATE TABLE</span> customers (
   customer_id    <span class="u">VARCHAR</span>(<span class="n">8</span>)  <span class="k">PRIMARY KEY</span>,
   name           <span class="u">VARCHAR</span>(<span class="n">80</span>),
-  member_rank           <span class="u">VARCHAR</span>(<span class="n">16</span>),
+  member_rank    <span class="u">VARCHAR</span>(<span class="n">16</span>),
   total_purchase <span class="u">DECIMAL</span>(<span class="n">12</span>,<span class="n">2</span>),
   last_order_at  <span class="u">DATE</span>,
   churned_at     <span class="u">DATE</span>
@@ -995,7 +996,7 @@
 <span class="c">--   × 「member_rank という列は "会員ランク" のことだ」という意味</span>
 <span class="c">--   × 「売上 = amount - tax - refund」という計算式</span></pre>
   </div>
-  <p class="hlr"><code>member_rank</code> が <code>VARCHAR(20)</code> だと分かっても、<strong>'VIP' と 'vip' のどちらで入っているか</strong>、<strong>そもそも会員ランクで優良顧客を判定していいのか</strong>は分かりません。</p>
+  <p class="hlr"><code>member_rank</code> が <code>VARCHAR(16)</code> だと分かっても、<strong>'VIP' と 'vip' のどちらで入っているか</strong>、<strong>そもそも会員ランクで優良顧客を判定していいのか</strong>は分かりません。</p>
 </section>
 
 <section class="slide">

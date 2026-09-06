@@ -967,7 +967,7 @@
       <tr><td><strong>優良顧客</strong></td><td>member_rank と total_purchase という<strong>列があること</strong>だけ</td><td>列で判定するのか、金額で判定するのか。<span class="no">答え: 累計購入額 50,000 円以上</span>。member_rank 列は営業部の手運用なので<strong>ズレている</strong></td></tr>
       <tr><td><strong>アクティブ</strong></td><td>last_order_at と churned_at という<strong>列があること</strong>だけ</td><td>「直近 何日」なのか。解約者を除くのか。<span class="no">答え: 直近 90 日以内に購入、かつ未解約</span>。どこにも書かれていない</td></tr>
       <tr><td><strong>売上</strong></td><td>amount / tax / refunds.amount / status という<strong>列があること</strong>だけ</td><td>税を引くのか。返金を引くのか。pending を含めるのか。<span class="no">答え: 税抜・返金差引後・confirmed のみ</span></td></tr>
-      <tr><td><strong>先月</strong></td><td>order_date がある</td><td>暦月か会計月か。この会社は暦月なので、<strong>ここは実害が少ない</strong></td></tr>
+      <tr><td><strong>先月</strong></td><td>order_date という<strong>列があること</strong>だけ</td><td>暦月か会計月か。<span class="no">答え: 暦月</span>。たまたま一致することもありますが、会計月の会社なら別の数字が出ます</td></tr>
     </table>
   </div>
   <p class="hl">大事なのは、これらが<strong>「書き忘れ」ではない</strong>ということです。DDL は格納構造を書くための言語であって、業務概念を書くための言語ではありません。<strong>書く場所が用意されていない</strong>のです。</p>

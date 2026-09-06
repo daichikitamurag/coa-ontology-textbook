@@ -1577,15 +1577,17 @@ ec:C001 <span class="k">a</span> ec:顧客 .         <span class="c"># ← 「C0
       <p class="ptitle" style="text-transform:none">ラベル — 同じものの「呼び方」を全部ぶら下げる</p>
       <pre><span class="k">@prefix</span> skos: &lt;http://www.w3.org/2004/02/skos/core#&gt; .
 
-<span class="c"># 実務では URI は ASCII が普通です</span>
-<span class="c"># （この資料は読みやすさのため ec:顧客 と日本語で書いています）</span>
+<span class="c"># 実務では URI は ASCII か、機械が作った識別子です</span>
 ec:Customer
-    rdfs:label    <span class="s">"顧客"</span>@ja <span class="k">;</span>          <span class="c"># ← ここで初めて日本語が付く</span>
-    rdfs:label    <span class="s">"Customer"</span>@en <span class="k">;</span>
+    rdfs:label    <span class="s">"顧客"</span>@ja <span class="k">;</span>          <span class="c"># 日本語はここにしか無い</span>
     skos:altLabel <span class="s">"取引先"</span>@ja <span class="k">,</span>        <span class="c"># 営業部の言い方</span>
                   <span class="s">"お取引先様"</span>@ja <span class="k">,</span>     <span class="c"># 顧客向け文書</span>
-                  <span class="s">"customers"</span>@en .        <span class="c"># DB の表名</span></pre>
-      <p class="sm" style="text-align:left;margin-top:10px"><strong>URI が日本語なら label は冗長です。</strong>この資料の <code>ec:顧客</code> に <code>rdfs:label "顧客"@ja</code> を付けても、ほぼ言い換えにしかなりません。ただし実務では URI は ASCII です — 第 12 章で AWS COA が実際に生成したクラスは <code>ind:PreferredCustomer</code> で、日本語は <code>skos:altLabel "優良顧客"</code> として付いていました。<strong>そこでは label と altLabel しか、日本語から辿る手がかりがありません。</strong><br><span class="sm">※ <code>skos:altLabel</code> は厳密には RDFS ではなく SKOS の語彙ですが、呼び方の登録は実務でこれを使います。</span></p>
+                  <span class="s">"customers"</span>@en .        <span class="c"># DB の表名</span>
+
+<span class="c"># 逆に、これは書いても言い換えにしかならない</span>
+<span class="c">#   ec:Customer rdfs:label "Customer"@en</span>
+<span class="c">#   ec:顧客     rdfs:label "顧客"@ja</span></pre>
+      <p class="sm" style="text-align:left;margin-top:10px"><strong>label が効くのは、URI と人間の言葉が違うときだけです。</strong>効く場面は 3 つ — <strong>① 別の言語</strong>（<code>ec:Customer</code> → 「顧客」）、<strong>② 別の言い方</strong>（「取引先」「お取引先様」）、<strong>③ 機械が作った識別子</strong>（<code>member_rank</code> や、第 12 章で COA が生成した <code>ind:PreferredCustomer</code>）。<br>この資料は読みやすさのため URI を日本語（<code>ec:顧客</code>）で書いているので、このあとのリストに出てくる <code>rdfs:label</code> は<strong>ほぼ言い換えです</strong>。実務では URI が人間の言葉であることはまずないので、<strong>そこでは label と altLabel しか手がかりがありません</strong>。<br><span class="sm">※ <code>skos:altLabel</code> は厳密には RDFS ではなく SKOS の語彙ですが、呼び方の登録は実務でこれを使います。</span></p>
     </div>
     <div class="panel">
       <p class="ptitle" style="text-transform:none">コメント — その列の「扱い方」を残す</p>

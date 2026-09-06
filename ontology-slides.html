@@ -952,7 +952,7 @@
   </div>
   <div class="g4" style="margin-top:20px">
     <div class="card"><h4>「優良顧客」の書き方</h4><p class="sm"><code>member_rank = 'VIP'</code><br><code>total_purchase &gt;= 50000</code><br>あるいは条件を書かない<br><span class="no">どれも SQL として通ります</span></p></div>
-    <div class="card"><h4>「アクティブ」の書き方</h4><p class="sm"><code>last_order_at &gt;= 30 日前</code><br><code>last_order_at &gt;= 90 日前</code><br><code>churned_at IS NULL</code> を入れるか<br><span class="no">どれも SQL として通ります</span></p></div>
+    <div class="card"><h4>「アクティブ」の書き方</h4><p class="sm"><code>last_order_at &gt;= 30 日前</code><br><code>last_order_at &gt;= 90 日前</code><br><code>churned_at</code>（解約日）<code>IS NULL</code> を入れるか<br><span class="no">どれも SQL として通ります</span></p></div>
     <div class="card"><h4>「売上」の書き方</h4><p class="sm"><code>SUM(amount)</code><br><code>SUM(amount - tax - 返金)</code><br><code>status = 'confirmed'</code> を入れるか<br><span class="no">どれも SQL として通ります</span></p></div>
     <div class="card"><h4>「先月」の書き方</h4><p class="sm"><code>order_date</code> で暦月を切る<br>会計月で切る<br>「直近 30 日」と読み替える<br><span class="no">どれも SQL として通ります</span></p></div>
   </div>
@@ -967,7 +967,7 @@
     <p class="ptitle">DB から分かること / 分からないこと</p>
     <table class="tw"><thead><tr><th style="width:15%">言葉</th><th style="width:30%">DB から分かること</th><th style="width:55%">DB から分からないこと ＝ この会社の答え</th></tr></thead>
       <tr><td><strong>優良顧客</strong></td><td>member_rank と total_purchase という<strong>列があること</strong>だけ</td><td>列で判定するのか、金額で判定するのか。<span class="no">答え: 累計購入額 50,000 円以上</span>。member_rank 列は営業部の手運用なので<strong>ズレている</strong></td></tr>
-      <tr><td><strong>アクティブ</strong></td><td>last_order_at と churned_at という<strong>列があること</strong>だけ</td><td>「直近 何日」なのか。解約者を除くのか。<span class="no">答え: 直近 90 日以内に購入、かつ未解約</span>。どこにも書かれていない</td></tr>
+      <tr><td><strong>アクティブ</strong></td><td>last_order_at（最終注文日）と churned_at（解約日）という<strong>列があること</strong>だけ</td><td>「直近 何日」なのか。解約者を除くのか。<span class="no">答え: 直近 90 日以内に購入、かつ未解約</span>。どこにも書かれていない</td></tr>
       <tr><td><strong>売上</strong></td><td>amount / tax / refunds.amount / status という<strong>列があること</strong>だけ</td><td>税を引くのか。返金を引くのか。pending を含めるのか。<span class="no">答え: 税抜・返金差引後・confirmed のみ</span></td></tr>
       <tr><td><strong>先月</strong></td><td>order_date という<strong>列があること</strong>だけ</td><td>暦月か会計月か。<span class="no">答え: 暦月</span>。たまたま一致することもありますが、会計月の会社なら別の数字が出ます</td></tr>
     </table>
@@ -987,7 +987,7 @@
   member_rank    <span class="u">VARCHAR</span>(<span class="n">16</span>),
   total_purchase <span class="u">DECIMAL</span>(<span class="n">12</span>,<span class="n">2</span>),
   last_order_at  <span class="u">DATE</span>,
-  churned_at     <span class="u">DATE</span>
+  churned_at     <span class="u">DATE</span>          <span class="c">-- 解約日。値があれば解約済み</span>
 );
 
 <span class="c">-- 書けるのはここまで。「型」と「一意性」と「参照先」だけ。</span>
@@ -1017,7 +1017,7 @@
 <section class="slide">
   <div class="eyebrow">ACT 2 — 事故</div>
   <h2>同じ依頼に、2 つの答えが出る</h2>
-  <p class="lead">では実際に SQL を書いてみます。<strong>定義を知らない新人</strong>と、<strong>4 つの定義を知っている人</strong>。同じ依頼から、違う数字が出ます。</p>
+  <p class="lead">では実際に SQL を書いてみます。<strong>まずは人が書いた場合</strong>です — <strong>配属されたばかりで 4 つの定義を知らない担当者（以下「新人」）</strong>と、<strong>定義を知っている人</strong>。同じ依頼から違う数字が出ます。<span class="sm">同じ一文を AI Agent に投げた場合は第 3 部で見ます。<strong>つまずくのは同じ 4 つの言葉です。</strong></span></p>
   <div class="panel">
     <p class="ptitle">同じ依頼、2 つの答え</p>
     <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
@@ -1175,7 +1175,7 @@
   <p class="lead">さきほどの <code>customers</code> から、佐藤さんの行だけを取り出します。これを日本語の文にばらしてみます。</p>
   <div class="panel">
     <p class="ptitle">customers — 佐藤さんの 1 行</p>
-    <table><thead><tr><th>customer_id</th><th>name</th><th>member_rank</th><th>total_purchase</th><th>last_order_at</th><th>churned_at</th></tr></thead>
+    <table><thead><tr><th>customer_id</th><th>name</th><th>member_rank</th><th>total_purchase</th><th>last_order_at</th><th>churned_at<br><span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">（解約日）</span></th></tr></thead>
       <tr><td>C001</td><td>佐藤 花子</td><td>VIP</td><td>82,000</td><td>2026-07-28</td><td>(null)</td></tr>
     </table>
   </div>
@@ -1571,7 +1571,7 @@ ec:C001 <span class="k">a</span> ec:顧客 .         <span class="c"># ← 「C0
 <section class="slide">
   <div class="eyebrow">ACT 5 — 注釈</div>
   <h2>rdfs:label — 記号に人間の言葉を与える</h2>
-  <p class="lead">第 2 章で新人が外した原因を並べ直します。<strong>①「直近 90 日」という基準を知らなかった ② <code>churned_at</code> という列の存在に気づかなかった ③「売上」が税抜・返金差引後だと知らなかった</strong>。<strong>3 つとも「列の名前を見ただけでは分からない」こと</strong>です。<code>rdfs:label</code> と <code>rdfs:comment</code> は、この情報を<strong>列そのものに貼り付ける</strong>ための語彙です。</p>
+  <p class="lead">第 2 章で新人が間違えた原因を、並べ直します。<strong>①「直近 90 日」という基準を知らなかった ② <code>churned_at</code>（解約日）という列の存在に気づかなかった ③「売上」が税抜・返金差引後だと知らなかった</strong>。<strong>3 つとも「列の名前を見ただけでは分からない」こと</strong>です。<code>rdfs:label</code> と <code>rdfs:comment</code> は、この情報を<strong>列そのものに貼り付ける</strong>ための語彙です。</p>
   <div class="g2 vtop" style="margin-top:16px;align-items:stretch">
     <div class="panel">
       <p class="ptitle" style="text-transform:none">ラベルを付ける</p>
@@ -1598,7 +1598,7 @@ ec:解約日
       <p class="sm" style="text-align:left;margin-top:10px">ラベルは名前を与えるだけですが、<code>rdfs:comment</code> は<strong>「この列をどう扱うべきか」を運べます</strong>。</p>
     </div>
   </div>
-  <p class="hl">もしこの 2 つが書かれていれば、第 2 章の新人は<strong>「30 日くらいかな」と推測する必要がなく</strong>、<code>churned_at</code> を見落とすこともありませんでした。</p>
+  <p class="hl">もしこの 2 つが書かれていれば、第 2 章の新人は<strong>「30 日くらいかな」と推測する必要がなく</strong>、<code>churned_at</code>（解約日）を見落とすこともありませんでした。</p>
   <div class="card amber" style="margin-top:16px">
     <h4>rdfs:comment が地味に重要です</h4>
     <p class="sm">「営業部が四半期ごとに手動更新している」と書いておけば、<strong>この列を信用しすぎてはいけないこと</strong>が、後任者にも、そして LLM にも伝わります。第 6 章で <code>member_rank</code> を使わずに累計購入額で判定する理由が、ここに書いてあることになります。</p>

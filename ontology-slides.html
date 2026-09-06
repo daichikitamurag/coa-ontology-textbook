@@ -1937,6 +1937,18 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
   <h2>ルールが示す集合と、列が示す集合はズレる</h2>
   <p class="lead">累計購入額で判定すると 4 人。<code>member_rank</code> 列は 2 人。<strong>鈴木さんと田中さんが、ルール上は優良顧客なのに列では Regular</strong> — 第 2 章の事故の正体がこれです。</p>
   <div class="panel">
+    <p class="ptitle" style="text-transform:none">ルールを第 1 章の 5 人に当てはめる</p>
+    <table><thead><tr>
+      <th style="width:18%">顧客</th><th style="width:18%">累計購入額</th>
+      <th style="width:22%">ルールでの判定</th><th style="width:22%">member_rank 列の値</th><th style="width:20%">一致?</th></tr></thead>
+      <tr><td>C001 佐藤</td><td>82,000</td><td><span class="ok">優良顧客</span></td><td>VIP</td><td><span class="ok">一致</span></td></tr>
+      <tr><td>C002 鈴木</td><td>55,000</td><td><span class="ok">優良顧客</span></td><td>Regular</td><td><span class="no">ズレている</span></td></tr>
+      <tr><td>C003 田中</td><td>61,000</td><td><span class="ok">優良顧客</span></td><td>Regular</td><td><span class="no">ズレている</span></td></tr>
+      <tr><td>C004 高橋</td><td>12,000</td><td>該当せず</td><td>Regular</td><td><span class="ok">一致</span></td></tr>
+      <tr><td>C005 伊藤</td><td>94,000</td><td><span class="ok">優良顧客</span></td><td>VIP</td><td><span class="ok">一致</span></td></tr>
+    </table>
+  </div>
+  <div class="panel">
     <p class="ptitle">ルールが示す集合と、列が示す集合</p>
     <svg viewBox="0 0 880 260" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
       <circle cx="300" cy="130" r="104" fill="#f1f8f4" stroke="#1f6f4a" stroke-width="2.4"/>
@@ -1960,6 +1972,7 @@ ec:優良顧客 <span class="k">a</span> owl:Class <span class="k">;</span>
       <text x="470" y="222" font-size="11" fill="#96650a"> 書いておいた理由がここで効く)</text>
     </svg>
   </div>
+  <p class="hlg"><strong>推論器を動かす前に、「ズレの検知」だけで元が取れます。</strong>第 5 章で <code>rdfs:comment</code> に「営業部が手動更新している」と書いておいた理由が、ここで効きます。</p>
 </section>
 
 <section class="slide">

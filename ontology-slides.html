@@ -290,6 +290,8 @@
   .cover{background:linear-gradient(135deg,#131a34 0%,#1e2a55 52%,#2c1d5e 100%);border:none;color:#fff;
       min-height:560px;display:flex;flex-direction:column;justify-content:center;padding:60px 64px}
   @media print{ .slide{min-height:0} }
+  /* TBox / ABox を横並びにしたスライドのコードは少し小さく */
+  .g2.vtop > .panel > pre{font-size:9.6px;line-height:1.62}
 
   /* パネル内の表は左揃え（.panel は図のために中央寄せなので上書き） */
   .panel td, .panel th{text-align:left}
@@ -1276,7 +1278,8 @@ ec:C001 ec:名前 <span class="s">"佐藤 花子"</span> <span class="k">;</span
 <section class="slide">
   <div class="eyebrow">ACT 4 — Turtle</div>
   <h2>この資料で使う定義とデータ、全体</h2>
-  <p class="lead">上が<strong>定義（TBox）</strong>、下が<strong>データ（ABox）</strong>です。データは顧客 5 人・注文 5 件・返金 1 件。<strong>89,000 / 84,500 も、第 3 部の実機デモも、全部このデータです</strong>。</p>
+  <p class="lead">左が<strong>定義（TBox）</strong>、右が<strong>データ（ABox）</strong>です。データは顧客 5 人・注文 5 件・返金 1 件。<strong>89,000 / 84,500 も、第 3 部の実機デモも、全部このデータです</strong>。</p>
+  <div class="g2 vtop" style="align-items:stretch">
   <div class="panel">
     <p class="ptitle">TBox（定義）— 第 5 章までに書く分の抜粋</p>
     <pre><span class="k">@prefix</span> ec:   &lt;http://example.com/ec#&gt; .
@@ -1307,7 +1310,7 @@ ec:累計購入額
     <pre><span class="k">@prefix</span> ec:  <span class="u">&lt;http://example.com/ec#&gt;</span> .
 <span class="k">@prefix</span> xsd: <span class="u">&lt;http://www.w3.org/2001/XMLSchema#&gt;</span> .
 
-<span class="c"># ここから下は「データ」だけ。定義は上のブロック。</span>
+<span class="c"># ここにあるのは「データ」だけ。定義は左のブロック。</span>
 <span class="c"># 分ける理由は次のスライド。定義の書き方は ACT 5〜6。</span>
 
 <span class="c"># ── 顧客 5 人 ──────────────────────────────</span>
@@ -1355,6 +1358,7 @@ ec:O105 <span class="k">a</span> ec:注文 <span class="k">;</span> ec:注文者
 
 <span class="c"># ── 返金 1 件 ──────────────────────────────</span>
 ec:R01  <span class="k">a</span> ec:返金 <span class="k">;</span> ec:対象注文 ec:O101 <span class="k">;</span> ec:金額 <span class="s">"5500"</span>^^xsd:decimal .</pre>
+  </div>
   </div>
 </section>
 

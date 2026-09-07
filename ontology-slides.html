@@ -2666,9 +2666,95 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
   <div class="part">第 11 章</div>
   <h1>VKG <span style="font-size:.62em;font-weight:700;opacity:.72">(Virtual Knowledge Graph)</span> — RDB を 1 バイトも動かさない</h1>
   <p>「既存 DB を全部 RDF 化するコスト」という最大の壁を、丸ごと回避する技術です。第 3 部の AWS COA と Palantir は、どちらもこの考え方の上に立っています。</p>
-  <div class="agenda"><span>対応表を書くだけ</span><span>外部キーが矢印になる</span><span>TBox と ABox</span><span>推論が難しくなる</span><span>TBox 検査だけに使う</span></div>
+  <div class="agenda"><span>定義と実データの規模差</span><span>対応表を書くだけ</span><span>外部キーが矢印になる</span><span>推論が難しくなる</span><span>TBox 検査だけに使う</span></div>
 </section>
 
+<section class="slide">
+  <div class="eyebrow">第 11 章 — VKG</div>
+  <h2>ABox が圧倒的に多い — 全部を写すと二重管理になる</h2>
+  <p class="lead">TBox（定義）は数千トリプル。ABox（実データ）は数億行あります。全部を Triple Store に写すと、<strong>数億行の写しを持って元の RDB と二重管理になります</strong>。容量・鮮度・規制で、そもそも移せない場合もあります。</p>
+  <div class="panel">
+    <p class="ptitle">TBox（定義）と ABox（実データ）— 居場所と規模の差</p>
+    <svg viewBox="0 0 880 332" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+      <!-- ═══ 上: Triple Store（定義が入る）═══ -->
+      <rect x="120" y="18" width="560" height="134" rx="10" fill="#fdf8ec" stroke="#96650a" stroke-width="2.8"/>
+      <circle cx="158" cy="46" r="19" fill="#fff" stroke="#96650a" stroke-width="1.8"/>
+      <g transform="translate(158,46)" stroke="#96650a" stroke-width="1.5">
+        <line x1="0" y1="-7" x2="-7" y2="5"/><line x1="0" y1="-7" x2="7" y2="5"/><line x1="-7" y1="5" x2="7" y2="5"/>
+        <circle cx="0" cy="-7" r="3.4" fill="#fff"/><circle cx="-7" cy="5" r="3.4" fill="#fff"/><circle cx="7" cy="5" r="3.4" fill="#fff"/></g>
+      <text x="192" y="42" font-size="12.5" font-weight="800" fill="#7a4a1c">Triple Store (Amazon Neptune 等)</text>
+      <text x="192" y="60" font-size="10" fill="#96650a"><tspan font-weight="700">TBox（定義）</tspan>を置く</text>
+      <text x="192" y="86" font-size="9" font-family="Menlo,monospace" fill="#7a4a1c">✓ ec:顧客 a owl:Class</text>
+      <text x="192" y="104" font-size="9" font-family="Menlo,monospace" fill="#7a4a1c">✓ ec:注文者 rdfs:domain ec:注文 ; rdfs:range ec:顧客</text>
+      <text x="192" y="122" font-size="9" font-family="Menlo,monospace" fill="#7a4a1c">✓ ec:優良顧客 owl:equivalentClass [ ... ]</text>
+      <text x="192" y="140" font-size="9" font-family="Menlo,monospace" fill="#7a4a1c">✓ Metric（指標）の定義</text>
+      <text x="778" y="62" font-size="22" font-weight="900" fill="#7a4a1c" text-anchor="middle">数千</text>
+      <text x="778" y="80" font-size="10" fill="#96650a" text-anchor="middle">トリプル</text>
+      <text x="778" y="106" font-size="8.5" fill="#6b7480" text-anchor="middle">クラスとプロパティの</text>
+      <text x="778" y="119" font-size="8.5" fill="#6b7480" text-anchor="middle">数だけなので</text>
+      <text x="778" y="136" font-size="8.5" font-weight="700" fill="#96650a" text-anchor="middle">データが増えても</text>
+      <text x="778" y="149" font-size="8.5" font-weight="700" fill="#96650a" text-anchor="middle">膨らまない</text>
+
+      <!-- ═══ 境界 ═══ -->
+      <line x1="120" y1="176" x2="680" y2="176" stroke="#b3261e" stroke-width="2" stroke-dasharray="8 5"/>
+      <text x="400" y="170" font-size="10" font-weight="800" fill="#b3261e" text-anchor="middle">この数億行を、境界の上に写すのか — ここが最大の壁</text>
+
+      <!-- ═══ 下: 元の RDB（実データが居る）═══ -->
+      <rect x="120" y="196" width="560" height="118" rx="10" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2.8"/>
+      <circle cx="158" cy="224" r="19" fill="#fff" stroke="#1c5b9c" stroke-width="1.8"/>
+      <g transform="translate(158,224)" stroke="#1c5b9c" stroke-width="1.7" fill="none">
+        <ellipse cx="0" cy="-7" rx="8.5" ry="3.2"/>
+        <path d="M-8.5,-7 V7 a8.5,3.2 0 0 0 17,0 V-7"/>
+        <path d="M-8.5,0 a8.5,3.2 0 0 0 17,0"/></g>
+      <text x="192" y="220" font-size="12.5" font-weight="800" fill="#0f3f6b">元の RDB / S3 (Athena・JDBC で読む)</text>
+      <text x="192" y="238" font-size="10" fill="#1c5b9c"><tspan font-weight="700">ABox（実データ）</tspan>は最後までここに居る</text>
+      <text x="192" y="264" font-size="9" font-family="Menlo,monospace" fill="#0f3f6b">✓ customers … C001 佐藤, C002 鈴木, C003 田中 …</text>
+      <text x="192" y="282" font-size="9" font-family="Menlo,monospace" fill="#0f3f6b">✓ orders    … O101, O102, O103, O104, O105</text>
+      <text x="192" y="300" font-size="9" font-family="Menlo,monospace" fill="#0f3f6b">✓ refunds   … R01</text>
+      <text x="778" y="240" font-size="22" font-weight="900" fill="#0f3f6b" text-anchor="middle">数億</text>
+      <text x="778" y="258" font-size="10" fill="#1c5b9c" text-anchor="middle">行</text>
+      <text x="778" y="280" font-size="8.5" fill="#6b7480" text-anchor="middle">容量・鮮度・規制で</text>
+      <text x="778" y="296" font-size="8.5" font-weight="700" fill="#1c5b9c" text-anchor="middle">移せないことも多い</text>
+    </svg>
+  </div>
+  <div class="panel">
+    <p class="ptitle" style="text-transform:none">図 11-6　① 推論を諦める — 同じ数字が 2 箇所に分かれる</p>
+    <svg viewBox="0 0 880 250" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+    <defs><marker id="m6r" markerWidth="9" markerHeight="9" refX="7.2" refY="3.1" orient="auto"><path d="M0,0 L7.2,3.1 L0,6.2 z" fill="#b3261e"/></marker></defs>
+
+    <rect x="30" y="30" width="336" height="106" rx="10" fill="#fdf8ec" stroke="#96650a" stroke-width="2.4"/>
+    <circle cx="58" cy="56" r="14" fill="#fff" stroke="#96650a" stroke-width="1.6"/>
+    <g transform="translate(58,56)" stroke="#96650a" stroke-width="1.5" fill="none">
+    <rect x="-5.5" y="-7" width="11" height="14" rx="1.5"/><path d="M-2.5,-3.5 H2.5M-2.5,0 H2.5M-2.5,3.5 H0.5"/></g>
+    <text x="80" y="60" font-size="11.5" font-weight="800" fill="#7a4a1c">OWL の定義（リスト 6-2）</text>
+    <text x="46" y="88" font-size="9" font-family="Menlo,monospace" fill="#7a4a1c">ec:優良顧客 owl:equivalentClass [</text>
+    <text x="46" y="104" font-size="9" font-family="Menlo,monospace" fill="#7a4a1c">  ec:累計購入額 が 50000 以上 ] .</text>
+    <text x="46" y="126" font-size="9" font-weight="700" fill="#96650a">置いてあるが、推論器は走らせない</text>
+
+    <rect x="514" y="30" width="336" height="106" rx="10" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2.4"/>
+    <circle cx="542" cy="56" r="14" fill="#fff" stroke="#6b3fa0" stroke-width="1.6"/>
+    <g transform="translate(542,56)" stroke="#6b3fa0" stroke-width="1.6" fill="none" stroke-linecap="round">
+    <circle cx="-1.5" cy="-1.5" r="5.5"/><path d="M2.5,2.5 L7,7"/></g>
+    <text x="564" y="60" font-size="11.5" font-weight="800" fill="#4c1d95">SPARQL（リスト 7-3）</text>
+    <text x="530" y="88" font-size="9" font-family="Menlo,monospace" fill="#4c1d95">?c ec:累計購入額 ?t .</text>
+    <text x="530" y="104" font-size="9" font-family="Menlo,monospace" fill="#4c1d95">FILTER(?t &gt;= 50000)</text>
+    <text x="530" y="126" font-size="9" font-weight="700" fill="#6b3fa0">実際に 4 名を絞っているのはこちら</text>
+
+    <rect x="392" y="52" width="96" height="62" rx="9" fill="#fdf3f2" stroke="#b3261e" stroke-width="2.4"/>
+    <text x="440" y="82" text-anchor="middle" font-size="17" font-weight="900" fill="#8c1e18">50000</text>
+    <text x="440" y="102" text-anchor="middle" font-size="9" font-weight="800" fill="#b3261e">同じ数字</text>
+    <line x1="366" y1="83" x2="390" y2="83" stroke="#b3261e" stroke-width="2"/>
+    <line x1="490" y1="83" x2="512" y2="83" stroke="#b3261e" stroke-width="2"/>
+
+    <rect x="30" y="176" width="820" height="56" rx="9" fill="#fff" stroke="#b3261e" stroke-width="2.2" stroke-dasharray="7 4"/>
+    <text x="56" y="200" font-size="11.5" font-weight="900" fill="#8c1e18">基準を 50,000 円 → 40,000 円 に変えるとき</text>
+    <text x="56" y="220" font-size="9.5" fill="#b3261e">OWL の定義と SPARQL の<tspan font-weight="800">両方</tspan>を直す。片方だけ直しても誰もエラーを出さない — 結果が静かにズレる</text>
+    <line x1="150" y1="174" x2="150" y2="140" stroke="#b3261e" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#m6r)"/>
+    <line x1="700" y1="174" x2="700" y2="140" stroke="#b3261e" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#m6r)"/>
+    </svg>
+  </div>
+  <div class="hlg">大きい側を移さずに、上からはグラフとして見せる方法があります。それが <strong>VKG</strong> です。</div>
+</section>
 <section class="slide">
   <div class="eyebrow">第 11 章 — VKG</div>
   <h2>上はグラフに見え、下は RDB のまま</h2>
@@ -2858,55 +2944,6 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
   </div>
 </section>
 
-<section class="slide">
-  <div class="eyebrow">第 11 章 — VKG</div>
-  <h2>TBox（定義）と ABox（実データ）— 規模が非対称</h2>
-  <p class="lead">定義は数百〜数千トリプル。実データは数億行。<strong>この非対称が、次のスライドの制約を生みます</strong>。</p>
-  <div class="panel">
-    <p class="ptitle">TBox（定義）と ABox（実データ）の居場所 — そして規模の非対称</p>
-    <svg viewBox="0 0 880 332" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
-      <!-- ═══ 上: Triple Store（定義が入る）═══ -->
-      <rect x="120" y="18" width="560" height="134" rx="10" fill="#fdf8ec" stroke="#96650a" stroke-width="2.8"/>
-      <circle cx="158" cy="46" r="19" fill="#fff" stroke="#96650a" stroke-width="1.8"/>
-      <g transform="translate(158,46)" stroke="#96650a" stroke-width="1.5">
-        <line x1="0" y1="-7" x2="-7" y2="5"/><line x1="0" y1="-7" x2="7" y2="5"/><line x1="-7" y1="5" x2="7" y2="5"/>
-        <circle cx="0" cy="-7" r="3.4" fill="#fff"/><circle cx="-7" cy="5" r="3.4" fill="#fff"/><circle cx="7" cy="5" r="3.4" fill="#fff"/></g>
-      <text x="192" y="42" font-size="12.5" font-weight="800" fill="#7a4a1c">Triple Store (Amazon Neptune 等)</text>
-      <text x="192" y="60" font-size="10" fill="#96650a"><tspan font-weight="700">TBox（定義）だけ</tspan>が入る</text>
-      <text x="192" y="86" font-size="9" font-family="Menlo,monospace" fill="#7a4a1c">✓ ec:顧客 a owl:Class</text>
-      <text x="192" y="104" font-size="9" font-family="Menlo,monospace" fill="#7a4a1c">✓ ec:注文者 rdfs:domain ec:注文 ; rdfs:range ec:顧客</text>
-      <text x="192" y="122" font-size="9" font-family="Menlo,monospace" fill="#7a4a1c">✓ ec:優良顧客 owl:equivalentClass [ ... ]</text>
-      <text x="192" y="140" font-size="9" font-family="Menlo,monospace" fill="#7a4a1c">✓ R2RML の対応表 / Metric 定義</text>
-      <text x="778" y="62" font-size="22" font-weight="900" fill="#7a4a1c" text-anchor="middle">数千</text>
-      <text x="778" y="80" font-size="10" fill="#96650a" text-anchor="middle">トリプル</text>
-      <text x="778" y="106" font-size="8.5" fill="#6b7480" text-anchor="middle">クラスとプロパティの</text>
-      <text x="778" y="119" font-size="8.5" fill="#6b7480" text-anchor="middle">数だけなので</text>
-      <text x="778" y="136" font-size="8.5" font-weight="700" fill="#96650a" text-anchor="middle">データが増えても</text>
-      <text x="778" y="149" font-size="8.5" font-weight="700" fill="#96650a" text-anchor="middle">膨らまない</text>
-
-      <!-- ═══ 境界 ═══ -->
-      <line x1="120" y1="176" x2="680" y2="176" stroke="#b3261e" stroke-width="2" stroke-dasharray="8 5"/>
-      <text x="400" y="170" font-size="10" font-weight="800" fill="#b3261e" text-anchor="middle">この境界を、データは越えない — 繋ぐのは対応表だけ</text>
-
-      <!-- ═══ 下: 元の RDB（実データが居る）═══ -->
-      <rect x="120" y="196" width="560" height="118" rx="10" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2.8"/>
-      <circle cx="158" cy="224" r="19" fill="#fff" stroke="#1c5b9c" stroke-width="1.8"/>
-      <g transform="translate(158,224)" stroke="#1c5b9c" stroke-width="1.7" fill="none">
-        <ellipse cx="0" cy="-7" rx="8.5" ry="3.2"/>
-        <path d="M-8.5,-7 V7 a8.5,3.2 0 0 0 17,0 V-7"/>
-        <path d="M-8.5,0 a8.5,3.2 0 0 0 17,0"/></g>
-      <text x="192" y="220" font-size="12.5" font-weight="800" fill="#0f3f6b">元の RDB / S3 (Athena・JDBC で読む)</text>
-      <text x="192" y="238" font-size="10" fill="#1c5b9c"><tspan font-weight="700">ABox（実データ）</tspan>は最後までここに居る</text>
-      <text x="192" y="264" font-size="9" font-family="Menlo,monospace" fill="#0f3f6b">✓ customers … C001 佐藤, C002 鈴木, C003 田中 …</text>
-      <text x="192" y="282" font-size="9" font-family="Menlo,monospace" fill="#0f3f6b">✓ orders    … O101, O102, O103, O104, O105</text>
-      <text x="192" y="300" font-size="9" font-family="Menlo,monospace" fill="#0f3f6b">✓ refunds   … R01</text>
-      <text x="778" y="240" font-size="22" font-weight="900" fill="#0f3f6b" text-anchor="middle">数億</text>
-      <text x="778" y="258" font-size="10" fill="#1c5b9c" text-anchor="middle">行</text>
-      <text x="778" y="282" font-size="8.5" fill="#6b7480" text-anchor="middle">移せないことも多い。</text>
-      <text x="778" y="298" font-size="8.5" font-weight="700" fill="#1c5b9c" text-anchor="middle">移す必要もない</text>
-    </svg>
-  </div>
-</section>
 
 <section class="slide">
   <div class="eyebrow">第 11 章 — VKG</div>

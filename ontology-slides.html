@@ -3306,7 +3306,7 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
 <section class="slide">
   <div class="eyebrow">第 12 章 — 狙い</div>
   <h2>グラウンディング層とは何か</h2>
-  <p class="lead">要点は<strong>「同じ層を 2 回使う」</strong>ことです。LLM に渡す材料と、LLM の出力を検査する物差しが<strong>同一のオントロジー</strong>。</p>
+  <p class="lead">COA の狙いは一言で言えます。<strong>オントロジーを LLM のグラウンディング層として使う</strong>。グラウンディングとは、LLM の答えを手元の事実に接地させることです。放っておくと LLM は「アクティブ顧客とは 30 日だろう」と自分で埋めます（第 2 章）。そこで SQL を書かせる前に、社内で決めた定義を読ませます。</p>
   <div class="panel">
     <p class="ptitle">グラウンディング層とは何か — 生成前の材料と、生成後の検査を、同じ 1 箇所から出す</p>
     <svg viewBox="0 0 880 618" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
@@ -3386,6 +3386,7 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
     <text x="458" y="603" font-size="8.5" fill="#3d4654">権限外の参照は<tspan font-weight="800">機械的に止まる</tspan>（図 12-28）</text>
   </svg>
   </div>
+  <div class="hl">それだけなら <strong>RAG と同じ</strong>ですが、渡すのが文章ではなくオントロジーである点が違います。構造があるので、出てきた答えを機械が検査できます。要点は「<strong>同じ層を 2 回使う</strong>」こと — LLM に渡す材料と、LLM の出力を検査する物差しが、同一のオントロジーです。</div>
 </section>
 
 <section class="slide">

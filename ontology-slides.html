@@ -337,7 +337,7 @@
   <h1>オントロジーで、<em>意味</em>を機械に渡す</h1>
   <p class="sub">AWS Context Ontology Accelerator / Palantir Foundry・AIP / 自作 Minecraft Agent — 3 つの実装を実機で確かめた記録</p>
   <p class="meta">社内クラウド勉強会 ／ SI部 北村</p>
-  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 112 枚</span></div>
+  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 113 枚</span></div>
 </section>
 
 <section class="slide">
@@ -2669,6 +2669,122 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
   <div class="agenda"><span>対応表を書くだけ</span><span>外部キーが矢印になる</span><span>TBox と ABox</span><span>推論が難しくなる</span><span>TBox 検査だけに使う</span></div>
 </section>
 
+<section class="slide">
+  <div class="eyebrow">第 11 章 — VKG</div>
+  <h2>書き写すのではなく、「対応表」だけを書く</h2>
+  <p class="lead">第 4 章では <code>customers</code> 表を手で Turtle に書き写しました。実務でそれをやると、<strong>元の DB と Turtle の二重管理が始まります</strong>。</p>
+  <div class="panel">
+    <p class="ptitle" style="text-transform:none">第 4 章のやり方（書き写す）と、第 11 章のやり方（対応表）</p>
+    <svg viewBox="0 0 880 258" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, sans-serif">
+      <defs>
+        <marker id="s59n-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0,1 L9,5 L0,9 z" fill="#8f1f18"/>
+        </marker>
+        <marker id="s59n-ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0,1 L9,5 L0,9 z" fill="#96650a"/>
+        </marker>
+      </defs>
+
+      <!-- 左：書き写す -->
+      <rect x="14" y="14" width="418" height="230" rx="12" fill="#fdf3f2" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="7 5"/>
+      <text x="32" y="38" font-size="11.5" font-weight="900" fill="#8f1f18">✕ 第 4 章のやり方 — 表を Turtle に書き写す</text>
+
+      <rect x="32" y="54" width="168" height="96" rx="8" fill="#fff" stroke="#1c5b9c" stroke-width="2"/>
+      <text x="44" y="73" font-size="10" font-weight="900" fill="#1c5b9c">RDB  customers</text>
+      <text x="44" y="91" font-size="8.6" fill="#3d4654">C001  佐藤花子  VIP</text>
+      <text x="44" y="106" font-size="8.6" fill="#3d4654">C002  鈴木一郎  GOLD</text>
+      <text x="44" y="121" font-size="8.6" fill="#6b7480">…（以下 3 件）</text>
+      <text x="44" y="141" font-size="8" font-weight="800" fill="#1c5b9c">日々更新される</text>
+
+      <line x1="206" y1="102" x2="248" y2="102" stroke="#8f1f18" stroke-width="2.2" marker-end="url(#s59n-ar)"/>
+      <text x="227" y="93" text-anchor="middle" font-size="8" font-weight="800" fill="#8f1f18">手で写す</text>
+
+      <rect x="254" y="54" width="162" height="96" rx="8" fill="#fff" stroke="#6b3fa0" stroke-width="2"/>
+      <text x="266" y="73" font-size="10" font-weight="900" fill="#4c1d95">Turtle ファイル</text>
+      <text x="266" y="91" font-size="8" fill="#3d4654">ec:C001 ec:会員ランク "VIP"</text>
+      <text x="266" y="106" font-size="8" fill="#3d4654">ec:C002 ec:会員ランク "GOLD"</text>
+      <text x="266" y="121" font-size="8" fill="#6b7480">…（以下 3 件）</text>
+      <text x="266" y="141" font-size="8" font-weight="800" fill="#8f1f18">写した時点のまま</text>
+
+      <rect x="32" y="166" width="384" height="62" rx="8" fill="#fff" stroke="#b3261e" stroke-width="1.4"/>
+      <text x="46" y="186" font-size="9.4" font-weight="900" fill="#8f1f18">同じ事実が 2 箇所にある — 二重管理</text>
+      <text x="46" y="203" font-size="8.6" fill="#3d4654">RDB 側を更新しても、写した Turtle は自動では追いつきません。</text>
+      <text x="46" y="219" font-size="8.6" fill="#3d4654">同期の仕組みを作るか、古いまま使うかの選択になります。</text>
+
+      <!-- 右：対応表 -->
+      <rect x="448" y="14" width="418" height="230" rx="12" fill="#f2f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
+      <text x="466" y="38" font-size="11.5" font-weight="900" fill="#155c3c">○ 第 11 章のやり方 — 対応表だけを書く</text>
+
+      <rect x="466" y="54" width="168" height="96" rx="8" fill="#fff" stroke="#1c5b9c" stroke-width="2"/>
+      <text x="478" y="73" font-size="10" font-weight="900" fill="#1c5b9c">RDB  customers</text>
+      <text x="478" y="91" font-size="8.6" fill="#3d4654">C001  佐藤花子  VIP</text>
+      <text x="478" y="106" font-size="8.6" fill="#3d4654">C002  鈴木一郎  GOLD</text>
+      <text x="478" y="121" font-size="8.6" fill="#6b7480">…（以下 3 件）</text>
+      <text x="478" y="141" font-size="8" font-weight="800" fill="#155c3c">実データはここだけ</text>
+
+      <line x1="640" y1="102" x2="682" y2="102" stroke="#96650a" stroke-width="2.2" stroke-dasharray="5 4" marker-end="url(#s59n-ag)"/>
+      <text x="661" y="93" text-anchor="middle" font-size="8" font-weight="800" fill="#96650a">対応づけ</text>
+
+      <rect x="688" y="54" width="162" height="96" rx="8" fill="#fdf8ec" stroke="#96650a" stroke-width="2"/>
+      <text x="700" y="73" font-size="10" font-weight="900" fill="#7a5208">R2RML の対応表</text>
+      <text x="700" y="91" font-size="8" fill="#3d4654">customers.member_rank</text>
+      <text x="712" y="106" font-size="8" fill="#96650a">↓ 対応する</text>
+      <text x="700" y="121" font-size="8" fill="#3d4654">ec:会員ランク</text>
+      <text x="700" y="141" font-size="8" font-weight="800" fill="#7a5208">値は 1 件も持たない</text>
+
+      <rect x="466" y="166" width="384" height="62" rx="8" fill="#fff" stroke="#1f6f4a" stroke-width="1.4"/>
+      <text x="480" y="186" font-size="9.4" font-weight="900" fill="#155c3c">書くのは対応関係だけ — 写しを作らない</text>
+      <text x="480" y="203" font-size="8.6" fill="#3d4654">「この表のこの列は、オントロジーのこのプロパティに対応する」だけを書きます。</text>
+      <text x="480" y="219" font-size="8.6" fill="#3d4654">RDB を更新すれば、グラフとして見える中身も同じ瞬間に変わります。</text>
+    </svg>
+  </div>
+  <div class="panel">
+    <p class="ptitle" style="text-transform:none">接続先は R2RML に書かない — 同じ対応表を開発用と本番用に向け直せる</p>
+    <svg viewBox="0 0 880 214" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, sans-serif">
+      <defs>
+        <marker id="s59n-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+          <path d="M0,1 L9,5 L0,9 z" fill="#1f6f4a"/>
+        </marker>
+      </defs>
+
+      <rect x="14" y="20" width="196" height="76" rx="9" fill="#fdf8ec" stroke="#96650a" stroke-width="2.4"/>
+      <text x="28" y="42" font-size="10.5" font-weight="900" fill="#7a5208">R2RML の対応表（1 つ）</text>
+      <text x="28" y="60" font-size="8.6" fill="#3d4654">表・列 → クラス・プロパティ</text>
+      <text x="28" y="80" font-size="8.6" font-weight="800" fill="#8f1f18">ホスト名は書かれていない</text>
+
+      <rect x="14" y="112" width="196" height="70" rx="9" fill="#f7f8fa" stroke="#6b7480" stroke-width="1.8" stroke-dasharray="6 4"/>
+      <text x="28" y="134" font-size="10.5" font-weight="900" fill="#3d4654">接続情報（別の設定）</text>
+      <text x="28" y="152" font-size="8.6" fill="#3d4654">ホスト / ユーザー / パスワード</text>
+      <text x="28" y="170" font-size="8.6" fill="#6b7480">実行時に渡す</text>
+
+      <path d="M210,58 H246 V102 H282" fill="none" stroke="#1f6f4a" stroke-width="2" marker-end="url(#s59n-b)"/>
+      <path d="M210,147 H246 V102" fill="none" stroke="#1f6f4a" stroke-width="2"/>
+
+      <rect x="288" y="66" width="146" height="72" rx="9" fill="#fff" stroke="#1f6f4a" stroke-width="2.4"/>
+      <text x="361" y="90" text-anchor="middle" font-size="10.5" font-weight="900" fill="#155c3c">Ontop など</text>
+      <text x="361" y="108" text-anchor="middle" font-size="8.6" fill="#3d4654">SPARQL を SQL に翻訳</text>
+      <text x="361" y="125" text-anchor="middle" font-size="8.6" fill="#6b7480">第 10 章の ④ 仮想化</text>
+
+      <path d="M434,90 H470 V50 H514" fill="none" stroke="#1c5b9c" stroke-width="2" marker-end="url(#s59n-b)"/>
+      <path d="M434,114 H470 V156 H514" fill="none" stroke="#1c5b9c" stroke-width="2" marker-end="url(#s59n-b)"/>
+
+      <rect x="520" y="24" width="184" height="54" rx="8" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2"/>
+      <text x="534" y="46" font-size="10" font-weight="900" fill="#1c5b9c">開発用 DB</text>
+      <text x="534" y="64" font-size="8.6" fill="#3d4654">dev-db.internal</text>
+
+      <rect x="520" y="130" width="184" height="54" rx="8" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2"/>
+      <text x="534" y="152" font-size="10" font-weight="900" fill="#1c5b9c">本番用 DB</text>
+      <text x="534" y="170" font-size="8.6" fill="#3d4654">prod-db.internal</text>
+
+      <text x="718" y="88" font-size="9.4" font-weight="900" fill="#155c3c">替えるのは接続情報だけ</text>
+      <text x="718" y="106" font-size="8.6" fill="#3d4654">対応表はそのまま使えます</text>
+      <text x="718" y="126" font-size="8.6" fill="#6b7480">第 16 章のデモでは、この</text>
+      <text x="718" y="141" font-size="8.6" fill="#6b7480">「接続先」が COA の</text>
+      <text x="718" y="156" font-size="8.6" fill="#6b7480">Data Source 登録に当たります</text>
+    </svg>
+  </div>
+  <div class="hl"><strong>R2RML</strong> = RDB to RDF Mapping Language（RDB を RDF に対応づける言語）。W3C 勧告です。</div>
+</section>
 <section class="slide">
   <div class="eyebrow">第 11 章 — VKG</div>
   <h2>上はグラフに見え、下は RDB のまま</h2>

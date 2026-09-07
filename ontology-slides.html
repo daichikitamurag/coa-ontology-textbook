@@ -5798,35 +5798,204 @@ ACTION_DEPS: dict[str, list[str]] = {
 <section class="slide">
   <div class="eyebrow">第 14 章 — デモ ①</div>
   <h2>デモ ① オントロジー無し — 4 手のうち 1 手だけ成功</h2>
-  <p class="lead">渡したのは<strong>アクション名の列挙だけ</strong>です。LLM は 5.47 秒でプランを返しましたが、<code>craft_stone_pickaxe</code> を最初に置きました。材料がまだありません。</p>
+  <p class="lead">入力したプロンプトは <strong>「石のツルハシを作って、動物を狩り、小屋を建てて」</strong>。3 方式とも同じ 1 文です。① に渡したのはアクション名の列挙だけで、LLM は 5.47 秒で 4 手のプランを返しました。</p>
+  <div class="panel">
+    <p class="ptitle" style="text-transform:none">プロンプトと、どこまで実行されたか — ① オントロジー無し</p>
+    <svg viewBox="0 0 880 236" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+      <defs><marker id="d14a" markerWidth="9" markerHeight="9" refX="7.2" refY="3.1" orient="auto"><path d="M0,0 L7.2,3.1 L0,6.2 z" fill="#3d4654"/></marker></defs>
+      <text x="22" y="20" font-size="9.6" font-weight="900" fill="#3d4654">LLM が出したプラン（4 手）— そのまま実行した</text>
+      <rect x="22" y="30" width="200" height="112" rx="8" fill="#fdf3f2" stroke="#b3261e" stroke-width="2"/>
+      <text x="34" y="49" font-size="9.2" font-weight="900" fill="#8f1f18">① craft_stone_pickaxe</text>
+      <text x="34" y="63" font-size="7.6" fill="#6b7480">石のツルハシを作成</text>
+      <text x="34" y="83" font-size="10.5" font-weight="900" fill="#b3261e">✗ 失敗</text>
+      <text x="34" y="98" font-size="6.8" font-family="Menlo,monospace" fill="#8f1f18">need 1x cobblestone/stone</text>
+      <text x="34" y="111" font-size="7.6" font-weight="700" fill="#8f1f18">丸石も石も 1 個も持っていない</text>
+      <rect x="234" y="30" width="200" height="112" rx="8" fill="#fdf3f2" stroke="#b3261e" stroke-width="2"/>
+      <text x="246" y="49" font-size="9.2" font-weight="900" fill="#8f1f18">② mine_stone</text>
+      <text x="246" y="63" font-size="7.6" fill="#6b7480">石を採掘して素材を集める</text>
+      <text x="246" y="83" font-size="10.5" font-weight="900" fill="#b3261e">✗ 失敗</text>
+      <text x="246" y="98" font-size="6.8" font-family="Menlo,monospace" fill="#8f1f18">need a pickaxe</text>
+      <text x="246" y="108" font-size="6.8" font-family="Menlo,monospace" fill="#8f1f18">(wooden or better)</text>
+      <text x="246" y="121" font-size="7.6" font-weight="700" fill="#8f1f18">ツルハシが無いので石が採れない</text>
+      <rect x="446" y="30" width="200" height="112" rx="8" fill="#f2f8f4" stroke="#1f6f4a" stroke-width="2"/>
+      <text x="458" y="49" font-size="9.2" font-weight="900" fill="#155c3c">③ hunt_animal</text>
+      <text x="458" y="63" font-size="7.6" fill="#6b7480">動物を狩る</text>
+      <text x="458" y="83" font-size="10.5" font-weight="900" fill="#155c3c">✓ 成功</text>
+      <text x="458" y="101" font-size="7.6" font-weight="700" fill="#155c3c">sheep と cow を 2 体</text>
+      <rect x="658" y="30" width="200" height="112" rx="8" fill="#fdf3f2" stroke="#b3261e" stroke-width="2"/>
+      <text x="670" y="49" font-size="9.2" font-weight="900" fill="#8f1f18">④ build_hut</text>
+      <text x="670" y="63" font-size="7.6" fill="#6b7480">小屋を建設する</text>
+      <text x="670" y="83" font-size="10.5" font-weight="900" fill="#b3261e">✗ 失敗</text>
+      <text x="670" y="98" font-size="6.8" font-family="Menlo,monospace" fill="#8f1f18">need oak_planks</text>
+      <text x="670" y="111" font-size="7.6" font-weight="700" fill="#8f1f18">板が無いので建てられない</text>
+      <line x1="224" y1="86" x2="231" y2="86" stroke="#3d4654" stroke-width="1.8" marker-end="url(#d14a)"/>
+      <line x1="436" y1="86" x2="443" y2="86" stroke="#3d4654" stroke-width="1.8" marker-end="url(#d14a)"/>
+      <line x1="648" y1="86" x2="655" y2="86" stroke="#3d4654" stroke-width="1.8" marker-end="url(#d14a)"/>
+      <rect x="22" y="158" width="836" height="70" rx="8" fill="#fff" stroke="#b3261e" stroke-width="1.8"/>
+      <text x="38" y="182" font-size="12.5" font-weight="900" fill="#8f1f18">実行結果 1 / 4 成功</text>
+      <text x="38" y="200" font-size="8.6" fill="#3d4654">LLM 4 手のうち、動いたのは ③ の狩りだけ。①②④ は前提が揃っておらず、その場で止まりました</text>
+      <text x="38" y="215" font-size="8.6" fill="#3d4654">LLM の応答 5.47 秒 ／ 実行 2026-07-19 14:11:11 ／ no_ontology_agent.py</text>
+    </svg>
+  </div>
   <div class="panel">
     <p class="ptitle" style="text-transform:none">デモ動画 — オントロジー無し（no_ontology_agent.py）（21 秒 / 実機の画面収録 2026-07-19）</p>
     <div class="map v"><b>Slide 115 の ①</b>オントロジー無し（no_ontology_agent.py）</div>
     <video controls preload="metadata" playsinline poster="video/part1_baseline.jpg" src="video/part1_baseline.mp4"></video>
   </div>
-  <p class="hlr">実行結果 <strong>1 / 4 成功</strong>。丸石も棒も無い状態でツルハシを作ろうとして、そこで止まります。</p>
+  <p class="hlr">丸石も棒も無い状態でツルハシを作ろうとして、そこで止まりました。<strong>プランの順序を、誰も検査していません</strong>。</p>
 </section>
 <section class="slide">
   <div class="eyebrow">第 14 章 — デモ ②</div>
   <h2>デモ ② RAG — 正しいページを引いて、同じ間違いをした</h2>
-  <p class="lead">Wiki 8 本から類似度で上位 4 本を渡しました。<strong>引いたページは正しかった</strong>のに、出てきたプランは ① と<strong>順序まで同じ</strong>でした。</p>
+  <p class="lead">プロンプトは ① と同じ <strong>「石のツルハシを作って、動物を狩り、小屋を建てて」</strong>。違いは、Wiki 8 本から類似度で上位 4 本を<strong>プロンプトに足した</strong>ことだけです。</p>
+  <div class="panel">
+    <p class="ptitle" style="text-transform:none">プロンプトと、どこまで実行されたか — ② RAG</p>
+    <svg viewBox="0 0 880 314" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+      <defs><marker id="d14b" markerWidth="9" markerHeight="9" refX="7.2" refY="3.1" orient="auto"><path d="M0,0 L7.2,3.1 L0,6.2 z" fill="#3d4654"/></marker></defs>
+      <rect x="22" y="14" width="836" height="82" rx="8" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
+      <text x="38" y="34" font-size="9.6" font-weight="900" fill="#4c1d95">RAG が引いたページ — Wiki 8 本から bi-gram 類似度で上位 4 本</text>
+      <rect x="38" y="44" width="182" height="24" rx="6" fill="#fff" stroke="#6b3fa0" stroke-width="1.4"/>
+      <text x="48" y="60" font-size="8.2" font-family="Menlo,monospace" fill="#4c1d95">stone_pickaxe</text>
+      <text x="210" y="60" text-anchor="end" font-size="8" font-weight="800" fill="#6b3fa0">0.226</text>
+      <rect x="234" y="44" width="182" height="24" rx="6" fill="#fff" stroke="#6b3fa0" stroke-width="1.4"/>
+      <text x="244" y="60" font-size="8.2" font-family="Menlo,monospace" fill="#4c1d95">wooden_pickaxe</text>
+      <text x="406" y="60" text-anchor="end" font-size="8" font-weight="800" fill="#6b3fa0">0.114</text>
+      <rect x="430" y="44" width="182" height="24" rx="6" fill="#fff" stroke="#6b3fa0" stroke-width="1.4"/>
+      <text x="440" y="60" font-size="8.2" font-family="Menlo,monospace" fill="#4c1d95">build_hut</text>
+      <text x="602" y="60" text-anchor="end" font-size="8" font-weight="800" fill="#6b3fa0">0.103</text>
+      <rect x="626" y="44" width="182" height="24" rx="6" fill="#fff" stroke="#6b3fa0" stroke-width="1.4"/>
+      <text x="636" y="60" font-size="8.2" font-family="Menlo,monospace" fill="#4c1d95">chop_tree</text>
+      <text x="798" y="60" text-anchor="end" font-size="8" font-weight="800" fill="#6b3fa0">0.067</text>
+      <text x="38" y="86" font-size="8.2" font-weight="700" fill="#4c1d95">1 本目の stone_pickaxe のページには「材料: 丸石 × 3、棒 × 2」と書いてありました — 引いたページは正しい</text>
+      <text x="22" y="120" font-size="9.6" font-weight="900" fill="#3d4654">それでも LLM が出したプランは ① と同じ（順序まで一致）</text>
+      <rect x="22" y="130" width="200" height="112" rx="8" fill="#fdf3f2" stroke="#b3261e" stroke-width="2"/>
+      <text x="34" y="149" font-size="9.2" font-weight="900" fill="#8f1f18">① craft_stone_pickaxe</text>
+      <text x="34" y="163" font-size="7.6" fill="#6b7480">石のツルハシを作成</text>
+      <text x="34" y="183" font-size="10.5" font-weight="900" fill="#b3261e">✗ 失敗</text>
+      <text x="34" y="198" font-size="6.8" font-family="Menlo,monospace" fill="#8f1f18">need 1x cobblestone/stone</text>
+      <text x="34" y="211" font-size="7.6" font-weight="700" fill="#8f1f18">丸石も石も 1 個も持っていない</text>
+      <rect x="234" y="130" width="200" height="112" rx="8" fill="#fdf3f2" stroke="#b3261e" stroke-width="2"/>
+      <text x="246" y="149" font-size="9.2" font-weight="900" fill="#8f1f18">② mine_stone</text>
+      <text x="246" y="163" font-size="7.6" fill="#6b7480">石を採掘して素材を集める</text>
+      <text x="246" y="183" font-size="10.5" font-weight="900" fill="#b3261e">✗ 失敗</text>
+      <text x="246" y="198" font-size="6.8" font-family="Menlo,monospace" fill="#8f1f18">need a pickaxe</text>
+      <text x="246" y="208" font-size="6.8" font-family="Menlo,monospace" fill="#8f1f18">(wooden or better)</text>
+      <text x="246" y="221" font-size="7.6" font-weight="700" fill="#8f1f18">ツルハシが無いので石が採れない</text>
+      <rect x="446" y="130" width="200" height="112" rx="8" fill="#f2f8f4" stroke="#1f6f4a" stroke-width="2"/>
+      <text x="458" y="149" font-size="9.2" font-weight="900" fill="#155c3c">③ hunt_animal</text>
+      <text x="458" y="163" font-size="7.6" fill="#6b7480">動物を狩る</text>
+      <text x="458" y="183" font-size="10.5" font-weight="900" fill="#155c3c">✓ 成功</text>
+      <text x="458" y="201" font-size="7.6" font-weight="700" fill="#155c3c">cow を 2 体</text>
+      <rect x="658" y="130" width="200" height="112" rx="8" fill="#fdf3f2" stroke="#b3261e" stroke-width="2"/>
+      <text x="670" y="149" font-size="9.2" font-weight="900" fill="#8f1f18">④ build_hut</text>
+      <text x="670" y="163" font-size="7.6" fill="#6b7480">小屋を建設する</text>
+      <text x="670" y="183" font-size="10.5" font-weight="900" fill="#b3261e">✗ 失敗</text>
+      <text x="670" y="198" font-size="6.8" font-family="Menlo,monospace" fill="#8f1f18">need oak_planks</text>
+      <text x="670" y="211" font-size="7.6" font-weight="700" fill="#8f1f18">板が無いので建てられない</text>
+      <line x1="224" y1="186" x2="231" y2="186" stroke="#3d4654" stroke-width="1.8" marker-end="url(#d14b)"/>
+      <line x1="436" y1="186" x2="443" y2="186" stroke="#3d4654" stroke-width="1.8" marker-end="url(#d14b)"/>
+      <line x1="648" y1="186" x2="655" y2="186" stroke="#3d4654" stroke-width="1.8" marker-end="url(#d14b)"/>
+      <rect x="22" y="254" width="836" height="54" rx="8" fill="#fff" stroke="#b3261e" stroke-width="1.8"/>
+      <text x="38" y="278" font-size="12.5" font-weight="900" fill="#8f1f18">実行結果 1 / 4 成功</text>
+      <text x="38" y="296" font-size="8.6" fill="#3d4654">正しい知識を渡すことと、正しい順序に並べることは別 ／ LLM の応答 4.90 秒 ／ 14:11:47 ／ rag_agent.py</text>
+    </svg>
+  </div>
   <div class="panel">
     <p class="ptitle" style="text-transform:none">デモ動画 — RAG（rag_agent.py）（31 秒 / 実機の画面収録 2026-07-19）</p>
     <div class="map v"><b>Slide 115 の ②</b>RAG（rag_agent.py）</div>
     <video controls preload="metadata" playsinline poster="video/part2_rag.jpg" src="video/part2_rag.mp4"></video>
   </div>
-  <p class="hlr">実行結果 <strong>1 / 4 成功</strong>。RAG には<strong>順序を保証する仕組みがありません</strong>。正しい知識を渡すことと、正しい順序に並べることは別の話でした。</p>
+  <p class="hlr">RAG には<strong>順序を保証する仕組みがありません</strong>。正しい知識を渡すことと、正しい順序に並べることは別の話でした。</p>
 </section>
 <section class="slide">
   <div class="eyebrow">第 14 章 — デモ ③</div>
   <h2>デモ ③ オントロジー — 抜けた 2 手が自動で挿入された</h2>
-  <p class="lead">依存グラフ全体とトポロジカルソートを使いました。<strong>LLM はここでも同じ 2 手を抜かしました</strong>。違いは、抜けを<strong>後段の機械が埋めた</strong>ことです。</p>
+  <p class="lead">プロンプトは ①② と同じ <strong>「石のツルハシを作って、動物を狩り、小屋を建てて」</strong>。違いは、依存グラフ全体を渡し、<strong>出てきたプランを後段で並べ直した</strong>ことです。</p>
+  <div class="panel">
+    <p class="ptitle" style="text-transform:none">プロンプトと、どこまで実行されたか — ③ オントロジー</p>
+    <svg viewBox="0 0 880 476" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+      <defs><marker id="d14c" markerWidth="9" markerHeight="9" refX="7.2" refY="3.1" orient="auto"><path d="M0,0 L7.2,3.1 L0,6.2 z" fill="#1f6f4a"/></marker></defs>
+      <text x="22" y="18" font-size="9.6" font-weight="900" fill="#3d4654">LLM が出したプラン（6 手）— ここでも 2 手足りない</text>
+      <rect x="22" y="26" width="130" height="24" rx="6" fill="#f7f8fa" stroke="#6b7480" stroke-width="1.4"/>
+      <text x="87" y="42" text-anchor="middle" font-size="7.6" font-family="Menlo,monospace" fill="#3d4654">chop_tree</text>
+      <rect x="162" y="26" width="130" height="24" rx="6" fill="#f7f8fa" stroke="#6b7480" stroke-width="1.4"/>
+      <text x="227" y="42" text-anchor="middle" font-size="7.6" font-family="Menlo,monospace" fill="#3d4654">craft_planks</text>
+      <rect x="302" y="26" width="130" height="24" rx="6" fill="#f7f8fa" stroke="#6b7480" stroke-width="1.4"/>
+      <text x="367" y="42" text-anchor="middle" font-size="7.6" font-family="Menlo,monospace" fill="#3d4654">craft_stick</text>
+      <rect x="442" y="26" width="130" height="24" rx="6" fill="#f7f8fa" stroke="#6b7480" stroke-width="1.4"/>
+      <text x="507" y="42" text-anchor="middle" font-size="7.6" font-family="Menlo,monospace" fill="#3d4654">craft_stone_pickaxe</text>
+      <rect x="582" y="26" width="130" height="24" rx="6" fill="#f7f8fa" stroke="#6b7480" stroke-width="1.4"/>
+      <text x="647" y="42" text-anchor="middle" font-size="7.6" font-family="Menlo,monospace" fill="#3d4654">hunt_animal</text>
+      <rect x="722" y="26" width="130" height="24" rx="6" fill="#f7f8fa" stroke="#6b7480" stroke-width="1.4"/>
+      <text x="787" y="42" text-anchor="middle" font-size="7.6" font-family="Menlo,monospace" fill="#3d4654">build_hut</text>
+      <rect x="22" y="62" width="836" height="34" rx="8" fill="#fdf8ec" stroke="#96650a" stroke-width="1.8"/>
+      <text x="38" y="84" font-size="9" font-weight="900" fill="#7a5208">オントロジー（依存グラフ）で不足している 2 手を補完し、トポロジカルソートで並べ替え<tspan font-weight="700" fill="#3d4654"> — LLM は呼び直していません</tspan></text>
+      <line x1="440" y1="96" x2="440" y2="112" stroke="#1f6f4a" stroke-width="2" marker-end="url(#d14c)"/>
+      <text x="22" y="134" font-size="9.6" font-weight="900" fill="#155c3c">実行したプラン（8 手）— どこまで実行されたか</text>
+      <rect x="22" y="142" width="200" height="96" rx="8" fill="#f2f8f4" stroke="#1f6f4a" stroke-width="2"/>
+      <text x="34" y="161" font-size="9.2" font-weight="900" fill="#155c3c">① chop_tree</text>
+      <text x="34" y="175" font-size="7.6" fill="#6b7480">原木を切る</text>
+      <text x="34" y="195" font-size="10.5" font-weight="900" fill="#155c3c">✓ 成功</text>
+      <text x="34" y="213" font-size="7.6" font-weight="700" fill="#155c3c">oak_log 3 個</text>
+      <rect x="234" y="142" width="200" height="96" rx="8" fill="#f2f8f4" stroke="#1f6f4a" stroke-width="2"/>
+      <text x="246" y="161" font-size="9.2" font-weight="900" fill="#155c3c">② craft_planks</text>
+      <text x="246" y="175" font-size="7.6" fill="#6b7480">原木から板を作る</text>
+      <text x="246" y="195" font-size="10.5" font-weight="900" fill="#155c3c">✓ 成功</text>
+      <text x="246" y="213" font-size="7.6" font-weight="700" fill="#155c3c">oak_planks 4 個</text>
+      <rect x="446" y="142" width="200" height="96" rx="8" fill="#f2f8f4" stroke="#1f6f4a" stroke-width="2"/>
+      <text x="458" y="161" font-size="9.2" font-weight="900" fill="#155c3c">③ craft_stick</text>
+      <text x="458" y="175" font-size="7.6" fill="#6b7480">板から棒を作る</text>
+      <text x="458" y="195" font-size="10.5" font-weight="900" fill="#155c3c">✓ 成功</text>
+      <text x="458" y="213" font-size="7.6" font-weight="700" fill="#155c3c">stick 4 個</text>
+      <rect x="658" y="142" width="200" height="96" rx="8" fill="#fdf8ec" stroke="#96650a" stroke-width="2"/>
+      <text x="670" y="161" font-size="9.2" font-weight="900" fill="#7a5208">④ craft_wooden_pickaxe</text>
+      <text x="670" y="175" font-size="7.6" fill="#6b7480">LLM は書いていない</text>
+      <text x="670" y="195" font-size="10.5" font-weight="900" fill="#155c3c">✓ 成功</text>
+      <text x="670" y="213" font-size="7.6" font-weight="700" fill="#7a5208">wooden_pickaxe 1 本</text>
+      <rect x="800" y="216" width="52" height="15" rx="7" fill="#96650a"/>
+      <text x="826" y="227" text-anchor="middle" font-size="7.4" font-weight="900" fill="#fff">自動補完</text>
+      <rect x="22" y="260" width="200" height="96" rx="8" fill="#fdf8ec" stroke="#96650a" stroke-width="2"/>
+      <text x="34" y="279" font-size="9.2" font-weight="900" fill="#7a5208">⑤ mine_stone</text>
+      <text x="34" y="293" font-size="7.6" fill="#6b7480">LLM は書いていない</text>
+      <text x="34" y="313" font-size="10.5" font-weight="900" fill="#155c3c">✓ 成功</text>
+      <text x="34" y="331" font-size="7.6" font-weight="700" fill="#7a5208">cobblestone 4 個</text>
+      <rect x="164" y="334" width="52" height="15" rx="7" fill="#96650a"/>
+      <text x="190" y="345" text-anchor="middle" font-size="7.4" font-weight="900" fill="#fff">自動補完</text>
+      <rect x="234" y="260" width="200" height="96" rx="8" fill="#f2f8f4" stroke="#1f6f4a" stroke-width="2"/>
+      <text x="246" y="279" font-size="9.2" font-weight="900" fill="#155c3c">⑥ hunt_animal</text>
+      <text x="246" y="293" font-size="7.6" fill="#6b7480">動物を狩る</text>
+      <text x="246" y="313" font-size="10.5" font-weight="900" fill="#155c3c">✓ 成功</text>
+      <text x="246" y="331" font-size="7.6" font-weight="700" fill="#155c3c">sheep を 2 体</text>
+      <rect x="446" y="260" width="200" height="96" rx="8" fill="#f2f8f4" stroke="#1f6f4a" stroke-width="2"/>
+      <text x="458" y="279" font-size="9.2" font-weight="900" fill="#155c3c">⑦ craft_stone_pickaxe</text>
+      <text x="458" y="293" font-size="7.6" fill="#6b7480">石のツルハシを作成</text>
+      <text x="458" y="313" font-size="10.5" font-weight="900" fill="#155c3c">✓ 成功</text>
+      <text x="458" y="331" font-size="7.6" font-weight="700" fill="#155c3c">stone_pickaxe 1 本</text>
+      <rect x="658" y="260" width="200" height="96" rx="8" fill="#f2f8f4" stroke="#1f6f4a" stroke-width="2"/>
+      <text x="670" y="279" font-size="9.2" font-weight="900" fill="#155c3c">⑧ build_hut</text>
+      <text x="670" y="293" font-size="7.6" fill="#6b7480">小屋を建設する</text>
+      <text x="670" y="313" font-size="10.5" font-weight="900" fill="#155c3c">✓ 成功</text>
+      <text x="670" y="331" font-size="7.6" font-weight="700" fill="#155c3c">11×11・1011 ブロック</text>
+      <line x1="224" y1="190" x2="231" y2="190" stroke="#1f6f4a" stroke-width="1.8" marker-end="url(#d14c)"/>
+      <line x1="436" y1="190" x2="443" y2="190" stroke="#1f6f4a" stroke-width="1.8" marker-end="url(#d14c)"/>
+      <line x1="648" y1="190" x2="655" y2="190" stroke="#1f6f4a" stroke-width="1.8" marker-end="url(#d14c)"/>
+      <line x1="224" y1="308" x2="231" y2="308" stroke="#1f6f4a" stroke-width="1.8" marker-end="url(#d14c)"/>
+      <line x1="436" y1="308" x2="443" y2="308" stroke="#1f6f4a" stroke-width="1.8" marker-end="url(#d14c)"/>
+      <line x1="648" y1="308" x2="655" y2="308" stroke="#1f6f4a" stroke-width="1.8" marker-end="url(#d14c)"/>
+      <path d="M844,238 V254 H36 V260" fill="none" stroke="#1f6f4a" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#d14c)"/>
+      <rect x="22" y="378" width="836" height="88" rx="8" fill="#f2f8f4" stroke="#1f6f4a" stroke-width="1.8"/>
+      <text x="38" y="402" font-size="12.5" font-weight="900" fill="#155c3c">実行結果 8 / 8 成功</text>
+      <text x="38" y="420" font-size="8.6" fill="#3d4654">④ craft_wooden_pickaxe と ⑤ mine_stone は、誰も書いていないのに実行されました（自動補完）</text>
+      <text x="38" y="435" font-size="8.6" fill="#3d4654">⑦ craft_stone_pickaxe は LLM が 4 番目に置いたものを、並べ替えで 7 番目に移しています</text>
+      <text x="38" y="450" font-size="8.6" fill="#3d4654">LLM の応答 4.32 秒 ／ 実行 2026-07-19 14:12:40 ／ ontology_agent.py</text>
+    </svg>
+  </div>
   <div class="panel">
     <p class="ptitle" style="text-transform:none">デモ動画 — オントロジー（ontology_agent.py）（40 秒 / 実機の画面収録 2026-07-19）</p>
     <div class="map v"><b>Slide 115 の ③</b>オントロジー（ontology_agent.py）</div>
     <video controls preload="metadata" playsinline poster="video/part3_ontology.jpg" src="video/part3_ontology.mp4"></video>
   </div>
-  <p class="hlg">実行結果 <strong>8 / 8 成功</strong>。差は「渡した情報量」ではなく<strong>「出てきたものを機械が直せるか」</strong>です。</p>
+  <p class="hlg">差は「渡した情報量」ではなく<strong>「出てきたものを機械が直せるか」</strong>です。LLM は 3 方式とも同じところで間違えていました。</p>
 </section>
 
 <section class="slide chapter">

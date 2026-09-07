@@ -2775,7 +2775,6 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
     <div class="card amber"><h4>R2RML = RDB to RDF Mapping Language</h4><p class="sm">W3C 勧告です。書くのは「<strong>表・列 → クラス・プロパティ</strong>」の対応だけ。データの写しは 1 件も作らないので、二重管理になりません。</p></div>
     <div class="card blue"><h4>どの DB に繋ぐかは R2RML に書かない</h4><p class="sm">接続情報（ホスト・ユーザー・パスワード）は<strong>別の設定として渡します</strong>。だから同じ対応表を、開発用 DB と本番用 DB に向け直せます。</p></div>
   </div>
-  <div class="hlr">第 10 章の <strong>② 推論・③ 検証</strong> は、この構成では走りません。推論器は全データをメモリに載せてから動きますが、ABox（実データ）は下の RDB に居続けるからです。このあとのスライドで扱います。</div>
 </section>
 
 <section class="slide">

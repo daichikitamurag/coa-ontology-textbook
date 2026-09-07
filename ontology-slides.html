@@ -337,7 +337,7 @@
   <h1>オントロジーで、<em>意味</em>を機械に渡す</h1>
   <p class="sub">AWS Context Ontology Accelerator / Palantir Foundry・AIP / 自作 Minecraft Agent — 3 つの実装を実機で確かめた記録</p>
   <p class="meta">社内クラウド勉強会 ／ SI部 北村</p>
-  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 112 枚</span></div>
+  <div class="chips"><span>RDF・OWL・SPARQL・SHACL</span><span>AWS COA 実測</span><span>Palantir</span><span>Minecraft Agent</span><span>全 115 枚</span></div>
 </section>
 
 <section class="slide">
@@ -2666,7 +2666,7 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
   <div class="part">第 11 章</div>
   <h1>VKG <span style="font-size:.62em;font-weight:700;opacity:.72">(Virtual Knowledge Graph)</span> — RDB を 1 バイトも動かさない</h1>
   <p>「既存 DB を全部 RDF 化するコスト」という最大の壁を、丸ごと回避する技術です。第 3 部の AWS COA と Palantir は、どちらもこの考え方の上に立っています。</p>
-  <div class="agenda"><span>定義と実データの規模差</span><span>対応表を書くだけ</span><span>外部キーが矢印になる</span><span>推論が難しくなる</span><span>TBox 検査だけに使う</span></div>
+  <div class="agenda"><span>定義と実データの規模差</span><span>対応表を書くだけ</span><span>外部キーが矢印になる</span><span>推論が難しくなる</span><span>打ち手は 3 つ</span></div>
 </section>
 
 <section class="slide">
@@ -3004,10 +3004,211 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
     <div class="card green"><h4>③ 定義の検査にだけ使う</h4><p class="sm">ABox の推論は諦め、<strong>TBox が矛盾していないかだけ</strong>を検査する</p></div>
   </div>
 </section>
-
 <section class="slide">
   <div class="eyebrow">第 11 章 — VKG</div>
-  <h2>③ が実は一番効く — データを 1 行も読まずにバグを止める</h2>
+  <h2>なぜ、クエリのたびに推論器を動かせないのか</h2>
+  <p class="lead">「ならクエリのたびに元 DB から引けばいい」と思えます。しかし推論は<strong>全件を見ないと成立しない</strong>処理です。</p>
+  <div class="panel">
+    <p class="ptitle">なぜ全件を読む必要があるのか — 途中で打ち切れない</p>
+    <svg viewBox="0 0 880 236" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+      <defs><marker id="s63a" markerWidth="9" markerHeight="9" refX="7.2" refY="3.1" orient="auto"><path d="M0,0 L7.2,3.1 L0,6.2 z" fill="#6b3fa0"/></marker></defs>
+
+      <rect x="16" y="52" width="214" height="88" rx="10" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2.4"/>
+      <text x="32" y="76" font-size="10.5" font-weight="800" fill="#4c1d95">質問</text>
+      <text x="32" y="96" font-size="9.4" fill="#3d4654">累計 50,000 円以上の顧客を、</text>
+      <text x="32" y="112" font-size="9.4" fill="#3d4654">漏れなく挙げて</text>
+      <text x="32" y="132" font-size="8.4" font-weight="700" fill="#6b3fa0">1 人も落とせない</text>
+      <line x1="234" y1="96" x2="274" y2="96" stroke="#6b3fa0" stroke-width="2.2" marker-end="url(#s63a)"/>
+
+      <rect x="282" y="24" width="272" height="196" rx="8" fill="#fff" stroke="#1c5b9c" stroke-width="2.4"/>
+      <rect x="284" y="26" width="268" height="24" fill="#eef4fa"/>
+      <text x="296" y="43" font-size="9" font-weight="800" fill="#0f3f6b">customer_id</text>
+      <text x="438" y="43" font-size="9" font-weight="800" fill="#0f3f6b">累計購入額</text>
+      <line x1="282" y1="50" x2="554" y2="50" stroke="#1c5b9c" stroke-width="1.2"/>
+      <text x="296" y="70" font-size="8.8" font-family="Menlo,monospace" fill="#3d4654">C000001</text>
+      <text x="438" y="70" font-size="8.8" font-family="Menlo,monospace" fill="#3d4654">12,000</text>
+      <text x="296" y="88" font-size="8.8" font-family="Menlo,monospace" fill="#3d4654">C000002</text>
+      <text x="438" y="88" font-size="8.8" font-family="Menlo,monospace" fill="#3d4654">8,000</text>
+      <text x="296" y="106" font-size="8.8" font-family="Menlo,monospace" fill="#3d4654">C000003</text>
+      <text x="438" y="106" font-size="8.8" font-family="Menlo,monospace" fill="#3d4654">34,000</text>
+      <text x="296" y="130" font-size="11" font-weight="800" fill="#6b7480">︙</text>
+      <text x="330" y="130" font-size="8.4" fill="#6b7480">この間に数億行</text>
+      <rect x="286" y="146" width="264" height="26" rx="4" fill="#fdf3f2"/>
+      <text x="296" y="164" font-size="8.8" font-family="Menlo,monospace" font-weight="700" fill="#8f1f18">C999999</text>
+      <text x="438" y="164" font-size="8.8" font-family="Menlo,monospace" font-weight="700" fill="#8f1f18">61,000</text>
+      <text x="296" y="190" font-size="8.6" font-weight="800" fill="#8f1f18">最後の 1 行が該当者だった</text>
+      <text x="296" y="206" font-size="8.4" fill="#6b7480">途中で打ち切れば、この人を見落とす</text>
+
+      <rect x="572" y="24" width="292" height="196" rx="10" fill="#fdf3f2" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="7 5"/>
+      <text x="588" y="50" font-size="9.8" font-weight="900" fill="#8f1f18">必要な行を、先に決められない</text>
+      <text x="588" y="70" font-size="8.8" fill="#3d4654">SQL の WHERE は「この条件の行だけ」と</text>
+      <text x="588" y="85" font-size="8.8" fill="#3d4654">絞れます。推論は「導けるかどうか」が</text>
+      <text x="588" y="100" font-size="8.8" fill="#3d4654">他の行に依存するので、絞れません。</text>
+      <text x="588" y="128" font-size="9.8" font-weight="900" fill="#8f1f18">先頭から順に読んでも終われない</text>
+      <text x="588" y="148" font-size="8.8" fill="#3d4654">「漏れなく」と言われているので、</text>
+      <text x="588" y="163" font-size="8.8" fill="#3d4654">最後の 1 行まで読み切るしかありません。</text>
+      <line x1="588" y1="180" x2="848" y2="180" stroke="#b3261e" stroke-width="1.4"/>
+      <text x="588" y="203" font-size="10.5" font-weight="900" fill="#b3261e">全件を読まないと成立しない</text>
+    </svg>
+  </div>
+  <div class="panel">
+    <p class="ptitle">質問 1 回ごとに起きること</p>
+    <svg viewBox="0 0 880 240" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+      <defs>
+        <marker id="s63b" markerWidth="9" markerHeight="9" refX="7.2" refY="3.1" orient="auto"><path d="M0,0 L7.2,3.1 L0,6.2 z" fill="#3d4654"/></marker>
+        <marker id="s63c" markerWidth="9" markerHeight="9" refX="7.2" refY="3.1" orient="auto"><path d="M0,0 L7.2,3.1 L0,6.2 z" fill="#6b7480"/></marker>
+      </defs>
+
+      <rect x="24" y="34" width="148" height="68" rx="8" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2"/>
+      <text x="38" y="56" font-size="9.6" font-weight="800" fill="#4c1d95">① 質問が 1 件届く</text>
+      <text x="38" y="74" font-size="8" fill="#3d4654">SPARQL が 1 本</text>
+      <text x="38" y="89" font-size="8" fill="#6b7480">投げられただけ</text>
+
+      <rect x="195" y="34" width="148" height="68" rx="8" fill="#fdf3f2" stroke="#b3261e" stroke-width="2"/>
+      <text x="209" y="56" font-size="9.6" font-weight="800" fill="#8f1f18">② 数億行を SELECT</text>
+      <text x="209" y="74" font-size="8" fill="#3d4654">customers / orders を</text>
+      <text x="209" y="89" font-size="8" fill="#3d4654">最後の 1 行まで全件</text>
+
+      <rect x="366" y="34" width="148" height="68" rx="8" fill="#fdf3f2" stroke="#b3261e" stroke-width="2"/>
+      <text x="380" y="56" font-size="9.6" font-weight="800" fill="#8f1f18">③ RDF に変換</text>
+      <text x="380" y="74" font-size="8" fill="#3d4654">1 行 → 数トリプルに</text>
+      <text x="380" y="89" font-size="8" fill="#3d4654">組み直す</text>
+
+      <rect x="537" y="34" width="148" height="68" rx="8" fill="#fdf3f2" stroke="#b3261e" stroke-width="2"/>
+      <text x="551" y="56" font-size="9.6" font-weight="800" fill="#8f1f18">④ メモリに載せる</text>
+      <text x="551" y="74" font-size="8" fill="#3d4654">推論器は全件が揃って</text>
+      <text x="551" y="89" font-size="8" fill="#3d4654">初めて動く</text>
+
+      <rect x="708" y="34" width="148" height="68" rx="8" fill="#f2f8f4" stroke="#1f6f4a" stroke-width="2"/>
+      <text x="722" y="56" font-size="9.6" font-weight="800" fill="#155c3c">⑤ 推論して答える</text>
+      <text x="722" y="74" font-size="8" fill="#3d4654">ようやく 1 件ぶんの</text>
+      <text x="722" y="89" font-size="8" fill="#3d4654">答えが返る</text>
+
+      <line x1="176" y1="68" x2="191" y2="68" stroke="#3d4654" stroke-width="2" marker-end="url(#s63b)"/>
+      <line x1="347" y1="68" x2="362" y2="68" stroke="#3d4654" stroke-width="2" marker-end="url(#s63b)"/>
+      <line x1="518" y1="68" x2="533" y2="68" stroke="#3d4654" stroke-width="2" marker-end="url(#s63b)"/>
+      <line x1="689" y1="68" x2="704" y2="68" stroke="#3d4654" stroke-width="2" marker-end="url(#s63b)"/>
+
+      <line x1="269" y1="102" x2="269" y2="118" stroke="#b3261e" stroke-width="1.4" stroke-dasharray="4 3"/>
+      <line x1="440" y1="102" x2="440" y2="118" stroke="#b3261e" stroke-width="1.4" stroke-dasharray="4 3"/>
+      <line x1="611" y1="102" x2="611" y2="118" stroke="#b3261e" stroke-width="1.4" stroke-dasharray="4 3"/>
+      <rect x="195" y="118" width="490" height="30" rx="7" fill="#fdf3f2" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="7 4"/>
+      <text x="440" y="137" text-anchor="middle" font-size="9.6" font-weight="900" fill="#8f1f18">この 3 つが数億行ぶん — 質問 1 回ごとに、毎回</text>
+
+      <path d="M782,102 V178 H98 V102" fill="none" stroke="#6b7480" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#s63c)"/>
+      <text x="440" y="172" text-anchor="middle" font-size="9" font-weight="700" fill="#6b7480">次の質問でも、また ② から</text>
+
+      <text x="24" y="208" font-size="9.4" font-weight="800" fill="#155c3c">マテリアライズ — このコストを構築時に 1 回だけ払う</text>
+      <text x="24" y="228" font-size="9.4" font-weight="800" fill="#8f1f18">クエリのたびに推論 — 質問のたびに払う。秒で返る処理にはならない</text>
+    </svg>
+  </div>
+  <div class="hlr">だから実際の製品は、次の 3 つのどれかを選びます。<strong>「推論をクエリ時に回さない」点はどれも同じ</strong>で、違うのは代わりに何を置くかです。</div>
+</section>
+<section class="slide">
+  <div class="eyebrow">第 11 章 — 打ち手 ①</div>
+  <h2>① 推論を諦める — 条件を SPARQL 側に書く</h2>
+  <p class="lead">OWL の定義は書いたまま、<strong>推論器を走らせません</strong>。絞り込みは SPARQL の <code>FILTER</code> でやります。第 7 章で書いたクエリがまさにこれで、この資料もここまでずっとこの方式でした。</p>
+  <div class="panel">
+    <p class="ptitle">同じ数字が 2 箇所に分かれる</p>
+    <svg viewBox="0 0 880 250" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+    <defs><marker id="m6r" markerWidth="9" markerHeight="9" refX="7.2" refY="3.1" orient="auto"><path d="M0,0 L7.2,3.1 L0,6.2 z" fill="#b3261e"/></marker></defs>
+
+    <rect x="30" y="30" width="336" height="106" rx="10" fill="#fdf8ec" stroke="#96650a" stroke-width="2.4"/>
+    <circle cx="58" cy="56" r="14" fill="#fff" stroke="#96650a" stroke-width="1.6"/>
+    <g transform="translate(58,56)" stroke="#96650a" stroke-width="1.5" fill="none">
+    <rect x="-5.5" y="-7" width="11" height="14" rx="1.5"/><path d="M-2.5,-3.5 H2.5M-2.5,0 H2.5M-2.5,3.5 H0.5"/></g>
+    <text x="80" y="60" font-size="11.5" font-weight="800" fill="#7a4a1c">OWL の定義（リスト 6-2）</text>
+    <text x="46" y="88" font-size="9" font-family="Menlo,monospace" fill="#7a4a1c">ec:優良顧客 owl:equivalentClass [</text>
+    <text x="46" y="104" font-size="9" font-family="Menlo,monospace" fill="#7a4a1c">  ec:累計購入額 が 50000 以上 ] .</text>
+    <text x="46" y="126" font-size="9" font-weight="700" fill="#96650a">置いてあるが、推論器は走らせない</text>
+
+    <rect x="514" y="30" width="336" height="106" rx="10" fill="#f6f2fb" stroke="#6b3fa0" stroke-width="2.4"/>
+    <circle cx="542" cy="56" r="14" fill="#fff" stroke="#6b3fa0" stroke-width="1.6"/>
+    <g transform="translate(542,56)" stroke="#6b3fa0" stroke-width="1.6" fill="none" stroke-linecap="round">
+    <circle cx="-1.5" cy="-1.5" r="5.5"/><path d="M2.5,2.5 L7,7"/></g>
+    <text x="564" y="60" font-size="11.5" font-weight="800" fill="#4c1d95">SPARQL（リスト 7-3）</text>
+    <text x="530" y="88" font-size="9" font-family="Menlo,monospace" fill="#4c1d95">?c ec:累計購入額 ?t .</text>
+    <text x="530" y="104" font-size="9" font-family="Menlo,monospace" fill="#4c1d95">FILTER(?t &gt;= 50000)</text>
+    <text x="530" y="126" font-size="9" font-weight="700" fill="#6b3fa0">実際に 4 名を絞っているのはこちら</text>
+
+    <rect x="392" y="52" width="96" height="62" rx="9" fill="#fdf3f2" stroke="#b3261e" stroke-width="2.4"/>
+    <text x="440" y="82" text-anchor="middle" font-size="17" font-weight="900" fill="#8c1e18">50000</text>
+    <text x="440" y="102" text-anchor="middle" font-size="9" font-weight="800" fill="#b3261e">同じ数字</text>
+    <line x1="366" y1="83" x2="390" y2="83" stroke="#b3261e" stroke-width="2"/>
+    <line x1="490" y1="83" x2="512" y2="83" stroke="#b3261e" stroke-width="2"/>
+
+    <rect x="30" y="176" width="820" height="56" rx="9" fill="#fff" stroke="#b3261e" stroke-width="2.2" stroke-dasharray="7 4"/>
+    <text x="56" y="200" font-size="11.5" font-weight="900" fill="#8c1e18">基準を 50,000 円 → 40,000 円 に変えるとき</text>
+    <text x="56" y="220" font-size="9.5" fill="#b3261e">OWL の定義と SPARQL の<tspan font-weight="800">両方</tspan>を直す。片方だけ直しても誰もエラーを出さない — 結果が静かにズレる</text>
+    <line x1="150" y1="174" x2="150" y2="140" stroke="#b3261e" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#m6r)"/>
+    <line x1="700" y1="174" x2="700" y2="140" stroke="#b3261e" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#m6r)"/>
+    </svg>
+  </div>
+  <div class="g2">
+    <div class="card green"><h4>得られるもの</h4><p class="sm">今すぐ動きます。常に最新で、実装は 3 つのうち一番軽い。</p></div>
+    <div class="card red"><h4>手放すもの</h4><p class="sm">同じ条件が OWL と SPARQL の <strong>2 箇所</strong>に書かれます。基準を 50,000 円から 40,000 円に変えるとき両方直します。片方だけ直しても、誰もエラーを出しません。</p></div>
+  </div>
+  <div class="hl">それでも OWL 側を書く価値は残ります。<strong>人間と LLM が読む「正解の置き場所」</strong>になるからです。第 5 章の <code>rdfs:label</code> と <code>rdfs:comment</code> と定義が揃っていれば、LLM は「優良顧客」という言葉から <code>FILTER(?t &gt;= 50000)</code> を自分で書けます。推論器が使わないだけです。</div>
+</section>
+<section class="slide">
+  <div class="eyebrow">第 11 章 — 打ち手 ②</div>
+  <h2>② バッチで回す — 夜間に型付与だけを書き戻す</h2>
+  <p class="lead">夜間に 1 回、ABox を全件読んで推論を回します。ただし書き戻すのは<strong>推論の結果だけ</strong>。<code>ec:C002 a ec:優良顧客</code> のような型付与が数千行できるので、それだけを Triple Store に入れます。</p>
+  <div class="panel">
+    <p class="ptitle">速さを買って、鮮度を売る</p>
+    <svg viewBox="0 0 880 272" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
+    <defs><marker id="m7a" markerWidth="9" markerHeight="9" refX="7.2" refY="3.1" orient="auto"><path d="M0,0 L7.2,3.1 L0,6.2 z" fill="#96650a"/></marker>
+    <marker id="m7g" markerWidth="9" markerHeight="9" refX="7.2" refY="3.1" orient="auto"><path d="M0,0 L7.2,3.1 L0,6.2 z" fill="#9aa3af"/></marker></defs>
+
+    <rect x="30" y="24" width="206" height="76" rx="9" fill="#fdf8ec" stroke="#96650a" stroke-width="2.4"/>
+    <circle cx="56" cy="48" r="14" fill="#fff" stroke="#96650a" stroke-width="1.6"/>
+    <g transform="translate(56,48)" stroke="#96650a" stroke-width="1.5" fill="none" stroke-linecap="round">
+    <circle cx="0" cy="0" r="5.5"/><circle cx="0" cy="0" r="2"/>
+    <path d="M0,-10 V-6.5M0,6.5 V10M-10,0 H-6.5M6.5,0 H10M-7,-7 L-4.6,-4.6M4.6,4.6 L7,7M7,-7 L4.6,-4.6M-4.6,4.6 L-7,7"/></g>
+    <text x="78" y="52" font-size="11.5" font-weight="800" fill="#7a4a1c">02:00 夜間バッチ</text>
+    <text x="44" y="76" font-size="9" fill="#96650a">ABox を全件読んで推論を回す</text>
+    <text x="44" y="91" font-size="9" font-weight="700" fill="#7a4a1c">→ 型付与トリプルだけ書き戻す</text>
+    <line x1="238" y1="62" x2="258" y2="62" stroke="#96650a" stroke-width="2.2" marker-end="url(#m7a)"/>
+
+    <rect x="262" y="24" width="588" height="76" rx="9" fill="#f1f6fb" stroke="#1c5b9c" stroke-width="2.4"/>
+    <circle cx="288" cy="48" r="14" fill="#fff" stroke="#1c5b9c" stroke-width="1.6"/>
+    <g transform="translate(288,48)" stroke="#1c5b9c" stroke-width="1.3">
+    <line x1="0" y1="-6" x2="-6" y2="4"/><line x1="0" y1="-6" x2="6" y2="4"/><line x1="-6" y1="4" x2="6" y2="4"/>
+    <circle cx="0" cy="-6" r="2.8" fill="#fff"/><circle cx="-6" cy="4" r="2.8" fill="#fff"/><circle cx="6" cy="4" r="2.8" fill="#fff"/></g>
+    <text x="310" y="52" font-size="11.5" font-weight="800" fill="#0f3f6b">日中 — クエリは Triple Store を読むだけ (速い)</text>
+    <text x="276" y="76" font-size="9" font-family="Menlo,monospace" fill="#0f3f6b">ec:C002 a ec:優良顧客   ← 昨夜すでに書き込まれている</text>
+    <text x="276" y="91" font-size="9" font-weight="700" fill="#1c5b9c">推論器は動かない。だから待たされない</text>
+
+    <line x1="30" y1="126" x2="856" y2="126" stroke="#9aa3af" stroke-width="1.8" marker-end="url(#m7g)"/>
+    <g font-size="9" fill="#6b7480" text-anchor="middle">
+    <text x="44" y="143">02:00</text><text x="240" y="143">09:00</text><text x="520" y="143">14:00</text><text x="740" y="143">24:00</text><text x="832" y="143">翌 02:00</text></g>
+    <g stroke="#9aa3af" stroke-width="1.4">
+    <line x1="44" y1="121" x2="44" y2="131"/><line x1="240" y1="121" x2="240" y2="131"/>
+    <line x1="740" y1="121" x2="740" y2="131"/><line x1="832" y1="121" x2="832" y2="131"/></g>
+
+    <rect x="30" y="164" width="474" height="40" rx="6" fill="#f5f6f8" stroke="#9aa3af" stroke-width="1.4"/>
+    <text x="267" y="180" text-anchor="middle" font-size="9.5" font-weight="800" fill="#6b7480">バッチ時点の答え = 正しい</text>
+    <text x="267" y="195" text-anchor="middle" font-size="9" fill="#9aa3af">4 名が優良顧客として返る</text>
+
+    <circle cx="520" cy="126" r="6" fill="#b3261e"/>
+    <text x="520" y="158" text-anchor="middle" font-size="10" font-weight="900" fill="#b3261e">14:00 — ある顧客の累計が 50,000 円を超える</text>
+    <rect x="512" y="164" width="338" height="40" rx="6" fill="#fdf3f2" stroke="#b3261e" stroke-width="2.2" stroke-dasharray="6 4"/>
+    <text x="681" y="180" text-anchor="middle" font-size="10" font-weight="900" fill="#8c1e18">この 12 時間、その人は優良顧客として扱われない</text>
+    <text x="681" y="195" text-anchor="middle" font-size="9" fill="#b3261e">レポートに載らない。それでも誰もエラーを出さない</text>
+    <text x="850" y="226" text-anchor="end" font-size="9.5" font-weight="800" fill="#96650a">↑ 翌 02:00 のバッチで、ようやく反映される</text>
+    <text x="30" y="250" font-size="10" font-weight="800" fill="#3d4654">つまり「昨夜の答え」を、今日一日返し続ける仕組みです。</text>
+    </svg>
+  </div>
+  <div class="g2">
+    <div class="card green"><h4>得られるもの</h4><p class="sm">推論の結果が使えます。日中のクエリは書き戻された型付与を読むだけなので速い。</p></div>
+    <div class="card red"><h4>手放すもの</h4><p class="sm"><strong>鮮度</strong>です。次のバッチまで、昨夜の答えを返し続けます。日次のレポート用途なら足りますが、「いまこの人は優良顧客か」を聞かれる用途には向きません。</p></div>
+  </div>
+  <div class="hl">夜間バッチと聞くとマテリアライズに近づいたように見えますが、移すのは<strong>推論結果の数千行だけ</strong>で、数億行の実データは元 DB に残ったままです。</div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">第 11 章 — 打ち手 ③</div>
+  <h2>③ 定義の検査にだけ使う — データを 1 行も読まずに矛盾を見つける</h2>
   <p class="lead">オントロジーは 1 人が一気に書くものではありません。<strong>何人かが何ヶ月かけて足していきます</strong>。そのとき起きることです。</p>
   <div class="panel">
     <p class="ptitle">誰も入れないクラスを、データを 1 行も読まずに構築時に見つける</p>

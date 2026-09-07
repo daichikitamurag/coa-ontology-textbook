@@ -3001,7 +3001,7 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
   <div class="g3">
     <div class="card red"><h4>① 推論を諦める</h4><p class="sm">定義は置いておき、SPARQL の FILTER で同じ条件を書く。<strong>同じ数字が 2 箇所に分かれる</strong></p></div>
     <div class="card amber"><h4>② バッチで回す</h4><p class="sm">夜間に推論を走らせ、型付与だけを書き戻す。<strong>速さを買って、鮮度を売る</strong></p></div>
-    <div class="card green"><h4>③ 定義の検査にだけ使う</h4><p class="sm">ABox の推論は諦め、<strong>TBox が矛盾していないかだけ</strong>を検査する</p></div>
+    <div class="card green"><h4>③ TBox だけを推論する</h4><p class="sm"><strong>ABox は推論しない</strong>。TBox が矛盾していないかだけを検査する</p></div>
   </div>
 </section>
 <section class="slide">
@@ -3209,8 +3209,8 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
 
 <section class="slide">
   <div class="eyebrow">第 11 章 — 打ち手 ③</div>
-  <h2>③ 定義の検査にだけ使う — データを 1 行も読まずに矛盾を見つける</h2>
-  <p class="lead">オントロジーは 1 人が一気に書くものではありません。<strong>何人かが何ヶ月かけて足していきます</strong>。そのとき起きることです。</p>
+  <h2>③ TBox（定義）だけを推論する — ABox（実データ）は推論しない</h2>
+  <p class="lead"><strong>ABox（実データ）への推論は諦め、TBox（定義）そのものに推論器を向けます</strong>。推論器に渡すのは TBox だけで、実データは 1 行も渡しません。オントロジーは何人かが何ヶ月かけて足していくものなので、定義同士の矛盾はこうして起きます。</p>
   <div class="panel">
     <p class="ptitle">誰も入れないクラスを、データを 1 行も読まずに構築時に見つける</p>
     <svg viewBox="0 0 880 324" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Sans','Yu Gothic',sans-serif">
@@ -3270,7 +3270,11 @@ ec:C005 <span class="k">a</span> ec:優良顧客 .   <span class="b">← 新規<
       <text x="48" y="294" font-size="9.5" fill="#1f6f4a">定義ファイルを目で追って気づくのはほぼ無理。<tspan font-weight="800">推論器なら、顧客データを 1 行も読まずにこれを指摘できます</tspan></text>
     </svg>
   </div>
-  <p class="hlr">足した 3 つは、<strong>1 つずつ見ればどれも正しい定義</strong>でした。<strong>3 つ揃ったときだけ矛盾します</strong>。目で追って気づくのは、まず無理です。</p>
+  <div class="g2">
+    <div class="card green"><h4>得られるもの</h4><p class="sm">定義同士の矛盾を、公開前に止められます。渡すのは数千トリプルの TBox だけなのでコストはほぼゼロ。<strong>ABox が手元に無くても動くので、仮想化と両立します</strong>。</p></div>
+    <div class="card red"><h4>手放すもの</h4><p class="sm">ABox の推論を全部です。<code>ec:C002 a ec:優良顧客</code> は付きません。得られるのは<strong>「定義そのものが壊れていないこと」の保証だけ</strong>です。</p></div>
+  </div>
+  <div class="hl">拾えるのは<strong>定義同士の矛盾</strong>だけです。<code>ec:C001</code> が個人顧客であり法人顧客でもあると ABox に書かれていても、TBox しか渡されていない推論器は気づきません。そちらは第 8 章の SHACL の担当で、③ が守るのは定義の側、SHACL が守るのはデータの側です。</div>
 </section>
 
 <section class="slide chapter">

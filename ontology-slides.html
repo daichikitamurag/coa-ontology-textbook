@@ -330,6 +330,85 @@
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <defs>
+  <linearGradient id="cCompute" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F8A24A"/><stop offset="1" stop-color="#ED7100"/></linearGradient>
+  <linearGradient id="cDatabase" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#DA5CE3"/><stop offset="1" stop-color="#C925D1"/></linearGradient>
+  <linearGradient id="cAnalytics" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A87DFF"/><stop offset="1" stop-color="#8C4FFF"/></linearGradient>
+  <linearGradient id="cML" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2BC4AC"/><stop offset="1" stop-color="#01A88D"/></linearGradient>
+  <linearGradient id="cStorage" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9BC53D"/><stop offset="1" stop-color="#7AA116"/></linearGradient>
+  <linearGradient id="cSecurity" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E85C6E"/><stop offset="1" stop-color="#DD344C"/></linearGradient>
+  <linearGradient id="cNetwork" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A87DFF"/><stop offset="1" stop-color="#8C4FFF"/></linearGradient>
+  <linearGradient id="cMgmt" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F0559B"/><stop offset="1" stop-color="#E7157B"/></linearGradient>
+
+  <symbol id="ic-neptune" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cDatabase)"/>
+    <g stroke="#fff" stroke-width="2" fill="none"><path d="M16 16 L32 16 M16 16 L24 30 M32 16 L24 30 M16 16 L14 32 M32 16 L34 32 M14 32 L24 30 M34 32 L24 30"/></g>
+    <g fill="#fff"><circle cx="16" cy="16" r="3.6"/><circle cx="32" cy="16" r="3.6"/><circle cx="24" cy="30" r="4.2"/><circle cx="14" cy="33" r="3"/><circle cx="34" cy="33" r="3"/></g></symbol>
+
+  <symbol id="ic-dynamodb" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cDatabase)"/>
+    <g fill="none" stroke="#fff" stroke-width="2.2"><ellipse cx="24" cy="15" rx="11" ry="4.2"/>
+    <path d="M13 15v8c0 2.3 4.9 4.2 11 4.2s11-1.9 11-4.2v-8"/><path d="M13 23v8c0 2.3 4.9 4.2 11 4.2s11-1.9 11-4.2v-8"/></g></symbol>
+
+  <symbol id="ic-s3" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cStorage)"/>
+    <path d="M13 14h22l-3 22H16z" fill="none" stroke="#fff" stroke-width="2.2"/>
+    <path d="M13 14h22" stroke="#fff" stroke-width="2.6"/><circle cx="24" cy="25" r="3.4" fill="#fff"/></symbol>
+
+  <symbol id="ic-athena" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cAnalytics)"/>
+    <g stroke="#fff" stroke-width="2.2" fill="none"><rect x="12" y="13" width="24" height="22" rx="2.5"/><path d="M12 20h24M20 20v15M28 20v15"/></g></symbol>
+
+  <symbol id="ic-opensearch" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cAnalytics)"/>
+    <circle cx="22" cy="21" r="8.5" fill="none" stroke="#fff" stroke-width="2.4"/>
+    <path d="M28.5 27.5 L36 35" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+    <g fill="#fff"><circle cx="19" cy="19" r="1.7"/><circle cx="25" cy="19" r="1.7"/><circle cx="22" cy="24" r="1.7"/></g></symbol>
+
+  <symbol id="ic-glue" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cAnalytics)"/>
+    <g stroke="#fff" stroke-width="2.2" fill="none"><circle cx="24" cy="24" r="6.5"/>
+    <path d="M24 11v5M24 32v5M11 24h5M32 24h5M15 15l3.5 3.5M29.5 29.5L33 33M33 15l-3.5 3.5M18.5 29.5L15 33"/></g></symbol>
+
+  <symbol id="ic-ecs" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cCompute)"/>
+    <g fill="none" stroke="#fff" stroke-width="2.2"><rect x="11" y="12" width="11" height="11" rx="1.5"/><rect x="26" y="12" width="11" height="11" rx="1.5"/>
+    <rect x="11" y="26" width="11" height="11" rx="1.5"/><rect x="26" y="26" width="11" height="11" rx="1.5"/></g></symbol>
+
+  <symbol id="ic-lambda" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cCompute)"/>
+    <path d="M14 36 L23 12 h5 l9 24 h-5.5 l-6-16 -5.5 16z" fill="#fff"/></symbol>
+
+  <symbol id="ic-bedrock" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cML)"/>
+    <g stroke="#fff" stroke-width="2.3" fill="none" stroke-linecap="round">
+    <path d="M12 17c4-2.5 8-2.5 12 0s8 2.5 12 0"/><path d="M12 24c4-2.5 8-2.5 12 0s8 2.5 12 0"/><path d="M12 31c4-2.5 8-2.5 12 0s8 2.5 12 0"/></g></symbol>
+
+  <symbol id="ic-cloudfront" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cNetwork)"/>
+    <circle cx="24" cy="24" r="11" fill="none" stroke="#fff" stroke-width="2.2"/>
+    <g stroke="#fff" stroke-width="1.9" fill="none"><ellipse cx="24" cy="24" rx="4.6" ry="11"/><path d="M13 24h22"/></g></symbol>
+
+  <symbol id="ic-waf" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cSecurity)"/>
+    <path d="M24 11l11 4v9c0 7-5 11.5-11 13-6-1.5-11-6-11-13v-9z" fill="none" stroke="#fff" stroke-width="2.2"/>
+    <path d="M13.5 20h21M24 15v22" stroke="#fff" stroke-width="1.6"/></symbol>
+
+  <symbol id="ic-cognito" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cSecurity)"/>
+    <circle cx="24" cy="19" r="5.6" fill="none" stroke="#fff" stroke-width="2.2"/>
+    <path d="M13 37c0-6.5 5-10.5 11-10.5S35 30.5 35 37" fill="none" stroke="#fff" stroke-width="2.2"/></symbol>
+
+  <symbol id="ic-apigw" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cNetwork)"/>
+    <g stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round">
+    <path d="M12 16h9l4 8-4 8h-9"/><path d="M36 16h-9l-4 8 4 8h9"/></g></symbol>
+
+  <symbol id="ic-cloudwatch" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cMgmt)"/>
+    <circle cx="24" cy="24" r="11" fill="none" stroke="#fff" stroke-width="2.2"/>
+    <path d="M24 16v8l6 4" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/></symbol>
+
+  <symbol id="ic-smus" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cML)"/>
+    <g stroke="#fff" stroke-width="2.2" fill="none"><rect x="11" y="13" width="26" height="18" rx="2.5"/><path d="M18 36h12M24 31v5"/></g>
+    <circle cx="24" cy="22" r="3.6" fill="#fff"/></symbol>
+
+  <symbol id="ic-datazone" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="url(#cAnalytics)"/>
+    <g fill="none" stroke="#fff" stroke-width="2.2"><path d="M24 11l12 6.5v13L24 37l-12-6.5v-13z"/><path d="M24 24l12-6.5M24 24v13M24 24L12 17.5"/></g></symbol>
+
+  <symbol id="ic-user" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="#4B5563"/>
+    <circle cx="24" cy="19" r="5.6" fill="none" stroke="#fff" stroke-width="2.2"/>
+    <path d="M13 37c0-6.5 5-10.5 11-10.5S35 30.5 35 37" fill="none" stroke="#fff" stroke-width="2.2"/></symbol>
+ </defs>
+</svg>
+
 <div class="deck">
 
 <section class="slide cover">
